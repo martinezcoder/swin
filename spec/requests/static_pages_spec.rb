@@ -4,18 +4,19 @@ require 'spec_helper'
 
 describe "StaticPages" do
 
-
+  let(:base_title) { "SocialWin Analytics" }
+   
   describe "Home page" do
 
     it "should have the h1 'SocialWin Analytics'" do
       visit '/static_pages/home'
-      page.should have_selector('h1', :text => 'SocialWin Analytics')
+      page.should have_selector('h1', :text => "#{base_title}")
     end
 
     it "should have the title 'Home'" do
       visit '/static_pages/home'
       page.should have_selector('title',
-                        :text => "SocialWin Analytics | Home")
+                        :text => "#{base_title}")
     end
 
   end
@@ -32,7 +33,7 @@ describe "StaticPages" do
     it "should have the title 'Help'" do
       visit '/static_pages/help'
       page.should have_selector('title',
-                        :text => "SocialWin Analytics | Ayuda")
+                        :text => "#{base_title} | Ayuda")
     end
 
   end
@@ -49,7 +50,7 @@ describe "StaticPages" do
     it "should have the title 'About'" do
       visit '/static_pages/about'
       page.should have_selector('title',
-                        :text => "SocialWin Analytics | Quién somos")
+                        :text => "#{base_title} | Quién somos")
     end
 
   end
