@@ -20,6 +20,16 @@ describe "StaticPages" do
       should have_selector('title', :text => full_title('') )
     end
 
+
+    it "should have the right links on the layout" do
+      visit root_path
+      click_link "Ayuda"
+      should have_selector 'title', text: full_title('Ayuda')
+      click_link "Home"
+      click_link "Sign up now!"
+      click_link "Entrar"
+    end
+
   end
 
 
