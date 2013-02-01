@@ -4,9 +4,13 @@ Swin::Application.routes.draw do
   #### ojoooooo!!!!!!
   resources :users # igual hay que limitarlo a show, ya que el create se hará desde authentications...
 
+  resources :authentications
   
   match '/signin',  to: 'sessions#new'
   match '/signout', to: 'sessions#destroy', via: :delete
+
+  match '/auth/:provider/callback', to: 'authentications#create'
+
 
   match '/help',    to: 'static_pages#help'
   match '/about',   to: 'static_pages#about'

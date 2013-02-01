@@ -11,6 +11,7 @@
 
 class User < ActiveRecord::Base
   attr_accessible :email, :name
+  has_many :authentications
 
   before_save { self.email.downcase! }
   before_save :create_remember_token
