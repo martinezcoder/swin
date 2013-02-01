@@ -6,7 +6,7 @@ module SessionsHelper
   end
 
   def signed_in?
-    !current_user.nil?  # esto llamará a la función "def curren_user" que buscará en BD el token del usuario
+    !current_user.nil?  # this will call to "def current_user" that will search in DB the token == cookies(token)
   end
 
   def current_user=(user)

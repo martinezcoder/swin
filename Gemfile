@@ -8,19 +8,25 @@ gem 'pg', '0.14.1'
 gem 'omniauth', '1.1.1'
 gem 'omniauth-facebook', '1.4.1'
 gem 'omniauth-twitter', '0.0.14'
+
+gem 'koala', '1.6.0'
+
   
 group :development, :test do
   gem 'rspec-rails', '2.12.0'
-  
   gem 'guard-spork', '1.2.0'
   gem 'spork', '0.9.2'
-  
-  require 'resolv'
-  require 'resolv-replace'
 end
 
 group :development do
+  require 'resolv'
+  require 'resolv-replace'
   gem 'annotate', '2.5.0'
+end
+
+group :test do
+  gem 'capybara', '1.1.2'
+  gem 'factory_girl_rails', '4.1.0'
 end
 
 
@@ -38,10 +44,6 @@ end
 
 gem 'jquery-rails', '2.2.0'
 
-group :test do
-  gem 'capybara', '1.1.2'
-  gem 'factory_girl_rails', '4.1.0'
-end
 
 
 
