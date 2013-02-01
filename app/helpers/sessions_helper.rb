@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 module SessionsHelper
 
   def sign_in(user)
@@ -41,9 +43,8 @@ module SessionsHelper
   def signed_in_user
     unless signed_in?
       store_location
-      redirect_to signin_url, notice: "Por favor, inicie la sesion" 
+      redirect_to signin_url, notice: "Por favor, inicie la sesión" 
     end
   end
-
 
 end

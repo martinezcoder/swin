@@ -3,7 +3,6 @@ Swin::Application.routes.draw do
 
   #### ojoooooo!!!!!!
   resources :users # igual hay que limitarlo a show, ya que el create se hará desde authentications...
-
   resources :authentications
   
   match '/signin',  to: 'sessions#new'
