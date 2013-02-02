@@ -8,7 +8,7 @@ module AuthenticationsHelper
   end
 
   def current_auth #(omniauth)
-    @current_auth ||= Authentication.find_by_provider_and_uid(@omniauth['provider'], @omniauth['uid'])
+    @current_auth ||= Authentication.find_by_provider_and_uid(omniauth.provider, omniauth.uid)
   end
 
   def authentication_exist? #(omniauth)
