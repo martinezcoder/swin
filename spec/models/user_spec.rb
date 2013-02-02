@@ -34,10 +34,12 @@ describe User do
     it { should_not be_valid }
   end
 
+=begin
   describe "when email is not present" do
     before { @user.email = " " }
     it { should_not be_valid }
   end
+=end
 
   describe "when email format is invalid" do
     it "should be invalid" do

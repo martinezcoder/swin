@@ -1,11 +1,10 @@
 Swin::Application.routes.draw do
-  resources :sessions, only: [:create, :destroy]
+  resources :sessions, only: [:destroy]
 
   #### ojoooooo!!!!!!
   resources :users # igual hay que limitarlo a show, ya que el create se hará desde authentications...
-  resources :authentications
+  resources :authentications, only: [:create, :destroy, :index]
   
-  match '/signin',  to: 'sessions#new'
   match '/signout', to: 'sessions#destroy', via: :delete
 
   match '/auth/:provider/callback', to: 'authentications#create'
