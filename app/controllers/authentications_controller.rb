@@ -15,13 +15,21 @@ class AuthenticationsController < ApplicationController
 
     if signed_in?
       if authentication
-        # poner provider a ON si no está ya puesto
-        flash[:notice] = "#{omniauth['provider']} ON"  
-        redirect_to root_url  
+        if authentication.user == current_user
+          # poner provider a ON si no está ya puesto
+          flash[:notice] = "#{omniauth['provider']} ON"
+        else
+          flash[:error] = "Usuario incorrecto para esta cuenta"
+        end  
+        redirect_to root_path 
       else
-        current_user.authentications.create(:provider => omniauth['provider'], :uid => omniauth['uid'])  
-        flash[:notice] = "Nueva conexión de usuario"  
-        redirect_to root_url  
+        newauth = current_user.authentications.new(:provider => omniauth['provider'], :uid => omniauth['uid'])
+        if newauth.save  
+          flash[:notice] = "Nueva conexión de usuario"
+        else  
+          flash[:error] = "Usuario incorrecto para esta cuenta"
+        end  
+        redirect_to root_path
       end
     else
       if authentication
@@ -33,14 +41,14 @@ class AuthenticationsController < ApplicationController
           flash[:notice] = "Bienvenido #{omniauth.info.name}"  
         end
         #poner provider a ON
-        redirect_to root_url 
+        redirect_to root_path 
       else
         user = User.create
         user.authentications.build(provider: omniauth['provider'], uid: omniauth['uid'])
         user.save!  
         flash[:notice] = "Nuevo usuario"  
         sign_in(user)
-        redirect_to root_url          
+        redirect_to root_path        
       end
     end
 
@@ -48,6 +56,10 @@ class AuthenticationsController < ApplicationController
 
 
   def destroy
+    @authentication = current_user.authentications.find(params[:id])
+    @authentication.destroy
+    flash[:notice] = "Conexión eliminada."
+    redirect_to root_path
   end
 
 
