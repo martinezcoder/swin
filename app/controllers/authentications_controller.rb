@@ -20,7 +20,7 @@ class AuthenticationsController < ApplicationController
         turn_on_authentication
         redirect_to root_path
       else
-        new_user_authentication
+        new_user_authentication_provider
         redirect_to root_path
       end
     else

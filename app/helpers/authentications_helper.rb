@@ -30,13 +30,19 @@ module AuthenticationsHelper
     flash[:notice] = msg ||= "Bienvenido #{current_auth.user.name}"
   end
 
-  def new_user_authentication
+  def new_user_authentication_provider
     newauth = current_user.authentications.new(:provider => omniauth.provider, :uid => omniauth.uid)
     if newauth.save  
       flash[:notice] = "Nuevo proveedor asignado al usuario: #{omniauth.provider}"
     else  
       flash[:error] = "Usuario incorrecto para esta cuenta"
-    end  
+    end
+    # with facebook connection we can get the user email
+    if omniauth.provider == FACEBOOK and current_user.email.nil?
+      current_user.update_attributes(email: omniauth.info.email)
+      flash[:success] = "Usuario actualizado"
+      sign_in current_user
+    end
   end
 
   def turn_on_authentication
