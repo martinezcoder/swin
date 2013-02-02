@@ -13,17 +13,17 @@
 									Cuenta<b class="caret"></b>
 								</a>
 								<ul class="dropdown-menu">
-									<li><%= link_to "Perfil", current_user %></li>
-									<li><%= link_to "Ajustes", edit_user_path(current_user) %></li>
+									<li><%= link_to current_user do %><i class="icon-user"></i> Perfil<% end %></li>
+									<li><%= link_to edit_user_path(current_user) do %><i class="icon-wrench"></i> Ajustes<% end %></li>
 									<li class="divider"></li>
 									<li>
-										<%= link_to "Salir", signout_path, method: "delete" %>
+										<%= link_to signout_path, method: "delete" do %><i class="icon-remove"></i> Cerrar sesión<% end %>
 									</li>
 								</ul>
 						<% else %>
 							<li id="fat-menu" class="dropdown">
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-									Entrar<b class="caret"></b>
+									Entrar <b class="caret"></b>
 								</a>
 								<ul class="dropdown-menu signinmenu">
 									<li><%= link_to "Facebook", "/auth/facebook", class: "btn btn-small btn-primary" %></li>

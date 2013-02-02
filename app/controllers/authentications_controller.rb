@@ -43,6 +43,8 @@ class AuthenticationsController < ApplicationController
         #poner provider a ON
         redirect_to root_path 
       else
+#        create_new_user(omniauth)
+
         user = User.create
         user.authentications.build(provider: omniauth['provider'], uid: omniauth['uid'])
         user.save!  

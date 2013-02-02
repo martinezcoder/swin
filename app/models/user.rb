@@ -12,7 +12,8 @@
 
 class User < ActiveRecord::Base
   attr_accessible :email, :name
-  has_many :authentications
+
+  has_many :authentications, dependent: :destroy
 
   before_save { self.email.downcase! if !self.email.nil? }
   before_save :create_remember_token
