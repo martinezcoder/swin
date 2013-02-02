@@ -1,7 +1,7 @@
 	<header class="navbar navbar-fixed-top">
 		<div class="navbar-inner">
 			<div class="container">
-				<%= link_to "SocialWin", root_path, id: "logo" %>
+				<%= link_to "SocialWin Analytics", root_path, id: "logo" %>
 				<nav>
 					<ul class="nav pull-right">
 						<li><%= link_to "Home",   root_path %></li>
@@ -21,7 +21,16 @@
 									</li>
 								</ul>
 						<% else %>
-							<li><%= link_to "Entrar", signin_path %></li>
+							<li id="fat-menu" class="dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+									Entrar<b class="caret"></b>
+								</a>
+								<ul class="dropdown-menu signinmenu">
+									<li><%= link_to "Facebook", "/auth/facebook", class: "btn btn-small btn-primary" %></li>
+									<li><%= link_to "Twitter", "/auth/twitter", class: "btn btn-small btn-info" %></li>
+								</ul>
+							</li>
+
 						<% end %>
 
 					</ul>

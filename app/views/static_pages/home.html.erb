@@ -1,5 +1,4 @@
-
-<div class="center hero-unit">
+<div class="center">
 	<h1>Bienvenido a SocialWin Analytics</h1>
 
   <h2>
@@ -7,10 +6,12 @@
     <a href="http://www.socialwin.es/">SocialWin</a>.
   </h2>
 
-  <%= link_to "Entrar con Twitter", "/auth/twitter", class: "btn btn-large btn-info" %>    
-
-  <%= link_to "Entrar con Facebook", "/auth/facebook", class: "btn btn-large btn-primary" %>    
-    
 </div>
 
-<%= link_to image_tag("rails.png", alt: "Rails"), 'http://rubyonrails.org/' %>
+<div class="center hero-unit">
+	<%= link_to "Entrar con Facebook", "/auth/facebook", class: "btn btn-large btn-primary", style: "width: 140px;" %>    
+	O
+	<%= link_to "Entrar con Twitter", "/auth/twitter", class: "btn btn-large btn-info", style: "width: 140px;"  %>
+</div>
+
+<%= link_to image_tag("socialwin.png", alt: "SocialWin", size: "73x73",), 'http://www.socialwin.es/' %>

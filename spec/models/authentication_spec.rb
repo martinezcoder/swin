@@ -56,9 +56,18 @@ describe Authentication do
     it { should_not be_valid }
   end
 
-  describe "when user_id-provider already exists in db" do
+  describe "when this uid provider already exists for this user in db" do
     before do
       @repeat_provider = user.authentications.build(provider: 'facebook', uid: '123456')
+      @repeat_provider.save
+    end
+    
+    it {should_not be_valid}
+  end
+
+  describe "when this provider type already exists in db for this user in db" do
+    before do
+      @repeat_provider = user.authentications.build(provider: 'facebook', uid: '999111')
       @repeat_provider.save
     end
     

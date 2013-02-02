@@ -1,5 +1,5 @@
 @import "bootstrap";
-@import "bootstrap-responsive";
+/*@import "bootstrap-responsive";*/
 
 
 /* mixins, variables, etc. */
@@ -19,10 +19,14 @@ html {
 }
 
 body {
+
+  background:url(body-tail.gif) 0 0 repeat-x #fff;
+  position:relative;
+
+
   padding-top: 60px;
   font-size: 13px;
   line-height: 18px;
-  //font-weight: bold;
 }
 
 section {
@@ -205,3 +209,10 @@ input {
 .btn-large{
   font-size: 15px;
 } 
+
+.signinmenu li a{ 
+    margin-left: 15px;
+    margin-right: 15px;
+    color: white;
+
+}
