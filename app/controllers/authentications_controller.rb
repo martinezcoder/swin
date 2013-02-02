@@ -25,11 +25,11 @@ class AuthenticationsController < ApplicationController
       end
     else
       if authentication_exist?
-        # new existing user signing in through his provider
+        # existing user signing in
         signin_and_turn_on_authentication(nil)
         redirect_to root_path 
       else
-        # new user with new provider
+        # new user signin in
         create_new_user
         redirect_to root_path
       end
