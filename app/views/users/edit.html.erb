@@ -1,7 +1,5 @@
 <% provide(:title, "Edición de perfil") %> 
-<h1>Actualiza tus datos</h1>
-
-
+<h1>Confirma tus datos</h1>
 
 <div class="row">
   <div class="span6 offset3">
@@ -9,13 +7,19 @@
 
 	  <%= render 'shared/error_messages', object: f.object %>
 
-      <%= f.label :name %>
+      <%= f.label :name, "Nombre" %>
       <%= f.text_field :name %>
 
-      <%= f.label :email %>
-      <%= f.text_field :email %>
+	  <label class="checkbox">
+	  	<%= f.check_box(:policy_checked) %> 
+	  	Al registrarme, acepto las condiciones de uso y la política de protección de datos.
+	  </label>
 
-      <%= f.submit "Guardar cambios", class: "btn btn-large btn-primary" %>
+<!-- check_box("user", "policy", { :class => 'checkbox' }, "si", "no") -->
+
+      <%= f.submit "Confirmar", class: "btn btn-default btn-primary" unless !:policy %>
+      <%= link_to "Cancelar", '#', class: "btn btn-default btn-default", style: "width: 60px;margin-left:10px;"  %>
+
     <% end %>
 
  <!--   Falta botón para cambiar la imagen  -->

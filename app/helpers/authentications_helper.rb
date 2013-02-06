@@ -18,13 +18,13 @@ module AuthenticationsHelper
     user = User.create(name: omniauth['info']['name'], email: omniauth['info']['email'] ||= nil)
     user.authentications.build(provider: omniauth['provider'], uid: omniauth['uid'])
     user.save!  
-    signin_and_turn_on_authentication("Nuevo usuario: #{current_auth.user.name}")
+    signin_and_turn_on_authentication("Bienvenido #{current_auth.user.name}")
   end
 
   def signin_and_turn_on_authentication(msg)
     sign_in(current_auth.user)
-    turn_on_authentication
-    flash[:notice] = msg ||= "Bienvenido #{current_auth.user.name}"
+    turn_on_authentication(false)
+    flash[:success] = msg ||= "Bienvenido #{current_auth.user.name}"
   end
 
   def new_user_authentication_provider
@@ -42,11 +42,11 @@ module AuthenticationsHelper
     end
   end
 
-  def turn_on_authentication
+  def turn_on_authentication(msg)
     if current_user?(current_auth.user)
       # poner provider a ON si no está ya puesto
       cookies[omniauth['provider']] = "ON"
-      flash[:notice] = "#{omniauth['provider']} ON"
+      flash[:notice] = "#{omniauth['provider']} ON" unless !msg
     else
       # este provider no está asociado con esta sesión si no con otra...
       # habría que mirar si se puede hacer un merge de sesiones

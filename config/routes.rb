@@ -1,8 +1,8 @@
 Swin::Application.routes.draw do
   resources :sessions, only: [:destroy]
 
-  #### ojoooooo!!!!!!
-  resources :users # igual hay que limitarlo a show, ya que el create se hará desde authentications...
+  resources :users #, only: [:create, :show, :edit, :update, :destroy]
+
   resources :authentications, only: [:create, :destroy, :index]
   
   match '/signout', to: 'sessions#destroy', via: :delete

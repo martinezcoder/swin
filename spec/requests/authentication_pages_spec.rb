@@ -17,6 +17,29 @@ describe "AuthenticationPages" do
     it { should have_link('Ayuda',    href: help_path) }
 
 
+    describe "Sign in and sign out" do
+
+      before do
+        sign_in_test
+      end
+
+      it { should have_link('Usuarios', href: users_path) }
+
+      it { should have_link('Perfil', href: user_path(current_auth.user)) }
+      it { should have_link('Ajustes', href: edit_user_path(current_auth.user)) } 
+      it { should have_link('Cerrar sesión', href: signout_path) }
+
+      describe "User signs out. " do
+        before do
+          click_link "Cerrar sesión"
+        end
+        it { should have_link('Facebook') }
+        it { should have_link('Twitter') }
+      end
+
+    end
+
+
     describe "new user creation creates a new User and Authentication into database" do
       it "should create a new user" do
         expect do
@@ -54,27 +77,6 @@ describe "AuthenticationPages" do
     end
 
 
-    describe "Sign in a new user with new provider" do
-
-      before do
-        sign_in_test
-      end
-
-      it { should have_link('Usuarios', href: users_path) }
-
-      it { should have_link('Perfil', href: user_path(current_auth.user)) }
-      it { should have_link('Ajustes', href: edit_user_path(current_auth.user)) } 
-      it { should have_link('Cerrar sesión', href: signout_path) }
-
-      describe "User signs out. " do
-        before do
-          click_link "Cerrar sesión"
-        end
-        it { should have_link('Facebook') }
-        it { should have_link('Twitter') }
-      end
-
-    end
 
   end
 

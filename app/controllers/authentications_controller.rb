@@ -17,7 +17,7 @@ class AuthenticationsController < ApplicationController
 
     if signed_in?
       if authentication_exist?
-        turn_on_authentication
+        turn_on_authentication(true)
         redirect_to root_path
       else
         new_user_authentication_provider
@@ -31,7 +31,7 @@ class AuthenticationsController < ApplicationController
       else
         # new user signin in
         create_new_user
-        redirect_to root_path
+        redirect_to edit_user_path(current_user)
       end
     end
 

@@ -12,16 +12,27 @@ describe "User pages" do
     before { visit edit_user_path(user) }
 
     describe "page" do
-      it { should have_selector('h1', text: 'Actualiza tus datos')}
+      it { should have_selector('h1', text: 'Confirma tus datos')}
       it { should have_selector 'title' , text: full_title('Edición de perfil') }
 # FALTA: link para cambiar la foto de perfil. Nos dejará utilizar la foto de twitter, de facebook o de la página de facebook que utilizamos
     end
 
     describe "with invalid information" do
-      before { click_button "Guardar cambios" }
+      before do 
+        fill_in "Nombre",    with: "a" * 51
+        click_button "Confirmar"
+      end
       it { should have_content('error') }
     end
 
+    describe "without checking policy" do
+      it { should error }
+    end
+
+    describe "if user cancel registration" do
+      it { should destroy user }
+    end
+    
   end
 
   describe "profile page" do
