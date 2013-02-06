@@ -26,8 +26,6 @@ describe "StaticPages" do
       click_link "Ayuda"
       should have_selector 'title', text: full_title('Ayuda')
       click_link "Home"
-#      click_link "Entrar con Facebook"
-#      click_link "Entrar con Twitter"
     end
 
   end

@@ -2,24 +2,21 @@
 
 module AuthenticationsHelper
 
-
   def omniauth
     @omniauth
   end
 
   def current_auth #(omniauth)
-    @current_auth ||= Authentication.find_by_provider_and_uid(omniauth.provider, omniauth.uid)
+    @current_auth ||= Authentication.find_by_provider_and_uid(omniauth['provider'], omniauth['uid'])
   end
 
   def authentication_exist? #(omniauth)
-    #!current_auth(omniauth).nil?  # this will call to "def current_auth" that will search in DB if the provider exists.
-    !current_auth.nil?
+    !current_auth.nil? # this will call to "def current_auth" that will search in DB if the provider exists.
   end
 
-
   def create_new_user
-    user = User.create(name: omniauth.info.name, email: omniauth.info.email ||= nil)
-    user.authentications.build(provider: omniauth.provider, uid: omniauth.uid)
+    user = User.create(name: omniauth['info']['name'], email: omniauth['info']['email'] ||= nil)
+    user.authentications.build(provider: omniauth['provider'], uid: omniauth['uid'])
     user.save!  
     signin_and_turn_on_authentication("Nuevo usuario: #{current_auth.user.name}")
   end
@@ -48,7 +45,8 @@ module AuthenticationsHelper
   def turn_on_authentication
     if current_user?(current_auth.user)
       # poner provider a ON si no está ya puesto
-      flash[:notice] = "#{omniauth.provider} ON"
+      cookies[omniauth['provider']] = "ON"
+      flash[:notice] = "#{omniauth['provider']} ON"
     else
       # este provider no está asociado con esta sesión si no con otra...
       # habría que mirar si se puede hacer un merge de sesiones
@@ -57,7 +55,8 @@ module AuthenticationsHelper
     end
   end
 
-  def turn_off_authentication    
+  def turn_off_authentication(provider)
+    cookies[provider] = "OFF"    
   end
 
 end

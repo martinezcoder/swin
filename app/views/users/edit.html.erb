@@ -1,0 +1,24 @@
+<% provide(:title, "Edición de perfil") %> 
+<h1>Actualiza tus datos</h1>
+
+
+
+<div class="row">
+  <div class="span6 offset3">
+    <%= form_for(@user) do |f| %>
+
+	  <%= render 'shared/error_messages', object: f.object %>
+
+      <%= f.label :name %>
+      <%= f.text_field :name %>
+
+      <%= f.label :email %>
+      <%= f.text_field :email %>
+
+      <%= f.submit "Guardar cambios", class: "btn btn-large btn-primary" %>
+    <% end %>
+
+ <!--   Falta botón para cambiar la imagen  -->
+
+  </div>
+</div>

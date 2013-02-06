@@ -1,10 +1,9 @@
 FactoryGirl.define do
 
   factory :user do
-    name "tester"
+    name "mi tester"
     email "tester@socialwin.es"
   end
-
 
   factory :user0 do
     name "Fran J Martinez"

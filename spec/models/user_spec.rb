@@ -21,6 +21,7 @@ describe User do
   it { should respond_to(:name) }
   it { should respond_to(:email) }
   it { should respond_to(:remember_token) }
+  it { should respond_to(:authentications) }
 
   it { should be_valid }
 
@@ -33,13 +34,6 @@ describe User do
     before { @user.name = "a" * 51 }
     it { should_not be_valid }
   end
-
-=begin
-  describe "when email is not present" do
-    before { @user.email = " " }
-    it { should_not be_valid }
-  end
-=end
 
   describe "when email format is invalid" do
     it "should be invalid" do

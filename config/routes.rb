@@ -9,7 +9,6 @@ Swin::Application.routes.draw do
 
   match '/auth/:provider/callback', to: 'authentications#create'
 
-
   match '/help',    to: 'static_pages#help'
   match '/about',   to: 'static_pages#about'
 
