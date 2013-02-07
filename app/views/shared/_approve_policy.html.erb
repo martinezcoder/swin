@@ -6,7 +6,7 @@
 		    <%= form_for(current_user) do |f| %>
 		
 			  <%= render 'shared/error_messages', object: f.object %>
-		
+
 		      <%= f.label :name, "Nombre" %>
 		      <%= f.text_field :name %>
 
@@ -20,7 +20,7 @@
 
 		      <%= f.submit "Confirmar", class: "btn btn-default btn-primary" %>
 
-		      <%= link_to "Cancelar", signout_path, method: "delete", class: "btn btn-default btn-default", style: "width: 60px;margin-left:10px;"  %>
+			  <%= link_to "Cancelar", current_user, method: :delete, data: { confirm: "Desea cancelar el registro en SocialWin?" }, class: "btn btn-default btn-default", style: "width: 60px;margin-left:10px;" %>
 		
 		    <% end %>
 

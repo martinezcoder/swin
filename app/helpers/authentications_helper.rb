@@ -28,7 +28,7 @@ module AuthenticationsHelper
   def new_user_authentication_provider
     newauth = current_user.authentications.new(:provider => omniauth.provider, :uid => omniauth.uid)
     if newauth.save  
-      flash[:notice] = "Nuevo proveedor asignado al usuario: #{omniauth.provider}"
+      flash[:info] = "Nuevo proveedor asignado al usuario: #{omniauth.provider}"
     else  
       flash[:error] = "Usuario incorrecto para esta cuenta"
     end

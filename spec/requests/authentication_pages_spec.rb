@@ -29,8 +29,7 @@ describe "AuthenticationPages" do
         it { should_not have_link('Ajustes', href: edit_user_path(current_auth.user)) } 
         it { should_not have_link('Cerrar sesión', href: signout_path) }
   
-
-        describe "User confirms policy" do
+        describe "User confirms with approved policy" do
           before do
             current_auth.user.approved_policy = true
             current_auth.user.save
@@ -50,7 +49,28 @@ describe "AuthenticationPages" do
           end
 
         end
-        
+
+        describe "user confirms with invalid fields " do
+
+          describe "with invalid information" do
+            before do 
+              fill_in "Nombre",    with: "a" * 51
+              click_button "Confirmar"
+            end
+            it { should have_content('error') }
+          end
+
+          describe "without checking policy" do
+            before { click_button "Confirmar" }
+            it { should have_selector('div.alert.alert-error') }
+          end
+
+          describe "if user cancel registration" do
+            it { should destroy user }
+          end
+          
+        end
+
       end
 
     end
