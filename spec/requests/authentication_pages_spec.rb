@@ -19,22 +19,38 @@ describe "AuthenticationPages" do
 
     describe "Sign in and sign out" do
 
-      before do
-        sign_in_test
-      end
+      describe "policy confirmation page" do
 
-      it { should have_link('Usuarios', href: users_path) }
-
-      it { should have_link('Perfil', href: user_path(current_auth.user)) }
-      it { should have_link('Ajustes', href: edit_user_path(current_auth.user)) } 
-      it { should have_link('Cerrar sesión', href: signout_path) }
-
-      describe "User signs out. " do
         before do
-          click_link "Cerrar sesión"
+          sign_in_test
         end
-        it { should have_link('Facebook') }
-        it { should have_link('Twitter') }
+  
+        it { should_not have_link('Perfil', href: user_path(current_auth.user)) }
+        it { should_not have_link('Ajustes', href: edit_user_path(current_auth.user)) } 
+        it { should_not have_link('Cerrar sesión', href: signout_path) }
+  
+
+        describe "User confirms policy" do
+          before do
+            current_auth.user.approved_policy = true
+            current_auth.user.save
+            sign_in_test
+          end
+          
+          it { should have_link('Perfil', href: user_path(current_auth.user)) }
+          it { should have_link('Ajustes', href: edit_user_path(current_auth.user)) } 
+          it { should have_link('Cerrar sesión', href: signout_path) }
+
+          describe "User signs out. " do
+            before do
+              click_link "Cerrar sesión"
+            end
+            it { should have_link('Facebook') }
+            it { should have_link('Twitter') }
+          end
+
+        end
+        
       end
 
     end
