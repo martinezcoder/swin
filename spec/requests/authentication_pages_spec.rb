@@ -64,10 +64,6 @@ describe "AuthenticationPages" do
             before { click_button "Confirmar" }
             it { should have_selector('div.alert.alert-error') }
           end
-
-          describe "if user cancel registration" do
-            it { should destroy user }
-          end
           
         end
 

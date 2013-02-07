@@ -1,11 +1,7 @@
 Swin::Application.routes.draw do
   resources :sessions, only: [:destroy]
 
-  resources :users do
-    member do
-      get :confirm
-    end
-  end
+  resources :users
 
   resources :authentications, only: [:create, :destroy, :index]
   

@@ -21,7 +21,7 @@ class UsersController < ApplicationController
 #      @user.name = params[:user][:name]
 #      @user.save!
         sign_in(@user)
-        flash[:error] = 'No ha aceptado las condiciones de registro' unless current_user.approved_policy
+        flash[:notice] = 'No ha aceptado las condiciones de registro' unless current_user.approved_policy
       else
         flash[:error] = @user.errors.full_messages
       end
