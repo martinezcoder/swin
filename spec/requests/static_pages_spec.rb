@@ -28,6 +28,7 @@ describe "StaticPages" do
       click_link "Home"
     end
 
+
   end
 
 

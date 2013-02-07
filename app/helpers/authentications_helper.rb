@@ -18,13 +18,11 @@ module AuthenticationsHelper
     user = User.create(name: omniauth['info']['name'], email: omniauth['info']['email'] ||= nil)
     user.authentications.build(provider: omniauth['provider'], uid: omniauth['uid'])
     user.save!  
-    signin_and_turn_on_authentication("Bienvenido #{current_auth.user.name}")
   end
 
-  def signin_and_turn_on_authentication(msg)
+  def signin_and_turn_on_authentication
     sign_in(current_auth.user)
     turn_on_authentication(false)
-    flash[:success] = msg ||= "Bienvenido #{current_auth.user.name}"
   end
 
   def new_user_authentication_provider

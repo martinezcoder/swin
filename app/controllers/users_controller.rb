@@ -5,18 +5,8 @@ class UsersController < ApplicationController
 #  before_filter :correct_user,    only: [:edit, :update]
 #  before_filter :admin_user,      only: [:index, :destroy]
 
-=begin
-  def create
-    # no hará falta ya que lo crearé desde authentication
-    @user = User.new(params[:user])
-    if @user.save
-      # Handle a successful save.
-      redirect_to @user
-    else
-      redirect_to root_url
-    end
-  end
-=end
+  before_filter :signed_in_user
+  before_filter :correct_user
 
   def show
     @user = User.find(params[:id])
@@ -28,16 +18,19 @@ class UsersController < ApplicationController
 
   def update
     @user = User.find(params[:id])
-    if @user.update_attributes(params[:user])
-      if params[:user][:policy_checked] == '0'
-        flash[:error] = "Acepte las condiciones de uso y política de privacidad." 
-        render 'edit'
-      else
-      # Handle a successful update.
-      end
-    else
-      render 'edit'
+    if !@user.approved_policy
+      @user.approved_policy = params[:user][:approved_policy]
+      @user.save!
+      sign_in(@user)
+      flash[:error] = 'No ha aceptado las condiciones de registro' unless current_user.approved_policy
     end
+    redirect_to root_path
   end
 
+  private
+
+    def correct_user
+      @user = User.find(params[:id])
+      redirect_to(root_path) unless current_user?(@user)
+    end
 end

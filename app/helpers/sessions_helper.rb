@@ -11,6 +11,11 @@ module SessionsHelper
     !current_user.nil?  # this will call to "def current_user" that will search in DB the token == cookies(token)
   end
 
+  def approved?
+    current_user.approved_policy
+  end
+
+
   def current_user=(user)
     @current_user = user
   end
@@ -45,7 +50,7 @@ module SessionsHelper
   def signed_in_user
     unless signed_in?
       store_location
-      redirect_to signin_url, notice: "Por favor, inicie la sesión" 
+      redirect_to root_path, notice: "No ha iniciado la sesión. Por favor, inicie la sesión." 
     end
   end
 

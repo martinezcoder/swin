@@ -22,8 +22,12 @@ describe User do
   it { should respond_to(:email) }
   it { should respond_to(:remember_token) }
   it { should respond_to(:authentications) }
+  it { should respond_to(:approved_policy) }
+  
 
   it { should be_valid }
+
+  it { should_not be_approved_policy }
 
   describe "when name is not present" do
     before { @user.name = " " }
