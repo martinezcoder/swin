@@ -1,0 +1,32 @@
+	<% provide(:title, "Confirmación de registro") %> 
+	<h1>Confirmación de registro</h1>
+
+	<div class="row">
+		<div class="span6 offset3">
+		    <%= form_for(@user) do |f| %>
+
+			  <%= render 'shared/error_messages', object: f.object %>
+
+		      <%= f.label :name, "Nombre" %>
+		      <%= f.text_field :name %>
+
+			  <%= f.label :email %>
+			  <% if !current_user.email.nil? %>
+		      	<%= f.text_field :email, :disabled => 'disabled' %>
+		      <% else %>
+		      	<%= f.text_field :email %>
+			  <% end %>
+
+			  <%= f.label :approved_policy, { class: "checkbox" } do %>
+			  	<%= f.check_box :approved_policy %>
+			  	Al registrarme, acepto las condiciones de uso y la política de protección de datos.
+			  <% end %>
+
+		      <%= f.submit "Confirmar", class: "btn btn-default btn-primary" %>
+
+			  <%= link_to "Cancelar", @user, method: :delete, data: { confirm: "Desea cancelar el registro en SocialWin?" }, class: "btn btn-default btn-default", style: "width: 60px;margin-left:10px;" %>
+
+		    <% end %>
+
+		</div>
+	</div>

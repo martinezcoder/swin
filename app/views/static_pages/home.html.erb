@@ -1,11 +1,8 @@
 <% if signed_in? %>
 	<% if approved? %>
 		DENTRO DE LA SESIÓN Y APROBADO
-	<% else %>
-		<%= render 'shared/approve_policy' %>
 	<% end %>
 <% else %>
-
 
 	<%= render 'welcome' %>
 

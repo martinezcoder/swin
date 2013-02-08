@@ -23,7 +23,7 @@ class AuthenticationsController < ApplicationController
       create_new_user unless authentication_exist? 
       signin_and_turn_on_authentication
     end
-    redirect_back_or root_path
+    redirect_back_or edit_user_path(current_user)
 
   end
 

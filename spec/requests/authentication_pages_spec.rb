@@ -52,16 +52,18 @@ describe "AuthenticationPages" do
 
         describe "user confirms with invalid fields " do
 
+          describe "without checking policy" do
+            before { click_button "Confirmar" }
+            it { should have_selector('div.alert.alert-info') }
+          end
+
+
           describe "with invalid information" do
             before do 
               fill_in "Nombre",    with: "a" * 51
               click_button "Confirmar"
             end
             it { should have_content('error') }
-          end
-
-          describe "without checking policy" do
-            before { click_button "Confirmar" }
             it { should have_selector('div.alert.alert-error') }
           end
           
