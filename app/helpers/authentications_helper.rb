@@ -15,8 +15,14 @@ module AuthenticationsHelper
   end
 
   def create_new_user
-    user = User.create(name: omniauth['info']['name'], email: omniauth['info']['email'] ||= nil)
-    user.authentications.build(provider: omniauth['provider'], uid: omniauth['uid'])
+    user = User.create(name: omniauth['info']['name'], 
+                       email: omniauth['info']['email'] ||= nil
+                       )
+
+    user.authentications.build(provider: omniauth['provider'], 
+                               uid: omniauth['uid'],
+                               token: omniauth['credentials']['token']
+                               )
     user.save!  
   end
 

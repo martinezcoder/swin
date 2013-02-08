@@ -19,11 +19,18 @@ class AuthenticationsController < ApplicationController
       else
         new_user_authentication_provider
       end
+      redirect_back_or user_path(current_user)
     else
-      create_new_user unless authentication_exist? 
-      signin_and_turn_on_authentication
+      if authentication_exist?
+        signin_and_turn_on_authentication
+        redirect_back_or user_path(current_user)
+      else
+        create_new_user
+        signin_and_turn_on_authentication
+        redirect_back_or edit_user_path(current_user)
+      end
+
     end
-    redirect_back_or edit_user_path(current_user)
 
   end
 

@@ -9,6 +9,11 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
+
+    user_fgraph_api  = Koala::Facebook::API.new(@user.authentications.first.token)
+
+    @pages = user_fgraph_api.fql_query("SELECT name from page WHERE page_id in (SELECT page_id from page_admin where uid=me())")
+
   end
   
   def edit
@@ -22,16 +27,19 @@ class UsersController < ApplicationController
         sign_in(@user)
         if current_user.approved_policy
           flash[:info] = 'Bienvenido'
-          render 'show'
+          redirect_to user_path(current_user)
         else
           flash[:info] = 'No ha aceptado las condiciones de registro'
-          render 'edit'
+#          render 'edit'
+redirect_to edit_user_path(current_user)
         end
       else
         render 'edit'
       end
     else
-      render 'show'
+#      render 'show'
+redirect_to user_path(current_user)
+
     end
     
   end
