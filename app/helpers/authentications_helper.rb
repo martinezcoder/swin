@@ -28,18 +28,13 @@ module AuthenticationsHelper
                        email: omniauth['info']['email'] ||= nil
                        )
 
-    user.authentications.build(provider: omniauth['provider'], 
-                               uid: omniauth['uid'],
-                               token: omniauth['credentials']['token']
-                               )
-    user.save!  
+    user.save!
+    sign_in(user)
   end
 
   def create_new_auth
-    newauth = current_user.authentications.new(:provider => omniauth.provider, :uid => omniauth.uid)
+    newauth = current_user.authentications.new(:provider => omniauth.provider, :uid => omniauth.uid, :token => omniauth.credentials.token)
     if newauth.save
-      flash[:info] = "Nuevo proveedor asignado al usuario: #{omniauth.provider}"
-      # with facebook connection we can get the user email
       if omniauth.provider == FACEBOOK and current_user.email.nil?
         current_user.update_attributes(email: omniauth.info.email)
         sign_in current_user

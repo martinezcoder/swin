@@ -11,11 +11,9 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
 
     ftoken = get_token FACEBOOK
-
     user_fgraph_api  = Koala::Facebook::API.new(ftoken)
 
     @pages = user_fgraph_api.fql_query("SELECT name from page WHERE page_id in (SELECT page_id from page_admin where uid=me())")
-
   end
   
   def edit

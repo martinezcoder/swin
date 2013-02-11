@@ -41,6 +41,9 @@ module SessionsHelper
     session[:return_to] = request.url
   end
 
+  def get_auth(provider)
+    current_user.authentications.find_by_provider(provider)
+  end
 
   # Authorization functions 
   

@@ -35,7 +35,8 @@ include AuthenticationsHelper
         redirect_back_or user_path(current_user)
       else
         create_new_user
-        sign_in(current_auth.user)
+        sign_in(current_user)
+        create_new_auth
         turn_on_auth(false)
         redirect_back_or edit_user_path(current_user)
       end
