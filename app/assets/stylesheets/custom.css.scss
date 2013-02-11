@@ -5,6 +5,7 @@
 /* mixins, variables, etc. */
 $grayMediumLight: #eaeaea;
 $azulSocialWin: #76d4e5; 
+$facebookcolor: #3B5998; 
 
 @mixin box_sizing {
   -moz-box-sizing: border-box; 
@@ -96,7 +97,7 @@ p {
 /* footer */
 
 footer {
-  margin-top: 45px;
+  margin-top: 85px;
   padding-top: 5px;
   border-top: 1px solid $grayMediumLight;
   color: $grayLight;
@@ -216,3 +217,41 @@ input {
     color: white;
 
 }
+
+
+/* facebook pages */
+
+ 
+#facepageloop {
+  //float: right;
+  margin: 10px 0 10px 0px;
+  width: 100%;
+  
+  a {
+    display:block;
+    border: 1px solid $grayMediumLight;
+    padding: 10px;
+    text-decoration:none;
+    color: $facebookcolor; 
+    &:hover {
+      border: 1px solid #AAC1D4;
+      background-color: aliceblue;
+    }
+  }
+
+  .logofacebookpage {
+    font-size:14px;
+    color: #36c;
+    margin-bottom: 5px;
+    
+    img {
+      margin-right:20px; 
+    }
+  }
+  
+  h2 {
+    letter-spacing: 0px;
+  }
+  
+}
+ 

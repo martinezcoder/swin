@@ -13,7 +13,7 @@ class UsersController < ApplicationController
     ftoken = get_token FACEBOOK
     user_fgraph_api  = Koala::Facebook::API.new(ftoken)
 
-    @pages = user_fgraph_api.fql_query("SELECT name from page WHERE page_id in (SELECT page_id from page_admin where uid=me())")
+    @pages = user_fgraph_api.fql_query("SELECT name, pic_square, fan_count, talking_about_count from page WHERE page_id in (SELECT page_id from page_admin where uid=me())")
   end
   
   def edit
@@ -26,7 +26,7 @@ class UsersController < ApplicationController
       if @user.update_attributes(params[:user])
         sign_in(@user)
         if current_user.approved_policy
-          flash[:info] = 'Bienvenido'
+          flash[:info] = "Bienvenido #{@user.name}"
           redirect_to user_path(current_user)
         else
           flash[:info] = 'No ha aceptado las condiciones de registro'
@@ -50,18 +50,31 @@ class UsersController < ApplicationController
   private
 
     def correct_user
-      @user = User.find(params[:id])
-      redirect_to(root_path) unless current_user?(@user)
+      begin
+        @user = User.find(params[:id])
+        redirect_to(root_path) unless current_user?(@user)
+      rescue
+        redirect_to(root_path)
+      end
     end
 
     def not_approved_user
-      @user = User.find(params[:id])
-      redirect_to(root_path) unless !@user.approved_policy
+      begin
+        @user = User.find(params[:id])
+        redirect_to(root_path) unless !@user.approved_policy
+      rescue
+        redirect_to(root_path)
+      end
+
     end
 
     def approved_user
-      @user = User.find(params[:id])
-      redirect_to(root_path) unless @user.approved_policy
+      begin
+        @user = User.find(params[:id])
+        redirect_to(root_path) unless @user.approved_policy
+      rescue
+        redirect_to(root_path)
+      end
     end
 
     def get_token provider

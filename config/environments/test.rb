@@ -45,6 +45,9 @@ Swin::Application.configure do
       'info' => {
         'name' => 'FranJMartinez',
         'email' => 'fran.martinez@ss.com'
+        },
+      'credentials' => {
+        'token' => 'Agfkw32mdl2m3dDEkao'
       }
     }
   

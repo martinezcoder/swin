@@ -6,7 +6,7 @@ module AuthenticationsHelper
     @omniauth
   end
 
-  def current_auth #(omniauth)
+  def current_auth
     @current_auth ||= Authentication.find_by_provider_and_uid(omniauth['provider'], omniauth['uid'])
   end
 
@@ -33,10 +33,10 @@ module AuthenticationsHelper
   end
 
   def create_new_auth
-    newauth = current_user.authentications.new(:provider => omniauth.provider, :uid => omniauth.uid, :token => omniauth.credentials.token)
+    newauth = current_user.authentications.new(provider: omniauth['provider'], uid: omniauth['uid'], token: omniauth['credentials']['token'])
     if newauth.save
-      if omniauth.provider == FACEBOOK and current_user.email.nil?
-        current_user.update_attributes(email: omniauth.info.email)
+      if omniauth['provider'] == FACEBOOK and current_user.email.nil?
+        current_user.update_attributes(email: omniauth['info']['email'])
         sign_in current_user
       end
     else
