@@ -19,7 +19,7 @@ module AuthenticationsHelper
   end
 
   def signout_or_merge
-    flash[:error] = "Usuario incorrecto para esta cuenta"
+    flash[:error] = "Usuario incorrecto para esta cuenta. Sesión finalizada."
     sign_out
   end  
   

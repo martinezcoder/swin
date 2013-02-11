@@ -19,15 +19,17 @@ include AuthenticationsHelper
       if auth_exist?
         if same_user?
           turn_on_auth(true)
+          redirect_back_or user_path(current_user)
         else
           # this provider is asigned to other user. Posibility of Merge will be done in next version.
           signout_or_merge
+          redirect_to root_path
         end
       else
         create_new_auth
         turn_on_auth(true)
+        redirect_back_or user_path(current_user)
       end
-      redirect_back_or user_path(current_user)
     else
       if auth_exist?
         sign_in(current_auth.user)
