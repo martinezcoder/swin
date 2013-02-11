@@ -10,10 +10,19 @@ module AuthenticationsHelper
     @current_auth ||= Authentication.find_by_provider_and_uid(omniauth['provider'], omniauth['uid'])
   end
 
-  def authentication_exist? #(omniauth)
-    !current_auth.nil? # this will call to "def current_auth" that will search in DB if the provider exists.
+  def auth_exist?
+    !self.current_auth.nil? # this will call to "def current_auth" that will search in DB if the provider exists.
   end
 
+  def same_user?
+    current_user?(current_auth.user)
+  end
+
+  def signout_or_merge
+    flash[:error] = "Usuario incorrecto para esta cuenta"
+    sign_out
+  end  
+  
   def create_new_user
     user = User.create(name: omniauth['info']['name'], 
                        email: omniauth['info']['email'] ||= nil
@@ -26,40 +35,28 @@ module AuthenticationsHelper
     user.save!  
   end
 
-  def signin_and_turn_on_authentication
-    sign_in(current_auth.user)
-    turn_on_authentication(false)
-  end
-
-  def new_user_authentication_provider
+  def create_new_auth
     newauth = current_user.authentications.new(:provider => omniauth.provider, :uid => omniauth.uid)
-    if newauth.save  
+    if newauth.save
       flash[:info] = "Nuevo proveedor asignado al usuario: #{omniauth.provider}"
-    else  
-      flash[:error] = "Usuario incorrecto para esta cuenta"
-    end
-    # with facebook connection we can get the user email
-    if omniauth.provider == FACEBOOK and current_user.email.nil?
-      current_user.update_attributes(email: omniauth.info.email)
-      flash[:success] = "Usuario actualizado"
-      sign_in current_user
-    end
-  end
-
-  def turn_on_authentication(msg)
-    if current_user?(current_auth.user)
-      # poner provider a ON si no está ya puesto
-      cookies[omniauth['provider']] = "ON"
-      flash[:notice] = "#{omniauth['provider']} ON" unless !msg
+      # with facebook connection we can get the user email
+      if omniauth.provider == FACEBOOK and current_user.email.nil?
+        current_user.update_attributes(email: omniauth.info.email)
+        sign_in current_user
+      end
     else
-      # este provider no está asociado con esta sesión si no con otra...
-      # habría que mirar si se puede hacer un merge de sesiones
-      # por seguridad casi mejor cerrar la sesión en estos casos.
-      flash[:error] = "Usuario incorrecto para esta cuenta"
+      flash[:error] = "Se ha producido un error"
+      sign_out
     end
   end
 
-  def turn_off_authentication(provider)
+  def turn_on_auth(msg)
+    # poner provider a ON si no está ya puesto
+    cookies[omniauth['provider']] = "ON"
+    flash[:notice] = "#{omniauth['provider']} ON" unless !msg
+  end
+
+  def turn_off_auth(provider)
     cookies[provider] = "OFF"    
   end
 

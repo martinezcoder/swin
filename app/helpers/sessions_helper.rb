@@ -15,7 +15,6 @@ module SessionsHelper
     current_user.approved_policy
   end
 
-
   def current_user=(user)
     @current_user = user
   end
@@ -30,8 +29,6 @@ module SessionsHelper
 
   def sign_out
     self.current_user = nil
-    cookies.delete(:facebook)
-    cookies.delete(:twitter)
     cookies.delete(:remember_token)
   end
 

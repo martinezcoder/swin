@@ -10,7 +10,9 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
 
-    user_fgraph_api  = Koala::Facebook::API.new(@user.authentications.first.token)
+    ftoken = get_token FACEBOOK
+
+    user_fgraph_api  = Koala::Facebook::API.new(ftoken)
 
     @pages = user_fgraph_api.fql_query("SELECT name from page WHERE page_id in (SELECT page_id from page_admin where uid=me())")
 
@@ -30,16 +32,13 @@ class UsersController < ApplicationController
           redirect_to user_path(current_user)
         else
           flash[:info] = 'No ha aceptado las condiciones de registro'
-#          render 'edit'
-redirect_to edit_user_path(current_user)
+          redirect_to edit_user_path(current_user)
         end
       else
         render 'edit'
       end
     else
-#      render 'show'
-redirect_to user_path(current_user)
-
+      redirect_to user_path(current_user)
     end
     
   end
@@ -65,6 +64,10 @@ redirect_to user_path(current_user)
     def approved_user
       @user = User.find(params[:id])
       redirect_to(root_path) unless @user.approved_policy
+    end
+
+    def get_token provider
+      current_user.authentications.find_by_provider(provider).token
     end
 
 end

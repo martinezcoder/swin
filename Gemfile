@@ -18,9 +18,11 @@ group :development, :test do
   gem 'spork', '0.9.2'
 end
 
+
 group :development do
   require 'resolv'
   require 'resolv-replace'
+#  gem 'em-resolv-replace', require: false
   gem 'annotate', '2.5.0'
 end
 

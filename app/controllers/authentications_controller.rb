@@ -1,6 +1,8 @@
 # encoding: UTF-8
 
 class AuthenticationsController < ApplicationController
+include AuthenticationsHelper
+
   before_filter :signed_in_user,  only: [:index, :destroy]
   before_filter :correct_user,    only: [:index, :destroy]
 
@@ -14,25 +16,33 @@ class AuthenticationsController < ApplicationController
     @omniauth = request.env["omniauth.auth"]
 
     if signed_in?
-      if authentication_exist?
-        turn_on_authentication(true)
+      if auth_exist?
+        if same_user?
+          turn_on_auth(true)
+        else
+          # this provider is asigned to other user. Posibility of Merge will be done in next version.
+          signout_or_merge
+        end
       else
-        new_user_authentication_provider
+        create_new_auth
+        turn_on_auth(true)
       end
       redirect_back_or user_path(current_user)
     else
-      if authentication_exist?
-        signin_and_turn_on_authentication
+      if auth_exist?
+        sign_in(current_auth.user)
+        turn_on_auth(false)
         redirect_back_or user_path(current_user)
       else
         create_new_user
-        signin_and_turn_on_authentication
+        sign_in(current_auth.user)
+        turn_on_auth(false)
         redirect_back_or edit_user_path(current_user)
       end
-
     end
 
   end
+
 
   private
 
