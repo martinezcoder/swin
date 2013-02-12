@@ -45,7 +45,6 @@ describe "AuthenticationPages" do
               click_link "Cerrar sesión"
             end
             it { should have_link('Facebook') }
-            it { should have_link('Twitter') }
           end
 
         end

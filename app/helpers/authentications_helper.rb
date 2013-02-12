@@ -47,6 +47,10 @@ module AuthenticationsHelper
 
   def turn_on_auth(msg)
     # poner provider a ON si no está ya puesto
+    if !(current_auth.token == omniauth['credentials']['token'])
+      current_auth.token = omniauth['credentials']['token']
+      current_auth.save
+    end
     cookies[omniauth['provider']] = "ON"
     flash[:notice] = "#{omniauth['provider']} ON" unless !msg
   end

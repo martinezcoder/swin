@@ -9,7 +9,7 @@
 		<h2><%= @user.name %>, ¿aún no dispone de una página profesional en Facebook?</h2>
 		
 		<div id="facepageloop" style="text-align: center;">
-		<%= link_to "Cree su página profesional en Facebook", "https://www.facebook.com/pages/create.php" %>
+		<%= link_to "Cree su página profesional en Facebook", "https://www.facebook.com/pages/create.php", :target => "_blank" %>
 		</div>
 		
 		</div>
@@ -33,10 +33,24 @@
 	
 				 Seguidores:
 				<b><%= p["fan_count"] %></b>
-				<br>
+				<br/>
 				 Usuarios activos:
 				<b><%= p["talking_about_count"] %></b>
-				<br>
+				<br/>
+<!--								
+				page_id:
+				<b><%= p["page_id"] %></b>
+				<br/>
+				username:
+				<b><%= p["username"] %></b>
+				<br/>
+				type:
+				<b><%= p["type"] %></b>
+				<br/>
+				page_url:
+				<b><%= p["page_url"] %></b>
+				<br/>
+-->
 			<% end %>
 		</div>
 		<% end %>

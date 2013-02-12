@@ -19,4 +19,13 @@ FactoryGirl.define do
     sequence(:email) { |n| "person_#{n}@example.com"}   
   end
 
+  factory :page do
+    name "SocialWin"
+    page_id "349679691794392"
+    page_url "http://www.facebook.com/pages/SocialWin/349679691794392"
+    pic_square "http://profile.ak.fbcdn.net/hprofile-ak-snc6/276654_349679691794392_1240268105_q.jpg"
+    type "CONSULTING/BUSINESS SERVICES"
+    username "socialwin"
+  end
+
 end
