@@ -30,10 +30,18 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
 
     ftoken = get_token FACEBOOK
-    fgraph  = Koala::Facebook::API.new(ftoken)
-
-    @pages = fgraph.fql_query("SELECT page_id, username, type, page_url, name, pic_square, fan_count, talking_about_count from page WHERE page_id in (SELECT page_id from page_admin where uid=me())")
+    
+    begin
+      fgraph  = Koala::Facebook::API.new(ftoken)
+      @pages = fgraph.fql_query("SELECT page_id, username, type, page_url, name, pic_square, fan_count, talking_about_count from page WHERE page_id in (SELECT page_id from page_admin where uid=me())")
+    rescue
+      flash[:info] = "Facebook no responde. Por favor, inténtelo más tarde."
+      sign_out
+      redirect_to root_path
+    end
+    
     pages_create_or_update(@pages)
+
   end
 
   def destroy
@@ -58,10 +66,15 @@ class UsersController < ApplicationController
     end
 
     def is_your_token
-      omniauth = session[:omniauth]
-      fgraph  = Koala::Facebook::API.new(omniauth.credentials.token)
-      fuid = fgraph.get_object("me")
-      redirect_to(root_path) unless fuid["id"] == omniauth.uid  
+      begin
+        omniauth = session[:omniauth]
+        fgraph  = Koala::Facebook::API.new(omniauth.credentials.token)
+        fuid = fgraph.get_object("me")
+        redirect_to(root_path) unless fuid["id"] == omniauth.uid
+      rescue
+        flash[:info] = "Facebook no parece responder. Por favor, inténtelo más tarde."
+        redirect_to(root_path) 
+      end  
     end
 
 end
