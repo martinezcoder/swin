@@ -23,14 +23,6 @@ module AuthenticationsHelper
     sign_out
   end  
   
-  def create_new_user
-    user = User.create(name: omniauth['info']['name'], 
-                       email: omniauth['info']['email'] ||= nil
-                       )
-
-    user.save!
-    sign_in(user)
-  end
 
   def create_new_auth
     newauth = current_user.authentications.new(provider: omniauth['provider'], uid: omniauth['uid'], token: omniauth['credentials']['token'])

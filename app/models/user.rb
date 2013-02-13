@@ -12,13 +12,14 @@
 #
 
 class User < ActiveRecord::Base
-  attr_accessible :email, :name, :approved_policy
+  attr_accessible :email, :name, :approved_policy, :terms_of_service 
+  validates_acceptance_of :terms_of_service, :on => :create, :accept => '1', :allow_nil => false
+  attr_accessor :terms_of_service
 
   has_many :authentications, dependent: :destroy
 
   before_save { self.email.downcase! if !self.email.nil? }
   before_save :create_remember_token
-#  before_save { self.approved_policy = true }
 
 
   validates :name, presence: true, length: { maximum: 50 }

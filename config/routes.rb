@@ -5,6 +5,8 @@ Swin::Application.routes.draw do
 
   resources :authentications, only: [:create, :destroy, :index]
   
+  match '/confirm', to: 'users#create'
+
   match '/signout', to: 'sessions#destroy', via: :delete
 
   match '/auth/:provider/callback', to: 'authentications#create'

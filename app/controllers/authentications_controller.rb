@@ -11,10 +11,8 @@ include AuthenticationsHelper
   end
 
   def create
-    #raise request.env["omniauth.auth"].to_yaml
-
+    
     @omniauth = request.env["omniauth.auth"]
-
     if signed_in?
       if auth_exist?
         if same_user?
@@ -36,11 +34,8 @@ include AuthenticationsHelper
         turn_on_auth(false)
         redirect_back_or user_path(current_user)
       else
-        create_new_user
-        sign_in(current_user)
-        create_new_auth
-        turn_on_auth(false)
-        redirect_back_or edit_user_path(current_user)
+        @user = User.new(name: omniauth['info']['name'], email: omniauth['info']['email'] ||= nil)
+        session[:omniauth] = @omniauth
       end
     end
 

@@ -11,10 +11,6 @@ module SessionsHelper
     !current_user.nil?  # this will call to "def current_user" that will search in DB the token == cookies(token)
   end
 
-  def approved?
-    current_user.approved_policy
-  end
-
   def current_user=(user)
     @current_user = user
   end
