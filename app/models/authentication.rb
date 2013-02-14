@@ -14,7 +14,6 @@
 #
 
 class Authentication < ActiveRecord::Base
-#  attr_accessible :provider, :uid, :token
 
   belongs_to :user
 

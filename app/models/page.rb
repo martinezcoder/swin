@@ -1,7 +1,5 @@
 class Page < ActiveRecord::Base
 include PagesHelper
-
-  attr_protected  :page_id, :name, :page_url, :pic_square, :page_type, :username
   
   # what pages I consider my competitors
   has_many :page_relationships, foreign_key: "follower_id", dependent: :destroy
