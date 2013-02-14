@@ -2,11 +2,15 @@
 
 class UsersController < ApplicationController
   include PagesHelper
-  include AuthenticationsHelper
 
-  before_filter :signed_in_user, except: [:create]
-  before_filter :correct_user, except: [:create]
+  before_filter :signed_in_user, except: [:new, :create]
+  before_filter :correct_user, except: [:new, :create]
   before_filter :is_your_token, only: [:create]
+
+  def new
+    omniauth = session[:omniauth]
+    @user = User.new(name: omniauth['info']['name'], email: omniauth['info']['email'] ||= nil)
+  end
 
   def create
     @user = User.new(params[:user])
@@ -22,7 +26,7 @@ class UsersController < ApplicationController
       end
     else
       flash[:info] = 'No ha aceptado las condiciones de registro'
-      render "authentications/create"
+      render "new"
     end
   end
 
@@ -52,7 +56,7 @@ class UsersController < ApplicationController
         @user = User.find(params[:id])
         redirect_to(root_path) unless current_user?(@user)
       rescue
-        redirect_to(root_path)
+        redirect_to current_user
       end
     end
 

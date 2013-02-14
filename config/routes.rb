@@ -1,13 +1,11 @@
 Swin::Application.routes.draw do
-  resources :sessions, only: [:destroy]
+  resources :sessions, only: [:new, :destroy]
 
-  resources :users, only: [:create, :show]
-
-  resources :authentications, only: [:create]
+  resources :users, only: [:new, :create, :show]
 
   match '/signout', to: 'sessions#destroy', via: :delete
 
-  match '/auth/:provider/callback', to: 'authentications#create'
+  match '/auth/:provider/callback', to: 'sessions#new'
 
   match '/help',    to: 'static_pages#help'
   match '/about',   to: 'static_pages#about'
