@@ -25,7 +25,10 @@ module AuthenticationsHelper
   
 
   def create_new_auth
-    newauth = current_user.authentications.new(provider: omniauth['provider'], uid: omniauth['uid'], token: omniauth['credentials']['token'])
+    newauth = current_user.authentications.new
+    newauth.provider = omniauth['provider']
+    newauth.uid = omniauth['uid']
+    newauth.token = omniauth['credentials']['token']
     if newauth.save
       if omniauth['provider'] == FACEBOOK and current_user.email.nil?
         current_user.update_attributes(email: omniauth['info']['email'])
