@@ -43,7 +43,6 @@ ActiveRecord::Schema.define(:version => 20130212163108) do
     t.datetime "created_at",                         :null => false
     t.datetime "updated_at",                         :null => false
     t.string   "remember_token"
-    t.boolean  "approved_policy", :default => false
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
