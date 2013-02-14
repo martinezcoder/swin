@@ -6,9 +6,6 @@ include AuthenticationsHelper
   before_filter :signed_in_user,  only: [:index, :destroy]
   before_filter :correct_user,    only: [:index, :destroy]
 
-  def index
-    @connections = current_user.authentications
-  end
 
   def create
     begin

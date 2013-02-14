@@ -10,11 +10,11 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(params[:user])
-    @omniauth = session[:omniauth]
-    session.delete(:omniauth)
     if params[:user]["terms_of_service"] == '1'  
       if @user.save!
         sign_in @user
+        @omniauth = session[:omniauth]
+        session.delete(:omniauth)
         create_new_auth
         turn_on_auth(false)
         flash[:info] = "Bienvenido a SocialWin Analytics!"
@@ -44,11 +44,6 @@ class UsersController < ApplicationController
 
   end
 
-  def destroy
-    User.find(params[:id]).destroy
-    flash[:info] = "Registro cancelado."
-    redirect_to root_path
-  end
 
   private
 

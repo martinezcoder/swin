@@ -1,9 +1,9 @@
 Swin::Application.routes.draw do
   resources :sessions, only: [:destroy]
 
-  resources :users
+  resources :users, only: [:create, :show]
 
-  resources :authentications, only: [:create, :destroy, :index]
+  resources :authentications, only: [:create]
 
   match '/signout', to: 'sessions#destroy', via: :delete
 
