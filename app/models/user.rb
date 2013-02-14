@@ -12,7 +12,7 @@
 #
 
 class User < ActiveRecord::Base
-  attr_accessible :email, :name, :approved_policy, :terms_of_service 
+  attr_accessible :email, :name, :terms_of_service 
   validates_acceptance_of :terms_of_service, :on => :create, :accept => '1', :allow_nil => false
   attr_accessor :terms_of_service
 
