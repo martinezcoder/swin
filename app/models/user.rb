@@ -39,7 +39,7 @@ class User < ActiveRecord::Base
   def set_page!(this_page)
     self.user_page_relationships.find_or_create_by_page_id(this_page.id)
   end
-  
+
   
   private
 
