@@ -4,6 +4,7 @@ module SessionsHelper
 
   def sign_in(user)
     cookies[:remember_token] = user.remember_token
+    session[:provider] = { FACEBOOK => OFF, TWITTER => OFF, YOUTUBE => OFF }
     self.current_user = user
   end
 
@@ -26,6 +27,7 @@ module SessionsHelper
   def sign_out
     self.current_user = nil
     cookies.delete(:remember_token)
+    session.delete(:provider)
   end
 
   def redirect_back_or(default)
@@ -95,15 +97,19 @@ module SessionsHelper
       current_auth.token = omniauth['credentials']['token']
       current_auth.save
     end
-    cookies[omniauth['provider']] = "ON"
+
+    session[:provider][omniauth['provider']] = ON
     flash[:notice] = "#{omniauth['provider']} ON" unless !msg
   end
 
   def turn_off_auth(provider)
-    cookies[provider] = "OFF"    
+    session[:provider][provider] = OFF    
   end
 
 
+  def is_active?(provider)
+    session[:provider][provider] == ON
+  end
 
 
 end

@@ -22,7 +22,7 @@ class UsersController < ApplicationController
         create_new_auth
         turn_on_auth(false)
         flash[:info] = "Bienvenido a SocialWin Analytics!"
-        redirect_to @user # sería lo mismo poner:  render 'show'
+        redirect_to @user
       end
     else
       flash[:info] = 'No ha aceptado las condiciones de registro'
@@ -38,6 +38,7 @@ class UsersController < ApplicationController
     begin
       fgraph  = Koala::Facebook::API.new(ftoken)
       @pages = fgraph.fql_query("SELECT page_id, username, type, page_url, name, pic_square, fan_count, talking_about_count from page WHERE page_id in (SELECT page_id from page_admin where uid=me())")
+
     rescue
       flash[:info] = "Facebook no responde. Por favor, inténtelo más tarde."
       sign_out

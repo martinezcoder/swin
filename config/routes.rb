@@ -1,4 +1,8 @@
 Swin::Application.routes.draw do
+  get "pages/index"
+
+  get "pages/search"
+
   resources :sessions, only: [:new, :destroy]
 
   resources :users, only: [:new, :create, :show]
