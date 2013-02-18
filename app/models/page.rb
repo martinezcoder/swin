@@ -1,5 +1,8 @@
 class Page < ActiveRecord::Base
-include PagesHelper
+  include PagesHelper
+  
+  has_many :user_page_relationships, foreign_key: "page_id"
+  has_many :users, through: :user_page_relationships
   
   # what pages I consider my competitors
   has_many :page_relationships, foreign_key: "follower_id", dependent: :destroy
@@ -26,5 +29,6 @@ include PagesHelper
   def unfollow!(other_page)
     page_relationships.find_by_competitor_id(other_page.id).destroy
   end
+
 
 end

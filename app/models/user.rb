@@ -16,7 +16,13 @@ class User < ActiveRecord::Base
   validates_acceptance_of :terms_of_service, :on => :create, :accept => '1', :allow_nil => false
   attr_accessor :terms_of_service
 
+  # authentications
   has_many :authentications, dependent: :destroy
+
+  # pages
+  has_many :user_page_relationships, foreign_key: "user_id"
+  has_many :pages, through: :user_page_relationships
+
 
   before_save { self.email.downcase! if !self.email.nil? }
   before_save :create_remember_token
@@ -29,6 +35,12 @@ class User < ActiveRecord::Base
                     allow_blank: true, # allow_blank: true, allow_nil: false
                     uniqueness: { case_sensitive: false }
 
+
+  def set_page!(this_page)
+    self.user_page_relationships.find_or_create_by_page_id(this_page.id)
+  end
+  
+  
   private
 
     def create_remember_token

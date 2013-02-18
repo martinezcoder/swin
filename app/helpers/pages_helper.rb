@@ -14,7 +14,8 @@ module PagesHelper
 
   def pages_create_or_update(pagelist)
     pagelist.each do |p|
-      page_create_or_update(p)
+      user_page = page_create_or_update(p)
+      current_user.set_page!(Page.find_by_page_id("#{p["page_id"]}"))
     end
   end
 
