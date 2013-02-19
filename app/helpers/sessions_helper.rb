@@ -111,5 +111,10 @@ module SessionsHelper
     session[:provider][provider] == ON
   end
 
+  def get_token provider
+    current_user.authentications.find_by_provider(provider).token
+  end
+
+
 
 end

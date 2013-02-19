@@ -1,14 +1,48 @@
 <% provide(:title, "Elija una página") %>
 
-<div class="row">
+<% if @pages.count == 0 %>
 
-  <div class="span8">
-    <% if @user.microposts.any? %>
-      <h3>Microposts (<%= @user.microposts.count %>)</h3>
-      <ol class="microposts">
-        <%= render @microposts %>
-      </ol>
-      <%= will_paginate @microposts %>
-    <% end %>
-  </div>
-</div>
+	<div class="row facepagelist">
+		<div class="span6 offset3">
+
+		<h2><%= @user.name %>, ¿aún no dispone de una página profesional en Facebook?</h2>
+		
+		<div id="facepageloop" style="text-align: center;">
+		<%= link_to "Cree su página profesional en Facebook", "https://www.facebook.com/pages/create.php", :target => "_blank" %>
+		</div>
+		
+		</div>
+	</div>	
+
+
+<% else %>
+	<h1>Estas son sus páginas de Facebook</h1>
+	
+	<h2>Elija una de sus páginas para monitorizar y comparar</h2>
+
+
+	<div class="row">	
+		<% @pages.each do |p| %>
+		<div id="facepageloop">
+			<%=  link_to root_path do %>
+				<div class="logofacebookpage">
+					<img title="Active Company" src="<%= p.pic_square %>">
+					<%= p.name %>
+				</div>
+	
+				 Seguidores:
+				<b><%= 'xxxxx' %></b>
+				<br/>
+				 Usuarios activos:
+				<b><%= 'xxxxx' %></b>
+				<br/>
+
+			<% end %>
+		</div>
+		<% end %>
+
+	</div>
+
+
+<% end %>
+

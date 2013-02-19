@@ -40,7 +40,7 @@ class User < ActiveRecord::Base
     self.user_page_relationships.find_or_create_by_page_id(this_page.id)
   end
 
-  
+
   private
 
     def create_remember_token
