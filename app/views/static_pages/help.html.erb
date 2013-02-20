@@ -7,43 +7,6 @@
 
 
 
-<%= form_tag("/help", :method => "get") do %>
-  <%= label_tag(:q, "Search for:") %>
-  <%= text_field_tag(:q) %>
-  <%= submit_tag("Search") %>
-<% end %>
-
-
-<% if @listapages %>
-	<div class="row">	
-		<% @listapages.each do |p| %>
-		<div id="facepageloop">
-			<%=  link_to root_path do %>
-				<div class="logofacebookpage">
-					<img title="Active Company" src="<%= p["pic_square"] %>">
-					<%= p["name"] %>
-				</div>
-	
-				 Seguidores:
-				<b><%= p["fan_count"] %></b>
-				<br/>
-				 Usuarios activos:
-				<b><%= p["talking_about_count"] %></b>
-				<br/>
-				 Últimas visitas:
-				<b><%= p["were_here_count"] %></b>
-				<br/>
-
-				
-
-			<% end %>
-		</div>
-		<% end %>
-	</div>
-<% end %>
-
-
-
 
 
 

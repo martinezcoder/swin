@@ -21,6 +21,7 @@ class UsersController < ApplicationController
         create_new_auth
         turn_on_auth(false)
         flash[:info] = "Bienvenido a SocialWin Analytics!"
+        pages_update_from_facebook
         redirect_to user_pages_path(@user)
       end
     else

@@ -92,12 +92,13 @@ module SessionsHelper
   end
 
   def turn_on_auth(msg)
-    # poner provider a ON si no está ya puesto
+    # actualizamos token si éste ha cambiado
     if !(current_auth.token == omniauth['credentials']['token'])
       current_auth.token = omniauth['credentials']['token']
       current_auth.save
     end
 
+    # poner provider a ON si no está ya puesto
     session[:provider][omniauth['provider']] = ON
     flash[:notice] = "#{omniauth['provider']} ON" unless !msg
   end

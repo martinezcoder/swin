@@ -1,0 +1,5 @@
+<%= form_tag(user_pages_path(current_user), :method => "get") do %>
+  <%= text_field_tag(:update, 'yes', type: "hidden") %>
+  <%= submit_tag("Actualiza la lista", :class => "btn btn-default" ) %>
+<% end %>
+

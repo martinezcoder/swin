@@ -1,5 +1,6 @@
 <% provide(:title, "Elija una página") %>
 
+<%= @act %>
 <% if @pages.count == 0 %>
 
 	<div class="row facepagelist">
@@ -10,18 +11,23 @@
 		<div id="facepageloop" style="text-align: center;">
 		<%= link_to "Cree su página profesional en Facebook", "https://www.facebook.com/pages/create.php", :target => "_blank" %>
 		</div>
-		
+
+		<%= render 'update' %>
+			
 		</div>
 	</div>	
 
 
 <% else %>
+
 	<h1>Estas son sus páginas de Facebook</h1>
 	
 	<h2>Elija una de sus páginas para monitorizar y comparar</h2>
 
-
 	<div class="row">	
+	<%= render 'update' %>
+
+
 		<% @pages.each do |p| %>
 		<div id="facepageloop">
 			<%=  link_to root_path do %>
