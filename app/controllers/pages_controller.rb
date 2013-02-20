@@ -8,34 +8,16 @@ class PagesController < ApplicationController
     if params[:update] == 'yes'
       pages_update_from_facebook
     end
-    
     @user = User.find(params[:user_id])
     @pages = @user.pages
   end
 
   def search
-
     @listapages = nil
-    if params[:search]
-
-      ftoken = get_token FACEBOOK
-
-      fgraph  = Koala::Facebook::API.new(ftoken)
-      search = fgraph.search("#{params[:search]}", {type: "page"})
-  
-      page_ids = []
-      search.each do |s|
-        page_ids = page_ids + [s["id"]]       
-      end 
-  
-      str = page_ids.join(",")   
-  
-      query = fb_page_list_query(str)
-
-      fgraph  = Koala::Facebook::API.new(ftoken)
-      @listapages = fgraph.fql_query(query)      
+    if params[:search]      
+      pages_ids_list = fb_get_search_pages_list(params[:search])      
+      @listapages = fb_get_pages_info(pages_ids_list)
     end
-
   end
 
 

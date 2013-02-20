@@ -26,7 +26,7 @@ module PagesHelper
   def pages_update_from_facebook
     
     begin
-      fbpages = fb_my_admin_pages_info
+      fbpages = fb_get_my_admin_pages_info
     rescue
       flash[:info] = "Facebook no responde. Por favor, inténtelo más tarde."
       sign_out
