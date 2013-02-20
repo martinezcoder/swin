@@ -6,7 +6,11 @@ Swin::Application.routes.draw do
   resources :sessions, only: [:new, :destroy]
 
   resources :users, only: [:new, :create, :show] do
-    resources :pages, only: [:index, :search]
+    resources :pages, only: [:index, :search] do
+      member do
+        get :activate, :competitors
+      end
+    end
   end
 
   match '/signout', to: 'sessions#destroy', via: :delete

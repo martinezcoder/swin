@@ -67,6 +67,10 @@ namespace :db do
       newpage = Page.new
       newpage.page_id = page_id
       newpage.name = name
+      newpage.username = @pages.first["username"]
+      newpage.page_type = @pages.first["type"]
+      newpage.page_url = @pages.first["page_url"]
+      newpage.pic_square = @pages.first["pic_square"]
       newpage.save!
     end
   end

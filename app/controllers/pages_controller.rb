@@ -20,6 +20,17 @@ class PagesController < ApplicationController
     end
   end
 
+  def activate
+    activate_page(params[:id])
+    redirect_to user_pages_path(current_user)
+  end
+  
+  def competitors
+    @title = "Competidores"
+    @p = Page.find(params[:id])
+    @competitors = @p.competitors
+    render 'show_competitors'
+  end  
 
   private
 

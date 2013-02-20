@@ -19,42 +19,16 @@
 
 <% else %>
 
-	<h1>Estas son sus páginas de Facebook</h1>
+	<h1>Estas son tus páginas de Facebook</h1>
 	
-	<h2>Elija una de sus páginas para monitorizar y comparar</h2>
+	<h2>Elige una de tus páginas para monitorizar y comparar</h2>
 	
 
 	<div class="row">
 		<%= render 'update' %>
 
-
 		<ul class="fb_pages">
-		  <% @pages.each do |p| %>
-		    <li>
-		    	<%= image_tag p.pic_square, alt: p.name, class: "imgpage" %>
-				<strong><%= p.name %></strong>
-				<small><%= link_to "Ver en Facebook", p.page_url, target: "_blank" %></small>
-				<div class="fb_stats">
-				  <div class="fb_stat">
-				  	Fans de tu página:
-				    <strong id="fb_fans" class="stat">
-				      <%= 'xxxxx' %>
-				    </strong>
-				  </div>
-				  <div class="fb_stat">
-				  	Usuarios activos:
-				    <strong id="fb_talking_about" class="stat">
-				      <%= 'xxxxx' %>
-				    </strong>
-				  </div>
-				  <div class="fb_stat">
-				  	
-				  	<%= link_to "Comparar", p.page_url, class: "btn btn-primary", target: "_blank" %>
-				  </div>
-				</div>
-
-		    </li>
-		  <% end %>
+<%= render @pages %> 
 		</ul>
 	</div>
 	

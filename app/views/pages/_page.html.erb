@@ -1,0 +1,35 @@
+		    <li>
+		    	<%= image_tag page.pic_square, alt: page.name, class: "imgpage" %>
+				<strong><%= page.name %></strong>
+				<small><%= link_to "Ver en Facebook", page.page_url, target: "_blank" %></small>
+				<div class="fb_stats">
+				  <div class="fb_stat">
+				  	Fans:
+				    <strong id="fb_fans" class="stat">
+				      <%= 'xxxxx' %>
+				    </strong>
+				  </div>
+				  <div class="fb_stat">
+				  	Usuarios activos:
+				    <strong id="fb_talking_about" class="stat">
+				      <%= 'xxxxx' %>
+				    </strong>
+				  </div>
+				  <% if @user.pages.find_by_id(page) %>
+					  <div class="fb_stat">
+					  	<% if page.id.to_s == ss_active_page.to_s %>
+					  		<div class="btn btn-success">
+					  			<i class="icon-ok icon-white"></i> Activada
+					  		</div> 
+					  	<% else %>
+					  		<%= link_to activate_user_page_path(@user, page), class: "btn btn-primary"  do %>
+					  			<i class=" icon-plus icon-white"></i> Activar
+					  		<% end %>
+	
+					  	<% end %>
+					  </div>
+				 <% end %>
+
+				</div>
+
+		    </li>

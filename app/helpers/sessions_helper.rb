@@ -4,7 +4,7 @@ module SessionsHelper
 
   def sign_in(user)
     cookies[:remember_token] = user.remember_token
-    session[:provider] = { FACEBOOK => OFF, TWITTER => OFF, YOUTUBE => OFF }
+    session[:provider] = { FACEBOOK => { status: OFF, page: "0" }, TWITTER => { status: OFF }, YOUTUBE  => { status: OFF } }
     self.current_user = user
   end
 
@@ -99,23 +99,29 @@ module SessionsHelper
     end
 
     # poner provider a ON si no está ya puesto
-    session[:provider][omniauth['provider']] = ON
+    session[:provider][omniauth['provider']][:status] = ON
     flash[:notice] = "#{omniauth['provider']} ON" unless !msg
   end
 
   def turn_off_auth(provider)
-    session[:provider][provider] = OFF    
+    session[:provider][provider][:status] = OFF    
   end
 
 
   def is_active?(provider)
-    session[:provider][provider] == ON
+    session[:provider][provider][:status] == ON
   end
 
   def get_token provider
     current_user.authentications.find_by_provider(provider).token
   end
 
+  def activate_page(page_id)
+    session[:provider][FACEBOOK][:page] = page_id
+  end
 
+  def ss_active_page
+    session[:provider][FACEBOOK][:page]    
+  end
 
 end
