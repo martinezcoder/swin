@@ -254,4 +254,50 @@ input {
   }
   
 }
- 
+
+/* pages index */
+
+.fb_pages {
+  list-style: none;
+  margin: 0;
+  color: $facebookcolor; 
+
+  li {
+    overflow: auto;
+
+    padding: 10px 10px;
+    border-top: 1px solid $grayLighter;
+    &:last-child {
+      border-bottom: 1px solid $grayLighter;
+    }
+    &:hover {
+      border: 1px solid #AAC1D4;
+      background-color: aliceblue;
+    }
+  }
+}
+
+
+.fb_stats {
+  overflow: auto;
+
+  .fb_stat {
+    float: left;
+    padding: 0 10px;
+    border-left: 1px solid $grayLighter;
+    color: gray;
+    &:first-child {
+      padding-left: 0;
+      border: 0;
+    }
+  }
+
+  strong {
+    display: block;
+  }
+}
+
+.imgpage {
+  float: left;
+  margin-right: 10px;
+}
