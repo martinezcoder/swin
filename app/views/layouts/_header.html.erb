@@ -1,7 +1,9 @@
 	<header class="navbar navbar-fixed-top">
 		<div class="navbar-inner">
 			<div class="container">
-				<%= link_to "SocialWin Analytics", root_path, id: "logo" %>
+				<%= link_to root_path, id: "logo" do %>
+					SocialWin Analytics <small><em>βeta</em></small> 
+				<% end %>
 				<nav>
 					<ul class="nav pull-right">
 
@@ -23,7 +25,7 @@
 
 									<li><%= link_to user_path(current_user) do %><i class="icon-user"></i> Perfil<% end %></li>
 
-									<li><%= link_to '#' do %><i class="icon-wrench"></i> Ajustes<% end %></li>
+									<li><%= link_to user_pages_path(current_user) do %><i class="icon-wrench"></i> Ajustes de páginas<% end %></li>
 
 									<li class="divider"></li>
 									<li>

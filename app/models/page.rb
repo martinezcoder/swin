@@ -1,6 +1,8 @@
 class Page < ActiveRecord::Base
   include PagesHelper
   
+  attr_accessor :fan_count, :talking_about_count
+  
   has_many :user_page_relationships, foreign_key: "page_id"
   has_many :users, through: :user_page_relationships
   

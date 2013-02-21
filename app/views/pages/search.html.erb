@@ -1,36 +1,39 @@
-<% provide(:title, 'Búsqueda de páginas') %>
+<% provide(:title, 'Buscar de páginas') %>
 
-<h1>Búsqueda de competidores</h1>
+<div class="row">
+  <aside class="span4">
+    <section>
+		<h2>Página activa</h2>
+		<%= render @page, :origin => nil  %>
+    </section>
 
+    <section>    
+    	<%= render 'change_page_link' %>
+    </section>
+    
+    <section>
+		<%= render 'competitors_mini_photos' %>
+    </section>
+  </aside>
 
+  <div class="span8">
+    <h3><%= "Buscar competidores" %></h3>
 
-<%= form_tag(pages_search_path, :method => "get") do %>
-  <%= label_tag(:search, "Search for:") %>
-  <%= text_field_tag(:search) %>
-  <%= submit_tag("Buscar") %>
-<% end %>
+		<%= render 'search_form' %>		
+		
+		<% if @pageslist %>
+			<ul class="fb_pages">
 
+				<% @pageslist.each do |p| %>
+					<li>
+						<%= render p, :origin => 'search' %>
+					</li>
+				<% end %>
 
-<% if @listapages %>
-	<div class="row">	
-		<% @listapages.each do |p| %>
-		<div id="facepageloop">
-			<%=  link_to root_path do %>
-				<div class="logofacebookpage">
-					<img title="Active Company" src="<%= p["pic_square"] %>">
-					<%= p["name"] %>
-				</div>
-	
-				 Seguidores:
-				<b><%= p["fan_count"] %></b>
-				<br/>
-				 Usuarios activos:
-				<b><%= p["talking_about_count"] %></b>
-				<br/>
-				
-
-			<% end %>
-		</div>
+			</ul>
 		<% end %>
-	</div>
-<% end %>
+
+  </div>
+</div>
+
+

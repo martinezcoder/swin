@@ -18,13 +18,13 @@ class SessionsController < ApplicationController
         else
           create_new_auth
           turn_on_auth(true)
-          redirect_back_or user_pages_path(current_user)
+          redirect_back_or root_path
         end
       else
         if auth_exist?
           sign_in(current_auth.user)
           turn_on_auth(false)
-          redirect_back_or user_pages_path(current_user)
+          redirect_back_or root_path
         else
           session[:omniauth] = @omniauth
           redirect_to new_user_path

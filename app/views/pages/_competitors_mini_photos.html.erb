@@ -1,0 +1,7 @@
+      <% if @competitors.any? %>
+        <div class="user_avatars">
+          <% @competitors.each do |comp| %>
+          	<%= image_tag comp.pic_square, alt: comp.name, class: "imgpage", size: 30 %>
+          <% end %>
+        </div>
+      <% end %>

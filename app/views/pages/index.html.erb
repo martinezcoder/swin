@@ -2,19 +2,7 @@
 
 <% if @pages.count == 0 %>
 
-	<div class="row facepagelist">
-		<div class="span6 offset3">
-
-		<h2><%= @user.name %>, ¿aún no dispone de una página profesional en Facebook?</h2>
-		
-		<div id="facepageloop" style="text-align: center;">
-		<%= link_to "Cree su página profesional en Facebook", "https://www.facebook.com/pages/create.php", :target => "_blank" %>
-		</div>
-
-		<%= render 'update' %>
-			
-		</div>
-	</div>	
+	<%= render 'index_no_pages' %>
 
 
 <% else %>
@@ -24,11 +12,29 @@
 	<h2>Elige una de tus páginas para monitorizar y comparar</h2>
 	
 
-	<div class="row">
-		<%= render 'update' %>
+	<div class="row"> 	
 
+		<div class="span7">
+			<%= render 'index_update_list' %>
+		</div>
+		<div class="span3 offset2">
+			<%= link_to competitors_user_page_path(@user, ss_active_page), class: "btn btn-default"  do %>
+				<i class=" icon-wrench"></i> Administrar competidores
+			<% end %>
+		</div>
+	</div>
+	
+	<div class="row"> 	
 		<ul class="fb_pages">
-<%= render @pages %> 
+			<% @pages.each do |page| %>
+			
+				<li>
+					<%= render page, :origin => 'index' %>
+
+				 </li>
+			<% end %>
+
+
 		</ul>
 	</div>
 	
