@@ -41,7 +41,9 @@ class PagesController < ApplicationController
   end
 
   def activate
-    activate_page(params[:id])
+    if current_user.pages.find_by_id(params[:id])
+      activate_page(params[:id])
+    end
     redirect_to user_pages_path(current_user)
   end
   

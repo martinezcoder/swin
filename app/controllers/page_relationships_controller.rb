@@ -3,8 +3,7 @@ class PageRelationshipsController < ApplicationController
 
   before_filter :signed_in_user
 
-  def create
-    
+  def create    
     mypage = current_user.pages.find(ss_active_page)
 
     fb_page = fb_get_pages_info(params[:page_id])
