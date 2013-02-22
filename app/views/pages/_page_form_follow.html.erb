@@ -1,0 +1,10 @@
+
+<%= form_tag(page_relationships_path, :method => "post") do %>
+
+	<%= text_field_tag :page_id,    page.page_id,    type: "hidden"  %>
+
+	<%= button_tag(type: "submit", class: "btn btn-default") do %>
+		<strong>Empezar a Seguir <i class=" icon-plus icon-default"></i></strong> 
+	<% end %>
+
+<% end %>

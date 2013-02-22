@@ -12,6 +12,7 @@ module PagesHelper
         newpage.page_url = p["page_url"]
         newpage.pic_square = p["pic_square"]
         newpage.save!
+        newpage
   end
 
 

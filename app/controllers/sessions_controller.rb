@@ -9,7 +9,7 @@ class SessionsController < ApplicationController
         if auth_exist?
           if same_user?
             turn_on_auth(true)
-            redirect_back_or user_pages_path(current_user)
+            redirect_back_or root_path
           else
             # this provider is asigned to other user. Posibility of Merge will be done in next version.
             signout_or_merge
@@ -18,7 +18,7 @@ class SessionsController < ApplicationController
         else
           create_new_auth
           turn_on_auth(true)
-          redirect_back_or root_path
+          redirect_back_or user_pages_path(current_user)
         end
       else
         if auth_exist?
@@ -26,8 +26,17 @@ class SessionsController < ApplicationController
           turn_on_auth(false)
           redirect_back_or root_path
         else
-          session[:omniauth] = @omniauth
-          redirect_to new_user_path
+          @user = User.find_by_email(omniauth['info']['email']) 
+          if @user.nil?
+            session[:omniauth] = @omniauth
+            redirect_to new_user_path
+          else
+            sign_in(@user)           
+            create_new_auth
+            turn_on_auth(false)
+            redirect_back_or user_pages_path(current_user)
+          end
+          
         end
       end
     rescue

@@ -33,6 +33,5 @@ module FacebookHelper
 
       fb_get_search_pages_list = page_ids.join(",")   
   end
-
   
 end

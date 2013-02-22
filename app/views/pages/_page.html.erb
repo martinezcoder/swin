@@ -4,17 +4,26 @@
 
 				<div class="fb_stats">
 
+
 				  <div class="fb_stat">
 				  	Fans:
 				    <strong id="fb_fans" class="stat">
-				      <%= 'xxxxx' %>
+				    	<% if origin == 'search' %>
+				    		<%= page.fan_count %>
+				    	<% else %>
+				    		<%= 'xxx' %>
+				    	<% end %>
 				    </strong>
 				  </div>
 
 				  <div class="fb_stat">
 				  	Usuarios activos:
 				    <strong id="fb_talking_about" class="stat">
-				      <%= 'xxxxx' %>
+				    	<% if origin == 'search' %>
+							<%= page.talking_about_count %>
+				    	<% else %>
+				    		<%= 'xxx' %>
+				    	<% end %>
 				    </strong>
 				  </div>
 
@@ -36,9 +45,7 @@
 
 					<% when 'search' %>
 						<div class="fb_stat">
-					  		<%= link_to '#', class: "btn btn-default"  do %>
-					  			<strong>Empezar a Seguir <i class=" icon-plus icon-default"></i></strong> 
-					  		<% end %>
+							<%= render 'page_form_follow', :page => page %>
 					  	</div>
 
 					<% when 'competitors' %>

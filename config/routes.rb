@@ -13,6 +13,9 @@ Swin::Application.routes.draw do
     end
   end
 
+  resources :page_relationships, only: [:create, :destroy]
+
+
   match '/signout', to: 'sessions#destroy', via: :delete
 
   match '/auth/:provider/callback', to: 'sessions#new'

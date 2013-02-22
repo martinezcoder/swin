@@ -21,16 +21,20 @@ class PagesController < ApplicationController
     @page = @user.pages.find_by_id(ss_active_page)
     @competitors = @page.competitors
     fb_list = nil
-    if params[:search]      
+    if params.has_key?(:search) && params[:search] != ""
       pages_ids_list = fb_get_search_pages_list(params[:search])      
       fb_list = fb_get_pages_info(pages_ids_list)
       @pageslist = []
       fb_list.each do |p|
         page = Page.new
-        page.pic_square = p["pic_square"]
-        page.name = p["name"]
-        page.fan_count = p["fan_count"]
-        page.talking_about_count = p["talking_about_count"]    
+        page.page_id             = p["page_id"]
+        page.pic_square          = p["pic_square"]
+        page.name                = p["name"]
+        page.page_url            = p["page_url"]
+        page.page_type           = p["type"]
+        page.username            = p["username"]
+        page.fan_count           = p["fan_count"]
+        page.talking_about_count = p["talking_about_count"]
         @pageslist = @pageslist + [page]
       end
     end

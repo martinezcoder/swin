@@ -24,7 +24,7 @@ class Page < ActiveRecord::Base
 #    page_list = []
 #    page_list[0] = other_page.instance_values["attributes"]    
 #    pages_create_or_update(page_list)
-    page_create_or_update(other_page)
+
     page_relationships.create!(competitor_id: other_page.id)
   end
 
