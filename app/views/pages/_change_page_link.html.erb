@@ -1,1 +1,9 @@
-<small><%= link_to "Cambiar página", user_pages_path(current_user) %></small>
+<div class="fb_stats">
+	<div class="fb_stat">
+		<small><%= link_to "Mis páginas", user_pages_path(current_user) %></small>
+	</div>
+
+	<div class="fb_stat">
+		<small><%= link_to "Mis competidores", competitors_user_page_path(current_user, ss_active_page) %></small>
+	</div>
+</div>

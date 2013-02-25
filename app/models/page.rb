@@ -16,16 +16,19 @@ class Page < ActiveRecord::Base
 
   validates :page_id, presence: true
 
-  def following?(other_page)
-    page_relationships.find_by_competitor_id(other_page.id)
+  def following?(other_page_id)
+    self.competitors.find_by_page_id(other_page_id.to_s)
   end
 
   def follow!(other_page)
+    begin
 #    page_list = []
 #    page_list[0] = other_page.instance_values["attributes"]    
 #    pages_create_or_update(page_list)
-
-    page_relationships.create!(competitor_id: other_page.id)
+      page_relationships.create!(competitor_id: other_page.id)
+    rescue
+      nil
+    end
   end
 
   def unfollow!(other_page)

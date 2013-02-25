@@ -5,7 +5,6 @@ class PagesController < ApplicationController
   before_filter :correct_user, except: [:search]
   before_filter :correct_page, only: [:competitors]
 
-
   def index
     if params[:update] == 'yes'
       pages_update_from_facebook
@@ -13,7 +12,14 @@ class PagesController < ApplicationController
     @user = User.find(params[:user_id])
     @pages = @user.pages
 
-    redirect_to activate_user_page_path(@user, @user.pages.first) if ((@pages.count > 0) && (ss_active_page.to_s == "0"))
+    if (@pages.count > 0) 
+      if (ss_active_page.to_s == "0")
+        redirect_to activate_user_page_path(@user, @user.pages.first) 
+      else
+        @page = @user.pages.find_by_id(ss_active_page)
+        @competitors = @page.competitors
+      end
+    end
   end
 
   def search
@@ -46,16 +52,16 @@ class PagesController < ApplicationController
     end
     redirect_to user_pages_path(current_user)
   end
-  
+
   def competitors
     @title = "Competidores"
-    begin
+#    begin
       @page = Page.find(params[:id])
       @competitors = @page.competitors
       render 'show_competitors'
-    rescue
-      redirect_to user_pages_path(current_user)
-    end
+#    rescue
+#      redirect_to user_pages_path(current_user)
+#    end
   end  
 
   private
@@ -78,5 +84,5 @@ class PagesController < ApplicationController
         redirect_to user_pages_path(current_user) 
       end
     end
-    
+
 end

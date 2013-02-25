@@ -18,12 +18,16 @@ class PageRelationshipsController < ApplicationController
   end
 
   def destroy
-#    @user = Relationship.find(params[:id]).followed
-#    current_user.unfollow!(@user)
-#    respond_to do |format|
-#      format.html { redirect_to @user }
-#      format.js
-#    end
+    mypage = current_user.pages.find(ss_active_page)
+    competitor = mypage.competitors.find_by_id(params[:id])
+
+    mypage.unfollow!(competitor)
+
+    respond_to do |format|
+      format.html { redirect_to competitors_user_page_path(current_user, mypage) }
+      format.js
+    end
+
   end
 
 end

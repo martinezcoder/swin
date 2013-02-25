@@ -4,39 +4,59 @@
 
 	<%= render 'index_no_pages' %>
 
-
 <% else %>
 
-	<h1>Estas son tus páginas de Facebook</h1>
-	
-	<h2>Elige una de tus páginas para monitorizar y comparar</h2>
-	
 
-	<div class="row"> 	
-
-		<div class="span7">
-			<%= render 'index_update_list' %>
+	<div class="row">
+	  <aside class="span4">	
+	    <section>
+			<h2>Página activa</h2>
+			<%= render @page, :origin => nil  %>
+	    </section>
+	
+	    <section>    
+	    	<%= render 'change_page_link' %>
+	    </section>
+	    
+	    <section>
+			<%= render 'competitors_mini_photos' %>
+	    </section>
+	  </aside>
+	
+	  <div class="span8">
+		<h1>Estas son tus páginas de Facebook</h1>
+		
+		<h2>Elige una de tus páginas para monitorizar y comparar</h2>
+		
+		<div class="row"> 	
+			<ul class="fb_pages">
+				<% @pages.each do |page| %>
+				
+					<li>
+						<%= render page, :origin => 'index' %>
+	
+					 </li>
+				<% end %>
+		
+			</ul>
 		</div>
-		<div class="span3 offset2">
-			<%= link_to competitors_user_page_path(@user, ss_active_page), class: "btn btn-default"  do %>
-				<i class=" icon-wrench"></i> Administrar competidores
-			<% end %>
-		</div>
-	</div>
+
+
+		<div class="row" style="margin-top: 10px;"> 	
 	
-	<div class="row"> 	
-		<ul class="fb_pages">
-			<% @pages.each do |page| %>
-			
-				<li>
-					<%= render page, :origin => 'index' %>
+			<div class="span3">
+				<%= render 'index_update_list' %>
+			</div>
+			<div class="span3 offset2">
+				<%= link_to competitors_user_page_path(@user, ss_active_page), class: "btn btn-small btn-default"  do %>
+					<i class=" icon-wrench"></i> Administrar competidores
+				<% end %>
+			</div>
+		</div>
 
-				 </li>
-			<% end %>
 
-
-		</ul>
 	</div>
+  </div>
 	
 <% end %>
 

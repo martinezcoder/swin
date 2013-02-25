@@ -1,5 +1,9 @@
 		<%= form_tag(pages_search_path, :method => "get") do %>
 
-		  <%= text_field_tag(:search) %>
-		  <%= submit_tag("Buscar") %>
+		  <%= text_field_tag(:search, params[:search], autofocus: true) %>
+
+		  <%= button_tag(type: "submit", class: "btn btn-danger") do %>
+				<strong>Buscar <i class=" icon-search icon-white"></i></strong> 
+		  <% end %>
+		
 		<% end %>

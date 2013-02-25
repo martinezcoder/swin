@@ -50,9 +50,7 @@
 
 					<% when 'competitors' %>
 						<div class="fb_stat">
-					  		<%= link_to 'page_relationship_destroy'  do %>
-					  			<small>Dejar de seguir</small> 
-					  		<% end %>
+							<%= render 'page_form_unfollow', :page => page %>
 					  	</div>
 					
 					<% when nil %>
