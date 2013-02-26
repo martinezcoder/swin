@@ -1,0 +1,60 @@
+        <!--Load the AJAX API-->
+        <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+        <script type="text/javascript">
+
+          // Load the Visualization API and the piechart package.
+          google.load('visualization', '1.0', {'packages':['corechart','table']});
+
+          // Set a callback to run when the Google Visualization API is loaded.
+          google.setOnLoadCallback(drawChart);
+
+          // Callback that creates and populates a data table,
+          // instantiates the pie chart, passes in the data and
+          // draws it.
+          function drawChart() {
+
+			var options = {
+			  'title':'Análisis de competidores',
+			};
+
+		   // Some raw data (not necessarily accurate)
+		    var beforeData = [];
+		    var afterData =  [['Competidores', 'Likes'],
+		                     ['SEAT', 64169],
+		                     ['FIAT', 11792],
+		                     ['TOYOTA', 28018],
+		                     ['PEUGEOT', 84795],
+		                     ['CITROEN', 76615]];
+
+		    // Create and populate the data tables.
+		    var data = [];
+		    data[0] = google.visualization.arrayToDataTable(beforeData);
+		    data[1] = google.visualization.arrayToDataTable(afterData);
+
+
+	    	var current = 0;
+	    	// Create and draw the visualization.
+	    	var chart = new google.visualization.PieChart(document.getElementById('graph_div'));
+			var table = new google.visualization.Table(document.getElementById('table'));
+  
+			google.visualization.events.addListener(table, 'select', function() {
+				chart.setSelection(table.getSelection());
+			});
+			
+			google.visualization.events.addListener(chart, 'select', function() {
+				table.setSelection(chart.getSelection());
+			});
+
+
+			function execDraw() {
+			
+			      chart.draw(data[current], options);
+			      table.draw(data[1], null);
+			}
+			execDraw();
+			
+			current = 1 - current;
+			execDraw();
+
+		}
+        </script>

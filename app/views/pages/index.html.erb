@@ -6,9 +6,8 @@
 
 <% else %>
 
-
 	<div class="row">
-	  <aside class="span4">	
+	  <aside class="span3">	
 	    <section>
 			<h2>Página activa</h2>
 			<%= render @page, :origin => nil  %>
@@ -28,19 +27,16 @@
 		
 		<h2>Elige una de tus páginas para monitorizar y comparar</h2>
 		
-		<div class="row"> 	
-			<ul class="fb_pages">
-				<% @pages.each do |page| %>
-				
-					<li>
-						<%= render page, :origin => 'index' %>
-	
-					 </li>
-				<% end %>
-		
-			</ul>
-		</div>
+		<ul class="fb_pages">
+			<% @pages.each do |page| %>
+			
+				<li>
+					<%= render page, :origin => 'index' %>
 
+				 </li>
+			<% end %>
+	
+		</ul>
 
 		<div class="row" style="margin-top: 10px;"> 	
 	

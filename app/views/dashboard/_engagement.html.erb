@@ -1,0 +1,86 @@
+<!--Load the AJAX API-->
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript">
+
+	// Load the Visualization API and the piechart package.
+	google.load('visualization', '1.0', {'packages':['corechart','table']});
+
+	// Set a callback to run when the Google Visualization API is loaded.
+	google.setOnLoadCallback(drawChart);
+
+	function drawChart() {
+
+	    var options = {
+	      'title':'Análisis de competidores',
+	      vAxis: {title: "Likes"},
+	      hAxis: {title: "Competidores"},
+	      seriesType: "bars",
+	      series: {x: {type: "line"}},
+	      animation:{
+	        duration: 1500,
+	        easing: 'out'
+	      },
+          vAxis: {minValue:0, maxValue:200000}
+	    };
+	
+	   // Some raw data (not necessarily accurate)
+	    var rowData1 = [['Competidores', 'Likes', 'Prosumers'],
+              ['SEAT', 0, 0],
+              ['FIAT', 0, 0],
+              ['TOYOTA', 0, 0],
+              ['PEUGEOT', 0, 0],
+              ['CITROEN', 0, 0]];
+	    var rowData2 = [['Competidores', 'Likes', 'Prosumers'],
+			  ['SEAT', 64169, 1206],
+			  ['FIAT', 11792, 434],
+			  ['TOYOTA', 28018, 2200],
+			  ['PEUGEOT', 84795, 2567],
+			  ['CITROEN', 76615, 2336]];
+	
+	    // Create and populate the data tables.
+	    var data = [];
+	    data[0] = google.visualization.arrayToDataTable(rowData1);
+	    data[1] = google.visualization.arrayToDataTable(rowData2);
+
+	
+	    var current = 0;
+	    // Create and draw the visualization.
+	    var chart = new google.visualization.ComboChart(document.getElementById('graph_div'));
+		var table = new google.visualization.Table(document.getElementById('table'));
+
+	    function drawExec() {
+		      chart.draw(data[current], options);
+		      table.draw(data[1], {allowHtml: true, showRowNumber: true});
+	    }
+	    drawExec();
+
+	    current = 1 - current;
+	    drawExec();
+
+		google.visualization.events.addListener(table, 'sort',
+		      function(event) {
+		        data[1].sort([{column: event.column, desc: !event.ascending}]);
+		
+				      chart.draw(data[1], {
+							    title : 'Análisis de competidores',
+							    vAxis: {title: "Personas"},
+							    hAxis: {title: "Competidores"},
+							    seriesType: "bars",
+							    series: {5: {type: "line"}},
+		          				vAxis: {minValue:0, maxValue:200000}
+							  });
+		});
+
+
+		google.visualization.events.addListener(table, 'select', function() {
+			chart.setSelection(table.getSelection());
+		});
+
+		google.visualization.events.addListener(chart, 'select', function() {
+			table.setSelection(chart.getSelection());
+		});
+
+  }
+
+</script>
+
