@@ -1,0 +1,27 @@
+						<nav class="menumetricas">
+							<ul class="nav nav-pills nav-stacked">
+								<% if cookies[:metrica] == '1'%>
+								    <li class="active">
+								    	<a href="#">Vista general</a>
+								    </li>
+								<% else %>
+								    <li><a href="<%= '#' %>">Vista general</a></li>
+								<% end %>
+
+							    <% if cookies[:metrica] == '2'%>
+									<li class="active">
+										<a href="#">Engagement</a>
+									</li>
+								<% else %>
+							    	<li><a href="<%= '#' %>">Engagement</a></li>
+							    <% end %>
+							    
+						    	<li class="disabled"><a href="#">Tamaño</a></li>
+						    	<li class="disabled"><a href="#">Crecimiento</a></li>
+							    <li class="disabled"><a href="#">Actividad</a></li>
+							    <li class="disabled"><a href="#">Interacción</a></li>
+							    <li class="disabled"><a href="#">Embajadores</a></li>
+							    <li class="disabled"><a href="#">Influence</a></li>
+							    <li class="disabled"><a href="#">Sentiment</a></li>
+						    </ul>
+						</nav>

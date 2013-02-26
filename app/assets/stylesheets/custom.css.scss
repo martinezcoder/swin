@@ -13,6 +13,15 @@ $facebookcolor: #3B5998;
   box-sizing: border-box;
 }
 
+
+@mixin recuadrogris {
+  background-color: #eeeeee;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  border-radius: 6px;
+}
+
+
 /* universal */
 
 html {
@@ -300,3 +309,26 @@ input {
   float: left;
   margin-right: 10px;
 }
+
+
+
+.menumetricas {
+  padding-top: 60px;
+}
+
+
+.cuadro {
+  padding: 15px;
+  margin: 0 0 10px 0px;
+  background:transparent url(/assets/loader.gif) center no-repeat;
+  @include recuadrogris;
+}
+
+  .graph {
+      min-height: 100px;
+  }
+  
+  .tabla {
+      min-height: 160px;
+  }
+
