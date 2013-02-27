@@ -55,13 +55,14 @@ class PagesController < ApplicationController
 
   def competitors
     @title = "Competidores"
-#    begin
+    begin
       @page = Page.find(params[:id])
       @competitors = @page.competitors
       render 'show_competitors'
-#    rescue
+    rescue
 #      redirect_to user_pages_path(current_user)
-#    end
+raise 'error'
+    end
   end  
 
   private

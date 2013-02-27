@@ -2,7 +2,11 @@ class StaticPagesController < ApplicationController
   
   def home
     if signed_in?
-      @page = current_user.pages.find_by_id(ss_active_page)
+      if ss_active_page == "0"
+        redirect_to pages_index_path
+      else
+        @page = current_user.pages.find_by_id(ss_active_page)
+      end
     end
   end
 
