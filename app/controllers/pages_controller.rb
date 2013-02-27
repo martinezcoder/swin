@@ -4,6 +4,7 @@ class PagesController < ApplicationController
   before_filter :signed_in_user
   before_filter :correct_user, except: [:search]
   before_filter :correct_page, only: [:competitors]
+  before_filter :has_pages, only: [:search]
 
   def index
     if params[:update] == 'yes'
@@ -55,14 +56,9 @@ class PagesController < ApplicationController
 
   def competitors
     @title = "Competidores"
-    begin
-      @page = Page.find(params[:id])
-      @competitors = @page.competitors
-      render 'show_competitors'
-    rescue
-#      redirect_to user_pages_path(current_user)
-raise 'error'
-    end
+    @page = Page.find(params[:id])
+    @competitors = @page.competitors
+    render 'show_competitors'
   end  
 
   private
@@ -84,6 +80,15 @@ raise 'error'
       rescue
         redirect_to user_pages_path(current_user) 
       end
+    end
+
+    def has_pages
+      begin
+        @pages = current_user.pages
+        redirect_to root_path unless (@pages.count > 0)
+      rescue
+        redirect_to root_path
+      end 
     end
 
 end

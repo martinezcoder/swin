@@ -1,7 +1,7 @@
 class Page < ActiveRecord::Base
   include PagesHelper
   
-  attr_accessor :fan_count, :talking_about_count
+#  attr_accessor :fan_count, :talking_about_count
   
   has_many :user_page_relationships, foreign_key: "page_id"
   has_many :users, through: :user_page_relationships
@@ -14,7 +14,12 @@ class Page < ActiveRecord::Base
   has_many :reverse_page_relationships, foreign_key: "competitor_id", class_name: "PageRelationship", dependent: :destroy
   has_many :followers, through: :reverse_page_relationships #, source: :follower
 
+
+  has_one :page_data_day
+
   validates :page_id, presence: true
+
+  default_scope order: 'pages.created_at DESC'
 
   def following?(other_page_id)
     self.competitors.find_by_page_id(other_page_id.to_s)

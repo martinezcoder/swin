@@ -8,6 +8,44 @@ namespace :db do
     make_page_relationships
   end
 
+  desc "Fill page_data_day table with real data"
+  task page_data: :environment do
+    populate_page_data
+  end
+
+  def populate_page_data
+    
+    me = User.find_by_email("francisjavier@gmail.com")
+    ftoken = me.authentications.find_by_provider("facebook").token
+    fgraph  = Koala::Facebook::API.new(ftoken)
+
+    page_ids = []
+    Page.all.each do |s|
+      page_ids = page_ids + [s.page_id]       
+    end 
+    page_ids = page_ids.join(",") 
+
+    thispages = fgraph.fql_query("SELECT page_id, fan_count, talking_about_count from page WHERE page_id in (#{page_ids})")
+
+    thispages.each do |p|
+      page = Page.find_by_page_id(p["page_id"].to_s)
+      pagedata = PageDataDay.find_or_initialize_by_page_id(page.id)     
+      pagedata.likes = p["fan_count"]
+      pagedata.prosumers = p["talking_about_count"]
+      pagedata.save!
+    end    
+
+=begin
+    Page.all.each do |p|
+      pagedata = PageDataDay.find_or_initialize_by_page_id(p.id)
+      thispages = fgraph.fql_query("SELECT page_id, username, type, page_url, name, pic_square, fan_count, talking_about_count from page WHERE page_id in (#{p.page_id})")     
+      pagedata.likes = thispages.first["fan_count"]
+      pagedata.prosumers = thispages.first["talking_about_count"]
+      pagedata.save!
+    end    
+=end
+
+  end
 
   def make_users
     fran1 = User.create!(name: "Fran",

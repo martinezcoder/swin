@@ -11,6 +11,8 @@ module PagesHelper
         newpage.page_type = p["type"]
         newpage.page_url = p["page_url"]
         newpage.pic_square = p["pic_square"]
+        newpage.fan_count = p["fan_count"]
+        newpage.talking_about_count = p["talking_about_count"]
         newpage.save!
         newpage
   end

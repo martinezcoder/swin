@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130226185641) do
+ActiveRecord::Schema.define(:version => 20130227160253) do
 
   create_table "authentications", :force => true do |t|
     t.integer  "user_id"
@@ -24,16 +24,18 @@ ActiveRecord::Schema.define(:version => 20130226185641) do
 
   add_index "authentications", ["user_id", "provider"], :name => "index_authentications_on_user_id_and_provider", :unique => true
 
-  create_table "engagements", :force => true do |t|
+  create_table "page_data_days", :force => true do |t|
     t.integer  "page_id"
-    t.date     "date"
     t.integer  "likes"
     t.integer  "prosumers"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.integer  "comments"
+    t.integer  "shared"
+    t.integer  "total_likes_stream"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
   end
 
-  add_index "engagements", ["page_id", "date"], :name => "index_engagements_on_page_id_and_date", :unique => true
+  add_index "page_data_days", ["page_id"], :name => "index_page_data_days_on_page_id", :unique => true
 
   create_table "page_relationships", :force => true do |t|
     t.integer  "follower_id"
@@ -53,8 +55,10 @@ ActiveRecord::Schema.define(:version => 20130226185641) do
     t.string   "username"
     t.string   "page_url"
     t.string   "pic_square"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
+    t.integer  "fan_count"
+    t.integer  "talking_about_count"
   end
 
   add_index "pages", ["page_id"], :name => "index_pages_on_page_id", :unique => true

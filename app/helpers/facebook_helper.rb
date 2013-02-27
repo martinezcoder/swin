@@ -24,14 +24,14 @@ module FacebookHelper
   end
 
   def fb_get_search_pages_list(name)
-      search = fb_graph.search("#{name}", {type: 'page'})
+    search = fb_graph.search("#{name}", {type: 'page'})
 
-      page_ids = []
-      search.each do |s|
-        page_ids = page_ids + [s["id"]]       
-      end 
+    page_ids = []
+    search.each do |s|
+      page_ids = page_ids + [s["id"]]
+    end 
 
-      fb_get_search_pages_list = page_ids.join(",")   
+    fb_get_search_pages_list = page_ids.join(",")   
   end
   
 end
