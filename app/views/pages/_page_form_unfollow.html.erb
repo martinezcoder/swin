@@ -1,3 +1,3 @@
-<%= link_to page_relationship_path(page), method: :delete do %>
+<%= link_to page_relationship_path(page), method: :delete, data: { confirm: "Confirma dejar de seguir a #{page.name}?" } do %>
 	<small>Dejar de seguir</small>
 <% end %>

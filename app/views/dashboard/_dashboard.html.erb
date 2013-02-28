@@ -1,0 +1,19 @@
+
+		<%= render 'dashboard/engagement'%>
+
+	    <div class="row">
+		    <div class="span12">
+			    <div class="row">
+				    <div class="span2">
+				    	<%= render 'dashboard/layouts/menu_metrics' %>
+				    </div>
+				    <div class="span10">
+				    	<div class="mini_page_dashboard">
+					    	<%= image_tag @page.pic_square, alt: @page.name, class: "gravatar" %>
+							<strong><%= @page.name %></strong>
+						</div>
+						<%= render 'dashboard/layouts/menu_socials' %>
+				    </div>
+			    </div>
+		    </div>
+	    </div>

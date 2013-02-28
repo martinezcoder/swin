@@ -24,23 +24,15 @@
 	    };
 	
 	   // Some raw data (not necessarily accurate)
-	    var rowData1 = [['Competidores', 'Likes', 'Prosumers'],
-              ['SEAT', 0, 0],
-              ['FIAT', 0, 0],
-              ['TOYOTA', 0, 0],
-              ['PEUGEOT', 0, 0],
-              ['CITROEN', 0, 0]];
-	    var rowData2 = [['Competidores', 'Likes', 'Prosumers'],
-			  ['SEAT', 64169, 1206],
-			  ['FIAT', 11792, 434],
-			  ['TOYOTA', 28018, 2200],
-			  ['PEUGEOT', 84795, 2567],
-			  ['CITROEN', 76615, 2336]];
+
+	    var rowDataNil = <%= raw @data_nil %>;
+
+		var rowData = <%= raw @data %>;
 	
 	    // Create and populate the data tables.
 	    var data = [];
-	    data[0] = google.visualization.arrayToDataTable(rowData1);
-	    data[1] = google.visualization.arrayToDataTable(rowData2);
+	    data[0] = google.visualization.arrayToDataTable(rowDataNil);
+	    data[1] = google.visualization.arrayToDataTable(rowData);
 
 	
 	    var current = 0;

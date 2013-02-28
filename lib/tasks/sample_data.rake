@@ -13,17 +13,62 @@ namespace :db do
     populate_page_data
   end
 
-  def populate_page_data
-    
+
+  def fb_list_pages_update(page_id_list)
     me = User.find_by_email("francisjavier@gmail.com")
     ftoken = me.authentications.find_by_provider("facebook").token
     fgraph  = Koala::Facebook::API.new(ftoken)
 
+
+    fbpages = fgraph.fql_query("SELECT page_id, fan_count, talking_about_count from page WHERE page_id in (#{page_id_list})")
+
+    fbpages.each do |p|
+      page = Page.find_by_page_id(p["page_id"].to_s)
+      pagedata = PageDataDay.find_or_initialize_by_page_id(page.id)     
+      pagedata.likes = p["fan_count"]
+      pagedata.prosumers = p["talking_about_count"]
+      pagedata.save!  
+      page.fan_count = p["fan_count"]
+      page.talking_about_count = p["talking_about_count"]
+      page.save!
+    end
+  end
+
+  def populate_page_data
+
+    # Groups of nblock pages:    
+    nblock = 30
+    nmax = Page.count
+    n = 1
+    while n < nmax do
+
+      if nmax-n < nblock
+        nnext = nmax
+      else
+        nnext = n + nblock
+      end
+
+      id_list = []
+      Page.where("id between ? and ?", n, nnext).each do |p|
+        id_list = id_list + [p.page_id]
+      end
+      id_list = id_list.join(",")
+puts id_list
+
+      fb_list_pages_update(id_list)
+puts ".."
+
+      n = nnext+1
+
+    end
+
+
+=begin
     page_ids = []
     Page.all.each do |s|
-      page_ids = page_ids + [s.page_id]       
-    end 
-    page_ids = page_ids.join(",") 
+      page_ids = page_ids + [s.page_id]
+    end
+    page_ids = page_ids.join(",")
 
     thispages = fgraph.fql_query("SELECT page_id, fan_count, talking_about_count from page WHERE page_id in (#{page_ids})")
 
@@ -32,19 +77,12 @@ namespace :db do
       pagedata = PageDataDay.find_or_initialize_by_page_id(page.id)     
       pagedata.likes = p["fan_count"]
       pagedata.prosumers = p["talking_about_count"]
-      pagedata.save!
-    end    
-
-=begin
-    Page.all.each do |p|
-      pagedata = PageDataDay.find_or_initialize_by_page_id(p.id)
-      thispages = fgraph.fql_query("SELECT page_id, username, type, page_url, name, pic_square, fan_count, talking_about_count from page WHERE page_id in (#{p.page_id})")     
-      pagedata.likes = thispages.first["fan_count"]
-      pagedata.prosumers = thispages.first["talking_about_count"]
-      pagedata.save!
-    end    
+      pagedata.save!  
+      page.fan_count = p["fan_count"]
+      page.talking_about_count = p["talking_about_count"]
+      page.save!
+    end
 =end
-
   end
 
   def make_users
