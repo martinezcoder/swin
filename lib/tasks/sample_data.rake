@@ -13,15 +13,81 @@ namespace :db do
     populate_page_data
   end
 
+  desc "Fill page_stream table with real data"
+  task page_stream: :environment do
+    puts Time.now
+    populate_page_stream
+    puts Time.now
+  end
+
+  def update_page_stream(page_id, page_st)
+    begin
+      if !page_st["permalink"].nil? and !page_st["permalink"].empty? 
+        stream = PageStream.find_or_initialize_by_page_id_and_created_time(page_id, page_st["created_time"])
+        stream.post_id = page_st["post_id"]
+        stream.permalink = page_st["permalink"]
+        if !page_st["attachment"]["media"].nil? 
+          if !page_st["attachment"]["media"][0].nil?
+            stream.media_type = page_st["attachment"]["media"][0]["type"]
+          end
+        end 
+        stream.actor_id = page_st["actor_id"]
+        stream.target_id = page_st["target_id"]
+        stream.likes_count = page_st["likes"]["count"]
+        stream.comments_count = page_st["comments"]["count"]
+        stream.share_count = page_st["share_count"] 
+        stream.created_time = page_st["created_time"]
+        stream.day = Time.now.yesterday.yesterday.end_of_day.to_i+1
+        stream.save!
+      end
+    rescue => error
+      puts error.backtrace
+      puts page_st
+    end
+  end
+
+  def populate_page_stream
+    me = User.find_by_email("francisjavier@gmail.com")
+    ftoken = me.authentications.find_by_provider("facebook").token
+    fgraph  = Koala::Facebook::API.new(ftoken)
+    
+    time_from = Time.now.yesterday.yesterday.end_of_day.to_i
+    time_to   = Time.now.yesterday.end_of_day.to_i
+
+    Page.all.sort.each do |p|
+      n = 0
+      m = 50    
+      t = time_from +1
+
+      while t > time_from and t < time_to do
+        query =  "SELECT post_id, permalink, likes, actor_id, target_id, attachment, comments, share_count, created_time FROM stream WHERE source_id = #{p.page_id} and created_time > #{time_from} and created_time < #{time_to} LIMIT #{n},#{m}"
+
+        fbstream = fgraph.fql_query(query)
+
+        if fbstream.empty?
+          break
+        else
+          for i in 0..m
+            if fbstream[i-1].nil?
+              break
+            end
+            update_page_stream(p.id, fbstream[i-1])
+            t = fbstream[i-1]["created_time"].to_i          
+          end
+        end
+
+        n = m
+        m = n+50
+      end
+    end
+  end
+
 
   def fb_list_pages_update(page_id_list)
     me = User.find_by_email("francisjavier@gmail.com")
     ftoken = me.authentications.find_by_provider("facebook").token
     fgraph  = Koala::Facebook::API.new(ftoken)
-
-
     fbpages = fgraph.fql_query("SELECT page_id, fan_count, talking_about_count from page WHERE page_id in (#{page_id_list})")
-
     fbpages.each do |p|
       page = Page.find_by_page_id(p["page_id"].to_s)
       pagedata = PageDataDay.find_or_initialize_by_page_id(page.id)     
@@ -35,54 +101,24 @@ namespace :db do
   end
 
   def populate_page_data
-
     # Groups of nblock pages:    
     nblock = 30
     nmax = Page.count
     n = 1
-    while n < nmax do
-
-      if nmax-n < nblock
-        nnext = nmax
-      else
-        nnext = n + nblock
-      end
-
-      id_list = []
-      Page.where("id between ? and ?", n, nnext).each do |p|
-        id_list = id_list + [p.page_id]
-      end
-      id_list = id_list.join(",")
-puts id_list
-
-      fb_list_pages_update(id_list)
-puts ".."
-
-      n = nnext+1
-
+    while n < nmax do  
+        if nmax-n < nblock
+          nnext = nmax
+        else
+          nnext = n + nblock
+        end
+        id_list = []
+        Page.where("id between ? and ?", n, nnext).each do |p|
+          id_list = id_list + [p.page_id]
+        end
+        id_list = id_list.join(",")
+        fb_list_pages_update(id_list)
+        n = nnext+1
     end
-
-
-=begin
-    page_ids = []
-    Page.all.each do |s|
-      page_ids = page_ids + [s.page_id]
-    end
-    page_ids = page_ids.join(",")
-
-    thispages = fgraph.fql_query("SELECT page_id, fan_count, talking_about_count from page WHERE page_id in (#{page_ids})")
-
-    thispages.each do |p|
-      page = Page.find_by_page_id(p["page_id"].to_s)
-      pagedata = PageDataDay.find_or_initialize_by_page_id(page.id)     
-      pagedata.likes = p["fan_count"]
-      pagedata.prosumers = p["talking_about_count"]
-      pagedata.save!  
-      page.fan_count = p["fan_count"]
-      page.talking_about_count = p["talking_about_count"]
-      page.save!
-    end
-=end
   end
 
   def make_users

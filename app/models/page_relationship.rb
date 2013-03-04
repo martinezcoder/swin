@@ -1,3 +1,14 @@
+# == Schema Information
+#
+# Table name: page_relationships
+#
+#  id            :integer          not null, primary key
+#  follower_id   :integer
+#  competitor_id :integer
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#
+
 class PageRelationship < ActiveRecord::Base
   attr_accessible :competitor_id
   

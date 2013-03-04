@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130227160253) do
+ActiveRecord::Schema.define(:version => 20130304121754) do
 
   create_table "authentications", :force => true do |t|
     t.integer  "user_id"
@@ -47,6 +47,28 @@ ActiveRecord::Schema.define(:version => 20130227160253) do
   add_index "page_relationships", ["competitor_id"], :name => "index_page_relationships_on_competitor_id"
   add_index "page_relationships", ["follower_id", "competitor_id"], :name => "index_page_relationships_on_follower_id_and_competitor_id", :unique => true
   add_index "page_relationships", ["follower_id"], :name => "index_page_relationships_on_follower_id"
+
+  create_table "page_streams", :force => true do |t|
+    t.integer  "page_id"
+    t.string   "post_id"
+    t.string   "permalink"
+    t.string   "media_type"
+    t.string   "actor_id"
+    t.string   "target_id"
+    t.integer  "likes_count"
+    t.integer  "comments_count"
+    t.integer  "share_count"
+    t.integer  "created_time"
+    t.integer  "day"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
+
+  add_index "page_streams", ["actor_id"], :name => "index_page_streams_on_actor_id"
+  add_index "page_streams", ["created_time"], :name => "index_page_streams_on_created_time"
+  add_index "page_streams", ["page_id", "created_time"], :name => "index_page_streams_on_page_id_and_created_time", :unique => true
+  add_index "page_streams", ["page_id", "day"], :name => "index_page_streams_on_page_id_and_day"
+  add_index "page_streams", ["page_id"], :name => "index_page_streams_on_page_id"
 
   create_table "pages", :force => true do |t|
     t.string   "page_id"

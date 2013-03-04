@@ -1,3 +1,20 @@
+# == Schema Information
+#
+# Table name: pages
+#
+#  id                  :integer          not null, primary key
+#  page_id             :string(255)
+#  name                :string(255)
+#  page_type           :string(255)
+#  username            :string(255)
+#  page_url            :string(255)
+#  pic_square          :string(255)
+#  created_at          :datetime         not null
+#  updated_at          :datetime         not null
+#  fan_count           :integer
+#  talking_about_count :integer
+#
+
 require 'spec_helper'
 
 describe Page do
