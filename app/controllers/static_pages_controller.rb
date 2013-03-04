@@ -7,14 +7,23 @@ class StaticPagesController < ApplicationController
       else
         @page = current_user.pages.find_by_id(ss_active_page)
 
-        @data_nil = [["Competidores", "Likes", "Prosumers"],['SEAT',0,0],['FIAT',0,0],['TOYOTA',0,0],['PEUGEOT',0,0],['CITROEN',0,0]]
+        num = @page.competitors.count
+        
+        @data_nil = []
+        @data_nil[0] = ["Competidores", "Likes", "Prosumers"]        
+        for i in 0..num-1 do
+          @data_nil[i+1] = [@page.competitors[i].name, 0, 0]
+        end
+
+
         @data = []
         @data[0] = ["Competidores", "Likes", "Prosumers"]
-        @data[1] = ['SEAT', 64169, 1206]
-        @data[2] = ['FIAT', 11792, 434]
-        @data[3] = ['TOYOTA', 28018, 2200]
-        @data[4] = ['PEUGEOT', 84795, 2567]
-        @data[5] = ['CITROEN', 76615, 2336]
+        
+        for i in 0..num-1 do
+          @data[i+1] = [@page.competitors[i].name, @page.competitors[i].page_data_days.last.likes, @page.competitors[i].page_data_days.last.prosumers]
+        end
+
+        @max_value = @page.competitors.maximum("fan_count")
 
       end
     end

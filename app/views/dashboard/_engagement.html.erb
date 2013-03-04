@@ -16,12 +16,12 @@
 	      vAxis: {title: "Likes"},
 	      hAxis: {title: "Competidores"},
 	      seriesType: "bars",
-	      series: {x: {type: "line"}},
+	      series: {1: {type: "line"}},
 	      animation:{
 	        duration: 1500,
 	        easing: 'out'
 	      },
-          vAxis: {minValue:0, maxValue:200000}
+          vAxis: {minValue:0, maxValue:<%= @max_value %>}
 	    };
 
 	    var opt2 = {
@@ -29,7 +29,8 @@
 				    vAxis: {title: "Likes"},
 				    hAxis: {title: "Competidores"},
 				    seriesType: "bars",
-      				vAxis: {minValue:0, maxValue:200000}
+				    series: {1: {type: "line"}},
+      				vAxis: {minValue:0, maxValue:<%= @max_value %>}
 				  };
 
 	

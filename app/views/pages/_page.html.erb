@@ -7,22 +7,14 @@
 				  <div class="fb_stat">
 				  	Fans:
 				    <strong id="fb_fans" class="stat">
-				    	<% if origin == 'search' || page.page_data_day.nil? %>
-				    		<%= page.fan_count %>
-				    	<% else %>
-				    		<%= page.page_data_day.likes if !page.page_data_day.nil? %>
-				    	<% end %>
+			    		<%= page.fan_count %>
 				    </strong>
 				  </div>
 
 				  <div class="fb_stat">
 				  	Usuarios activos:
 				    <strong id="fb_talking_about" class="stat">
-				    	<% if origin == 'search' || page.page_data_day.nil? %>
-							<%= page.talking_about_count %>
-				    	<% else %>
-				    		<%= page.page_data_day.prosumers if !page.page_data_day.nil? %>
-				    	<% end %>
+						<%= page.talking_about_count %>
 				    </strong>
 				  </div>
 

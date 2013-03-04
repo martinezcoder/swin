@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130304121754) do
+ActiveRecord::Schema.define(:version => 20130304172131) do
 
   create_table "authentications", :force => true do |t|
     t.integer  "user_id"
@@ -33,9 +33,11 @@ ActiveRecord::Schema.define(:version => 20130304121754) do
     t.integer  "total_likes_stream"
     t.datetime "created_at",         :null => false
     t.datetime "updated_at",         :null => false
+    t.integer  "day"
+    t.integer  "posts"
   end
 
-  add_index "page_data_days", ["page_id"], :name => "index_page_data_days_on_page_id", :unique => true
+  add_index "page_data_days", ["page_id", "day"], :name => "index_page_data_days_on_page_id_and_day", :unique => true
 
   create_table "page_relationships", :force => true do |t|
     t.integer  "follower_id"

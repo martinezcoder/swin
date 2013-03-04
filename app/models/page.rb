@@ -30,7 +30,7 @@ class Page < ActiveRecord::Base
   has_many :followers, through: :reverse_page_relationships #, source: :follower
 
   has_many :page_streams
-  has_one :page_data_day
+  has_many :page_data_days
 
   validates :page_id, presence: true
 

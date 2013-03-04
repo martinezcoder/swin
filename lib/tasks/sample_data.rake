@@ -1,11 +1,20 @@
 namespace :db do
 
   desc "Fill database with sample data"
-  task populate: :environment do
+  task sample_populate: :environment do
     make_users
     make_authentications
     make_pages
     make_page_relationships
+  end
+
+  desc "Fill daily stream tables"
+   task populate: :environment do
+      puts Time.now
+      populate_page_stream
+      puts Time.now
+      populate_page_data
+      puts Time.now 
   end
 
   desc "Fill page_data_day table with real data"
@@ -15,9 +24,7 @@ namespace :db do
 
   desc "Fill page_stream table with real data"
   task page_stream: :environment do
-    puts Time.now
     populate_page_stream
-    puts Time.now
   end
 
   def update_page_stream(page_id, page_st)
@@ -37,7 +44,7 @@ namespace :db do
         stream.comments_count = page_st["comments"]["count"]
         stream.share_count = page_st["share_count"] 
         stream.created_time = page_st["created_time"]
-        stream.day = Time.now.yesterday.yesterday.end_of_day.to_i+1
+        stream.day = Time.now.yesterday.beginning_of_day
         stream.save!
       end
     rescue => error
@@ -82,7 +89,6 @@ namespace :db do
     end
   end
 
-
   def fb_list_pages_update(page_id_list)
     me = User.find_by_email("francisjavier@gmail.com")
     ftoken = me.authentications.find_by_provider("facebook").token
@@ -93,6 +99,11 @@ namespace :db do
       pagedata = PageDataDay.find_or_initialize_by_page_id(page.id)     
       pagedata.likes = p["fan_count"]
       pagedata.prosumers = p["talking_about_count"]
+      pagedata.comments = page.page_streams.sum("comments_count")
+      pagedata.shared = page.page_streams.sum("share_count")
+      pagedata.total_likes_stream = page.page_streams.sum("likes_count")
+      pagedata.posts = page.page_streams.count
+      pagedata.day = Time.now.yesterday.beginning_of_day
       pagedata.save!  
       page.fan_count = p["fan_count"]
       page.talking_about_count = p["talking_about_count"]
