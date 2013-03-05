@@ -11,8 +11,14 @@ class PageRelationshipsController < ApplicationController
 
     mypage.follow!(competitor)
 
+    #if the page is not registered, then get yesterday's stream data
+    if PageDataDay.find_by_page_id(competitor.id).nil?
+      page_data_stream_update(competitor.id)
+      page_data_day_update(competitor.id) 
+    end
+
     respond_to do |format|
-      format.html { redirect_to competitors_user_page_path(current_user, mypage) }
+      format.html { redirect_to pages_search_path(search: params[:search]) }
       format.js
     end
   end

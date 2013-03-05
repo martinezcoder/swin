@@ -60,28 +60,20 @@
 			});
 		}
 
-	    function updateDraw(options) {
-			chart.draw(data[1], options);
-//			table.draw(data[1], {allowHtml: true, showRowNumber: true});
-//			addSelectListeners(sel_table, sel_chart);
-	    }
-
-		function drawExec(options) {
+		function drawExec(current, options) {
 			chart.draw(data[current], options);
 			table.draw(data[1], {allowHtml: true, showRowNumber: true});
 	    }
 
-	    current = 0;
-	    drawExec(opt);
-	    current = 1 - current;
-	    drawExec(opt);
+	    drawExec(0, opt);
+	    drawExec(1, opt);
 
 		addSelectListeners();
 
 		google.visualization.events.addListener(table, 'sort',
 		      function(event) {
 		        	data[1].sort([{column: event.column, desc: !event.ascending}]);
-					updateDraw(opt2);
+					drawExec(1, opt2);
 		});
 
   }

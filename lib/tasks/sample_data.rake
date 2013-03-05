@@ -64,22 +64,23 @@ namespace :db do
     Page.all.sort.each do |p|
       n = 0
       m = 50    
-      t = time_from +1
 
-      while t > time_from and t < time_to do
+      end_loop = false
+      while !end_loop do
         query =  "SELECT post_id, permalink, likes, actor_id, target_id, attachment, comments, share_count, created_time FROM stream WHERE source_id = #{p.page_id} and created_time > #{time_from} and created_time < #{time_to} LIMIT #{n},#{m}"
-
         fbstream = fgraph.fql_query(query)
 
         if fbstream.empty?
-          break
+          # when a page doesn't have any stream in these range of data
+          end_loop = true
         else
-          for i in 0..m
-            if fbstream[i-1].nil?
+          for i in 0..fbstream.count-1 #m-1
+            if fbstream[i].nil?
+              # last hash post when less than m posts
               break
+            else
+              update_page_stream(p.id, fbstream[i])  
             end
-            update_page_stream(p.id, fbstream[i-1])
-            t = fbstream[i-1]["created_time"].to_i          
           end
         end
 
@@ -96,14 +97,14 @@ namespace :db do
     fbpages = fgraph.fql_query("SELECT page_id, fan_count, talking_about_count from page WHERE page_id in (#{page_id_list})")
     fbpages.each do |p|
       page = Page.find_by_page_id(p["page_id"].to_s)
-      pagedata = PageDataDay.find_or_initialize_by_page_id(page.id)     
+      pagedata = PageDataDay.find_or_initialize_by_page_id_and_day(page.id, Time.now.yesterday.beginning_of_day.to_i)     
       pagedata.likes = p["fan_count"]
       pagedata.prosumers = p["talking_about_count"]
       pagedata.comments = page.page_streams.sum("comments_count")
       pagedata.shared = page.page_streams.sum("share_count")
       pagedata.total_likes_stream = page.page_streams.sum("likes_count")
       pagedata.posts = page.page_streams.count
-      pagedata.day = Time.now.yesterday.beginning_of_day
+      pagedata.day = Time.now.yesterday.beginning_of_day.to_i
       pagedata.save!  
       page.fan_count = p["fan_count"]
       page.talking_about_count = p["talking_about_count"]

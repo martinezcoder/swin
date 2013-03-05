@@ -41,4 +41,46 @@ module PagesHelper
   end
 
 
+  def page_data_day_update(p_id, data_date=Time.now)
+      page = Page.find_by_id(p_id)
+      pagedata = PageDataDay.find_or_initialize_by_page_id_and_day(page.id, data_date.to_i)     
+      pagedata.likes = page.fan_count
+      pagedata.prosumers = page.talking_about_count
+      pagedata.comments = page.page_streams.sum("comments_count") || 0
+      pagedata.shared = page.page_streams.sum("share_count") || 0
+      pagedata.total_likes_stream = page.page_streams.sum("likes_count") || 0
+      pagedata.posts = page.page_streams.count || 0
+      pagedata.day = data_date.to_i
+      pagedata.save!
+  end
+
+
+
+  def page_data_stream_update(page_id)
+    fb_page_id = Page.find_by_id(page_id).page_id
+    page_stream = fb_get_page_stream(fb_page_id)
+
+    for i in 0..page_stream.count-1
+      ps = page_stream[i]
+      if !ps["permalink"].nil? and !ps["permalink"].empty? 
+        stream = PageStream.find_or_initialize_by_page_id_and_created_time(page_id, ps["created_time"])
+        stream.post_id = ps["post_id"]
+        stream.permalink = ps["permalink"]
+        if !ps["attachment"]["media"].nil? 
+          if !ps["attachment"]["media"][0].nil?
+            stream.media_type = ps["attachment"]["media"][0]["type"]
+          end
+        end 
+        stream.actor_id = ps["actor_id"]
+        stream.target_id = ps["target_id"]
+        stream.likes_count = ps["likes"]["count"]
+        stream.comments_count = ps["comments"]["count"]
+        stream.share_count = ps["share_count"] 
+        stream.created_time = ps["created_time"]
+        stream.day = Time.now.yesterday.beginning_of_day
+        stream.save!
+      end
+    end
+  end
+
 end

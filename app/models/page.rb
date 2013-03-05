@@ -34,8 +34,6 @@ class Page < ActiveRecord::Base
 
   validates :page_id, presence: true
 
-  default_scope order: 'pages.created_at DESC'
-
   def following?(other_page_id)
     self.competitors.find_by_page_id(other_page_id.to_s)
   end
