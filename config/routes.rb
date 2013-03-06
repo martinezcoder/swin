@@ -1,4 +1,9 @@
 Swin::Application.routes.draw do
+
+  get "dashboard/main"
+
+  get "dashboard/engage"
+
   get "pages/index"
 
   get "pages/search"

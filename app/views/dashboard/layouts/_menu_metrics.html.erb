@@ -10,10 +10,10 @@
 
 							    <% if cookies[:metrica] == '2'%>
 									<li class="active">
-										<a href="#">Engagement</a>
+										<%= link_to "Engagement", dashboard_engage_path %>
 									</li>
 								<% else %>
-							    	<li><a href="<%= '#' %>">Engagement</a></li>
+							    	<li><%= link_to "Engagement", dashboard_engage_path %></li>
 							    <% end %>
 							    
 						    	<li class="disabled"><a href="#">Tamaño</a></li>

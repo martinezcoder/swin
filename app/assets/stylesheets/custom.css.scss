@@ -321,18 +321,18 @@ input {
 }
 
 
-.cuadro {
+.data_graph {
   padding: 15px;
   margin: 0 0 10px 0px;
   background:transparent url(/assets/loader.gif) center no-repeat;
+  min-height: 100px;
   @include recuadrogris;
 }
 
-  .graph {
-      min-height: 100px;
-  }
-  
-  .tabla {
-      min-height: 160px;
-  }
-
+.data_table {
+  padding: 15px;
+  margin: 0 0 10px 0px;
+  background:transparent url(/assets/loader.gif) center no-repeat;
+  min-height: 160px;
+  @include recuadrogris;
+}
