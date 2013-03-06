@@ -11,6 +11,8 @@
 #  total_likes_stream :integer
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
+#  day                :integer
+#  posts              :integer
 #
 
 class PageDataDay < ActiveRecord::Base

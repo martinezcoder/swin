@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130304172131) do
+ActiveRecord::Schema.define(:version => 20130306151829) do
 
   create_table "authentications", :force => true do |t|
     t.integer  "user_id"
@@ -90,8 +90,9 @@ ActiveRecord::Schema.define(:version => 20130304172131) do
   create_table "user_page_relationships", :force => true do |t|
     t.integer  "user_id"
     t.integer  "page_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
+    t.boolean  "active",     :default => false
   end
 
   add_index "user_page_relationships", ["page_id"], :name => "index_user_page_relationships_on_page_id"

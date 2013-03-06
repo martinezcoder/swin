@@ -116,12 +116,13 @@ module SessionsHelper
     current_user.authentications.find_by_provider(provider).token
   end
 
-  def activate_page(page_id)
-    session[:provider][FACEBOOK][:page] = page_id
-  end
-
   def ss_active_page
-    session[:provider][FACEBOOK][:page]    
+    # active is a field of table user_page_relationship
+    if current_user.user_page_relationships.find_by_active(true).nil?
+      nil
+    else
+      Page.find(current_user.user_page_relationships.find_by_active(true))  
+    end
   end
 
 end

@@ -1,5 +1,4 @@
 # encoding: UTF-8
-
 # == Schema Information
 #
 # Table name: authentications
@@ -12,6 +11,8 @@
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
+
+
 
 class Authentication < ActiveRecord::Base
 

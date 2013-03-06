@@ -23,12 +23,12 @@
 					<% when 'index' %>
 				  		
 				  		<div class="fb_stat">
-					  	<% if page.id.to_s == ss_active_page.to_s %>
+					  	<% if page.id == ss_active_page.id %>
 					  		<div class="btn btn-success">
 					  			<i class="icon-ok icon-white"></i> Activada
 					  		</div> 
 					  	<% else %>
-					  		<%= link_to activate_user_page_path(@user, page), class: "btn btn-primary"  do %>
+					  		<%= link_to activate_user_page_path(@user, page), method: :post, class: "btn btn-primary"  do %>
 					  			<i class=" icon-plus icon-white"></i> Activar
 					  		<% end %>
 					  	<% end %>

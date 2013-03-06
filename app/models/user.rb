@@ -1,4 +1,3 @@
-# encoding: UTF-8
 # == Schema Information
 #
 # Table name: users
@@ -10,6 +9,7 @@
 #  updated_at     :datetime         not null
 #  remember_token :string(255)
 #
+
 
 class User < ActiveRecord::Base
   attr_accessible :email, :name, :terms_of_service 
@@ -36,10 +36,10 @@ class User < ActiveRecord::Base
                     uniqueness: { case_sensitive: false }
 
 
-  def set_page!(this_page)
+  # user admin n pages. This method is called from pages_create_or_update in pages_helper
+  def rel_user_page!(this_page)
     self.user_page_relationships.find_or_create_by_page_id(this_page.id)
   end
-
 
   private
 

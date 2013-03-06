@@ -7,10 +7,12 @@
 #  page_id    :integer
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  active     :boolean          default(FALSE)
 #
 
+
 class UserPageRelationship < ActiveRecord::Base
-  attr_accessible :page_id
+  attr_accessible :page_id, :active
 
   belongs_to :user, class_name: "User"
   belongs_to :page, class_name: "Page"

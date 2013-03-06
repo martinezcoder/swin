@@ -13,7 +13,7 @@
 #  comments_count :integer
 #  share_count    :integer
 #  created_time   :integer
-#  updated_time   :integer
+#  day            :integer
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
 #

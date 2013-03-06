@@ -3,8 +3,8 @@ class PagesController < ApplicationController
 
   before_filter :signed_in_user
   before_filter :correct_user, except: [:search]
-  before_filter :correct_page, only: [:competitors]
-  before_filter :has_pages, only: [:search]
+  before_filter :correct_user_page, only: [:competitors, :activate]
+  before_filter :has_pages, except: [:index] #, only: [:search]
 
   def index
     if params[:update] == 'yes'
@@ -14,18 +14,18 @@ class PagesController < ApplicationController
     @pages = @user.pages
 
     if (@pages.count > 0) 
-      if (ss_active_page.to_s == "0")
-        redirect_to activate_user_page_path(@user, @user.pages.first) 
-      else
-        @page = @user.pages.find_by_id(ss_active_page)
-        @competitors = @page.competitors
+      if ss_active_page.nil?
+        @user.pages.first.activate_user_page(@user) 
       end
+        @page = @user.pages.find(ss_active_page)
+        @competitors = @page.competitors
+
     end
   end
 
   def search
     @user = current_user
-    @page = @user.pages.find_by_id(ss_active_page)
+    @page = @user.pages.find(ss_active_page)
     @competitors = @page.competitors
     fb_list = nil
     if params.has_key?(:search) && params[:search] != ""
@@ -47,19 +47,17 @@ class PagesController < ApplicationController
     end
   end
 
-  def activate
-    if current_user.pages.find_by_id(params[:id])
-      activate_page(params[:id])
-    end
-    redirect_to user_pages_path(current_user)
-  end
-
   def competitors
     @title = "Competidores"
     @page = Page.find(params[:id])
     @competitors = @page.competitors.order("created_at DESC")
     render 'show_competitors'
   end  
+
+  def activate
+    Page.find(params[:id]).activate_user_page(current_user)
+    redirect_to user_pages_path(current_user)
+  end
 
   private
 
@@ -72,11 +70,11 @@ class PagesController < ApplicationController
       end
     end
 
-    def correct_page
+    def correct_user_page
       begin
         @page1 = Page.find(params[:id])
         @page2 = current_user.pages.find_by_id(params[:id])
-        redirect_to user_pages_path(current_user) unless  ((@page1 == @page2) && (@page1.id.to_s == ss_active_page))
+        redirect_to user_pages_path(current_user) unless (@page1 == @page2)
       rescue
         redirect_to user_pages_path(current_user) 
       end
