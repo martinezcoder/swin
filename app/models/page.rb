@@ -55,15 +55,10 @@ class Page < ActiveRecord::Base
     page_relationships.find_by_competitor_id(other_page.id).destroy
   end
 
-
   def activate_user_page(user)
-    if p = user.user_page_relationships.find_by_active(true)
-      p.active = false
-      p.save
-    end
-    q = user.user_page_relationships.find_by_page_id(self.id)
-    q.active= true
-    q.save!
+    user.user_page_relationships.find_by_active(true).desactivate if !user.user_page_relationships.find_by_active(true).blank?
+    user.user_page_relationships.find(self).activate
   end
+
 
 end

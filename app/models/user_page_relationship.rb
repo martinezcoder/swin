@@ -20,4 +20,14 @@ class UserPageRelationship < ActiveRecord::Base
   validates :user_id, presence: true
   validates :page_id, presence: true
   
+  def desactivate
+    self.active = false
+    self.save!
+  end
+
+  def activate
+    self.active = true
+    self.save!
+  end
+
 end

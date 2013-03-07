@@ -41,6 +41,14 @@ class User < ActiveRecord::Base
     self.user_page_relationships.find_or_create_by_page_id(this_page.id)
   end
 
+  def active_page
+    self.user_page_relationships.find_by_active(true)
+  end
+
+  def token(provider)
+    self.authentications.find_by_provider(provider).token    
+  end
+
   private
 
     def create_remember_token

@@ -19,7 +19,7 @@ class Authentication < ActiveRecord::Base
   belongs_to :user
 
   validates :user_id, presence: true
-  validates :provider, presence: true, inclusion: { in: %w(facebook twitter linkedin), message: "%{value} no es proveedor válido" }
+  validates :provider, presence: true, inclusion: { in: %w(facebook twitter youtube), message: "%{value} no es proveedor válido" }
   validates :uid, presence: true, :length => { :maximum => 40 }, :numericality => { :only_integer => true }
 
   validates_uniqueness_of :user_id, :scope => :provider

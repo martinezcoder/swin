@@ -55,9 +55,9 @@ module SessionsHelper
   def user_has_pages
     begin
       pages = current_user.pages
-      redirect_to root_path unless (pages.count > 0)
+      redirect_to pages_index_path unless (pages.count > 0)
     rescue
-      redirect_to root_path
+      redirect_to pages_index_path
     end 
   end
 
@@ -127,19 +127,19 @@ module SessionsHelper
   def set_active_page(p_id)
     session[:provider][FACEBOOK][:active_page] = p_id
   end
-  
+    
   def get_active_page
     active = session[:provider][FACEBOOK][:active_page]  
     if active.nil?
       # active is a field of table user_page_relationship
-      if current_user.user_page_relationships.find_by_active(true).nil?
-        active = nil
-      else
-        active = current_user.user_page_relationships.find_by_active(true).page_id
+      # active_page is a User method class
+      active = current_user.active_page 
+      if !active.nil?
+        active = active.page_id
         set_active_page(active)
       end
     end
     return active
-  end
+  end 
   
 end
