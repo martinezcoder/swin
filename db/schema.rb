@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130306151829) do
+ActiveRecord::Schema.define(:version => 20130307160019) do
 
   create_table "authentications", :force => true do |t|
     t.integer  "user_id"
@@ -37,7 +37,9 @@ ActiveRecord::Schema.define(:version => 20130306151829) do
     t.integer  "posts"
   end
 
+  add_index "page_data_days", ["day"], :name => "index_page_data_days_on_day"
   add_index "page_data_days", ["page_id", "day"], :name => "index_page_data_days_on_page_id_and_day", :unique => true
+  add_index "page_data_days", ["page_id"], :name => "index_page_data_days_on_page_id"
 
   create_table "page_relationships", :force => true do |t|
     t.integer  "follower_id"
@@ -67,9 +69,10 @@ ActiveRecord::Schema.define(:version => 20130306151829) do
   end
 
   add_index "page_streams", ["actor_id"], :name => "index_page_streams_on_actor_id"
-  add_index "page_streams", ["created_time"], :name => "index_page_streams_on_created_time"
-  add_index "page_streams", ["page_id", "created_time"], :name => "index_page_streams_on_page_id_and_created_time", :unique => true
+  add_index "page_streams", ["day"], :name => "index_page_streams_on_day"
+  add_index "page_streams", ["media_type"], :name => "index_page_streams_on_media_type"
   add_index "page_streams", ["page_id", "day"], :name => "index_page_streams_on_page_id_and_day"
+  add_index "page_streams", ["page_id", "media_type"], :name => "index_page_streams_on_page_id_and_media_type"
   add_index "page_streams", ["page_id"], :name => "index_page_streams_on_page_id"
 
   create_table "pages", :force => true do |t|
