@@ -44,7 +44,7 @@
 				<%= render 'index_update_list' %>
 			</div>
 			<div class="span3 offset2">
-				<%= link_to competitors_user_page_path(@user, ss_active_page), class: "btn btn-small btn-default"  do %>
+				<%= link_to competitors_user_page_path(@user, get_active_page), class: "btn btn-small btn-default"  do %>
 					<i class=" icon-wrench"></i> Administrar competidores
 				<% end %>
 			</div>

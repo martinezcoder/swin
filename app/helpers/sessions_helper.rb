@@ -4,7 +4,7 @@ module SessionsHelper
 
   def sign_in(user)
     cookies[:remember_token] = user.remember_token
-    session[:provider] = { FACEBOOK => { status: OFF, page: "0" }, TWITTER => { status: OFF }, YOUTUBE  => { status: OFF } }
+    session[:provider] = { FACEBOOK => { status: OFF, active_page: nil }, TWITTER => { status: OFF }, YOUTUBE  => { status: OFF } }
     self.current_user = user
   end
 
@@ -97,7 +97,6 @@ module SessionsHelper
       current_auth.token = omniauth['credentials']['token']
       current_auth.save
     end
-
     # poner provider a ON si no está ya puesto
     session[:provider][omniauth['provider']][:status] = ON
     flash[:notice] = "#{omniauth['provider']} ON" unless !msg
@@ -116,13 +115,21 @@ module SessionsHelper
     current_user.authentications.find_by_provider(provider).token
   end
 
-  def ss_active_page
-    # active is a field of table user_page_relationship
-    if current_user.user_page_relationships.find_by_active(true).nil?
-      nil
-    else
-      Page.find(current_user.user_page_relationships.find_by_active(true))  
+  def set_active_page(p_id)
+    session[:provider][FACEBOOK][:active_page] = p_id
+  end
+  
+  def get_active_page
+    active = session[:provider][FACEBOOK][:active_page]  
+    if active.nil?
+      # active is a field of table user_page_relationship
+      if current_user.user_page_relationships.find_by_active(true).nil?
+        active = nil
+      else
+        active = current_user.user_page_relationships.find_by_active(true).page_id
+      end
     end
+    return active
   end
 
 end

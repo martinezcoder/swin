@@ -4,7 +4,7 @@ class PageRelationshipsController < ApplicationController
   before_filter :signed_in_user
 
   def create    
-    mypage = current_user.pages.find(ss_active_page)
+    mypage = current_user.pages.find(get_active_page)
 
     fb_page = fb_get_pages_info(params[:page_id])
     competitor = page_create_or_update(fb_page.first)
@@ -24,7 +24,7 @@ class PageRelationshipsController < ApplicationController
   end
 
   def destroy
-    mypage = current_user.pages.find(ss_active_page)
+    mypage = current_user.pages.find(get_active_page)
     competitor = mypage.competitors.find_by_id(params[:id])
 
     mypage.unfollow!(competitor)

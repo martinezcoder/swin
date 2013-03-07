@@ -2,10 +2,10 @@ class DashboardController < ApplicationController
 before_filter :signed_in_user
 
   def main
-      if ss_active_page.nil?
+      if get_active_page.nil?
         redirect_to pages_index_path
       else
-        @page = current_user.pages.find(ss_active_page)
+        @page = current_user.pages.find(get_active_page)
 
         num = @page.competitors.count
         competitors = @page.competitors.order("fan_count")

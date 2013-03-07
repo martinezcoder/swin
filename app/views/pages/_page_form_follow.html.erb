@@ -1,4 +1,4 @@
-<% @mypage = current_user.pages.find(ss_active_page) %>
+<% @mypage = current_user.pages.find(get_active_page) %>
 
 <% if @mypage.following?(page.page_id) %>	
 	<div class="btn btn-small btn-primary">

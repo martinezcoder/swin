@@ -14,10 +14,11 @@ class PagesController < ApplicationController
     @pages = @user.pages
 
     if (@pages.count > 0) 
-      if ss_active_page.nil?
+      if get_active_page.nil?
         @user.pages.first.activate_user_page(@user) 
+        set_active_page(get_active_page)
       end
-        @page = @user.pages.find(ss_active_page)
+        @page = @user.pages.find(get_active_page)
         @competitors = @page.competitors
 
     end
@@ -25,7 +26,7 @@ class PagesController < ApplicationController
 
   def search
     @user = current_user
-    @page = @user.pages.find(ss_active_page)
+    @page = @user.pages.find(get_active_page)
     @competitors = @page.competitors
     fb_list = nil
     if params.has_key?(:search) && params[:search] != ""
@@ -56,6 +57,7 @@ class PagesController < ApplicationController
 
   def activate
     Page.find(params[:id]).activate_user_page(current_user)
+    set_active_page(params[:id].to_i)
     redirect_to user_pages_path(current_user)
   end
 

@@ -11,7 +11,7 @@
 
 						    <% if current_user.pages.count > 0 %>
 								<li><%= link_to "Dashboard",   root_path %></li>
-								<li><%= link_to "Competidores",  competitors_user_page_path(current_user, ss_active_page) %></li>
+								<li><%= link_to "Competidores",  competitors_user_page_path(current_user, get_active_page) %></li>
 							<% end %>
 
 							<li id="fat-menu" class="dropdown">
