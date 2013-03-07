@@ -124,22 +124,24 @@ module SessionsHelper
     current_user.authentications.find_by_provider(provider).token
   end
 
-  def set_active_page(p_id)
-    session[:provider][FACEBOOK][:active_page] = p_id
+  def set_active_page(page)
+    session[:provider][FACEBOOK][:active_page] = page.id
+    page.activate_user_page(current_user)
   end
-    
+
   def get_active_page
-    active = session[:provider][FACEBOOK][:active_page]  
-    if active.nil?
+    active_page_id = session[:provider][FACEBOOK][:active_page]  
+    if active_page_id.nil?
       # active is a field of table user_page_relationship
       # active_page is a User method class
-      active = current_user.active_page 
-      if !active.nil?
-        active = active.page_id
-        set_active_page(active)
+      active_page_rel = current_user.active_page_rel
+      if !active_page_rel.nil?
+        session[:provider][FACEBOOK][:active_page] = active_page_rel.page_id
+        active_page_id = active_page_rel.page_id
+#set_active_page(Page.find(active_page_rel.page_id))
       end
     end
-    return active
+    return active_page_id
   end 
   
 end

@@ -1,9 +1,11 @@
 class DashboardController < ApplicationController
 before_filter :signed_in_user
 before_filter :user_has_pages
+before_filter :has_active_page
+before_filter :has_competitors
 
   def main
-    @page = current_user.pages.find(get_active_page)
+    @page = current_user.pages.find_by_id(get_active_page)
 
     num = @page.competitors.count
     competitors = @page.competitors.order("fan_count")
@@ -25,4 +27,18 @@ before_filter :user_has_pages
   
   def engage
   end
+
+private
+
+  def has_active_page
+    begin
+      redirect_to pages_index_path if get_active_page.nil? 
+    rescue
+      redirect_to pages_index_path
+    end 
+  end
+
+  def has_competitors
+  end
+
 end

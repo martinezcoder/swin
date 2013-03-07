@@ -56,7 +56,6 @@ class Page < ActiveRecord::Base
   end
 
   def activate_user_page(user)
-    user.user_page_relationships.find_by_active(true).desactivate if !user.user_page_relationships.find_by_active(true).blank?
     user.user_page_relationships.find(self).activate
   end
 

@@ -15,8 +15,9 @@ class PagesController < ApplicationController
 
     if (@pages.count > 0) 
       if get_active_page.nil?
-        @user.pages.first.activate_user_page(@user) 
-        set_active_page(get_active_page)
+#        @user.pages.first.activate_user_page(@user) 
+#        set_active_page(get_active_page)
+        set_active_page(@user.pages.first)
       end
         @page = @user.pages.find(get_active_page)
         @competitors = @page.competitors
@@ -57,8 +58,8 @@ class PagesController < ApplicationController
   end  
 
   def activate
-    Page.find(params[:id]).activate_user_page(current_user)
-    set_active_page(params[:id].to_i)
+    page = Page.find(params[:id])
+    set_active_page(page)
     redirect_to user_pages_path(current_user)
   end
 

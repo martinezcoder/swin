@@ -26,6 +26,8 @@ class UserPageRelationship < ActiveRecord::Base
   end
 
   def activate
+    other_active_page = User.find(self.user_id).active_page_rel #user_page_relationships.find_by_active(true)
+    other_active_page.desactivate if !other_active_page.nil?
     self.active = true
     self.save!
   end
