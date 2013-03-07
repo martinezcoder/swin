@@ -1,58 +1,51 @@
 <% provide(:title, "Elija una página") %>
 
-<% if @pages.count == 0 %>
+<div class="row">
+  <aside class="span4">	
+    <section>
+		<h2>Página activa</h2>
+		<%= render @page, :origin => ''  %>
+    </section>
 
-	<%= render 'index_no_pages' %>
+    <section>    
+    	<%= render 'change_page_link' %>
+    </section>
+    
+    <section>
+		<%= render 'competitors_mini_photos' %>
+    </section>
+  </aside>
 
-<% else %>
-
-	<div class="row">
-	  <aside class="span4">	
-	    <section>
-			<h2>Página activa</h2>
-			<%= render @page, :origin => ''  %>
-	    </section>
+  <div class="span8">
+	<h1>Estas son tus páginas de Facebook</h1>
 	
-	    <section>    
-	    	<%= render 'change_page_link' %>
-	    </section>
-	    
-	    <section>
-			<%= render 'competitors_mini_photos' %>
-	    </section>
-	  </aside>
+	<h2>Elige una de tus páginas para monitorizar y comparar</h2>
 	
-	  <div class="span8">
-		<h1>Estas son tus páginas de Facebook</h1>
+	<ul class="fb_pages">
+		<% @pages.each do |page| %>
 		
-		<h2>Elige una de tus páginas para monitorizar y comparar</h2>
-		
-		<ul class="fb_pages">
-			<% @pages.each do |page| %>
-			
-				<li>
-					<%= render page, :origin => 'index' %>
+			<li>
+				<%= render page, :origin => 'index' %>
 
-				 </li>
-			<% end %>
-	
-		</ul>
+			 </li>
+		<% end %>
 
-		<div class="row" style="margin-top: 10px;"> 	
-	
-			<div class="span3">
-				<%= render 'index_update_list' %>
-			</div>
-			<div class="span3 offset2">
-				<%= link_to competitors_user_page_path(@user, get_active_page), class: "btn btn-small btn-default"  do %>
-					<i class=" icon-wrench"></i> Administrar competidores
-				<% end %>
-			</div>
+	</ul>
+
+	<div class="row" style="margin-top: 10px;"> 	
+
+		<div class="span3">
+			<%= render 'index_update_list' %>
 		</div>
-
-
+		<div class="span3 offset2">
+			<%= link_to competitors_user_page_path(@user, get_active_page), class: "btn btn-small btn-default"  do %>
+				<i class=" icon-wrench"></i> Administrar competidores
+			<% end %>
+		</div>
 	</div>
+
+
   </div>
-	
-<% end %>
+</div>
+
 

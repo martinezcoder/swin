@@ -2,6 +2,7 @@ class PageRelationshipsController < ApplicationController
   include PagesHelper
 
   before_filter :signed_in_user
+  before_filter :user_has_pages
 
   def create    
     mypage = current_user.pages.find(get_active_page)

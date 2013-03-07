@@ -43,7 +43,7 @@ module SessionsHelper
     current_user.authentications.find_by_provider(provider)
   end
 
-  # Authorization functions 
+  # Authorization functions (before_filter) 
   
   def signed_in_user
     unless signed_in?
@@ -52,6 +52,17 @@ module SessionsHelper
     end
   end
 
+  def user_has_pages
+    begin
+      pages = current_user.pages
+      redirect_to root_path unless (pages.count > 0)
+    rescue
+      redirect_to root_path
+    end 
+  end
+
+
+  # omniauth and socialnetworks authentication functions
 
   def omniauth
     @omniauth
@@ -74,7 +85,6 @@ module SessionsHelper
     sign_out
   end  
   
-
   def create_new_auth
     newauth = current_user.authentications.new
     newauth.provider = omniauth['provider']
@@ -106,7 +116,6 @@ module SessionsHelper
     session[:provider][provider][:status] = OFF    
   end
 
-
   def is_active?(provider)
     session[:provider][provider][:status] == ON
   end
@@ -127,9 +136,10 @@ module SessionsHelper
         active = nil
       else
         active = current_user.user_page_relationships.find_by_active(true).page_id
+        set_active_page(active)
       end
     end
     return active
   end
-
+  
 end

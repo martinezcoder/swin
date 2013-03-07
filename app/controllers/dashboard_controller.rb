@@ -1,5 +1,6 @@
 class DashboardController < ApplicationController
 before_filter :signed_in_user
+before_filter :user_has_pages
 
   def main
       if get_active_page.nil?

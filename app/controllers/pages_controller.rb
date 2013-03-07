@@ -4,7 +4,7 @@ class PagesController < ApplicationController
   before_filter :signed_in_user
   before_filter :correct_user, except: [:search]
   before_filter :correct_user_page, only: [:competitors, :activate]
-  before_filter :has_pages, except: [:index] #, only: [:search]
+  before_filter :user_has_pages, except: [:index]
 
   def index
     if params[:update] == 'yes'
@@ -20,7 +20,8 @@ class PagesController < ApplicationController
       end
         @page = @user.pages.find(get_active_page)
         @competitors = @page.competitors
-
+    else
+      render 'index_no_pages'
     end
   end
 
@@ -80,15 +81,6 @@ class PagesController < ApplicationController
       rescue
         redirect_to user_pages_path(current_user) 
       end
-    end
-
-    def has_pages
-      begin
-        @pages = current_user.pages
-        redirect_to root_path unless (@pages.count > 0)
-      rescue
-        redirect_to root_path
-      end 
     end
 
 end
