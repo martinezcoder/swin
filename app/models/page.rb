@@ -56,7 +56,7 @@ class Page < ActiveRecord::Base
   end
 
   def activate_user_page(user)
-    user.user_page_relationships.find(self).activate
+    user.user_page_relationships.find_by_page_id(self).activate
   end
 
 
