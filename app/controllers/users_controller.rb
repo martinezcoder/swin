@@ -3,8 +3,6 @@
 class UsersController < ApplicationController
   include PagesHelper
 
-#  before_filter :signed_in_user, except: [:new, :create]
-#  before_filter :correct_user, except: [:new, :create]
 
   def new
     omniauth = session[:omniauth]
@@ -31,6 +29,10 @@ class UsersController < ApplicationController
   end
 
 =begin
+  before_filter :signed_in_user, only: [:show]
+  before_filter :correct_user,  only: [:show]
+
+
   def show
     @user = User.find(params[:id])
   end

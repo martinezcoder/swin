@@ -24,8 +24,6 @@
 							
 								<ul class="dropdown-menu">
 
-									<li><%= link_to user_path(current_user) do %><i class="icon-user"></i> Perfil<% end %></li>
-
 									<li><%= link_to user_pages_path(current_user) do %><i class="icon-wrench"></i> Ajustes de páginas<% end %></li>
 
 									<li class="divider"></li>
@@ -38,13 +36,9 @@
 
 						<% else %>
 
-							<li><%= link_to "Home",   root_path %></li>
-							<li><%= link_to "Ayuda",  help_path %></li>
-
-
 							<li id="fat-menu" class="dropdown">
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-									Entrar <b class="caret"></b>
+									Empezar ahora <b class="caret"></b>
 								</a>
 								<ul class="dropdown-menu signinmenu">
 									<li><%= link_to "Facebook", '/auth/facebook', class: "btn btn-small btn-primary" %></li>

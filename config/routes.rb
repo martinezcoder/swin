@@ -1,17 +1,14 @@
 Swin::Application.routes.draw do
 
-  get "dashboard/main"
+  match "/dashboard/main", to: 'dashboard#main'
+  match "/dashboard/engage", to: 'dashboard#engage'
 
-  get "dashboard/engage"
-
-  get "pages/index"
-
-  get "pages/search"
+  match "pages/search", to: 'pages#search'
 
   resources :sessions, only: [:new, :destroy]
 
-  resources :users, only: [:new, :create, :show] do
-    resources :pages, only: [:index, :search] do
+  resources :users, only: [:new, :create] do
+    resources :pages, only: :index do
       member do
         get :competitors
         post :activate
@@ -24,9 +21,6 @@ Swin::Application.routes.draw do
   match '/signout', to: 'sessions#destroy', via: :delete
 
   match '/auth/:provider/callback', to: 'sessions#new'
-
-  match '/help',    to: 'static_pages#help'
-  match '/about',   to: 'static_pages#about'
 
   root to: 'static_pages#home'
 
