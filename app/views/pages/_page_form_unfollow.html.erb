@@ -1,3 +1,23 @@
-<%= link_to page_relationship_path(page), method: :delete, data: { confirm: "Confirma dejar de seguir a #{page.name}?" } do %>
+<!-- Button to trigger modal -->
+<%= link_to "#myModal#{page.id}", :data => {:toggle=>"modal"} do %>
 	<small>Dejar de seguir</small>
 <% end %>
+
+
+<!-- Modal -->
+<div id="myModal<%= page.id %>" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		<h3 id="myModalLabel">Quitar competidor</h3>
+	</div>
+	<div class="modal-body">
+		<p>Dejará de seguir a: </p>
+		<%= render page, :origin => nil %>
+	</div>
+	<div class="modal-footer">
+		<button class="btn btn-small" data-dismiss="modal" aria-hidden="true">Cancelar</button>
+		<%= link_to page_relationship_path(page), method: :delete do %>
+			<small>Dejar de seguir</small>
+		<% end %>		
+	</div>
+</div>
