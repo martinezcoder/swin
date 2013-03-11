@@ -8,7 +8,7 @@ class PagesController < ApplicationController
 
   def index
     if params[:update] == 'yes'
-      pages_update_from_facebook
+      my_admin_pages_update_from_facebook
     end
     @user = User.find(params[:user_id])
     @pages = @user.pages

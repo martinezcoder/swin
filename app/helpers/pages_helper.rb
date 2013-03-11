@@ -34,7 +34,7 @@ module PagesHelper
   end
 
 
-  def pages_update_from_facebook
+  def my_admin_pages_update_from_facebook
     
     begin
       fbpages = fb_get_my_admin_pages_info

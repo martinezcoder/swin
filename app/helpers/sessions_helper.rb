@@ -55,9 +55,9 @@ module SessionsHelper
   def user_has_pages
     begin
       pages = current_user.pages
-      redirect_to pages_index_path unless (pages.count > 0)
+      redirect_to user_pages_path unless (pages.count > 0)
     rescue
-      redirect_to pages_index_path
+      redirect_to user_pages_path
     end 
   end
 
@@ -126,7 +126,7 @@ module SessionsHelper
 
   def set_active_page(page)
     session[:provider][FACEBOOK][:active_page] = page.id
-    if page.id != current_user.active_page_rel.page_id
+    if current_user.active_page_rel.blank? ||  page.id != current_user.active_page_rel.page_id
       page.activate_user_page(current_user)
     end
   end
