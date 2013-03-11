@@ -3,7 +3,7 @@
 module PagesHelper
   include FacebookHelper
 
-  def page_create_or_update(p)
+  def page_create_or_update(p, stream=false, daily=false)
         newpage = Page.find_or_initialize_by_page_id("#{p["page_id"]}")
 
         newpage.name = p["name"]
@@ -14,6 +14,14 @@ module PagesHelper
         newpage.fan_count = p["fan_count"]
         newpage.talking_about_count = p["talking_about_count"]
         newpage.save!
+        if stream == UPDATE_STREAM
+          page_data_stream_update(page_id)
+        end
+        
+        if daily == UPDATE_DAY
+          page_data_day_update(p_id, data_date=Time.now.beginning_of_day)
+        end
+        
         newpage
   end
 
@@ -41,7 +49,7 @@ module PagesHelper
   end
 
 
-  def page_data_day_update(p_id, data_date=Time.now)
+  def page_data_day_update(p_id, data_date=Time.now.beginning_of_day)
       page = Page.find_by_id(p_id)
       pagedata = PageDataDay.find_or_initialize_by_page_id_and_day(page.id, data_date.to_i)     
       pagedata.likes = page.fan_count

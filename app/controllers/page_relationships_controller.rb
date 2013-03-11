@@ -14,8 +14,8 @@ class PageRelationshipsController < ApplicationController
 
     #if the page is not registered, then get yesterday's stream data
     if PageDataDay.find_by_page_id(competitor.id).nil?
-      page_data_stream_update(competitor.id)
-      page_data_day_update(competitor.id) 
+#      page_data_stream_update(competitor.id)
+      page_data_day_update(competitor.id)
     end
 
     respond_to do |format|
