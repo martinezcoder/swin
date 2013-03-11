@@ -1,12 +1,5 @@
 <% provide(:title, 'Buscar páginas') %>
 
-<script type="text/javascript">
-	function WaitDiv(page)
-	{
-		document.getElementById(page).style.display = 'block';
-	}
-</script>
-
 <div class="row">
   <aside class="span4">	
     <section>
@@ -32,6 +25,16 @@
 			<ul class="fb_pages">
 
 				<% if @pageslist.count > 0 %>
+
+					<script type="text/javascript">
+						$(document).ready(function(){
+						   $("button").click(function(event){
+							$(this).removeClass('btn-default').addClass('btn-primary');
+							$(this).button('loading');
+						   });
+						 });					
+					</script>
+
 					<% @pageslist.each do |p| %>
 						<li>
 							<%= render p, :origin => 'search' %>

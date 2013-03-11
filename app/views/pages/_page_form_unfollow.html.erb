@@ -1,11 +1,11 @@
 <!-- Button to trigger modal -->
-<%= link_to "#myModal#{page.id}", :data => {:toggle=>"modal"} do %>
+<%= link_to "#modal#{page.id}", :data => {:toggle=>"modal"} do %>
 	<small>Dejar de seguir</small>
 <% end %>
 
 
 <!-- Modal -->
-<div id="myModal<%= page.id %>" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div id="modal<%= page.id %>" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	<div class="modal-header">
 		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 		<h3 id="myModalLabel">Quitar competidor</h3>
