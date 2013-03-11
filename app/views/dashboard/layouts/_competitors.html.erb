@@ -1,0 +1,18 @@
+<nav class="menu_competitors">
+
+	<ul class="nav nav-pills nav-stacked newline">
+
+		<% @competitors.each do |c| %>
+		
+			<li class="newline">
+				<%= link_to '#' do%>
+			    	<%= image_tag c.pic_square, alt: c.name, class: "comp_avatar" %>
+			    	asdfas
+				<% end %>
+			</li>
+		<% end %>
+
+    </ul>
+
+</nav>
+						

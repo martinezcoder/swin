@@ -9,11 +9,15 @@
 
 						<% if signed_in? %>
 
-						    <% if current_user.pages.count > 0 %>
-								<li><%= link_to "Dashboard",   root_path %></li>
-								<li><%= link_to "Competidores",  competitors_user_page_path(current_user, get_active_page) %></li>
-							<% end %>
+							<% if is_active?(FACEBOOK) %>
+								<% @page = current_user.pages.find(get_active_page) %>
+	
+							    <% if current_user.pages.count > 0 %>
+									<li><%= link_to "Dashboard",   root_path %></li>
+									<li><%= link_to "Competidores",  competitors_user_page_path(current_user, @page.id) %></li>
+								<% end %>
 
+							<% end %>
 							<li id="fat-menu" class="dropdown">
 
 					

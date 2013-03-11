@@ -1,27 +1,39 @@
-						<nav class="menumetricas">
-							<ul class="nav nav-pills nav-stacked">
-								<% if cookies[:metrica] == '1'%>
-								    <li class="active">
-								    	<a href="#">Vista general</a>
-								    </li>
-								<% else %>
-								    <li><a href="<%= '#' %>">Vista general</a></li>
-								<% end %>
+<% if params[:tab] == FACEBOOK %>
+	<div class="page_active_dashboard">
+		<%= link_to @page.page_url, target: "_blank" do %>
+			<%= image_tag @page.pic_square, alt: @page.name, class: "imgpage", alt: "#{@page.name}" %>
+			<strong><%= @page.name %></strong>
+		<% end %>
+	</div>
+<% end %>
 
-							    <% if cookies[:metrica] == '2'%>
-									<li class="active">
-										<%= link_to "Engagement", dashboard_engage_path %>
-									</li>
-								<% else %>
-							    	<li><%= link_to "Engagement", dashboard_engage_path %></li>
-							    <% end %>
-							    
-						    	<li class="disabled"><a href="#">Tamaño</a></li>
-						    	<li class="disabled"><a href="#">Crecimiento</a></li>
-							    <li class="disabled"><a href="#">Actividad</a></li>
-							    <li class="disabled"><a href="#">Interacción</a></li>
-							    <li class="disabled"><a href="#">Embajadores</a></li>
-							    <li class="disabled"><a href="#">Influence</a></li>
-							    <li class="disabled"><a href="#">Sentiment</a></li>
-						    </ul>
-						</nav>
+<nav class="menu_metricas">
+
+	<ul class="nav nav-pills nav-stacked newline">
+
+		<% if params[:opt] == DEFAULT_OPT %>
+		    <li class="active">
+		<% else %>
+			<li>
+		<% end %>
+		    	<%= link_to "Vista general", dashboard_path(tab: params[:tab], opt: DEFAULT_OPT) %>
+		    </li>
+
+	    <% if params[:opt] == ENGAGE_OPT %>
+		    <li class="active">
+		<% else %>
+			<li>
+		<% end %>
+				<%= link_to "Engagement", dashboard_path(tab: params[:tab], opt: ENGAGE_OPT) %>
+			</li>
+	    
+    	<li class="disabled"><a href="#">Tamaño</a></li>
+    	<li class="disabled"><a href="#">Crecimiento</a></li>
+	    <li class="disabled"><a href="#">Actividad</a></li>
+	    <li class="disabled"><a href="#">Interacción</a></li>
+	    <li class="disabled"><a href="#">Embajadores</a></li>
+	    <li class="disabled"><a href="#">Influence</a></li>
+	    <li class="disabled"><a href="#">Sentiment</a></li>
+    </ul>
+</nav>
+

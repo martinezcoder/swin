@@ -1,6 +1,6 @@
 Swin::Application.routes.draw do
 
-  match "/dashboard/main", to: 'dashboard#main'
+  match "/dashboard", to: 'dashboard#main'
   match "/dashboard/engage", to: 'dashboard#engage'
 
   match "pages/search", to: 'pages#search'
