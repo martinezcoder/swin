@@ -17,25 +17,21 @@ module PagesHelper
         if stream == UPDATE_STREAM
           page_data_stream_update(page_id)
         end
-        
+
         if daily == UPDATE_DAY
           page_data_day_update(p_id, data_date=Time.now.beginning_of_day)
         end
-        
+
         newpage
   end
-
 
   def pages_create_or_update(pagelist)
     pagelist.each do |p|
       user_page = page_create_or_update(p)
-      current_user.rel_user_page!(Page.find_by_page_id("#{p["page_id"]}"))
     end
   end
 
-
-  def my_admin_pages_update_from_facebook
-    
+  def my_admin_pages_update_from_facebook    
     begin
       fbpages = fb_get_my_admin_pages_info
     rescue
@@ -43,11 +39,12 @@ module PagesHelper
       sign_out
       redirect_to root_path
     end
-
     pages_create_or_update(fbpages)
-
+    fbpages.each do |p|
+      user_page = page_create_or_update(p)
+      current_user.rel_user_page!(Page.find_by_page_id("#{p["page_id"]}"))
+    end
   end
-
 
   def page_data_day_update(p_id, data_date=Time.now.beginning_of_day)
       page = Page.find_by_id(p_id)

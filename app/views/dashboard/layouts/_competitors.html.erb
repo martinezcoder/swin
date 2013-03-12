@@ -5,9 +5,13 @@
 		<% @competitors.each do |c| %>
 		
 			<li class="newline">
-				<%= link_to '#' do%>
+				<%= link_to '#', class: 'nav-comp' do%>
 			    	<%= image_tag c.pic_square, alt: c.name, class: "comp_avatar" %>
-			    	asdfas
+			    	<% if c.name.length > 15 %>
+			    		<%= c.name[0..15] %>...
+			    	<% else %>
+			    		<%= c.name %>
+			    	<% end %>
 				<% end %>
 			</li>
 		<% end %>

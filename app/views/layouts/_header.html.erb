@@ -1,3 +1,5 @@
+
+
 	<header class="navbar navbar-fixed-top">
 		<div class="navbar-inner">
 			<div class="container">
@@ -6,18 +8,29 @@
 				<% end %>
 				<nav>
 					<ul class="nav pull-right">
-
+		
 						<% if signed_in? %>
 
 							<% if is_active?(FACEBOOK) %>
 								<% @page = current_user.pages.find(get_active_page) %>
 	
 							    <% if current_user.pages.count > 0 %>
-									<li><%= link_to "Dashboard",   root_path %></li>
-									<li><%= link_to "Competidores",  competitors_user_page_path(current_user, @page.id) %></li>
+
+								    <ul class="nav nav-pills">
+										<li class="active"><%= link_to "Cuadro de mandos",  root_path %></li>
+										<li class="active"><%= link_to "Mis competidores",  competitors_user_page_path(current_user, @page.id) %></li>
+								    </ul>
+
+    								<li class="search-box">
+										<%= form_tag(pages_search_path, :method => "get", class: "navbar-search pull-left") do %>
+										  <%= text_field_tag(:search, params[:search], class: "search-query", placeholder: "Buscar competidores...", autocomplete: "off") %>
+										<% end %>
+									</li>
+
 								<% end %>
 
 							<% end %>
+							
 							<li id="fat-menu" class="dropdown">
 
 					
@@ -28,7 +41,7 @@
 							
 								<ul class="dropdown-menu">
 
-									<li><%= link_to user_pages_path(current_user) do %><i class="icon-wrench"></i> Ajustes de páginas<% end %></li>
+									<li><%= link_to user_pages_path(current_user) do %><i class="icon-wrench"></i> Cambiar de página<% end %></li>
 
 									<li class="divider"></li>
 									<li>

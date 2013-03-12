@@ -1,6 +1,6 @@
 <% provide(:title, @title) %>
 <div class="row">
-  <aside class="span4">
+  <aside class="span3">
     <section>
 		<h2>Página activa</h2>
 		<%= render @page, :origin => nil %>
@@ -15,12 +15,8 @@
     </section>
   </aside>
 
-  <div class="span8">
+  <div class="span5 offset1">
     <h3><%= @title %></h3>
-
-	<%= link_to pages_search_path, class: "btn btn-danger", style: "margin-bottom: 20px;"  do %>
-		<i class=" icon-search icon-white"></i> Buscar competidores
-	<% end %>
   		
     <% if @competitors.any? %>
       <ul class="fb_pages">

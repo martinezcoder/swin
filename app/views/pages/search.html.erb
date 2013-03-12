@@ -1,7 +1,9 @@
+
 <% provide(:title, 'Buscar páginas') %>
 
 <div class="row">
-  <aside class="span4">	
+
+  <aside class="span3">	
     <section>
 		<h2>Página activa</h2>
 		<%= render @page, :origin => nil  %>
@@ -16,7 +18,7 @@
     </section>
   </aside>
 
-  <div class="span8">
+  <div class="span5 offset1">
     <h3>Buscar competidores</h3>
 
 		<%= render 'search_form' %>		
@@ -27,12 +29,14 @@
 				<% if @pageslist.count > 0 %>
 
 					<script type="text/javascript">
+/*
 						$(document).ready(function(){
 						   $("button").click(function(event){
 							$(this).removeClass('btn-default').addClass('btn-primary');
 							$(this).button('loading');
 						   });
 						 });					
+*/
 					</script>
 
 					<% @pageslist.each do |p| %>

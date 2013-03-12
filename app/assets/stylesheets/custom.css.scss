@@ -302,6 +302,7 @@ input {
     padding: 0 10px;
     border-left: 1px solid $grayLighter;
     color: gray;
+    min-width: 50px;
     &:first-child {
       padding-left: 0;
       border: 0;
@@ -315,7 +316,15 @@ input {
 
 .imgpage {
   float: left;
-  margin-right: 10px;
+  padding: 5px;
+  border: solid 2px transparent;
+  &:hover {
+    border: solid 2px #eee;
+  }
+}
+
+.search-box {
+  margin-top:1px; 
 }
 
 .mini_page_dashboard {
@@ -340,7 +349,6 @@ input {
   padding-top: 40px;
 }
 
-
 .data_graph {
   padding: 15px;
   margin: 0 0 10px 0px;
@@ -355,4 +363,18 @@ input {
   background:transparent url(/assets/loader.gif) center no-repeat;
   min-height: 160px;
   @include recuadrogris;
+}
+
+
+.data_nil {
+  padding: 15px;
+  margin: 0 0 10px 0px;
+  background:solid center no-repeat;
+  min-height: 100px;
+  @include recuadrogris;
+}
+
+
+.input-search {
+  margin-bottom: 0px;
 }

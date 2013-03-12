@@ -49,7 +49,7 @@ class PagesController < ApplicationController
   end
 
   def competitors
-    @title = "Competidores"
+    @title = "Siguiendo a:"
     @page = Page.find(params[:id])
     @competitors = @page.competitors.order("created_at DESC")
     render 'show_competitors'
