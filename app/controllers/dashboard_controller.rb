@@ -28,24 +28,28 @@ class DashboardController < ApplicationController
         end
     
         @data_nil = []
-        @data_nil[0] = ["Competidores", "Likes", "Activos"]
+        @data_nil[0] = ["Id", "Competidores", "Likes", "Activos"]
         num = @num_competitors
         for i in 0..num-1 do
-          @data_nil[i+1] = [@competitors[i].name, 0, 0]
+          @data_nil[i+1] = [(i+1).to_s, @competitors[i].name, 0, 0]
         end
-        @data_nil[num+1] = [@page.name, 0, 0]
+        @data_nil[num+1] = ['Yo', @page.name, 0, 0]
     
         @data = []
-        @data[0] = ["Competidores", "Likes", "Activos"]
+        @data[0] = ["Id", "Competidores", "Likes", "Activos"]
         for i in 0..num-1 do
-          @data[i+1] = [@competitors[i].name, @competitors[i].fan_count, @competitors[i].talking_about_count]
+          @data[i+1] = [(i+1).to_s, @competitors[i].name, @competitors[i].fan_count, @competitors[i].talking_about_count]
         end
-        @data[num+1] = [@page.name, @page.fan_count, @page.talking_about_count]
+        @data[num+1] = ['Yo', @page.name, @page.fan_count, @page.talking_about_count]
         
-        @max_value = @page.competitors.maximum("fan_count")
+        @max_value = @page.competitors.maximum("fan_count")        
+        @maxim = {} 
+        @maxim["Me gusta"] = @page.competitors.maximum("fan_count")
+        @maxim["Activos"] = @page.competitors.maximum("talking_about_count")
+
       end
     else
-      redirect_to dashboard_path(tab: FACEBOOK, opt: DEFAULT_OPT)
+      redirect_to dashboard_path(tab: FACEBOOK, opt: FANS_OPT)
     end
   end
   

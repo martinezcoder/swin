@@ -11,13 +11,6 @@
 
 	<ul class="nav nav-pills nav-stacked newline">
 
-		<% if params[:opt] == DEFAULT_OPT %>
-		    <li class="active">
-		<% else %>
-			<li>
-		<% end %>
-		    	<%= link_to "Vista general", dashboard_path(tab: params[:tab], opt: DEFAULT_OPT) %>
-		    </li>
 
 	    <% if params[:opt] == ENGAGE_OPT %>
 		    <li class="active">
@@ -26,6 +19,14 @@
 		<% end %>
 				<%= link_to "Engagement", dashboard_path(tab: params[:tab], opt: ENGAGE_OPT) %>
 			</li>
+
+		<% if params[:opt] == FANS_OPT %>
+		    <li class="active">
+		<% else %>
+			<li>
+		<% end %>
+		    	<%= link_to "Vista general", dashboard_path(tab: params[:tab], opt: FANS_OPT) %>
+		    </li>
 	    
     	<li class="disabled"><a href="#">Tamaño</a></li>
     	<li class="disabled"><a href="#">Crecimiento</a></li>

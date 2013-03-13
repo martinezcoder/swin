@@ -2,7 +2,7 @@ ON=1
 OFF=0
 UPDATE_STREAM=true
 UPDATE_DAY=true
-DEFAULT_OPT= '0'
+FANS_OPT= '0'
 ENGAGE_OPT= '1'
 
 FACEBOOK= 'facebook'
