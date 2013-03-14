@@ -39,7 +39,7 @@
   	dataChart[1] = new google.visualization.DataView(dataTable[1]);
 
 	function drawTable(tablex, datax) {
-		tablex.draw(datax, {allowHtml: true});
+		tablex.draw(datax, {allowHtml: true, showRowNumber: true});
 	}
 	
 	function drawcharts(chartx, data, n) {
@@ -52,11 +52,20 @@
       google.visualization.events.addListener(tablex, 'select', function() {
         chartx.setSelection(tablex.getSelection());
       });
-  
     }
+	
 
     var table = new google.visualization.Table(document.getElementById('table'));
     var chart = new google.visualization.ComboChart(document.getElementById('graph_div'));
+
+
+  
+	var formatter = new google.visualization.ColorFormat();
+	formatter.addRange(0, 10000, '#0088CC', '');
+	formatter.format(dataTable[1], 0);
+
+	var formatter = new google.visualization.NumberFormat({fractionDigits: 0});
+	formatter.format(dataTable[1], 4);
 
   	var sub_datatable = new google.visualization.DataView(dataTable[1]);
   	sub_datatable.setColumns([0,1,2,3,4]);

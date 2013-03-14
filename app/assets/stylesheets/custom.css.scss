@@ -439,9 +439,9 @@ input {
     margin: 20px; 
     padding-top: 5px; 
     text-align: center;
-    border: 1px solid #999999; 
+    border: 1px solid #0088CC; 
     background-color: #0088CC;
-  
+
     -moz-border-radius: 15px 15px 35px 35px;
     -webkit-border-radius: 15px 15px 25px 25px;
     border-radius: 15px 15px 35px 35px;
@@ -455,7 +455,33 @@ input {
     /*  text-shadow: rgba(0,0,0,0.5) 1px 1px 1px; */
       color: white;
     }
+
   }
+        
+  .golden {
+    border: 1px solid #FFD700; 
+    background-color: #FFD700;
+    background: radial-gradient(contain circle, #FFD700, #006699);
+    background:  -moz-radial-gradient(center, ellipse, #FFD700 10%, #006699 200%);
+    background:  -webkit-radial-gradient(center, ellipse, #FFD700 10%, #006699 200%);
+  }
+
+  .silver {
+    border: 1px solid #C0C0C0;
+    background-color: #C0C0C0;
+    background: radial-gradient(contain circle, #C0C0C0, #006699);
+    background:  -moz-radial-gradient(center, ellipse, #C0C0C0 10%, #006699 200%);
+    background:  -webkit-radial-gradient(center, ellipse, #C0C0C0 10%, #006699 200%);
+  }
+     
+  .bronze {
+    border: 1px solid #D2B48C;
+    background-color: #D2B48C;
+    background: radial-gradient(contain circle, #D2B48C, #006699);
+    background:  -moz-radial-gradient(center, ellipse, #D2B48C 10%, #006699 300%);
+    background:  -webkit-radial-gradient(center, ellipse, #D2B48C 10%, #006699 300%);
+  }
+
 }
 
 

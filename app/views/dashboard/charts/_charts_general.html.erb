@@ -80,6 +80,10 @@
     var chartActives = new google.visualization.ComboChart(document.getElementById('graph_div.2'));
 
 
+	var formatter = new google.visualization.NumberFormat({fractionDigits: 0});
+	formatter.format(dataTable[1], 3);
+	formatter.format(dataTable[1], 4);
+	
     table.draw(dataTable[1], {allowHtml: true});
 	drawcharts(0);
 	drawcharts(1);
