@@ -12,9 +12,10 @@
 						<% if signed_in? %>
 
 							<% if is_active?(FACEBOOK) %>
-								<% @page = current_user.pages.find(get_active_page) %>
 	
 							    <% if current_user.pages.count > 0 %>
+
+									<% @page = current_user.pages.find(get_active_page) %>
 
 								    <ul class="nav nav-pills">
 								    	<% if session[:active][:screen] == SC_DASHBOARD %>
