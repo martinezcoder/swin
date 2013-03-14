@@ -181,6 +181,13 @@ aside {
   
 }
 
+.normal_logo {
+  height: 50px;
+  width: 50px;
+  
+}
+
+
 .user-session {
   display: inline-block;
   max-width: 175px;
@@ -358,20 +365,16 @@ input {
 
 .data_graph {
   display: inline-block;
+  float: left;
   padding: 15px;
   margin: 0 0 10px 0px;
   background:transparent url(/assets/loader.gif) center no-repeat;
   min-height: 100px;
-  min-width: 350px;
+//  min-width: 350px;
   &:first-child {
     margin: 0 5px 10px 0px;
   }
   @include recuadrogris;  
-
-  .graph_div{
-    float: left;
-  }
-
 }
 
 
@@ -407,3 +410,53 @@ input {
 .input-search {
   margin-bottom: 0px;
 }
+
+// Engage Medals!
+
+.engage_div {
+  display: inline-block;
+  float: left;
+  padding: 15px;
+  margin: 0 0 10px 0px;
+  height: 200px;
+  width: 550px;
+  @include recuadrogris;  
+}
+
+
+#engageBox { 
+  float:left; 
+  position:relative;
+  margin-right: 30px;
+  margin-bottom: 30px;
+
+  .engageMedal {
+    position:absolute;
+    top:10px;
+    left:14px;
+    width: 30px;
+    height: 25px;
+    margin: 20px; 
+    padding-top: 5px; 
+    text-align: center;
+    border: 1px solid #999999; 
+    background-color: #0088CC;
+  
+    -moz-border-radius: 15px 15px 35px 35px;
+    -webkit-border-radius: 15px 15px 25px 25px;
+    border-radius: 15px 15px 35px 35px;
+  
+    -moz-box-shadow: rgb(150,150,150) 2px 2px 5px;
+    -webkit-box-shadow: rgb(150,150,150) 2px 2px 5px;
+    box-shadow: rgb(150,150,150) 2px 2px 5px;  
+
+    #engageNumber {
+      font: bold 16px verdana, sans-serif;
+    /*  text-shadow: rgba(0,0,0,0.5) 1px 1px 1px; */
+      color: white;
+    }
+  }
+}
+
+
+

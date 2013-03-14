@@ -1,0 +1,74 @@
+<!--Load the AJAX API-->
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript">
+  // Load the Visualization API and the chart package.
+  google.load('visualization', '1', {packages: ['corechart','table']});
+</script>
+<script type="text/javascript">
+
+	// Set a callback to run when the Google Visualization API is loaded.
+  google.setOnLoadCallback(drawVisualization);
+
+  function drawVisualization() {
+
+	var options = {title:'', 
+					colors: ['#0088CC'], 
+					width: 350, 
+					height: 200, 
+					seriesType: "bars", 
+					animation:{duration: 1500,easing: 'out'}, 
+					hAxes:[{title:'Competidores'}],
+					vAxis: {minValue:0, maxValue:<%= @max %>},
+					fontSize: 10,
+					legend: {position: 'top'}
+					};
+
+   // Some raw data (not necessarily accurate)
+
+	var rowDataNil = <%= raw @data_nil %>;
+	var rowData = <%= raw @data %>;
+
+    // Create and populate the data tables.
+	var dataTable = [];
+    dataTable[0] = google.visualization.arrayToDataTable(rowDataNil);
+    dataTable[1] = google.visualization.arrayToDataTable(rowData);
+
+  	// Data
+  	var dataChart = []
+  	dataChart[0] = new google.visualization.DataView(dataTable[0]);
+  	dataChart[1] = new google.visualization.DataView(dataTable[1]);
+
+	function drawTable(tablex, datax) {
+		tablex.draw(datax, {allowHtml: true});
+	}
+	
+	function drawcharts(chartx, data, n) {
+		data[n].setColumns([0, 4, {sourceColumn:2, role:'tooltip',type:'string'}]);
+	    chartx.draw(data[n], options); 
+	}
+
+    function addSelectListeners(chartx, tablex)
+    {
+      google.visualization.events.addListener(tablex, 'select', function() {
+        chartx.setSelection(tablex.getSelection());
+      });
+  
+    }
+
+    var table = new google.visualization.Table(document.getElementById('table'));
+    var chart = new google.visualization.ComboChart(document.getElementById('graph_div'));
+
+  	var sub_datatable = new google.visualization.DataView(dataTable[1]);
+  	sub_datatable.setColumns([0,1,2,3,4]);
+
+	drawTable(table, sub_datatable);
+	drawcharts(chart, dataChart, 0);
+	drawcharts(chart, dataChart, 1);
+
+    addSelectListeners(chart, table);
+
+  }
+
+
+</script>
+

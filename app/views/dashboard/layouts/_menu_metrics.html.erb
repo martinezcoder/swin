@@ -1,4 +1,4 @@
-<% if params[:tab] == FACEBOOK %>
+<% if session[:active][:tab] == FACEBOOK %>
 	<div class="page_active_dashboard">
 		<%= link_to @page.page_url, target: "_blank" do %>
 			<%= image_tag @page.pic_square, alt: @page.name, class: "imgpage", alt: "#{@page.name}" %>
@@ -12,20 +12,20 @@
 	<ul class="nav nav-pills nav-stacked newline">
 
 
-	    <% if params[:opt] == ENGAGE_OPT %>
+	    <% if session[:active][:opt] == OPT_ENGAGE %>
 		    <li class="active">
 		<% else %>
 			<li>
 		<% end %>
-				<%= link_to "Engagement", dashboard_path(tab: params[:tab], opt: ENGAGE_OPT) %>
+				<%= link_to "Engagement", dashboard_path %>
 			</li>
 
-		<% if params[:opt] == FANS_OPT %>
+		<% if session[:active][:opt] == OPT_GENERAL %>
 		    <li class="active">
 		<% else %>
 			<li>
 		<% end %>
-		    	<%= link_to "Vista general", dashboard_path(tab: params[:tab], opt: FANS_OPT) %>
+		    	<%= link_to "Vista general", dashboard_general_path %>
 		    </li>
 	    
     	<li class="disabled"><a href="#">Tamaño</a></li>

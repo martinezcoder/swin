@@ -1,0 +1,12 @@
+  
+
+<% @data.drop(1).each do |logo| %>
+
+	<div id="engageBox">
+	  <%= raw logo[5] %>
+	  <div class="engageMedal golden">
+	     <span id="engageNumber"><%= raw logo[4] %></span>
+	  </div>
+	</div>
+	
+<% end %>  

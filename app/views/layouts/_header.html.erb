@@ -17,8 +17,20 @@
 							    <% if current_user.pages.count > 0 %>
 
 								    <ul class="nav nav-pills">
-										<li class="active"><%= link_to "Cuadro de mandos",  root_path %></li>
-										<li class="active"><%= link_to "Mis competidores",  competitors_user_page_path(current_user, @page.id) %></li>
+								    	<% if session[:active][:screen] == SC_DASHBOARD %>
+										<li class="active">
+										<% else %>
+										<li>
+										<% end %>
+											<%= link_to "Cuadro de mandos",  root_path %>
+										</li>
+								    	<% if session[:active][:screen] == SC_COMPETITORS %>
+										<li class="active">
+										<% else %>
+										<li>
+										<% end %>
+											<%= link_to "Mis competidores",  competitors_user_page_path(current_user, @page.id) %>
+										</li>
 								    </ul>
 
     								<li class="search-box">

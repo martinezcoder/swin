@@ -1,62 +1,109 @@
+# encoding: UTF-8
+
 class DashboardController < ApplicationController
 include DashboardHelper
 
   before_filter :signed_in_user
   before_filter :user_has_pages
   before_filter :has_active_page
-  before_filter :has_competitors
+  before_filter :has_competitors, except: :no_competitors
 
-  def main
-    if params[:tab] == FACEBOOK
-      @min_competitors = 3
-      @page = current_user.pages.find_by_id(get_active_page)
-      @competitors = @page.competitors.order("fan_count")      
-      @num_competitors = @page.competitors.count
+  def no_competitors
+    session[:active] = { tab: FACEBOOK, opt: OPT_NO_COMPETITORS, screen: SC_DASHBOARD}
+    @page = current_user.pages.find_by_id(get_active_page)
+  end
 
-      if @num_competitors >= @min_competitors
+  def engage
+    session[:active] = { tab: FACEBOOK, opt: OPT_ENGAGE, screen: SC_DASHBOARD}    
+    @page = current_user.pages.find_by_id(get_active_page)    
 
-        # update only every if last updated was previous than 2 hours ago 
-        if @page.updated_at < 1.hour.ago
-          # updating competitor data
-          page_ids = []
-          @competitors.each do |p|
-            page_ids = page_ids + [p.page_id]
-          end 
-          page_ids = page_ids + [@page.page_id]
-          fb_pages_info_list = fb_get_pages_info(page_ids.join(","))
-    
-          pages_create_or_update(fb_pages_info_list)
-        end
+    competitors = []
+    competitors[0] = @page
+    competitors = competitors + @page.competitors   
+    num = competitors.length
 
-        @data_nil = []
-        @data_nil[0] = ["Id", "Logo", "Competidores", "Likes", "Activos"]
-        num = @num_competitors
-        for i in 0..num-1 do
-          @data_nil[i+1] = [(i+1).to_s, logo(@competitors[i].page_url, @competitors[i].pic_square), @competitors[i].name, 0, 0]
-        end
-        @data_nil[num+1] = ['Yo', logo(@page.page_url, @page.pic_square), @page.name, 0, 0]
-    
-        @data = []
-        @data[0] = ["Id", "Logo", "Competidores", "Likes", "Activos"]
-        for i in 0..num-1 do
-          @data[i+1] = [(i+1).to_s, logo(@competitors[i].page_url, @competitors[i].pic_square), @competitors[i].name, @competitors[i].fan_count, @competitors[i].talking_about_count]
-        end
-        @data[num+1] = ['Yo', logo(@page.page_url, @page.pic_square), @page.name, @page.fan_count, @page.talking_about_count]
-        
-        @max_value = @page.competitors.maximum("fan_count")        
-        @maxim = {} 
-        @maxim["Me gusta"] = @page.competitors.maximum("fan_count")
-        @maxim["Activos"] = @page.competitors.maximum("talking_about_count")
-
-      end
-    else
-      redirect_to dashboard_path(tab: FACEBOOK, opt: FANS_OPT)
+    css1 = 'mini_logo'
+    css2 = 'normal_logo'
+    @data_nil = []
+    @data_nil[0] = ["Id", "Logo", "Nombre", "Tipo", "Engagement", "pic"]
+    for i in 0..num-1 do
+      @data_nil[i+1] = [i.to_s,
+                      logo(competitors[i].page_url, competitors[i].pic_square, css1),
+                      competitors[i].name, 
+                      competitors[i].page_type, 
+                      0,
+                      logo(competitors[i].page_url, competitors[i].pic_square, css2)]
     end
+
+    @max = 0
+    @data = []
+    @data[0] = ["Id", "Logo", "Nombre", "Tipo", "Engagement", "pic"]
+    for i in 0..num-1 do
+      engage = get_engage(competitors[i].fan_count, competitors[i].talking_about_count)
+      @data[i+1] = [  i.to_s, 
+                    logo(competitors[i].page_url, competitors[i].pic_square, css1), 
+                    competitors[i].name, 
+                    competitors[i].page_type, 
+                    engage,
+                    logo(competitors[i].page_url, competitors[i].pic_square, css2)]
+      @max = engage if engage > @max
+    end
+
+    @max = 100 if @max < 100 
+
+  end
+
+
+  def general
+    session[:active] = { tab: FACEBOOK, opt: OPT_GENERAL, screen: SC_DASHBOARD}
+    @page = current_user.pages.find_by_id(get_active_page)
+
+    competitors = []
+    competitors[0] = @page
+    competitors = competitors + @page.competitors      
+    # update only every if last updated was previous than 3 hours ago 
+    if @page.updated_at < 2.hour.ago
+      # updating competitor data
+      page_ids = []
+      competitors.each do |p|
+        page_ids = page_ids + [p.page_id]
+      end 
+      page_ids = page_ids + [@page.page_id]
+      fb_pages_info_list = fb_get_pages_info(page_ids.join(","))
+
+      pages_create_or_update(fb_pages_info_list)
+    end
+
+
+    @maxlikes = 0
+    @maxactiv = 0
+
+    mini_logo = 'mini_logo'
+    @data_nil = []
+    @data_nil[0] = ["Id", "Logo", "Nombre", "Likes", "Activos"]
+    num = competitors.length
+    for i in 0..num-1 do
+      @maxlikes = competitors[i].fan_count if competitors[i].fan_count > @maxlikes
+      @maxactiv = competitors[i].talking_about_count if competitors[i].talking_about_count > @maxactiv 
+      @data_nil[i+1] = [i.to_s, 
+                        logo(competitors[i].page_url, competitors[i].pic_square, mini_logo), 
+                        competitors[i].name, 
+                        0, 
+                        0]
+    end
+
+    @data = []
+    @data[0] = ["Id", "Logo", "Nombre", "Likes", "Activos"]
+    for i in 0..num-1 do
+      @data[i+1] = [  i.to_s, 
+                    logo(competitors[i].page_url, competitors[i].pic_square, mini_logo), 
+                    competitors[i].name, 
+                    competitors[i].fan_count, 
+                    competitors[i].talking_about_count]
+    end
+
   end
   
-  def engage
-  end
-
 
 private
 
@@ -69,6 +116,16 @@ private
   end
 
   def has_competitors
+    begin
+      min_competitors = 3
+      page = current_user.pages.find_by_id(get_active_page)
+      num_competitors = page.competitors.count
+      if num_competitors < min_competitors
+        redirect_to dashboard_no_competitors_path
+      end
+    rescue
+      redirect_to dashboard_no_competitors_path
+    end
   end
 
 end
