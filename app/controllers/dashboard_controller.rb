@@ -20,35 +20,36 @@ include DashboardHelper
     competitors = []
     competitors[0] = @page
     competitors = competitors + @page.competitors   
-    num = competitors.length
 
     css1 = 'mini_logo'
     css2 = 'normal_logo'
-    @data_nil = []
-    @data_nil[0] = ["Id", "Logo", "Nombre", "Tipo", "Engagement", "pic"]
-    for i in 0..num-1 do
-      @data_nil[i+1] = [i.to_s,
-                      logo(competitors[i].page_url, competitors[i].pic_square, css1),
-                      competitors[i].name, 
-                      competitors[i].page_type, 
-                      0,
-                      logo(competitors[i].page_url, competitors[i].pic_square, css2)]
-    end
 
-    @max = 0
-    @data = []
-    @data[0] = ["Id", "Logo", "Nombre", "Tipo", "Engagement", "pic"]
+    num = competitors.length
+    compList = []
     for i in 0..num-1 do
       engage = get_engage(competitors[i].fan_count, competitors[i].talking_about_count)
-      @data[i+1] = [  i.to_s, 
-                    logo(competitors[i].page_url, competitors[i].pic_square, css1), 
-                    competitors[i].name, 
-                    competitors[i].page_type, 
-                    engage,
-                    logo(competitors[i].page_url, competitors[i].pic_square, css2)]
-      @max = engage if engage > @max
+      compList[i] = [ logo(competitors[i].page_url, competitors[i].pic_square, competitors[i].name, css1), 
+                      competitors[i].name, 
+                      competitors[i].page_type, 
+                      engage,
+                      logo(competitors[i].page_url, competitors[i].pic_square, competitors[i].name, css2)]
     end
 
+    compList = compList.sort_by { |a, b, c, d, e| d }
+    compList = compList.reverse
+
+    @data = []
+    @data_nil = []
+    @data[0] = ["Id", "Logo", "Nombre", "Tipo", "Engagement", "pic"]
+    @data_nil[0] = @data[0]
+ 
+    for i in 0..compList.length-1 do
+      @data_nil[i+1] = [(i+1).to_s] + compList[i]
+      @data_nil[i+1][4] = 0
+      @data[i+1] = [(i+1).to_s] + compList[i]
+    end
+
+    @max = compList[compList.length-1][3]
     @max = 100 if @max < 100 
 
   end
@@ -86,7 +87,7 @@ include DashboardHelper
       @maxlikes = competitors[i].fan_count if competitors[i].fan_count > @maxlikes
       @maxactiv = competitors[i].talking_about_count if competitors[i].talking_about_count > @maxactiv 
       @data_nil[i+1] = [i.to_s, 
-                        logo(competitors[i].page_url, competitors[i].pic_square, mini_logo), 
+                        logo(competitors[i].page_url, competitors[i].pic_square, competitors[i].name, mini_logo), 
                         competitors[i].name, 
                         0, 
                         0]
@@ -96,14 +97,14 @@ include DashboardHelper
     @data[0] = ["Id", "Logo", "Nombre", "Likes", "Activos"]
     for i in 0..num-1 do
       @data[i+1] = [  i.to_s, 
-                    logo(competitors[i].page_url, competitors[i].pic_square, mini_logo), 
+                    logo(competitors[i].page_url, competitors[i].pic_square, competitors[i].name, mini_logo), 
                     competitors[i].name, 
                     competitors[i].fan_count, 
                     competitors[i].talking_about_count]
     end
 
   end
-  
+
 
 private
 

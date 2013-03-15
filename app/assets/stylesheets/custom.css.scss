@@ -446,9 +446,9 @@ input {
     -webkit-border-radius: 15px 15px 25px 25px;
     border-radius: 15px 15px 35px 35px;
   
-    -moz-box-shadow: rgb(150,150,150) 2px 2px 5px;
-    -webkit-box-shadow: rgb(150,150,150) 2px 2px 5px;
-    box-shadow: rgb(150,150,150) 2px 2px 5px;  
+    -moz-box-shadow: rgb(150,150,150) 2px 2px 2px;
+    -webkit-box-shadow: rgb(150,150,150) 2px 2px 2px;
+    box-shadow: rgb(150,150,150) 2px 2px 2px;  
 
     #engageNumber {
       font: bold 16px verdana, sans-serif;
@@ -464,6 +464,10 @@ input {
     background: radial-gradient(contain circle, #FFD700, #006699);
     background:  -moz-radial-gradient(center, ellipse, #FFD700 10%, #006699 200%);
     background:  -webkit-radial-gradient(center, ellipse, #FFD700 10%, #006699 200%);
+  
+    -moz-box-shadow: rgb(240,210,20) 0px 0px 10px;
+    -webkit-box-shadow: rgb(240,210,20) 0px 0px 10px;
+    box-shadow: rgb(240,210,20) 0px 0px 10px;  
   }
 
   .silver {
@@ -472,6 +476,11 @@ input {
     background: radial-gradient(contain circle, #C0C0C0, #006699);
     background:  -moz-radial-gradient(center, ellipse, #C0C0C0 10%, #006699 200%);
     background:  -webkit-radial-gradient(center, ellipse, #C0C0C0 10%, #006699 200%);
+    
+    -moz-box-shadow: rgb(150,150,150) 2px 2px 2px;
+    -webkit-box-shadow: rgb(150,150,150) 2px 2px 2px;
+    box-shadow: rgb(150,150,150) 2px 2px 2px;  
+
   }
      
   .bronze {

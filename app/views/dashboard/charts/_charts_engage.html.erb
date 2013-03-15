@@ -39,7 +39,7 @@
   	dataChart[1] = new google.visualization.DataView(dataTable[1]);
 
 	function drawTable(tablex, datax) {
-		tablex.draw(datax, {allowHtml: true, showRowNumber: true});
+		tablex.draw(datax, {allowHtml: true}); //, showRowNumber: true});
 	}
 	
 	function drawcharts(chartx, data, n) {

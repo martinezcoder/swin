@@ -2,7 +2,7 @@
         <div class="user_avatars">
           <% @competitors.each do |comp| %>
           	<%= link_to comp.page_url, target: "_blank"  do %>
-          		<%= image_tag comp.pic_square, alt: comp.name, class: "img-rounded imgpage" %>
+          		<%= image_tag comp.pic_square, class: "img-rounded imgpage", alt: comp.name, title: comp.name %>
           	<% end %>
           <% end %>
         </div>

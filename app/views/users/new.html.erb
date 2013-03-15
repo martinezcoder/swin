@@ -18,10 +18,10 @@
 		      <% else %>
 		      	<%= f.text_field :email %>
 			  <% end %>
-     		  
-			  <%= f.label :terms_of_service, { class: "checkbox" } do %>
-			  	<%= f.check_box :terms_of_service %>
-			  	Al registrarme, acepto las condiciones de uso y la política de protección de datos.
+
+			  <%=  f.label :terms_of_service, :hidden, { class: "checkbox" } do %>
+			  	<%= f.check_box :terms_of_service, :checked => true, :style => 'visibility: hidden' %>
+<!--			  	Al registrarme, acepto las condiciones de uso y la política de protección de datos.-->
 			  <% end %>
 
 		      <%= f.submit "Confirmar", class: "btn btn-default btn-primary" %>

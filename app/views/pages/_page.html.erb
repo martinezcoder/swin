@@ -1,4 +1,4 @@
-		    	<%= image_tag page.pic_square, alt: page.name, class: "imgpage" %>
+		    	<%= image_tag page.pic_square, class: "imgpage", alt: page.name, title: page.name %>
 				<strong>
 					<% if page.name.length > 16 %>
 			    		<%= page.name[0..16] %>...
