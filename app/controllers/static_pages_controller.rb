@@ -1,4 +1,5 @@
 class StaticPagesController < ApplicationController
+  before_filter :signed_in_user, only: :habla
   
   def home
     if signed_in?
@@ -11,4 +12,7 @@ class StaticPagesController < ApplicationController
     end
   end
 
+  def habla
+    session[:active] = { screen: SC_PARTICIPA }
+  end
 end

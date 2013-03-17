@@ -7,6 +7,7 @@
 					SocialWin Analytics <small><em>βeta</em></small> 
 				<% end %>
 				<nav>
+					
 					<ul class="nav pull-right">
 		
 						<% if signed_in? %>
@@ -43,6 +44,17 @@
 								<% end %>
 
 							<% end %>
+
+							<ul class="nav nav-pills pull-right">
+						    	<% if session[:active][:screen] == SC_PARTICIPA %>
+								<li class="active">
+								<% else %>
+								<li>
+								<% end %>						
+								<%= link_to "Participa",  habla_path %></li>
+							</ul>
+
+
 							
 							<li id="fat-menu" class="dropdown">
 
@@ -77,6 +89,7 @@
 							</li>
 
 						<% end %>
+
 					</ul>
 				</nav>
 			</div>

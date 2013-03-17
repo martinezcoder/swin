@@ -8,6 +8,7 @@ OPT_ENGAGE= '2'
 
 SC_DASHBOARD = '1'
 SC_COMPETITORS = '2'
+SC_PARTICIPA = '3'
 SC_OTHER = '0'
 
 FACEBOOK= 'facebook'

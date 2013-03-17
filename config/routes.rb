@@ -23,6 +23,7 @@ Swin::Application.routes.draw do
 
   match '/auth/:provider/callback', to: 'sessions#new'
 
+  match '/habla', to: 'static_pages#habla'
   root to: 'static_pages#home'
 
 
