@@ -45,16 +45,6 @@
 
 							<% end %>
 
-							<ul class="nav nav-pills pull-right">
-						    	<% if session[:active][:screen] == SC_PARTICIPA %>
-								<li class="active">
-								<% else %>
-								<li>
-								<% end %>						
-								<%= link_to "Participa",  habla_path %></li>
-							</ul>
-
-
 							
 							<li id="fat-menu" class="dropdown">
 
@@ -67,6 +57,17 @@
 								<ul class="dropdown-menu">
 
 									<li><%= link_to user_pages_path(current_user) do %><i class="icon-wrench"></i> Cambiar de página<% end %></li>
+
+							    	<% if session[:active][:screen] == SC_PARTICIPA %>
+									<li class="active">
+									<% else %>
+									<li>
+									<% end %>						
+										<%= link_to habla_path do %>
+										<i class="icon-comment"></i> Participa
+										<% end %> 
+									</li>
+
 
 									<li class="divider"></li>
 									<li>
