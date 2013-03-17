@@ -1,7 +1,9 @@
 		<footer class="footer">
 		  <small>
-		  	<%= link_to "SocialWin", 'http://www.socialwin.es' %>
-		    Analytics
+		  	<%= link_to 'http://www.socialwin.es' do %>
+		  	 <%= image_tag("/assets/logo75x75.png", alt: "SocialWin", class: "gravatar", title: "socialwin")  %>
+			 SocialWin Analytics
+			<% end %>
 		  </small>
 		  <nav>
 		    <ul>
