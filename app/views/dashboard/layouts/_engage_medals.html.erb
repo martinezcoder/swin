@@ -2,19 +2,19 @@
 
 
 <div id="engageBox">
-  <%= raw @data[1][5] %>
+  <%= raw @dataB[0][5] %>
   <div class="engageMedal golden">
-     <span id="engageNumber"><%= raw @data[1][4] %></span>
+     <span id="engageNumber"><%= raw @dataB[0][4] %></span>
   </div>
 </div>
 <div id="engageBox">
-  <%= raw @data[2][5] %>
+  <%= raw @dataB[1][5] %>
   <div class="engageMedal silver">
-     <span id="engageNumber"><%= raw @data[2][4] %></span>
+     <span id="engageNumber"><%= raw @dataB[1][4] %></span>
   </div>
 </div>
 
-<% @data.drop(0).drop(1).drop(2).each do |logo| %>
+<% @dataB.drop(0).drop(1).drop(2).each do |logo| %>
 
 	<div id="engageBox">
 	  <%= raw logo[5] %>

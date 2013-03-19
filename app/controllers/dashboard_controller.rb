@@ -33,21 +33,20 @@ include DashboardHelper
                       competitors[i].name, 
                       competitors[i].page_type, 
                       engage,
-                      logo(competitors[i].page_url, competitors[i].pic_square, competitors[i].name, css2)]
+                      logo(competitors[i].page_url, competitors[i].pic_square, competitors[i].name, css2),
+                      tooltip(competitors[i].pic_square, competitors[i].name, engage)]
     end
 
-    compList = compList.sort_by { |a, b, c, d, e| d }
+    compList = compList.sort_by { |a, b, c, d, e, f| d }
     compList = compList.reverse
 
-    @data = []
-    @data_nil = []
-    @data[0] = ["Id", "Logo", "Nombre", "Tipo", "Engagement", "pic"]
-    @data_nil[0] = @data[0]
+    @dataA = []
+    @dataB = []
  
     for i in 0..compList.length-1 do
-      @data_nil[i+1] = [(i+1).to_s] + compList[i]
-      @data_nil[i+1][4] = 0
-      @data[i+1] = [(i+1).to_s] + compList[i]
+      @dataA[i] = [(i+1).to_s] + compList[i]
+      @dataA[i][4] = 0
+      @dataB[i] = [(i+1).to_s] + compList[i]
     end
 
     @max = compList[0][3]

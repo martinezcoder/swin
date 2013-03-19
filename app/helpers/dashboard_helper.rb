@@ -13,4 +13,16 @@ module DashboardHelper
     end
     return engage
   end
+  
+  
+   def tooltip(img, title, eng)
+     ret = 
+     '<div style="padding:5px 5px 5px 5px;'+ 
+                 'text-align: center;'+
+                 '">' +
+     '<div style="font-size: 1.7em;color: #0088CC"><strong>'+ eng.to_s + '</strong></div><br>'+
+     '<img src="'+ img +'"><br>' + title
+     return ret
+   end
+  
 end

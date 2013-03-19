@@ -11,42 +11,15 @@
 
   function drawVisualization() {
 
-	var options = {title:'', 
-					colors: ['#0088CC'], 
-					width: 950, 
-					height: 200, 
-					seriesType: "bars", 
-					animation:{duration: 1500,easing: 'out'}, 
-					hAxes:[{title:'Competidores'}],
-					vAxis: {minValue:0, maxValue:<%= @max %>},
-					fontSize: 10,
-					legend: {position: 'top', textStyle: {fontSize: 14}},
-					focusTarget: 'category',
-					tooltip: {isHtml: true}
-					};
-
-   // Some raw data (not necessarily accurate)
-
-	var rowDataNil = <%= raw @data_nil %>;
-	var rowData = <%= raw @data %>;
-
-    // Create and populate the data tables.
-	var dataTable = [];
-    dataTable[0] = google.visualization.arrayToDataTable(rowDataNil);
-    dataTable[1] = google.visualization.arrayToDataTable(rowData);
-
-  	// Data
-  	var dataChart = []
-  	dataChart[0] = new google.visualization.DataView(dataTable[0]);
-  	dataChart[1] = new google.visualization.DataView(dataTable[1]);
 
 	function drawTable(tablex, datax) {
+		datax.setColumns([0,1,2,3,4]);
 		tablex.draw(datax, {allowHtml: true}); //, showRowNumber: true});
 	}
 	
-	function drawcharts(chartx, data, n) {
-		data[n].setColumns([0, 4, {sourceColumn:2, role:'tooltip',type:'string'}]);
-	    chartx.draw(data[n], options); 
+	function drawcharts(chartx, datax) {
+		datax.setColumns([0, 4]);
+	    chartx.draw(datax, options); 
 	}
 
     function addSelectListeners(chartx, tablex)
@@ -55,31 +28,75 @@
         chartx.setSelection(tablex.getSelection());
       });
     }
-	
+
+    var options = {
+            seriesType: "bars",
+            title:'', 
+            colors: ['#0088CC'], 
+            width: 950, 
+            height: 200, 
+            animation:{duration: 1500,easing: 'out'}, 
+            hAxes:[{title:'Competidores'}],
+            vAxis: {minValue:0, maxValue:100},
+            fontSize: 10,
+            legend: {position: 'top', textStyle: {fontSize: 14}},
+//            focusTarget: 'category',
+            tooltip: {isHtml: true}
+            };
+
+   // Some raw data (not necessarily accurate)
+
+	var rowDataA = <%= raw @dataA %>;
+	var rowDataB = <%= raw @dataB %>;
+
+    // Create and populate the data tables.
+    var dataTableA = new google.visualization.DataTable();
+    dataTableA.addColumn('string', 'Id');
+    dataTableA.addColumn('string', 'minipic');
+    dataTableA.addColumn('string', 'Nombre');
+    dataTableA.addColumn('string', 'Tipo');
+    dataTableA.addColumn('number', 'Engagement');
+    dataTableA.addColumn('string', 'pic');
+    dataTableA.addColumn({'type': 'string', 'role': 'tooltip', 'p': {'html': true}});
+    dataTableA.addRows(rowDataA);
+
+    var dataTableB = new google.visualization.DataTable();
+    dataTableB.addColumn('string', 'Id');
+    dataTableB.addColumn('string', 'minipic');
+    dataTableB.addColumn('string', 'Nombre');
+    dataTableB.addColumn('string', 'Tipo');
+    dataTableB.addColumn('number', 'Engagement');
+    dataTableB.addColumn('string', 'pic');
+    dataTableB.addColumn({'type': 'string', 'role': 'tooltip', 'p': {'html': true}});
+    dataTableB.addRows(rowDataB);
+
 
     var table = new google.visualization.Table(document.getElementById('table'));
     var chart = new google.visualization.ComboChart(document.getElementById('graph_div'));
 
-
-  
+  	// Formatters. Only tableB because tableA is empty previous animation table
 	var formatter = new google.visualization.ColorFormat();
 	formatter.addRange(0, 10000, '#0088CC', '');
-	formatter.format(dataTable[1], 0);
+	formatter.format(dataTableB, 0);
 
 	var formatter = new google.visualization.NumberFormat({fractionDigits: 0});
-	formatter.format(dataTable[1], 4);
+	formatter.format(dataTableB, 4);
 
-  	var sub_datatable = new google.visualization.DataView(dataTable[1]);
-  	sub_datatable.setColumns([0,1,2,3,4]);
+  	// Data
+  	var dataChartA = new google.visualization.DataView(dataTableA);
+	drawcharts(chart, dataChartA);
 
+    dataChartB = new google.visualization.DataView(dataTableB);
+    dataChartB.setColumns([0, 4, 6]);
+    chart.draw(dataChartB, options);
+
+
+  	var sub_datatable = new google.visualization.DataView(dataTableB);
 	drawTable(table, sub_datatable);
-	drawcharts(chart, dataChart, 0);
-	drawcharts(chart, dataChart, 1);
 
     addSelectListeners(chart, table);
 
   }
-
 
 </script>
 
