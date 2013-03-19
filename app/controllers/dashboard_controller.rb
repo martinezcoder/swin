@@ -11,6 +11,7 @@ include DashboardHelper
   def no_competitors
     session[:active] = { tab: FACEBOOK, opt: OPT_NO_COMPETITORS, screen: SC_DASHBOARD}
     @page = current_user.pages.find_by_id(get_active_page)
+    @num_competitors = @page.competitors.count
   end
 
   def engage
@@ -49,7 +50,7 @@ include DashboardHelper
       @data[i+1] = [(i+1).to_s] + compList[i]
     end
 
-    @max = compList[compList.length-1][3]
+    @max = compList[0][3]
     @max = 100 if @max < 100 
 
   end

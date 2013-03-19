@@ -13,14 +13,16 @@
 
 	var options = {title:'', 
 					colors: ['#0088CC'], 
-					width: 350, 
+					width: 950, 
 					height: 200, 
 					seriesType: "bars", 
 					animation:{duration: 1500,easing: 'out'}, 
 					hAxes:[{title:'Competidores'}],
 					vAxis: {minValue:0, maxValue:<%= @max %>},
 					fontSize: 10,
-					legend: {position: 'top'}
+					legend: {position: 'top', textStyle: {fontSize: 14}},
+					focusTarget: 'category',
+					tooltip: {isHtml: true}
 					};
 
    // Some raw data (not necessarily accurate)

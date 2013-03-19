@@ -371,7 +371,7 @@ input {
 .data_graph {
   display: inline-block;
   float: left;
-  padding: 15px;
+  padding: 10px;
   margin: 0 0 10px 0px;
   background:transparent url(/assets/loader.gif) center no-repeat;
   min-height: 100px;
@@ -385,7 +385,7 @@ input {
 
 
 .data_table {
-  padding: 15px;
+  padding: 10px;
   margin: 0 0 10px 0px;
   background:transparent url(/assets/loader.gif) center no-repeat;
   min-height: 160px;
@@ -421,20 +421,22 @@ input {
 .engage_div {
   display: inline-block;
   float: left;
-  padding: 15px;
+  overflow: hidden;
+  padding: 10px; padding-bottom: 20px;
   margin: 0 0 10px 0px;
-  height: 200px;
-  width: 550px;
+  height: 50px; //200px;
+  width: 950px; //550px;
   @include recuadrogris;  
 }
-
 
 #engageBox { 
   float:left; 
   position:relative;
-  margin-right: 30px;
+  margin-right: 35px;
   margin-bottom: 30px;
-
+  &:first-child {
+    margin-left: 5px;
+  }
   .engageMedal {
     position:absolute;
     top:10px;
