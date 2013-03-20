@@ -21,12 +21,10 @@
 <% if session[:active][:tab] == FACEBOOK %>
 	<% if session[:active][:opt] == OPT_ENGAGE %>
 									<div class="engage_div">
-									  <div id="engage_medals">
 										<%= render 'dashboard/layouts/engage_medals' %>
-									  </div>
 									</div>
 									<div class="clearfix"></div>
-									<div class="data_graph">
+									<div class="data_graph full_width">
 					                  <div id="graph_div"></div>
 									</div>
 									<div class="clearfix"></div>

@@ -301,10 +301,7 @@ input {
     overflow: auto;
 
     padding: 10px 10px;
-    border-top: 1px solid $grayLighter;
-    &:last-child {
-      border-bottom: 1px solid $grayLighter;
-    }
+    border-bottom: 1px solid $grayLighter;
     &:hover {
       background-color: aliceblue;
     }
@@ -375,13 +372,14 @@ input {
   margin: 0 0 10px 0px;
   background:transparent url(/assets/loader.gif) center no-repeat;
   min-height: 100px;
-//  min-width: 350px;
   &:first-child {
     margin: 0 5px 10px 0px;
   }
   @include recuadrogris;  
 }
-
+.full_width {
+    width: 98%;
+}
 
 
 .data_table {
@@ -419,84 +417,86 @@ input {
 // Engage Medals!
 
 .engage_div {
-  display: inline-block;
-  float: left;
   overflow: hidden;
   padding: 10px; padding-bottom: 20px;
   margin: 0 0 10px 0px;
-  height: 50px; //200px;
-  width: 950px; //550px;
-  @include recuadrogris;  
+  height: 50px;
+  @include recuadrogris;
 }
 
-#engageBox { 
-  float:left; 
-  position:relative;
-  margin-right: 35px;
-  margin-bottom: 30px;
-  &:first-child {
-    margin-left: 5px;
-  }
-  .engageMedal {
-    position:absolute;
-    top:10px;
-    left:14px;
-    width: 30px;
-    height: 25px;
-    margin: 20px; 
-    padding-top: 5px; 
-    text-align: center;
-    border: 1px solid #0088CC; 
-    background-color: #0088CC;
+#engage_medals {
 
-    -moz-border-radius: 15px 15px 35px 35px;
-    -webkit-border-radius: 15px 15px 25px 25px;
-    border-radius: 15px 15px 35px 35px;
-  
-    -moz-box-shadow: rgb(150,150,150) 2px 2px 2px;
-    -webkit-box-shadow: rgb(150,150,150) 2px 2px 2px;
-    box-shadow: rgb(150,150,150) 2px 2px 2px;  
-
-    #engageNumber {
-      font: bold 16px verdana, sans-serif;
-    /*  text-shadow: rgba(0,0,0,0.5) 1px 1px 1px; */
-      color: white;
+  #engageBox { 
+    float:left; 
+    position:relative;
+    margin-right: 35px;
+    margin-bottom: 30px;
+    &:first-child {
+      margin-left: 5px;
     }
-
-  }
-        
-  .golden {
-    border: 1px solid #FFD700; 
-    background-color: #FFD700;
-    background: radial-gradient(contain circle, #FFD700, #006699);
-    background:  -moz-radial-gradient(center, ellipse, #FFD700 10%, #006699 200%);
-    background:  -webkit-radial-gradient(center, ellipse, #FFD700 10%, #006699 200%);
+    .engageMedal {
+      position:absolute;
+      top:10px;
+      left:14px;
+      width: 30px;
+      height: 25px;
+      margin: 20px; 
+      padding-top: 5px; 
+      text-align: center;
+      border: 1px solid #0088CC; 
+      background-color: #0088CC;
   
-    -moz-box-shadow: rgb(240,210,20) 0px 0px 10px;
-    -webkit-box-shadow: rgb(240,210,20) 0px 0px 10px;
-    box-shadow: rgb(240,210,20) 0px 0px 10px;  
-  }
-
-  .silver {
-    border: 1px solid #C0C0C0;
-    background-color: #C0C0C0;
-    background: radial-gradient(contain circle, #C0C0C0, #006699);
-    background:  -moz-radial-gradient(center, ellipse, #C0C0C0 10%, #006699 200%);
-    background:  -webkit-radial-gradient(center, ellipse, #C0C0C0 10%, #006699 200%);
+      -moz-border-radius: 15px 15px 35px 35px;
+      -webkit-border-radius: 15px 15px 25px 25px;
+      border-radius: 15px 15px 35px 35px;
     
-    -moz-box-shadow: rgb(150,150,150) 2px 2px 2px;
-    -webkit-box-shadow: rgb(150,150,150) 2px 2px 2px;
-    box-shadow: rgb(150,150,150) 2px 2px 2px;  
-
-  }
-     
-  .bronze {
-    border: 1px solid #D2B48C;
-    background-color: #D2B48C;
-    background: radial-gradient(contain circle, #D2B48C, #006699);
-    background:  -moz-radial-gradient(center, ellipse, #D2B48C 10%, #006699 300%);
-    background:  -webkit-radial-gradient(center, ellipse, #D2B48C 10%, #006699 300%);
+      -moz-box-shadow: rgb(150,150,150) 2px 2px 2px;
+      -webkit-box-shadow: rgb(150,150,150) 2px 2px 2px;
+      box-shadow: rgb(150,150,150) 2px 2px 2px;  
+  
+      #engageNumber {
+        font: bold 16px verdana, sans-serif;
+      /*  text-shadow: rgba(0,0,0,0.5) 1px 1px 1px; */
+        color: white;
+      }
+  
+    }
+          
+    .golden {
+      border: 1px solid #FFD700; 
+      background-color: #FFD700;
+      background: radial-gradient(contain circle, #FFD700, #006699);
+      background:  -moz-radial-gradient(center, ellipse, #FFD700 10%, #006699 200%);
+      background:  -webkit-radial-gradient(center, ellipse, #FFD700 10%, #006699 200%);
+    
+      -moz-box-shadow: rgb(240,210,20) 0px 0px 10px;
+      -webkit-box-shadow: rgb(240,210,20) 0px 0px 10px;
+      box-shadow: rgb(240,210,20) 0px 0px 10px;  
+    }
+  
+    .silver {
+      border: 1px solid #C0C0C0;
+      background-color: #C0C0C0;
+      background: radial-gradient(contain circle, #C0C0C0, #006699);
+      background:  -moz-radial-gradient(center, ellipse, #C0C0C0 10%, #006699 200%);
+      background:  -webkit-radial-gradient(center, ellipse, #C0C0C0 10%, #006699 200%);
+      
+      -moz-box-shadow: rgb(150,150,150) 2px 2px 2px;
+      -webkit-box-shadow: rgb(150,150,150) 2px 2px 2px;
+      box-shadow: rgb(150,150,150) 2px 2px 2px;  
+  
+    }
+       
+    .bronze {
+      border: 1px solid #D2B48C;
+      background-color: #D2B48C;
+      background: radial-gradient(contain circle, #D2B48C, #006699);
+      background:  -moz-radial-gradient(center, ellipse, #D2B48C 10%, #006699 300%);
+      background:  -webkit-radial-gradient(center, ellipse, #D2B48C 10%, #006699 300%);
+    }
+  
   }
 
 }
+
 

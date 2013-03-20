@@ -15,14 +15,47 @@ module DashboardHelper
   end
   
   
-   def tooltip(img, title, eng)
-     ret = 
+   def tooltip(img, title, value)
+      ret = 
      '<div style="padding:5px 5px 5px 5px;'+ 
                  'text-align: center;'+
-                 '">' +
-     '<div style="font-size: 1.7em;color: #0088CC"><strong>'+ eng.to_s + '</strong></div><br>'+
-     '<img src="'+ img +'"><br>' + title
+                 'align:center;'+
+#                 'background:url(/assets/body-tail.gif) 0 0 repeat-x #fff;'+
+                 '">'+
+        '<div style="'+
+                    'margin:0 auto 10px auto;'+
+                    'width: 30px;'+
+                    'padding: 2px  5px;'+
+                    'font-size: 1.7em;'+
+                    'color: #FFF;'+
+  
+                    'border: 1px solid #0088CC;'+ 
+                    'background-color: #0088CC;'+
+  
+                    '-moz-border-radius: 5px;'+
+                    '-webkit-border-radius: 5px;'+
+                    'border-radius: 5px;'+
+                    
+                    '-moz-box-shadow: rgb(150,150,150) 2px 2px 2px;'+
+                    '-webkit-box-shadow: rgb(150,150,150) 2px 2px 2px;'+
+                    'box-shadow: rgb(150,150,150) 2px 2px 2px;'+
+                    '">'+
+            '<strong>'+ value.to_s + '</strong>'+
+        '</div>'+
+        '<div style="'+
+                    'margin-bottom:10px;'+
+                    '">'+
+        '<img src="'+ img +'">'+
+        '</div>'+
+        '<strong>'+ title + '</strong>' +
+      '</div>'
+
      return ret
    end
+
+
+
+
+
   
 end

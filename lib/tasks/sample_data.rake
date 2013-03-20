@@ -67,7 +67,7 @@ namespace :db do
 
       end_loop = false
       while !end_loop do
-        query =  "SELECT post_id, permalink, likes, actor_id, target_id, attachment, comments, share_count, created_time FROM stream WHERE source_id = #{p.page_id} and created_time > #{time_from} and created_time < #{time_to} LIMIT #{n},#{m}"
+        query =  "SELECT post_id, permalink, likes, actor_id, target_id, attachment, comments, share_count, created_time FROM stream WHERE source_id = #{p.page_id} and updated_time > #{time_from} and updated_time < #{time_to} LIMIT #{n},#{m}"
         fbstream = fgraph.fql_query(query)
 
         if fbstream.empty?

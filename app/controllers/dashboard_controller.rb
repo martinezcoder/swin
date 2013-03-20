@@ -81,7 +81,7 @@ include DashboardHelper
 
     mini_logo = 'mini_logo'
     @data_nil = []
-    @data_nil[0] = ["Id", "Logo", "Nombre", "Likes", "Activos"]
+    @data_nil[0] = ["Id", "Logo", "Nombre", "Fans", "Activos"]
     num = competitors.length
     for i in 0..num-1 do
       @maxlikes = competitors[i].fan_count if competitors[i].fan_count > @maxlikes
@@ -94,7 +94,7 @@ include DashboardHelper
     end
 
     @data = []
-    @data[0] = ["Id", "Logo", "Nombre", "Likes", "Activos"]
+    @data[0] = ["Id", "Logo", "Nombre", "Fans", "Activos"]
     for i in 0..num-1 do
       @data[i+1] = [  i.to_s, 
                     logo(competitors[i].page_url, competitors[i].pic_square, competitors[i].name, mini_logo), 
