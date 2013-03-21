@@ -11,12 +11,11 @@
 
   function drawVisualization() {
 
-
 	function drawTable(tablex, datax) {
 		datax.setColumns([0,1,2,3,4]);
 		tablex.draw(datax, {allowHtml: true}); //, showRowNumber: true});
 	}
-	
+
 	function drawcharts(chartx, datax) {
 		datax.setColumns([0, 4]);
 	    chartx.draw(datax, options); 
@@ -70,14 +69,8 @@
     dataTableB.addColumn({'type': 'string', 'role': 'tooltip', 'p': {'html': true}});
     dataTableB.addRows(rowDataB);
 
-
     var table = new google.visualization.Table(document.getElementById('table'));
     var chart = new google.visualization.ComboChart(document.getElementById('graph_div'));
-
-  	// Formatters. Only tableB because tableA is empty previous animation table
-	var formatter = new google.visualization.ColorFormat();
-	formatter.addRange(0, 10000, '#0088CC', '');
-	formatter.format(dataTableB, 0);
 
 	var formatter = new google.visualization.NumberFormat({fractionDigits: 0});
 	formatter.format(dataTableB, 4);
@@ -86,10 +79,9 @@
   	var dataChartA = new google.visualization.DataView(dataTableA);
 	drawcharts(chart, dataChartA);
 
-    dataChartB = new google.visualization.DataView(dataTableB);
+    var dataChartB = new google.visualization.DataView(dataTableB);
     dataChartB.setColumns([0, 4, 6]);
     chart.draw(dataChartB, options);
-
 
   	var sub_datatable = new google.visualization.DataView(dataTableB);
 	drawTable(table, sub_datatable);
