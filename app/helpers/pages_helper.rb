@@ -39,7 +39,6 @@ module PagesHelper
       sign_out
       redirect_to root_path
     end
-    pages_create_or_update(fbpages)
     fbpages.each do |p|
       if p["fan_count"].to_i > 50
         user_page = page_create_or_update(p)
