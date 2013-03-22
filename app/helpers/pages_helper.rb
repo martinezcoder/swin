@@ -41,8 +41,10 @@ module PagesHelper
     end
     pages_create_or_update(fbpages)
     fbpages.each do |p|
-      user_page = page_create_or_update(p)
-      current_user.rel_user_page!(Page.find_by_page_id("#{p["page_id"]}"))
+      if p["fan_count"].to_i > 50
+        user_page = page_create_or_update(p)
+        current_user.rel_user_page!(Page.find_by_page_id("#{p["page_id"]}"))
+      end
     end
   end
 
