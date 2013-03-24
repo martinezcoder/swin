@@ -110,9 +110,9 @@ private
 
   def has_active_page
     begin
-      redirect_to user_pages_path if get_active_page.nil? 
+      redirect_to user_pages_path(current_user) if get_active_page.nil? 
     rescue
-      redirect_to user_pages_path
+      redirect_to user_pages_path(current_user)
     end 
   end
 
