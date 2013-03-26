@@ -1,4 +1,5 @@
 <% provide(:title, @title) %>
+
 <div class="row">
   <aside class="span3">
 
@@ -19,7 +20,10 @@
 											
   <div class="span5 offset1">
 
-    <h3><%= @title %></h3>
+
+    <h3>Siguiendo a <%= @competitors.count %> competidores:</h3>
+	<p>Puede seguir <%= MAX_COMPETITORS - @competitors.count %> competidores más.</p>
+	<%= render 'pages/search_form' %>
 
 	<div class="data_follow">
 
@@ -31,6 +35,8 @@
 			</li>
 		<% end %>
       </ul>
+    <% else %>
+    	<p>Actualmente no sigue a ningún competidor.</p>
     <% end %>
 	</div>
 

@@ -50,7 +50,8 @@ include DashboardHelper
     end
 
     @max = compList[0][3]
-    @max = 100 if @max < 100 
+    
+    @max = 50 if @max <= 50 
 
   end
 

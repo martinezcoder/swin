@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 class PagesController < ApplicationController
   include PagesHelper
 
@@ -52,7 +54,7 @@ class PagesController < ApplicationController
 
   def competitors
     session[:active] = { screen: SC_COMPETITORS }
-    @title = "Siguiendo a:"
+    @title = "Competidores"
     @page = Page.find(params[:id])
     @competitors = @page.competitors.order("created_at DESC")
     render 'show_competitors'

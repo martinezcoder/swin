@@ -3,7 +3,9 @@
 <% if @mypage.following?(page.page_id) %>	
 	<div class="btn btn-small btn-primary">
 		<i class="icon-ok icon-white"></i> Siguiendo
-	</div> 
+	</div>
+	<%= render 'page_form_unfollow', :page => Page.find_by_page_id(page.page_id.to_s) %>
+
 <% else %>
 
 	<div id="<%= page.page_id %>" style="display: none;">Cargando...</div>
