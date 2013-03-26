@@ -106,10 +106,15 @@ p {
 /* footer */
 
 footer {
-  margin-top: 85px;
+  margin-top: 75px;
   padding-top: 5px;
   border-top: 1px solid $grayMediumLight;
   color: $grayLight;
+    
+  .bottom small{
+    margin-left: 20px;    
+  }
+
 
   a {
     color: $gray;
@@ -119,18 +124,49 @@ footer {
   }  
 
   small { 
-    float: left; 
+    float: right; 
+  }
+  .fblike {
+    float: right;
   }
 
+
   ul {
-    float: right;
+    display: block;
+    float: left;
     list-style: none;
     li {
       float: left;
       margin-left: 10px;
     }
+
+    li .name {
+      display: none;
+    }
+    li:hover .name {
+      display:block;
+      position: absolute;
+      margin-top: -15px;
+      color:#000;text-align:center;
+    }
+
+
+    .option1_32{
+        background: url(/assets/option1_32.png) no-repeat scroll;
+        display: block;
+        float: left;
+        height: 32px;
+        width: 32px;
+        margin-top: 5px;
+    }
+
   }
+  .clear li{
+     clear: both;
+  }
+      
 }
+
 
 
 /* sidebar */
@@ -379,7 +415,7 @@ input {
 }
 
 .full_width {
-    width: 950px; //98%;
+    width: 98%;
 }
 
 
@@ -500,4 +536,17 @@ input {
 
 }
 
+.loginhome {
+  margin-left: 120px;
+  margin-top: 50px;  
+}
+
+.boxshadow {
+    background-color: white;  
+    background-repeat: no-repeat;
+    border-color: #F8F8F8;
+    border-style: solid;
+    box-shadow: 0px 0px 19px #A09F9F;
+    @include recuadrogris;
+}
 

@@ -9,7 +9,15 @@ namespace :db do
   end
 
   desc "Fill daily stream tables"
-   task populate: :environment do
+   task day_populate: :environment do
+      puts Time.now
+      populate_page_data
+      puts Time.now 
+  end
+
+
+  desc "Fill daily stream tables"
+   task premium: :environment do
       puts Time.now
       populate_page_stream
       puts Time.now
@@ -100,12 +108,15 @@ namespace :db do
       pagedata = PageDataDay.find_or_initialize_by_page_id_and_day(page.id, Time.now.yesterday.beginning_of_day.to_i)     
       pagedata.likes = p["fan_count"]
       pagedata.prosumers = p["talking_about_count"]
-      pagedata.comments = page.page_streams.sum("comments_count")
-      pagedata.shared = page.page_streams.sum("share_count")
-      pagedata.total_likes_stream = page.page_streams.sum("likes_count")
-      pagedata.posts = page.page_streams.count
-      pagedata.day = Time.now.yesterday.beginning_of_day.to_i
-      pagedata.save!  
+
+      yesterday = Time.now.yesterday.beginning_of_day.to_i
+      pagedata.comments = page.page_streams.where("day = #{yesterday}").sum("comments_count")
+      pagedata.shared = page.page_streams.where("day = #{yesterday}").sum("share_count")
+      pagedata.total_likes_stream = page.page_streams.where("day = #{yesterday}").sum("likes_count")
+      pagedata.posts = page.page_streams.where("day = #{yesterday}").count
+      pagedata.day = yesterday
+      pagedata.save!
+      
       page.fan_count = p["fan_count"]
       page.talking_about_count = p["talking_about_count"]
       page.save!
