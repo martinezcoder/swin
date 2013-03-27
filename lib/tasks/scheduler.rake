@@ -41,6 +41,7 @@ namespace :db do
         end
         id_list = id_list.join(",")
         fb_list_pages_update(id_list)
+        puts "Page.id from #{n} to #{nnext} terminated"
         n = nnext+1
     end
   end
