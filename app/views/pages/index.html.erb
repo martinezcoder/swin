@@ -1,7 +1,7 @@
 <% provide(:title, "Elija una página") %>
 
 <div class="row">
-  <aside class="span3">	
+  <aside class="span3 well">	
     <section>
 		<h2>Página activa</h2>
 		<%= render @page, :origin => ''  %>
@@ -16,7 +16,7 @@
     </section>
   </aside>
 
-  <div class="span6">
+  <div class="span6 well">
 	<h1>Estas son tus páginas de Facebook</h1>
 	
 	<h2>Elige una de tus páginas para monitorizar y comparar</h2>
@@ -33,14 +33,6 @@
 	</ul>
   </div>
   
-  <div class="span3" style="margin-top:160px;">
-			<%= render 'index_update_list' %>
-			<%= link_to competitors_user_page_path(@user, get_active_page), class: "btn btn-small btn-default"  do %>
-				<i class=" icon-wrench"></i> Administrar competidores
-			<% end %>
-
-
-  </div>
 
 </div>
 

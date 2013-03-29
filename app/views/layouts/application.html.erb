@@ -16,9 +16,45 @@
 				<div class="alert alert-<%= key %>"><%= value %></div>
 			<% end %>
 
-			<%= yield %>
+			<% if signed_in? %>	
+			    <div class="row">
+				    <div class="span12">
+					    <div class="row">
+						    <aside class="span2">
+					    		<%= render 'layouts/menu' %>
+						    </aside>
+						    <div class="span10">
 
-<!--			<%= link_to image_tag("socialwin.png", alt: "SocialWin", size: "73x73",), 'http://www.socialwin.es/' %> -->
+								<nav class="tabbable"> <!-- Only required for left/right tabs -->
+									<ul class="nav nav-tabs">
+										<li class="active"><a href="#facebook" data-toggle="tab">Facebook</a></li>
+										<li><a href="#twitter" data-toggle="tab">Twitter</a></li>
+										<li><a href="#youtube" data-toggle="tab">Youtube</a></li>
+									</ul>
+
+									<nav class="tabbable"> <!-- Only required for left/right tabs -->
+										<div class="tab-content">
+											<div class="tab-pane active" id="facebook">
+												<%= yield %>
+											</div>
+											<div class="tab-pane" id="twitter">
+												<%= yield %>
+											</div>
+											<div class="tab-pane" id="youtube">
+												<%= yield %>
+											</div>
+										</div>
+									</nav>
+
+								</nav>
+						    </div>
+					    </div>
+				    </div>
+			    </div>
+		    <% else %>
+		    	<%= yield %>
+			<% end %>
+
 
 			<%= render 'layouts/footer' %>
 

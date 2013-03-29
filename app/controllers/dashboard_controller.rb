@@ -9,13 +9,13 @@ include DashboardHelper
   before_filter :has_competitors, except: :no_competitors
 
   def no_competitors
-    session[:active] = { tab: FACEBOOK, opt: OPT_NO_COMPETITORS, screen: SC_DASHBOARD}
+    session[:active] = { tab: FACEBOOK, opt: OPT_NO_COMPETITORS }
     @page = current_user.pages.find_by_id(get_active_page)
     @num_competitors = @page.competitors.count
   end
 
   def engage
-    session[:active] = { tab: FACEBOOK, opt: OPT_ENGAGE, screen: SC_DASHBOARD}    
+    session[:active] = { tab: FACEBOOK, opt: OPT_ENGAGE }    
     @page = current_user.pages.find_by_id(get_active_page)    
 
     competitors = []
@@ -57,7 +57,7 @@ include DashboardHelper
 
 
   def general
-    session[:active] = { tab: FACEBOOK, opt: OPT_GENERAL, screen: SC_DASHBOARD}
+    session[:active] = { tab: FACEBOOK, opt: OPT_GENERAL }
     @page = current_user.pages.find_by_id(get_active_page)
 
     competitors = []

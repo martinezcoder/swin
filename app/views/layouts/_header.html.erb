@@ -19,23 +19,6 @@
 
 									<% @page = current_user.pages.find(get_active_page) %>
 
-								    <ul class="nav nav-pills">
-								    	<% if session[:active][:screen] == SC_DASHBOARD %>
-										<li class="active">
-										<% else %>
-										<li>
-										<% end %>
-											<%= link_to "Cuadro de mandos",  root_path %>
-										</li>
-								    	<% if session[:active][:screen] == SC_COMPETITORS %>
-										<li class="active">
-										<% else %>
-										<li>
-										<% end %>
-											<%= link_to "Mis competidores",  competitors_user_page_path(current_user, @page.id) %>
-										</li>
-								    </ul>
-
     								<li class="search-box">
 										<%= form_tag(pages_search_path, :method => "get", class: "navbar-search pull-left") do %>
 										  <%= text_field_tag(:search, params[:search], class: "search-query", placeholder: "Buscar competidores...", autocomplete: "off") %>
@@ -56,24 +39,7 @@
 								</a>
 							
 								<ul class="dropdown-menu">
-
-									<li><%= link_to user_pages_path(current_user) do %><i class="icon-wrench"></i> Cambiar de página<% end %></li>
-
-							    	<% if session[:active][:screen] == SC_PARTICIPA %>
-									<li class="active">
-									<% else %>
-									<li>
-									<% end %>						
-										<%= link_to habla_path do %>
-										<i class="icon-comment"></i> Participa
-										<% end %> 
-									</li>
-
-
-									<li class="divider"></li>
-									<li>
-										<%= link_to signout_path, method: "delete" do %><i class="icon-remove"></i> Cerrar sesión<% end %>
-									</li>
+									<li><%= link_to signout_path, method: "delete" do %><i class="icon-remove"></i> Cerrar sesión<% end %></li>
 								</ul>
 							</li>
 
