@@ -4,8 +4,6 @@ Swin::Application.routes.draw do
   match "/dashboard/general", to: 'dashboard#general'
   match "/dashboard/no_competitors", to: 'dashboard#no_competitors'
 
-  match "pages/search", to: 'pages#search'
-
   resources :sessions, only: [:new, :destroy]
 
   resources :users, only: [:new, :create] do

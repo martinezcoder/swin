@@ -1,25 +1,9 @@
 <% provide(:title, @title) %>
 
 <div class="row">
-  <aside class="span3 well">
-
-    <section>
-		<h2>Página activa</h2>
-		<%= render @page, :origin => nil %>
-    </section>
-
-    <section>
-		<%= render 'competitors_mini_photos' %>
-    </section>
-  </aside>
-
-											
-  <div class="span6 well">
-
+<div class="span5 well">
 
     <h3>Siguiendo a <%= @competitors.count %> competidores:</h3>
-	<p>Puede seguir <%= MAX_COMPETITORS - @competitors.count %> competidores más.</p>
-	<%= render 'pages/search_form' %>
 
 	<div class="data_follow">
 
@@ -36,12 +20,21 @@
     <% end %>
 	</div>
 
-
-  </div>
-  
-  
 </div>
 
 
+<div class="span4 well">
 
+	<h2>Buscar competidores</h2>
 
+	<% if @more > 0 %>
+		<p>Puede seguir <%= @more %> competidores más.</p>
+		<%= render 'pages/search_form' %>
+		<%= render 'pages/search_results'%>
+	<% else %>
+		<p>Ha llegado al máximo de competidores.</p>
+		<p>Para añadir un nuevo competidor, deje de seguir alguno de los competidores actuales.</p>
+	<% end %>
+
+</div>
+</div>

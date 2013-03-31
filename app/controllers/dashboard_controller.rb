@@ -119,7 +119,7 @@ private
 
   def has_competitors
     begin
-      min_competitors = 3
+      min_competitors = 1
       page = current_user.pages.find_by_id(get_active_page)
       num_competitors = page.competitors.count
       if num_competitors < min_competitors

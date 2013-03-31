@@ -12,23 +12,6 @@
 					<ul class="nav pull-right">
 		
 						<% if signed_in? %>
-
-							<% if is_active?(FACEBOOK) %>
-	
-							    <% if current_user.pages.count > 0 %>
-
-									<% @page = current_user.pages.find(get_active_page) %>
-
-    								<li class="search-box">
-										<%= form_tag(pages_search_path, :method => "get", class: "navbar-search pull-left") do %>
-										  <%= text_field_tag(:search, params[:search], class: "search-query", placeholder: "Buscar competidores...", autocomplete: "off") %>
-										<% end %>
-									</li>
-
-								<% end %>
-
-							<% end %>
-
 							
 							<li id="fat-menu" class="dropdown">
 

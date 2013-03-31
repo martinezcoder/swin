@@ -23,7 +23,7 @@ class PageRelationshipsController < ApplicationController
     end
     
     respond_to do |format|
-      format.html { redirect_to pages_search_path(search: params[:search], free: free) }
+      format.html { redirect_to competitors_user_page_path(current_user, mypage, search: params[:search], free: free) }
       format.js
     end
   end

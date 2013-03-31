@@ -4,7 +4,7 @@ class PagesController < ApplicationController
   include PagesHelper
 
   before_filter :signed_in_user
-  before_filter :correct_user, except: [:search]
+  before_filter :correct_user
   before_filter :correct_user_page, only: [:competitors, :activate]
   before_filter :user_has_pages, except: [:index]
 
@@ -27,10 +27,13 @@ class PagesController < ApplicationController
     end
   end
 
-  def search
-    @user = current_user
-    @page = @user.pages.find(get_active_page)
-    @competitors = @page.competitors
+  def competitors
+    session[:active] = { tab: FACEBOOK, opt: OPT_COMPETITORS }
+    @title = "Competidores"
+    @page = Page.find(params[:id])
+    @competitors = @page.competitors.order("created_at DESC")
+    @more =  MAX_COMPETITORS - @competitors.count
+
     fb_list = nil
     if params.has_key?(:search) && params[:search] != ""
       pages_ids_list = fb_get_search_pages_list(params[:search])      
@@ -49,13 +52,7 @@ class PagesController < ApplicationController
         @pageslist = @pageslist + [page]
       end
     end
-  end
 
-  def competitors
-    session[:active] = { tab: FACEBOOK, opt: OPT_COMPETITORS }
-    @title = "Competidores"
-    @page = Page.find(params[:id])
-    @competitors = @page.competitors.order("created_at DESC")
     render 'show_competitors'
   end  
 

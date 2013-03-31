@@ -27,19 +27,23 @@
 
 				  <% case origin %>
 					<% when 'index' %>
-				  		
-				  		<div class="fb_stat">
-					  	<% if page.id == get_active_page %>
-					  		<div class="btn btn-success btn-small">
-					  			<i class="icon-ok icon-white"></i> Activada
-					  		</div> 
-					  	<% else %>
-					  		<%= link_to activate_user_page_path(@user, page), method: :post, class: "btn btn-primary btn-small"  do %>
-					  			<i class=" icon-plus icon-white"></i> Activar
-					  		<% end %>
-					  	<% end %>
+
+						<div class="fb_stat">
+							Competidores:
+							<%= render 'competitors_mini_logos'%>
 						</div>
 
+						<div class="fb_btn">
+						<% if page.id == get_active_page %>
+							<div class="btn btn-success btn-small">
+								<i class="icon-ok icon-white"></i> Activada
+							</div> 
+						<% else %>
+							<%= link_to activate_user_page_path(@user, page), method: :post, class: "btn btn-primary btn-small"  do %>
+								<i class=" icon-plus icon-white"></i> Activar
+							<% end %>
+						<% end %>
+						</div>
 					<% when 'search' %>
 						<div class="fb_stat">
 							<%= render 'page_form_follow', :page => page %>

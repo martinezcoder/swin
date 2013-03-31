@@ -214,7 +214,6 @@ aside {
 .mini_logo {
   height: 25px;
   width: 25px;
-  
 }
 
 .normal_logo {
@@ -228,6 +227,11 @@ aside {
   width: 30px; 
 }
 
+.no-decoration {
+    &:hover{ 
+      text-decoration: none;
+    }
+}
 
 .user-session {
   display: inline-block;
@@ -339,7 +343,7 @@ input {
     padding: 10px 10px;
     border-bottom: 1px solid $grayLighter;
     &:hover {
-      background-color: aliceblue;
+      background-color: white;
     }
   }
 }
@@ -353,10 +357,21 @@ input {
     padding: 0 10px;
     border-left: 1px solid $grayLighter;
     color: gray;
-    min-width: 50px;
+    min-width: 80px;
     &:first-child {
-      padding-left: 0;
+      padding-left: 11px;
       border: 0;
+    }
+  }
+
+  .fb_btn {
+    float: right;
+    padding: 0 10px;
+    border-left: 1px solid $grayLighter;
+    color: gray;
+    min-width: 80px;
+    .btn {
+          margin: 20px 0 0 20px;
     }
   }
 
@@ -364,6 +379,7 @@ input {
     display: block;
   }
 }
+
 
 .imgpage {
   float: left;
@@ -440,7 +456,7 @@ input {
   padding: 5px;
   margin: 0 0 10px 0px;
   background:solid center no-repeat;
-  border: solid 3px #eee;
+  border: solid 1px #eee;
   min-height: 100px;
   -webkit-border-radius: 6px;
   -moz-border-radius: 6px;

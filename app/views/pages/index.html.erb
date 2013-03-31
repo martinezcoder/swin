@@ -1,21 +1,9 @@
-<% provide(:title, "Elija una página") %>
+<% provide(:title, "Mis listas") %>
 
-<div class="row">
-  <aside class="span3 well">	
-    <section>
-		<h2>Página activa</h2>
-		<%= render @page, :origin => ''  %>
-    </section>
-    
-    <section>
-		<%= render 'competitors_mini_photos' %>
-    </section>
-  </aside>
 
-  <div class="span6 well">
-	<h1>Estas son tus páginas de Facebook</h1>
-	
-	<h2>Elige una de tus páginas para monitorizar y comparar</h2>
+
+<div class="span9 well">
+	<h2>Elige una de tus listas para monitorizar y comparar</h2>
 	
 	<ul class="fb_pages">
 		<% @pages.each do |page| %>
@@ -23,13 +11,12 @@
 			<li>
 				<%= render page, :origin => 'index' %>
 
-			 </li>
+			</li>
 		<% end %>
 
 	</ul>
-  </div>
-  
-
+	
 </div>
+
 
 
