@@ -21,7 +21,7 @@
 
 			  <%=  f.label :terms_of_service, { class: "checkbox" } do %>
 			  	<%= f.check_box :terms_of_service %>
-			  	Al registrarme, acepto las <%= link_to "condiciones del servicio", "/terms.html" %> y la <%= link_to "política de privacidad", "/private_policy.html" %>.
+			  	<small>Al registrarme, acepto las <%= link_to "condiciones del servicio", "/terms.html" %> y la <%= link_to "política de privacidad", "/private_policy.html" %>.</small>
 			  <% end %>
 
 		      <%= f.submit "Confirmar", class: "btn btn-default btn-primary" %>
