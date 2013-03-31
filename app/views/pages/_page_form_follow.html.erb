@@ -1,22 +1,20 @@
 <% @mypage = current_user.pages.find(get_active_page) %>
 
-<% if @mypage.following?(page.page_id) %>	
-	<div class="btn btn-small btn-primary">
-		<i class="icon-ok icon-white"></i> Siguiendo
+<% if @mypage.following?(page.page_id) %>
+	<div class="btn btn-mini btn-primary">
+		<i class="icon-ok icon-white"></i> <small>Siguiendo</small>
 	</div>
-	<%= render 'page_form_unfollow', :page => Page.find_by_page_id(page.page_id.to_s) %>
-
 <% else %>
 
 	<div id="<%= page.page_id %>" style="display: none;">Cargando...</div>
 
-	<%= form_tag(page_relationships_path, :method => "post") do %>
+	<%= form_tag(page_relationships_path, :method => "post" ) do %>
 	
 		<%= text_field_tag :page_id,    page.page_id,    type: "hidden"  %>
 		<%= text_field_tag :search,    params[:search],    type: "hidden"  %>
 
-		<%= button_tag(type: "submit", class: "btn btn-default btn-small cargar", :data => { "loading-text" => "Cargando..."}, onclick: "WaitDiv(#{page.page_id})") do %>			
-			<strong>Seguir <i class=" icon-plus icon-default"></i></strong> 
+		<%= button_tag(type: "submit", class: "btn btn-default btn-mini cargar", :data => { "loading-text" => "Cargando..."}, onclick: "WaitDiv(#{page.page_id})") do %>			
+			<strong><small>Seguir</small> <i class=" icon-plus icon-default"></i></strong> 
 		<% end %>
 
 	<% end %>

@@ -1,3 +1,32 @@
+<% if origin == 'search' %>
+
+		    	<%= image_tag page.pic_square, class: "imgpage", alt: page.name, title: page.name %>
+				<strong><small>
+					<% if page.name.length > 16 %>
+			    		<%= page.name[0..16] %>...
+			    	<% else %>
+			    		<%= page.name %>
+			    	<% end %>
+				</small></strong>
+				<small><%= link_to "Ver en Facebook", page.page_url, target: "_blank" %></small>
+
+				<div class="fb_stats">
+
+				  <div class="fb_stat mini">
+				  	<small>Fans:</small>
+				    <strong id="fb_fans" class="stat">
+			    		<small><%= page.fan_count %></small>
+				    </strong>
+				  </div>
+
+				  <div class="fb_stat mini">
+				  	<small>Usuarios activos:</small>
+				    <strong id="fb_talking_about" class="stat">
+						<small><%= page.talking_about_count %></small>
+				    </strong>
+				  </div>
+
+<% else %>
 		    	<%= image_tag page.pic_square, class: "imgpage", alt: page.name, title: page.name %>
 				<strong>
 					<% if page.name.length > 16 %>
@@ -23,7 +52,7 @@
 						<%= page.talking_about_count %>
 				    </strong>
 				  </div>
-
+<% end %>
 
 				  <% case origin %>
 					<% when 'index' %>
@@ -45,7 +74,7 @@
 						<% end %>
 						</div>
 					<% when 'search' %>
-						<div class="fb_stat">
+						<div class="fb_stat mini">
 							<%= render 'page_form_follow', :page => page %>
 					  	</div>
 
