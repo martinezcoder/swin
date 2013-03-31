@@ -477,7 +477,7 @@ input {
   overflow: hidden;
   padding: 10px; padding-bottom: 20px;
   margin: 0 0 10px 0px;
-  height: 40px;
+  min-height: 40px;
   @include recuadrogris;
 }
 
@@ -498,7 +498,7 @@ input {
   overflow: hidden;
   padding: 10px; padding-bottom: 20px;
   margin: 0 0 10px 0px;
-  height: 50px;
+  min-height: 50px;
   @include recuadrogris;
 }
 
