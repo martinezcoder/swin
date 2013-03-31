@@ -5,7 +5,7 @@ class PagesController < ApplicationController
 
   before_filter :signed_in_user
   before_filter :correct_user
-  before_filter :correct_user_page, only: [:competitors, :activate]
+  before_filter :correct_user_page, only: [:show, :activate]
   before_filter :user_has_pages, except: [:index]
 
   def index
@@ -27,7 +27,7 @@ class PagesController < ApplicationController
     end
   end
 
-  def competitors
+  def show
     session[:active] = { tab: FACEBOOK, opt: OPT_COMPETITORS }
     @title = "Competidores"
     @page = Page.find(params[:id])
@@ -52,9 +52,8 @@ class PagesController < ApplicationController
         @pageslist = @pageslist + [page]
       end
     end
-
-    render 'show_competitors'
   end  
+
 
   def activate
     page = Page.find(params[:id])
