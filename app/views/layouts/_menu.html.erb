@@ -1,15 +1,5 @@
 <% if current_user.pages.count > 0 %>
 
-	<% if session[:active][:tab] == FACEBOOK %>
-		<div class="page_active_dashboard">
-			<%= link_to @page.page_url, target: "_blank" do %>
-				<%= image_tag @page.pic_square, alt: @page.name, class: "imgpage", alt: "#{@page.name}", title: "#{@page.name}" %>
-				<strong><%= @page.name %></strong>
-			<% end %>
-		</div>
-	<% end %>
-	
-	
 	<div class="menu_metricas">
 		<div style="max-width: 340px; padding: 8px 0;" class="well">
 			<ul class="nav nav-list">
@@ -72,16 +62,24 @@
 						<li class="active"><% else %><li><% end %>
 							<%= link_to user_pages_path(current_user) do %><i class="icon-list"></i> Mis Listas<% end %>
 						</li>		
-	
+				<li class="disabled"><a href="#"><i class="icon-search"></i>Mis competidores</a></li>
+				
 				<li class="divider"></li>
 				
 				<li class="nav-header">Métricas</li>
+
+			    	<li class="disabled"><a href="#">Engagement</a></li>
+			    	<li class="disabled"><a href="#">General</a></li>
+			    	<li class="disabled"><a href="#">Tamaño</a></li>
+			    	<li class="disabled"><a href="#">Crecimiento</a></li>
+				    <li class="disabled"><a href="#">Actividad</a></li>
+				    <li class="disabled"><a href="#">Interacción</a></li>
+				    <li class="disabled"><a href="#">Embajadores</a></li>
+				    <li class="disabled"><a href="#">Influence</a></li>
+				    <li class="disabled"><a href="#">Sentiment</a></li>
 	
 				<li class="divider"></li>
-					<% if session[:active][:opt] == OPT_HABLA %>
-					    <li class="active"><% else %><li><% end %>
-					    	<%= link_to habla_path do %><i class="icon-comment"></i> Participa<% end %>
-					    </li>
+				    <li class="disabled"><a href="#"><i class="icon-comment"></i> Participa</a></li>
 			</ul>
 		</div>
 	</div>
