@@ -21,30 +21,19 @@
 	    chartx.draw(datax, options); 
 	}
 
-    function addSelectListeners(chartx, tablex)
-    {
-      google.visualization.events.addListener(tablex, 'select', function() {
-        chartx.setSelection(tablex.getSelection());
-      });
-    }
-
     var options = {
             seriesType: "bars",
             title:'Engagement (fidelidad de los seguidores)', 
             titleTextStyle: {fontSize: 14},
             colors: ['#0088CC'], 
-//            width: 950, 
             height: 200, 
             animation:{duration: 1500,easing: 'out'}, 
             hAxes:[{title:'Competidores'}],
             vAxis: {minValue:0, maxValue:<%= @max %>},
             fontSize: 10,
             legend: {position: 'none', textStyle: {fontSize: 14}},
-//            focusTarget: 'category',
             tooltip: {isHtml: true}
             };
-
-   // Some raw data (not necessarily accurate)
 
 	var rowDataA = <%= raw @dataA %>;
 	var rowDataB = <%= raw @dataB %>;
@@ -87,7 +76,22 @@
   	var sub_datatable = new google.visualization.DataView(dataTableB);
 	drawTable(table, sub_datatable);
 
-    addSelectListeners(chart, table);
+
+	google.visualization.events.addListener(table, 'select', function() {
+		chart.setSelection(table.getSelection());
+	});
+	
+	google.visualization.events.addListener(chart, 'select', function() {
+		table.setSelection(chart.getSelection());
+	});
+
+	google.visualization.events.addListener(table, 'sort',
+	      function(event) {
+	        dataTableB.sort([{column: event.column, desc: !event.ascending}]);
+			chart.draw(dataChartB, options);
+			sub_datatable = new google.visualization.DataView(dataTableB);
+			drawTable(table, sub_datatable);
+	});
 
   }
 

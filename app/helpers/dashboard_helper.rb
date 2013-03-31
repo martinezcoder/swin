@@ -15,12 +15,11 @@ module DashboardHelper
   end
   
   
-   def tooltip(img, title, value)
+  def tooltip_engage(img, title, value)
       ret = 
      '<div style="padding:5px 5px 5px 5px;'+ 
                  'text-align: center;'+
                  'align:center;'+
-#                 'background:url(/assets/body-tail.gif) 0 0 repeat-x #fff;'+
                  '">'+
         '<div style="'+
                     'margin:0 auto 10px auto;'+
@@ -54,6 +53,25 @@ module DashboardHelper
    end
 
 
+  
+  def tooltip_general(img, title, fans, actives)
+      ret = 
+     '<div style="padding:5px 5px 5px 5px;'+ 
+                 'text-align: center;'+
+                 'align:center;'+
+                 '">'+
+        '<p><strong>'+ title + '</strong></p>' +
+        '<div style="'+
+                    'margin-bottom:10px;'+
+                    '">'+
+        '<img src="'+ img +'">'+
+        '</div>'+
+        '<p>Fans: <strong>'+ fans.to_s.reverse.gsub(/...(?=.)/,'\&.').reverse + '</strong>' +
+        '<br/>Activos: <strong>'+ actives.to_s.reverse.gsub(/...(?=.)/,'\&.').reverse + '</strong></p>' +
+      '</div>'
+
+     return ret
+   end
 
 
 

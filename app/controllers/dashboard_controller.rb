@@ -34,7 +34,7 @@ include DashboardHelper
                       competitors[i].page_type, 
                       engage,
                       logo(competitors[i].page_url, competitors[i].pic_square, competitors[i].name, css2),
-                      tooltip(competitors[i].pic_square, competitors[i].name, engage)]
+                      tooltip_engage(competitors[i].pic_square, competitors[i].name, engage)]
     end
 
     compList = compList.sort_by { |a, b, c, d, e, f| d }
@@ -55,16 +55,16 @@ include DashboardHelper
 
   end
 
-
   def general
     session[:active] = { tab: FACEBOOK, opt: OPT_GENERAL }
     @page = current_user.pages.find_by_id(get_active_page)
 
     competitors = []
     competitors[0] = @page
-    competitors = competitors + @page.competitors      
-    # update only every if last updated was previous than 3 hours ago 
-    if @page.updated_at < 2.hour.ago
+    competitors = competitors + @page.competitors   
+
+    # update only every if last updated was previous than 1 hours ago 
+    if @page.updated_at < -1.hour.ago
       # updating competitor data
       page_ids = []
       competitors.each do |p|
@@ -76,36 +76,39 @@ include DashboardHelper
       pages_create_or_update(fb_pages_info_list)
     end
 
+    css1 = 'mini_logo'
+    css2 = 'normal_logo'
 
-    @maxlikes = 0
-    @maxactiv = 0
-
-    mini_logo = 'mini_logo'
-    @data_nil = []
-    @data_nil[0] = ["Id", "Logo", "Nombre", "Fans", "Activos"]
     num = competitors.length
+    compList = []
     for i in 0..num-1 do
-      @maxlikes = competitors[i].fan_count if competitors[i].fan_count > @maxlikes
-      @maxactiv = competitors[i].talking_about_count if competitors[i].talking_about_count > @maxactiv 
-      @data_nil[i+1] = [i.to_s, 
-                        logo(competitors[i].page_url, competitors[i].pic_square, competitors[i].name, mini_logo), 
-                        competitors[i].name, 
-                        0, 
-                        0]
+      compList[i] = [ logo(competitors[i].page_url, competitors[i].pic_square, competitors[i].name, css1), 
+                      competitors[i].name, 
+                      competitors[i].page_type, 
+                      competitors[i].fan_count,
+                      competitors[i].talking_about_count,
+                      logo(competitors[i].page_url, competitors[i].pic_square, competitors[i].name, css2),
+                      tooltip_general(competitors[i].pic_square, competitors[i].name, competitors[i].fan_count, competitors[i].talking_about_count)]
     end
 
-    @data = []
-    @data[0] = ["Id", "Logo", "Nombre", "Fans", "Activos"]
-    for i in 0..num-1 do
-      @data[i+1] = [  i.to_s, 
-                    logo(competitors[i].page_url, competitors[i].pic_square, competitors[i].name, mini_logo), 
-                    competitors[i].name, 
-                    competitors[i].fan_count, 
-                    competitors[i].talking_about_count]
+    compList = compList.sort_by { |a, b, c, d, e, f, g| d }
+    compList = compList.reverse
+
+    @dataA = []
+    @dataB = []
+ 
+    for i in 0..compList.length-1 do
+      @dataA[i] = [(i+1).to_s] + compList[i]
+      @dataA[i][4] = 0
+      @dataA[i][5] = 0
+      @dataB[i] = [(i+1).to_s] + compList[i]
     end
+
+    @max_fans = compList[0][3]
+    @max_actives = compList[0][4]
+ 
 
   end
-
 
 private
 

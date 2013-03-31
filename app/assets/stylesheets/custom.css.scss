@@ -473,6 +473,27 @@ input {
 
 // Engage Medals!
 
+.competitors_div {
+  overflow: hidden;
+  padding: 10px; padding-bottom: 20px;
+  margin: 0 0 10px 0px;
+  height: 40px;
+  @include recuadrogris;
+}
+
+#competitors_title {
+
+  #engageBox { 
+    float:left; 
+    position:relative;
+    margin-right: 35px;
+    margin-bottom: 30px;
+    &:first-child {
+      margin-left: 5px;
+    }
+  }
+}
+
 .engage_div {
   overflow: hidden;
   padding: 10px; padding-bottom: 20px;

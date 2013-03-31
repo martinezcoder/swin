@@ -17,11 +17,16 @@
 									</div>
 
 	<% elsif session[:active][:opt] == OPT_GENERAL %>
-									<div class="data_graph">
-					                  <div id="graph_div"></div>
+									<div class="competitors_div">
+										<%= render 'dashboard/layouts/competitors' %>
 									</div>
-									<div class="data_graph">
-					                  <div id="graph_div.2"></div>
+
+									<div class="data_graph full_width">
+					                  <div id="graph_fans_div"></div>
+									</div>
+									<div class="clearfix"></div>
+									<div class="data_graph full_width">
+					                  <div id="graph_actives_div"></div>
 									</div>
 									<div class="clearfix"></div>
 									<div class="data_table">

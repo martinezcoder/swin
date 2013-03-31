@@ -10,90 +10,112 @@
   google.setOnLoadCallback(drawVisualization);
 
   function drawVisualization() {
-  
-	var likeOptions = {title:'Fans (Seguidores en los últimos 7 días)',
-					titleTextStyle: {fontSize: 14},
-					colors: ['#0088CC'], 
-					width: 462, 
-					height: 200, 
-					seriesType: "bars", 
-					animation:{duration: 1500,easing: 'out'}, 
-					hAxes:[{title:'Competidores'}],
-					vAxis: {minValue:0, maxValue:<%= @maxlikes %>},
-					fontSize: 10,
-					legend: {position: 'none'}
-					};
-	var activeOptions = {title:'Activos (Hablando en los últimos 7 días)', 
-						titleTextStyle: {fontSize: 14},
-						colors: ['#76D4E5'], 
-						width: 462, 
-						height: 200, 
-						seriesType: "bars", 
-						animation:{duration: 1500,easing: 'out'},
-						hAxes:[{title:'Competidores'}], 
-						vAxis: {minValue:0, maxValue:<%= @maxactiv %>},
-						// chartArea:{left:"20%",top:20,width:"50%",height:"75%"}
-						fontSize: 10,
-						legend: {position: 'none'}
-						// Try out the new HTML tooltip.
-						//allowHtml: true,
-						//tooltip: {isHtml: true},
-						//focusTarget: 'category'
-						}
 
-   // Some raw data (not necessarily accurate)
-	var rowDataNil = <%= raw @data_nil %>;
-	var rowData = <%= raw @data %>;
-
-    // Create and populate the data tables.
-	var dataTable = [];
-    dataTable[0] = google.visualization.arrayToDataTable(rowDataNil);
-    dataTable[1] = google.visualization.arrayToDataTable(rowData);
-      
-  	// Likes Chart
-  	var dataLikes = []
-  	dataLikes[0] = new google.visualization.DataView(dataTable[0]);
-  	dataLikes[1] = new google.visualization.DataView(dataTable[1]);
-  	// Actives Chart
-    var dataActives = [];
-    dataActives[0] = new google.visualization.DataView(dataTable[0]);
-    dataActives[1] = new google.visualization.DataView(dataTable[1]);
-
-
-	function drawcharts(n) {
-		dataLikes[n].setColumns([0, 3, {sourceColumn:2, role:'tooltip',type:'string'}]);
-	    chartLikes.draw(dataLikes[n], likeOptions); 
-	
-	    dataActives[n].setColumns([0, 4, {sourceColumn:2, role:'tooltip',type:'string'}]);
-	    chartActives.draw(dataActives[n], activeOptions);
+	function drawTable(tablex, datax) {
+		datax.setColumns([0,1,2,3,4,5]);
+		tablex.draw(datax, {allowHtml: true}); //, showRowNumber: true});
 	}
 
-    function addSelectListeners(chartx)
+    function addSelectListeners(chartx, tablex)
     {
-      google.visualization.events.addListener(table, 'select', function() {
-        chartx.setSelection(table.getSelection());
+      google.visualization.events.addListener(tablex, 'select', function() {
+        chartx.setSelection(tablex.getSelection());
       });
     }
 
-	// The table
+    var options_fans = {
+            seriesType: "bars",
+            title:'Fans (Total de seguidores)', 
+            titleTextStyle: {fontSize: 14},
+            colors: ['#0088CC'],  
+            height: 200, 
+            animation:{duration: 1500,easing: 'out'}, 
+            hAxes:[{title:'Competidores'}],
+            vAxis: {minValue:0, maxValue:<%= @max_fans %>},
+            fontSize: 10,
+            legend: {position: 'none', textStyle: {fontSize: 14}},
+            tooltip: {isHtml: true}
+            };
+
+    var options_actives = {
+            seriesType: "bars",
+            title:'Activos (Hablando en los últimos 7 días)', 
+            titleTextStyle: {fontSize: 14},
+            colors: ['#0088CC'],  
+            height: 200, 
+            animation:{duration: 1500,easing: 'out'}, 
+            hAxes:[{title:'Competidores'}],
+            vAxis: {minValue:0, maxValue:<%= @max_actives %>},
+            fontSize: 10,
+            legend: {position: 'none', textStyle: {fontSize: 14}},
+            tooltip: {isHtml: true}
+            };
+	var rowDataA = <%= raw @dataA %>;
+	var rowDataB = <%= raw @dataB %>;
+
+    // Create and populate the data tables.
+    var dataTableA = new google.visualization.DataTable();
+    dataTableA.addColumn('string', 'Id');
+    dataTableA.addColumn('string', 'Icono');
+    dataTableA.addColumn('string', 'Nombre');
+    dataTableA.addColumn('string', 'Tipo');
+    dataTableA.addColumn('number', 'Fans');
+    dataTableA.addColumn('number', 'Activos');
+    dataTableA.addColumn('string', 'pic');
+    dataTableA.addColumn({'type': 'string', 'role': 'tooltip', 'p': {'html': true}});
+    dataTableA.addRows(rowDataA);
+
+    var dataTableB = new google.visualization.DataTable();
+    dataTableB.addColumn('string', 'Id');
+    dataTableB.addColumn('string', 'minipic');
+    dataTableB.addColumn('string', 'Nombre');
+    dataTableB.addColumn('string', 'Tipo');
+    dataTableB.addColumn('number', 'Fans');
+    dataTableB.addColumn('number', 'Activos');
+    dataTableB.addColumn('string', 'pic');
+    dataTableB.addColumn({'type': 'string', 'role': 'tooltip', 'p': {'html': true}});
+    dataTableB.addRows(rowDataB);
+
     var table = new google.visualization.Table(document.getElementById('table'));
-
-    var chartLikes = new google.visualization.ComboChart(document.getElementById('graph_div'));
-    var chartActives = new google.visualization.ComboChart(document.getElementById('graph_div.2'));
-
+    var chart_fans = new google.visualization.ComboChart(document.getElementById('graph_fans_div'));
+    var chart_actives = new google.visualization.ComboChart(document.getElementById('graph_actives_div'));
 
 	var formatter = new google.visualization.NumberFormat({fractionDigits: 0});
-	formatter.format(dataTable[1], 3);
-	formatter.format(dataTable[1], 4);
-	
-    table.draw(dataTable[1], {allowHtml: true});
-	drawcharts(0);
-	drawcharts(1);
+	formatter.format(dataTableB, 4);
+	formatter.format(dataTableB, 5);
 
-    addSelectListeners(chartLikes);
-    addSelectListeners(chartActives);
+  	// Data
+  	var dataChartA = new google.visualization.DataView(dataTableA);
+    dataChartA.setColumns([0, 4]);
+    chart_fans.draw(dataChartA, options_fans);
+    dataChartA.setColumns([0, 4]);
+    chart_actives.draw(dataChartA, options_actives);
+
+    var dataChartB = new google.visualization.DataView(dataTableB);
+    dataChartB.setColumns([0, 4, 7]);
+    chart_fans.draw(dataChartB, options_fans);
+    dataChartB.setColumns([0, 5, 7]);
+    chart_actives.draw(dataChartB, options_actives);
+
+  	var sub_datatable = new google.visualization.DataView(dataTableB);
+	drawTable(table, sub_datatable);
+
+    addSelectListeners(chart_fans, table);
+    addSelectListeners(chart_actives, table);
+
+	google.visualization.events.addListener(table, 'sort',
+	      function(event) {
+	        dataTableB.sort([{column: event.column, desc: !event.ascending}]);
+    		dataChartB.setColumns([0, 4, 7]);
+			chart_fans.draw(dataChartB, options_fans);
+		    dataChartB.setColumns([0, 5, 7]);
+		    chart_actives.draw(dataChartB, options_actives);
+			sub_datatable = new google.visualization.DataView(dataTableB);
+			drawTable(table, sub_datatable);
+	});
 
   }
 
 </script>
+
 

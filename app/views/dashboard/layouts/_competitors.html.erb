@@ -1,22 +1,8 @@
-<nav class="menu_competitors">
-
-	<ul class="nav nav-pills nav-stacked newline">
-
-		<% @competitors.each do |c| %>
-		
-			<li class="newline">
-				<%= link_to c.page_url, class: 'nav-comp', target: "_blank"   do%>
-			    	<%= image_tag c.pic_square, alt: c.name, class: "comp_avatar" %>
-			    	<% if c.name.length > 15 %>
-			    		<%= c.name[0..15] %>...
-			    	<% else %>
-			    		<%= c.name %>
-			    	<% end %>
-				<% end %>
-			</li>
-		<% end %>
-
-    </ul>
-
-</nav>
+<div id="competitors_title">
+	<% @dataB.each do |logo| %>
+		<div id="engageBox">
+		  <%= raw logo[6] %>
+		</div>		
+	<% end %>  
+</div>
 						
