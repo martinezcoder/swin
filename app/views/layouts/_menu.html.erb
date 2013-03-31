@@ -1,57 +1,94 @@
-<% if session[:active][:tab] == FACEBOOK %>
+<% if current_user.pages.count > 0 %>
+
+	<% if session[:active][:tab] == FACEBOOK %>
+		<div class="page_active_dashboard">
+			<%= link_to @page.page_url, target: "_blank" do %>
+				<%= image_tag @page.pic_square, alt: @page.name, class: "imgpage", alt: "#{@page.name}", title: "#{@page.name}" %>
+				<strong><%= @page.name %></strong>
+			<% end %>
+		</div>
+	<% end %>
+	
+	
+	<div class="menu_metricas">
+		<div style="max-width: 340px; padding: 8px 0;" class="well">
+			<ul class="nav nav-list">
+
+				<li class="nav-header">Mi Perfil</li>
+			    	<% if session[:active][:opt] == OPT_LISTS %>
+						<li class="active"><% else %><li><% end %>
+							<%= link_to user_pages_path(current_user) do %><i class="icon-list"></i> Mis Listas<% end %>
+						</li>		
+			    	<% if session[:active][:opt] == OPT_COMPETITORS %>
+						<li class="active"><% else %><li><% end %>
+							<%= link_to competitors_user_page_path(current_user, @page.id) do %><i class="icon-search"></i> Mis Competidores<% end %>
+						</li>		
+	
+				<li class="divider"></li>
+				
+				<li class="nav-header">Métricas</li>
+				    <% if session[:active][:opt] == OPT_ENGAGE %>
+					    <li class="active"><% else %><li><% end %>
+							<%= link_to dashboard_path do %><i class="icon-home"></i> Engagement<% end %>
+						</li>
+					<% if session[:active][:opt] == OPT_GENERAL %>
+					    <li class="active"><% else %><li><% end %>
+					    	<%= link_to dashboard_general_path do %><i class="icon-globe"></i> Vista general<% end %>
+					    </li>
+	
+			    	<li class="disabled"><a href="#">Tamaño</a></li>
+			    	<li class="disabled"><a href="#">Crecimiento</a></li>
+				    <li class="disabled"><a href="#">Actividad</a></li>
+				    <li class="disabled"><a href="#">Interacción</a></li>
+				    <li class="disabled"><a href="#">Embajadores</a></li>
+				    <li class="disabled"><a href="#">Influence</a></li>
+				    <li class="disabled"><a href="#">Sentiment</a></li>
+	
+	
+				<li class="divider"></li>
+					<% if session[:active][:opt] == OPT_HABLA %>
+					    <li class="active"><% else %><li><% end %>
+					    	<%= link_to habla_path do %><i class="icon-comment"></i> Participa<% end %>
+					    </li>
+			</ul>
+		</div>
+	</div>
+
+<% else %>
+
 	<div class="page_active_dashboard">
-		<%= link_to @page.page_url, target: "_blank" do %>
-			<%= image_tag @page.pic_square, alt: @page.name, class: "imgpage", alt: "#{@page.name}", title: "#{@page.name}" %>
-			<strong><%= @page.name %></strong>
-		<% end %>
+			<% @user = current_user %>
+			<%= image_tag "https://graph.facebook.com/#{get_auth(FACEBOOK).uid}/picture", alt: @user.name, class: "imgpage", alt: "#{@user.name}", title: "#{@user.name}" %>
+			<strong><%= @user.name %></strong>
 	</div>
+
+
+	<div class="menu_metricas">
+		<div style="max-width: 340px; padding: 8px 0;" class="well">
+			<ul class="nav nav-list">
+	
+				<li class="nav-header">Mi Perfil</li>
+			    	<% if session[:active][:opt] == OPT_LISTS %>
+						<li class="active"><% else %><li><% end %>
+							<%= link_to user_pages_path(current_user) do %><i class="icon-list"></i> Mis Listas<% end %>
+						</li>		
+	
+				<li class="divider"></li>
+				
+				<li class="nav-header">Métricas</li>
+	
+				<li class="divider"></li>
+					<% if session[:active][:opt] == OPT_HABLA %>
+					    <li class="active"><% else %><li><% end %>
+					    	<%= link_to habla_path do %><i class="icon-comment"></i> Participa<% end %>
+					    </li>
+			</ul>
+		</div>
+	</div>
+
+
+
 <% end %>
-
-
-<div class="menu_metricas">
-	<div style="max-width: 340px; padding: 8px 0;" class="well">
-		<ul class="nav nav-list">
-
-			<li class="nav-header">Mi Perfil</li>
-		    	<% if session[:active][:opt] == OPT_LISTS %>
-					<li class="active"><% else %><li><% end %>
-						<%= link_to user_pages_path(current_user) do %><i class="icon-list"></i> Mis Listas<% end %>
-					</li>		
-		    	<% if session[:active][:opt] == OPT_COMPETITORS %>
-					<li class="active"><% else %><li><% end %>
-						<%= link_to competitors_user_page_path(current_user, @page.id) do %><i class="icon-search"></i> Mis Competidores<% end %>
-					</li>		
-
-			<li class="divider"></li>
-			
-			<li class="nav-header">Métricas</li>
-			    <% if session[:active][:opt] == OPT_ENGAGE %>
-				    <li class="active"><% else %><li><% end %>
-						<%= link_to dashboard_path do %><i class="icon-home"></i> Engagement<% end %>
-					</li>
-				<% if session[:active][:opt] == OPT_GENERAL %>
-				    <li class="active"><% else %><li><% end %>
-				    	<%= link_to dashboard_general_path do %><i class="icon-globe"></i> Vista general<% end %>
-				    </li>
-
-		    	<li class="disabled"><a href="#">Tamaño</a></li>
-		    	<li class="disabled"><a href="#">Crecimiento</a></li>
-			    <li class="disabled"><a href="#">Actividad</a></li>
-			    <li class="disabled"><a href="#">Interacción</a></li>
-			    <li class="disabled"><a href="#">Embajadores</a></li>
-			    <li class="disabled"><a href="#">Influence</a></li>
-			    <li class="disabled"><a href="#">Sentiment</a></li>
-
-
-			<li class="divider"></li>
-				<% if session[:active][:opt] == OPT_HABLA %>
-				    <li class="active"><% else %><li><% end %>
-				    	<%= link_to habla_path do %><i class="icon-comment"></i> Participa<% end %>
-				    </li>
-		</ul>
-	</div>
-</div>
-
 
 
 

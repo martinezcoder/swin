@@ -2,6 +2,12 @@
 
 class SessionsController < ApplicationController
 
+
+  def oauth_failure
+    flash[:warning] = "Ha rechazado la solicitud."
+    redirect_to root_path
+  end
+
   def new
     begin
       @omniauth = request.env["omniauth.auth"]

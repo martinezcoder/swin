@@ -7,3 +7,6 @@ Rails.application.config.middleware.use OmniAuth::Builder do
     
   provider :twitter, TWITTER_CONSUMER_KEY, TWITTER_CONSUMER_SECRET
 end
+
+
+OmniAuth.config.on_failure = SessionsController.action(:oauth_failure)
