@@ -6,12 +6,58 @@ include DashboardHelper
   before_filter :signed_in_user
   before_filter :user_has_pages
   before_filter :has_active_page
-  before_filter :has_competitors, except: :no_competitors
+  before_filter :has_competitors, except: :empty
 
-  def no_competitors
+  def home
+    session[:active] = { tab: FACEBOOK, opt: OPT_HOME }
+    @page = current_user.pages.find_by_id(get_active_page)
+
+    nDays = 8
+    engageList = []
+    
+    engage = get_engage(@page.fan_count, @page.talking_about_count)
+    t = Time.now
+    engageList[nDays] = [ t.strftime("%d/%m/%Y"), # "#{t.year}/#{t.month}/#{t.day}",
+                          engage,
+                          tooltip_engage(@page.pic_square, @page.name, engage)]
+
+    t = Time.now.yesterday.beginning_of_day
+    (nDays-1).downto(0) { |i|    # 8 days, one complete week
+      dataDay = @page.page_data_days.where("day = #{t.to_i}")
+      if !dataDay.empty?
+        engage = get_engage(dataDay[0].likes, dataDay[0].prosumers)
+      else
+        engage = 0
+      end
+      engageList[i] = [ t.strftime("%d/%m/%Y"), # "#{t.year}/#{t.month}/#{t.day}",
+                        engage,
+                        tooltip_engage(@page.pic_square, @page.name, engage)]
+      t = t.yesterday
+    }
+
+    engageYesterday = engageList[nDays-1][1].to_f
+    engageToday = engageList[nDays][1].to_f
+    
+    @var = ((engageToday - engageYesterday) / engageYesterday) * 100
+
+    @dataA = []
+    @dataB = []
+ 
+    nDays.downto(0) { |i|    # 8 days, one complete week    
+      @dataA[i] = [] + engageList[i]
+      @dataA[i][1] = 0
+      @dataB[i] = [] + engageList[i]
+    }
+
+    @max = engageList[nDays][1]
+    @max = 50 if @max <= 50 
+
+  end
+  
+  def empty
     session[:active] = { tab: FACEBOOK, opt: OPT_NO_COMPETITORS }
     @page = current_user.pages.find_by_id(get_active_page)
-    @num_competitors = @page.competitors.count
+    @num_competitors = 0
   end
 
   def engage
@@ -33,6 +79,7 @@ include DashboardHelper
                       competitors[i].name, 
                       competitors[i].page_type, 
                       engage,
+#                      {v: engage, f: '-5.0%'},
                       logo(competitors[i].page_url, competitors[i].pic_square, competitors[i].name, css2),
                       tooltip_engage(competitors[i].pic_square, competitors[i].name, engage)]
     end
@@ -51,7 +98,7 @@ include DashboardHelper
 
     @max = compList[0][3]
     
-    @max = 50 if @max <= 50 
+    @max = 50  if @max <= 50 
 
   end
 
@@ -126,10 +173,10 @@ private
       page = current_user.pages.find_by_id(get_active_page)
       num_competitors = page.competitors.count
       if num_competitors < min_competitors
-        redirect_to dashboard_no_competitors_path
+        redirect_to dashboard_empty_path
       end
     rescue
-      redirect_to dashboard_no_competitors_path
+      redirect_to dashboard_empty_path
     end
   end
 

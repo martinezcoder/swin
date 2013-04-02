@@ -11,19 +11,9 @@
 
   function drawVisualization() {
 
-	function drawTable(tablex, datax) {
-		datax.setColumns([0,1,2,3,4]);
-		tablex.draw(datax, {allowHtml: true}); //, showRowNumber: true});
-	}
-
-	function drawcharts(chartx, datax) {
-		datax.setColumns([0, 4]);
-	    chartx.draw(datax, options); 
-	}
-
     var options = {
-            seriesType: "bars",
-            title:'Engagement Hoy (fidelidad de los seguidores)', 
+            seriesType: "area", // curveType: "function",
+            title:'Evolución engagement (fidelidad de los seguidores)', 
             titleTextStyle: {fontSize: 14},
             colors: ['#0088CC'], 
             height: 200, 
@@ -40,50 +30,35 @@
 
     // Create and populate the data tables.
     var dataTableA = new google.visualization.DataTable();
-    dataTableA.addColumn('string', 'Id');
-    dataTableA.addColumn('string', 'Icono');
-    dataTableA.addColumn('string', 'Nombre');
-    dataTableA.addColumn('string', 'Tipo');
+    dataTableA.addColumn('string', 'Fecha');
     dataTableA.addColumn('number', 'Engagement');
-    dataTableA.addColumn('string', 'pic');
     dataTableA.addColumn({'type': 'string', 'role': 'tooltip', 'p': {'html': true}});
     dataTableA.addRows(rowDataA);
 
     var dataTableB = new google.visualization.DataTable();
-    dataTableB.addColumn('string', 'Id');
-    dataTableB.addColumn('string', 'Icono');
-    dataTableB.addColumn('string', 'Nombre');
-    dataTableB.addColumn('string', 'Tipo');
+    dataTableB.addColumn('string', 'Fecha');
     dataTableB.addColumn('number', 'Engagement');
-    dataTableB.addColumn('string', 'pic');
     dataTableB.addColumn({'type': 'string', 'role': 'tooltip', 'p': {'html': true}});
     dataTableB.addRows(rowDataB);
 
     var table = new google.visualization.Table(document.getElementById('table'));
-    var chart = new google.visualization.ComboChart(document.getElementById('graph_div'));
+    var chart = new google.visualization.ComboChart(document.getElementById('graph_engage_evolution_div'));
 
 	var formatter = new google.visualization.NumberFormat({fractionDigits: 0});
-	formatter.format(dataTableB, 4);
+	formatter.format(dataTableB, 1);
 
-//	var formatter = new google.visualization.TableArrowFormat();
-//	formatter.format(dataTableB, 4); // Apply formatter to second column
-  
   	// Data
   	var dataChartA = new google.visualization.DataView(dataTableA);
-	drawcharts(chart, dataChartA);
+	dataChartA.setColumns([0, 1]);
+	chart.draw(dataChartA, options);
 
     var dataChartB = new google.visualization.DataView(dataTableB);
-    dataChartB.setColumns([0, 4, 6]);
+    dataChartB.setColumns([0, 1, 2]);
     chart.draw(dataChartB, options);
 
   	var sub_datatable = new google.visualization.DataView(dataTableB);
-	drawTable(table, sub_datatable);
-
-	google.visualization.events.addListener(table, 'sort',
-	      function(event) {
-	        dataTableB.sort([{column: event.column, desc: !event.ascending}]);
-			chart.draw(dataChartB, options);
-	});
+	sub_datatable.setColumns([0,1]);
+	table.draw(sub_datatable, {allowHtml: true});
 
 	google.visualization.events.addListener(table, 'select', function() {
 		chart.setSelection(table.getSelection());
@@ -92,7 +67,6 @@
 	google.visualization.events.addListener(chart, 'select', function() {
 		table.setSelection(chart.getSelection());
 	});
-
 
   }
 

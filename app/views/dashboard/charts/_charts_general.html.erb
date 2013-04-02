@@ -67,7 +67,7 @@
 
     var dataTableB = new google.visualization.DataTable();
     dataTableB.addColumn('string', 'Id');
-    dataTableB.addColumn('string', 'minipic');
+    dataTableB.addColumn('string', 'Icono');
     dataTableB.addColumn('string', 'Nombre');
     dataTableB.addColumn('string', 'Tipo');
     dataTableB.addColumn('number', 'Fans');
@@ -100,9 +100,6 @@
   	var sub_datatable = new google.visualization.DataView(dataTableB);
 	drawTable(table, sub_datatable);
 
-    addSelectListeners(chart_fans, table);
-    addSelectListeners(chart_actives, table);
-
 	google.visualization.events.addListener(table, 'sort',
 	      function(event) {
 	        dataTableB.sort([{column: event.column, desc: !event.ascending}]);
@@ -110,9 +107,10 @@
 			chart_fans.draw(dataChartB, options_fans);
 		    dataChartB.setColumns([0, 5, 7]);
 		    chart_actives.draw(dataChartB, options_actives);
-			sub_datatable = new google.visualization.DataView(dataTableB);
-			drawTable(table, sub_datatable);
 	});
+
+    addSelectListeners(chart_fans, table);
+    addSelectListeners(chart_actives, table);
 
   }
 

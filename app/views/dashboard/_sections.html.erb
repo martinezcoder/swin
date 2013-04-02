@@ -3,7 +3,19 @@
 						    <div class="tab-content">
 							    <div class="tab-pane active" id="facebook">
 <% if session[:active][:tab] == FACEBOOK %>
-	<% if session[:active][:opt] == OPT_ENGAGE %>
+	<% if session[:active][:opt] == OPT_HOME %>
+
+									<h1><%= sprintf( "%0.02f", @var) %> % </h1>
+									<div class="clearfix"></div>
+									<div class="data_graph full_width">
+					                  <div id="graph_engage_evolution_div"></div>
+									</div>
+									<div class="clearfix"></div>
+									<div class="data_table">
+						  			  <div id="table"></div>
+									</div>
+
+	<% elsif session[:active][:opt] == OPT_ENGAGE %>
 									<div class="engage_div">
 										<%= render 'dashboard/layouts/engage_medals' %>
 									</div>

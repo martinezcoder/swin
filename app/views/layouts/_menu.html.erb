@@ -7,7 +7,7 @@
 				<li class="nav-header">Mi Perfil</li>
 			    	<% if session[:active][:opt] == OPT_LISTS %>
 						<li class="active"><% else %><li><% end %>
-							<%= link_to user_pages_path(current_user) do %><i class="icon-list"></i> Mis Listas<% end %>
+							<%= link_to user_pages_path(current_user) do %><i class="icon-list"></i> Mis Páginas<% end %>
 						</li>		
 			    	<% if session[:active][:opt] == OPT_COMPETITORS %>
 						<li class="active"><% else %><li><% end %>
@@ -19,7 +19,7 @@
 				<li class="nav-header">Métricas</li>
 				    <% if session[:active][:opt] == OPT_ENGAGE %>
 					    <li class="active"><% else %><li><% end %>
-							<%= link_to dashboard_path do %><i class="icon-home"></i> Engagement<% end %>
+							<%= link_to dashboard_engage_path do %><i class="icon-home"></i> Engagement<% end %>
 						</li>
 					<% if session[:active][:opt] == OPT_GENERAL %>
 					    <li class="active"><% else %><li><% end %>

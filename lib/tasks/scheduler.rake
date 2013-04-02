@@ -85,17 +85,17 @@ namespace :db do
   end
 
   def fb_list_pages_update(page_id_list)
+    yesterday = Time.now.yesterday.beginning_of_day.to_i
     me = User.find_by_email("francisjavier@gmail.com")
     ftoken = me.authentications.find_by_provider("facebook").token
     fgraph  = Koala::Facebook::API.new(ftoken)
     fbpages = fgraph.fql_query("SELECT page_id, fan_count, talking_about_count from page WHERE page_id in (#{page_id_list})")
     fbpages.each do |p|
       page = Page.find_by_page_id(p["page_id"].to_s)
-      pagedata = PageDataDay.find_or_initialize_by_page_id_and_day(page.id, Time.now.yesterday.beginning_of_day.to_i)     
+      pagedata = PageDataDay.find_or_initialize_by_page_id_and_day(page.id, yesterday)     
       pagedata.likes = p["fan_count"]
       pagedata.prosumers = p["talking_about_count"]
 
-      yesterday = Time.now.yesterday.beginning_of_day.to_i
       pagedata.comments = page.page_streams.where("day = #{yesterday}").sum("comments_count")
       pagedata.shared = page.page_streams.where("day = #{yesterday}").sum("share_count")
       pagedata.total_likes_stream = page.page_streams.where("day = #{yesterday}").sum("likes_count")

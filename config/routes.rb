@@ -1,8 +1,9 @@
 Swin::Application.routes.draw do
 
-  match "/dashboard", to: 'dashboard#engage'
+  match "/dashboard", to: 'dashboard#home'
+  match "/dashboard/engage", to: 'dashboard#engage'
   match "/dashboard/general", to: 'dashboard#general'
-  match "/dashboard/no_competitors", to: 'dashboard#no_competitors'
+  match "/dashboard/empty", to: 'dashboard#empty'
 
   resources :sessions, only: [:new, :destroy]
 
