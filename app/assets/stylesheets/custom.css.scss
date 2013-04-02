@@ -475,9 +475,8 @@ input {
 
 .competitors_div {
   overflow: hidden;
-  padding: 10px; padding-bottom: 20px;
+  padding: 10px 15px;
   margin: 0 0 10px 0px;
-  min-height: 40px;
   @include recuadrogris;
 }
 
@@ -487,18 +486,13 @@ input {
     float:left; 
     position:relative;
     margin-right: 35px;
-    margin-bottom: 30px;
-    &:first-child {
-      margin-left: 5px;
-    }
   }
 }
 
 .engage_div {
   overflow: hidden;
-  padding: 10px; padding-bottom: 20px;
+  padding: 10px 15px;
   margin: 0 0 10px 0px;
-  min-height: 50px;
   @include recuadrogris;
 }
 
@@ -508,10 +502,7 @@ input {
     float:left; 
     position:relative;
     margin-right: 35px;
-    margin-bottom: 30px;
-    &:first-child {
-      margin-left: 5px;
-    }
+    margin-bottom: 25px;
     .engageMedal {
       position:absolute;
       top:10px;

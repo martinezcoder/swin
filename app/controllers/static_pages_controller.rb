@@ -9,6 +9,9 @@ class StaticPagesController < ApplicationController
       else
         redirect_to user_pages_path(current_user)
       end
+    else
+      @pages = Page.count
+      @users = User.count
     end
   end
 
