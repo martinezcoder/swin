@@ -9,6 +9,25 @@ namespace :dev do
   end
 
 
+
+  desc "Updating free acounts..."
+  task destroy_data_day: :environment do
+    puts "update_data_format..."
+        puts Time.now
+        destroy_page_data_day
+        puts Time.now 
+    puts "done."
+  end
+
+  def destroy_page_data_day
+    datos = PageDataDay.all
+    datos.each do |d|
+      p = PageDataDay.find_by_id(d.id)
+      p.destroy
+    end
+  end
+
+
   def make_users
     fran1 = User.create!(name: "Fran",
                         email: "francisjavier@gmail.com",

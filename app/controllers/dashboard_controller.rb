@@ -16,6 +16,7 @@ include DashboardHelper
     engageList = []
     
     engage = get_engage(@page.fan_count, @page.talking_about_count)
+
     t = Time.now
     engageList[nDays] = [ t.strftime("%d/%m/%Y"), # "#{t.year}/#{t.month}/#{t.day}",
                           engage,
@@ -23,7 +24,7 @@ include DashboardHelper
 
     t = Time.now.yesterday.beginning_of_day
     (nDays-1).downto(0) { |i|    # 8 days, one complete week
-      dataDay = @page.page_data_days.where("day = #{t.to_i}")
+      dataDay = @page.page_data_days.where("day = #{t.strftime("%Y%m%d").to_i}")
       if !dataDay.empty?
         engage = get_engage(dataDay[0].likes, dataDay[0].prosumers)
       else

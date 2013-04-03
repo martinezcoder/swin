@@ -61,7 +61,7 @@ namespace :db do
 
       end_loop = false
       while !end_loop do
-        query =  "SELECT post_id, permalink, likes, actor_id, target_id, attachment, comments, share_count, created_time FROM stream WHERE source_id = #{p.page_id} and updated_time > #{time_from} and updated_time < #{time_to} LIMIT #{n},#{m}"
+        query =  "SELECT post_id, permalink, likes, actor_id, target_id, attachment, comments, share_count, created_time FROM stream WHERE source_id = #{p.page_id} and updated_time > #{time_from} and updated_time <= #{time_to} LIMIT #{n},#{m}"
         fbstream = fgraph.fql_query(query)
 
         if fbstream.empty?
@@ -85,7 +85,7 @@ namespace :db do
   end
 
   def fb_list_pages_update(page_id_list)
-    yesterday = Time.now.yesterday.beginning_of_day.to_i
+    yesterday = Time.now.yesterday.strftime("%Y%m%d").to_i
     me = User.find_by_email("francisjavier@gmail.com")
     ftoken = me.authentications.find_by_provider("facebook").token
     fgraph  = Koala::Facebook::API.new(ftoken)
@@ -126,7 +126,7 @@ namespace :db do
         stream.comments_count = page_st["comments"]["count"]
         stream.share_count = page_st["share_count"] 
         stream.created_time = page_st["created_time"]
-        stream.day = Time.now.yesterday.beginning_of_day
+        stream.day = Time.now.yesterday.strftime("%Y%m%d").to_i
         stream.save!
       end
     rescue => error
