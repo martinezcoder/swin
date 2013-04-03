@@ -12,7 +12,7 @@
   function drawVisualization() {
 
 	function drawTable(tablex, datax) {
-		datax.setColumns([0,1,2,3,4]);
+		datax.setColumns([0,1,2,3,4,7]);
 		tablex.draw(datax, {allowHtml: true}); //, showRowNumber: true});
 	}
 
@@ -47,6 +47,7 @@
     dataTableA.addColumn('number', 'Engagement');
     dataTableA.addColumn('string', 'pic');
     dataTableA.addColumn({'type': 'string', 'role': 'tooltip', 'p': {'html': true}});
+    dataTableA.addColumn('string', 'Variación');
     dataTableA.addRows(rowDataA);
 
     var dataTableB = new google.visualization.DataTable();
@@ -57,6 +58,7 @@
     dataTableB.addColumn('number', 'Engagement');
     dataTableB.addColumn('string', 'pic');
     dataTableB.addColumn({'type': 'string', 'role': 'tooltip', 'p': {'html': true}});
+    dataTableB.addColumn('string', 'Variación');
     dataTableB.addRows(rowDataB);
 
     var table = new google.visualization.Table(document.getElementById('table'));

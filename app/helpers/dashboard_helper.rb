@@ -18,7 +18,7 @@ module DashboardHelper
     return ((today - yesterday) / yesterday) * 100
   end
   
-  def tooltip_engage(img, title, value, variation)
+  def html_tooltip_engage(img, title, value, variation)
       ret = 
      '<div style="padding:5px 5px 5px 5px;'+ 
                  'text-align: center;'+
@@ -63,7 +63,7 @@ module DashboardHelper
 
 
   
-  def tooltip_general(img, title, fans, actives)
+  def html_tooltip_general(img, title, fans, actives)
       ret = 
      '<div style="padding:5px 5px 5px 5px;'+ 
                  'text-align: center;'+
@@ -83,6 +83,14 @@ module DashboardHelper
    end
 
 
-
+  def html_variation(variation)
+      ret = '<div style="margin-left:10px;">'
+      if variation >= 0
+        ret += '<i class="icon-arrow-up"></i> ' + '<span style="color:green">'
+      else
+        ret += '<i class="icon-arrow-down"></i> ' '<span style="color:red">'
+      end
+      return ret + variation.to_s + '%</div>' 
+  end
   
 end

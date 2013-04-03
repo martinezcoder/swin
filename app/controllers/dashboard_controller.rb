@@ -28,7 +28,8 @@ include DashboardHelper
       end
       engageList[i] = [ t.strftime("%d/%m/%Y"), # "#{t.year}/#{t.month}/#{t.day}",
                         engage,
-                        tooltip_engage(@page.pic_square, @page.name, engage, get_variation(engage.to_f, engageYesterday.to_f))]
+                        html_tooltip_engage(@page.pic_square, @page.name, engage, get_variation(engage.to_f, engageYesterday.to_f)),
+                        html_variation(0)]
       engageYesterday = engage
       t = t.tomorrow
     end
@@ -37,7 +38,8 @@ include DashboardHelper
     @var = get_variation(engage.to_f, engageYesterday.to_f)
     engageList[nDays] = [ "Hoy",
                           engage,
-                          tooltip_engage(@page.pic_square, @page.name, engage, @var)]
+                          html_tooltip_engage(@page.pic_square, @page.name, engage, @var),
+                          html_variation(@var)]
 
     @dataA = []
     @dataB = []
@@ -84,13 +86,15 @@ include DashboardHelper
       end
 
       engage = get_engage(competitors[i].fan_count, competitors[i].talking_about_count)
+      variation = get_variation(engage.to_f,engageY.to_f)
       compList[i] = [ logo(competitors[i].page_url, competitors[i].pic_square, competitors[i].name, css1), 
                       competitors[i].name, 
                       competitors[i].page_type, 
                       engage,
 #                      {v: engage, f: '-5.0%'},
                       logo(competitors[i].page_url, competitors[i].pic_square, competitors[i].name, css2),
-                      tooltip_engage(competitors[i].pic_square, competitors[i].name, engage, get_variation(engage.to_f,engageY.to_f))]
+                      html_tooltip_engage(competitors[i].pic_square, competitors[i].name, engage, variation),
+                      html_variation(variation)]
     end
 
     compList = compList.sort_by { |a, b, c, d, e, f| d }
@@ -144,7 +148,7 @@ include DashboardHelper
                       competitors[i].fan_count,
                       competitors[i].talking_about_count,
                       logo(competitors[i].page_url, competitors[i].pic_square, competitors[i].name, css2),
-                      tooltip_general(competitors[i].pic_square, competitors[i].name, competitors[i].fan_count, competitors[i].talking_about_count)]
+                      html_tooltip_general(competitors[i].pic_square, competitors[i].name, competitors[i].fan_count, competitors[i].talking_about_count)]
     end
 
     compList = compList.sort_by { |a, b, c, d, e, f, g| d }
