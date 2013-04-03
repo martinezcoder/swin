@@ -5,7 +5,15 @@
 <% if session[:active][:tab] == FACEBOOK %>
 	<% if session[:active][:opt] == OPT_HOME %>
 
-									<h1><%= sprintf( "%0.02f", @var) %> % </h1>
+									<h1>
+									<% if @var >= 0 %>
+										<i class="icon-arrow-up"></i><span style="color:green">
+									<% else %>
+										<i class="icon-arrow-down"></i><span style="color:red">
+									<% end %>
+									<%= sprintf( "%0.01f", @var) %> %</span>
+									</h1> 
+
 									<div class="clearfix"></div>
 									<div class="data_graph full_width">
 					                  <div id="graph_engage_evolution_div"></div>

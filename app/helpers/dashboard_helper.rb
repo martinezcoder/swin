@@ -90,7 +90,7 @@ module DashboardHelper
       else
         ret += '<i class="icon-arrow-down"></i> ' '<span style="color:red">'
       end
-      return ret + variation.to_s + '%</div>' 
+      return ret + sprintf( "%0.01f", variation)  + '%</span></div>' 
   end
   
 end
