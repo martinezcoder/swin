@@ -15,15 +15,11 @@ include DashboardHelper
     nDays = 8
     engageList = []
     
-    engage = get_engage(@page.fan_count, @page.talking_about_count)
+    t = Time.now - (nDays*24*60*60)  # nDays ago
 
-    t = Time.now
-    engageList[nDays] = [ t.strftime("%d/%m/%Y"), # "#{t.year}/#{t.month}/#{t.day}",
-                          engage,
-                          tooltip_engage(@page.pic_square, @page.name, engage)]
+    engageYesterday = 0
 
-    t = Time.now.yesterday.beginning_of_day
-    (nDays-1).downto(0) { |i|    # 8 days, one complete week
+    for i in 0..nDays-1
       dataDay = @page.page_data_days.where("day = #{t.strftime("%Y%m%d").to_i}")
       if !dataDay.empty?
         engage = get_engage(dataDay[0].likes, dataDay[0].prosumers)
@@ -32,23 +28,25 @@ include DashboardHelper
       end
       engageList[i] = [ t.strftime("%d/%m/%Y"), # "#{t.year}/#{t.month}/#{t.day}",
                         engage,
-                        tooltip_engage(@page.pic_square, @page.name, engage)]
-      t = t.yesterday
-    }
+                        tooltip_engage(@page.pic_square, @page.name, engage, get_variation(engage.to_f, engageYesterday.to_f))]
+      engageYesterday = engage
+      t = t.tomorrow
+    end
 
-    engageYesterday = engageList[nDays-1][1].to_f
-    engageToday = engageList[nDays][1].to_f
-    
-    @var = ((engageToday - engageYesterday) / engageYesterday) * 100
+    engage = get_engage(@page.fan_count, @page.talking_about_count)
+    @var = get_variation(engage.to_f, engageYesterday.to_f)
+    engageList[nDays] = [ "Hoy",
+                          engage,
+                          tooltip_engage(@page.pic_square, @page.name, engage, @var)]
 
     @dataA = []
     @dataB = []
  
-    nDays.downto(0) { |i|    # 8 days, one complete week    
+    for i in 0..nDays    
       @dataA[i] = [] + engageList[i]
       @dataA[i][1] = 0
       @dataB[i] = [] + engageList[i]
-    }
+    end
 
     @max = engageList[nDays][1]
     @max = 50 if @max <= 50 
@@ -72,9 +70,19 @@ include DashboardHelper
     css1 = 'mini_logo'
     css2 = 'normal_logo'
 
+    t = Time.now - (24*60*60) # yesterday
     num = competitors.length
     compList = []
+
     for i in 0..num-1 do
+
+      dataDay = competitors[i].page_data_days.where("day = #{t.strftime("%Y%m%d").to_i}")
+      if !dataDay.empty?
+        engageY = get_engage(dataDay[0].likes, dataDay[0].prosumers)
+      else
+        engageY = 0
+      end
+
       engage = get_engage(competitors[i].fan_count, competitors[i].talking_about_count)
       compList[i] = [ logo(competitors[i].page_url, competitors[i].pic_square, competitors[i].name, css1), 
                       competitors[i].name, 
@@ -82,7 +90,7 @@ include DashboardHelper
                       engage,
 #                      {v: engage, f: '-5.0%'},
                       logo(competitors[i].page_url, competitors[i].pic_square, competitors[i].name, css2),
-                      tooltip_engage(competitors[i].pic_square, competitors[i].name, engage)]
+                      tooltip_engage(competitors[i].pic_square, competitors[i].name, engage, get_variation(engage.to_f,engageY.to_f))]
     end
 
     compList = compList.sort_by { |a, b, c, d, e, f| d }

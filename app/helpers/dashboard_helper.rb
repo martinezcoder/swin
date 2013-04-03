@@ -14,15 +14,24 @@ module DashboardHelper
     return engage
   end
   
+  def get_variation(today, yesterday)
+    return ((today - yesterday) / yesterday) * 100
+  end
   
-  def tooltip_engage(img, title, value)
+  def tooltip_engage(img, title, value, variation)
       ret = 
      '<div style="padding:5px 5px 5px 5px;'+ 
                  'text-align: center;'+
                  'align:center;'+
                  '">'+
+        '<strong>'+  if variation >= 0 
+                        '<span style="color:green">+' + sprintf( "%0.01f", variation) 
+                     else
+                        '<span style="color:red">' + sprintf( "%0.01f", variation)
+                     end + '%</span></strong>' +
+
         '<div style="'+
-                    'margin:0 auto 10px auto;'+
+                    'margin:10px auto 10px auto;'+
                     'width: 30px;'+
                     'padding: 2px  5px;'+
                     'font-size: 1.7em;'+
@@ -42,7 +51,7 @@ module DashboardHelper
             '<strong>'+ value.to_s + '</strong>'+
         '</div>'+
         '<div style="'+
-                    'margin-bottom:10px;'+
+                    'margin:10px 0px;'+
                     '">'+
         '<img src="'+ img +'">'+
         '</div>'+
