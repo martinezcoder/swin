@@ -1,0 +1,6 @@
+		<%= form_tag(user_pages_path(@user), :method => "get") do %>
+		  <%= text_field_tag :update, 'yes', type: "hidden"  %>
+		  <%= button_tag(type: "submit", class: "btn btn-small btn-default") do %>
+		  	<i class="icon-repeat"></i> Actualiza la lista
+		  <% end %>
+		<% end %>

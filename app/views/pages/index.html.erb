@@ -3,7 +3,7 @@
 
 
 <div class="span9 well">
-	<h2>Elige una de tus listas para monitorizar y comparar</h2>
+	<h2>Elige una de tus páginas para monitorizar y comparar</h2>
 	
 	<ul class="fb_pages">
 		<% @pages.each do |page| %>
@@ -15,7 +15,9 @@
 		<% end %>
 
 	</ul>
-	
+
+	<div style="margin-top:10px;"><%= render 'pages/update_list' %></div>
+		
 </div>
 
 

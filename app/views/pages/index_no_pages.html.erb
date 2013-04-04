@@ -6,11 +6,6 @@
 		<%= link_to "Crea tu página profesional en Facebook", "https://www.facebook.com/pages/create.php", :target => "_blank" %>
 		</div>
 
-		<%= form_tag(user_pages_path(@user), :method => "get") do %>
-		  <%= text_field_tag :update, 'yes', type: "hidden"  %>
-		  <%= button_tag(type: "submit", class: "btn btn-small btn-default", data: { confirm: "ATENCIÓN: solo apareceran páginas con más de 50 fans" }) do %>
-		  	<i class="icon-repeat"></i> Actualiza la lista
-		  <% end %>
-		<% end %>
-			
+		<%= render 'pages/update_list' %>
+
 		</div>
