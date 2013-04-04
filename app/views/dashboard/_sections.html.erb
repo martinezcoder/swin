@@ -5,8 +5,10 @@
 <% if session[:active][:tab] == FACEBOOK %>
 	<% if session[:active][:opt] == OPT_HOME %>
 
-									<h1>
-									<% if @var >= 0 %>
+									<h1>Variación semanal:
+									<% if @var == 0 %>
+										<span style="color:green">
+									<% elsif @var > 0 %>
 										<i class="icon-arrow-up"></i><span style="color:green">
 									<% else %>
 										<i class="icon-arrow-down"></i><span style="color:red">

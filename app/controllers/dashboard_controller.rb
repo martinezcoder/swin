@@ -8,11 +8,11 @@ include DashboardHelper
   before_filter :has_active_page
   before_filter :has_competitors, except: :empty
 
-  def home
+  def timeline_engage
     session[:active] = { tab: FACEBOOK, opt: OPT_HOME }
     @page = current_user.pages.find_by_id(get_active_page)
 
-    nDays = 8
+    nDays = 7
     engageList = []
     
     t = Time.now - (nDays*24*60*60)  # nDays ago
@@ -26,10 +26,12 @@ include DashboardHelper
       else
         engage = 0
       end
+      @var = get_variation(engage.to_f, engageYesterday.to_f)
       engageList[i] = [ t.strftime("%d/%m/%Y"), # "#{t.year}/#{t.month}/#{t.day}",
                         engage,
-                        html_tooltip_engage(@page.pic_square, @page.name, engage, get_variation(engage.to_f, engageYesterday.to_f)),
-                        html_variation(0)]
+                        html_tooltip_engage(@page.pic_square, @page.name, engage, @var),
+                        html_variation(@var),
+                        t.strftime("%Y%m%d").to_i]
       engageYesterday = engage
       t = t.tomorrow
     end
@@ -39,7 +41,10 @@ include DashboardHelper
     engageList[nDays] = [ "Hoy",
                           engage,
                           html_tooltip_engage(@page.pic_square, @page.name, engage, @var),
-                          html_variation(@var)]
+                          html_variation(@var),
+                          Time.now.strftime("%Y%m%d").to_i]
+
+    @var = get_variation(engage.to_f, engageList[0][1]) 
 
     @dataA = []
     @dataB = []

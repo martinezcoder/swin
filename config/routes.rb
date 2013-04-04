@@ -1,6 +1,6 @@
 Swin::Application.routes.draw do
 
-  match "/dashboard", to: 'dashboard#home'
+  match "/dashboard", to: 'dashboard#timeline_engage'
   match "/dashboard/engage", to: 'dashboard#engage'
   match "/dashboard/general", to: 'dashboard#general'
   match "/dashboard/empty", to: 'dashboard#empty'

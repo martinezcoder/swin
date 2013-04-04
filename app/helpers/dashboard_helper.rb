@@ -1,6 +1,5 @@
 module DashboardHelper
 
-
   def logo (url, img, title, options)
     return '<a href="'+ url +'" target="_blank"><img src="'+ img +'" class="'+ options +'" title="'+ title +'"></a>'
   end
@@ -59,9 +58,7 @@ module DashboardHelper
       '</div>'
 
      return ret
-   end
-
-
+  end
   
   def html_tooltip_general(img, title, fans, actives)
       ret = 
@@ -80,12 +77,14 @@ module DashboardHelper
       '</div>'
 
      return ret
-   end
+  end
 
 
   def html_variation(variation)
       ret = '<div style="margin-left:10px;">'
-      if variation >= 0
+      if variation == 0
+        ret += '<span style="color:green">'
+      elsif variation > 0
         ret += '<i class="icon-arrow-up"></i> ' + '<span style="color:green">'
       else
         ret += '<i class="icon-arrow-down"></i> ' '<span style="color:red">'

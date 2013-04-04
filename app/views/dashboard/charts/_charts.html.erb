@@ -34,6 +34,7 @@
     dataTableA.addColumn('number', 'Engagement');
     dataTableA.addColumn({'type': 'string', 'role': 'tooltip', 'p': {'html': true}});
     dataTableA.addColumn('string', 'Variación');
+    dataTableA.addColumn('number', 'Id');
     dataTableA.addRows(rowDataA);
 
     var dataTableB = new google.visualization.DataTable();
@@ -41,6 +42,7 @@
     dataTableB.addColumn('number', 'Engagement');
     dataTableB.addColumn({'type': 'string', 'role': 'tooltip', 'p': {'html': true}});
     dataTableB.addColumn('string', 'Variación');
+    dataTableB.addColumn('number', 'Id');
     dataTableB.addRows(rowDataB);
 
     var table = new google.visualization.Table(document.getElementById('table'));
@@ -52,6 +54,7 @@
   	// Data
   	var dataChartA = new google.visualization.DataView(dataTableA);
 	dataChartA.setColumns([0, 1]);
+//	dataChartA.sort();
 	chart.draw(dataChartA, options);
 
     var dataChartB = new google.visualization.DataView(dataTableB);
@@ -59,8 +62,8 @@
     chart.draw(dataChartB, options);
 
   	var sub_datatable = new google.visualization.DataView(dataTableB);
-	sub_datatable.setColumns([0, 1, 3]);
-	table.draw(sub_datatable, {allowHtml: true});
+	sub_datatable.setColumns([4, 0, 1, 3]);
+	table.draw(sub_datatable, {allowHtml: true, sortColumn: 0, sortAscending: false});
 
 	google.visualization.events.addListener(table, 'select', function() {
 		chart.setSelection(table.getSelection());
