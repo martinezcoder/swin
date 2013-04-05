@@ -3,10 +3,10 @@
 class PagesController < ApplicationController
   include PagesHelper
 
-  before_filter :signed_in_user
-  before_filter :correct_user
-  before_filter :correct_user_page, only: [:show, :activate]
-  before_filter :user_has_pages, except: [:index]
+  before_filter :signed_in_user, except: :show
+  before_filter :correct_user, except: :show
+  before_filter :correct_user_page, only: [:competitors, :activate]
+  before_filter :user_has_pages, except: [:index, :show]
 
   def index
     session[:active] = { tab: FACEBOOK, opt: OPT_LISTS }
@@ -28,6 +28,10 @@ class PagesController < ApplicationController
   end
 
   def show
+    @page = Page.find(params[:id])
+  end
+
+  def competitors
     session[:active] = { tab: FACEBOOK, opt: OPT_COMPETITORS }
     @title = "Competidores"
     @page = Page.find(params[:id])

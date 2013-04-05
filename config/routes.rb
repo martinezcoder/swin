@@ -8,12 +8,15 @@ Swin::Application.routes.draw do
   resources :sessions, only: [:new, :destroy]
 
   resources :users, only: [:new, :create] do
-    resources :pages, only: [:index,:show] do
+    resources :pages, only: :index do
       member do
+        get :competitors
         post :activate
       end
     end
   end
+
+  resources :pages, only: :show
 
   resources :page_relationships, only: [:create, :destroy]
 

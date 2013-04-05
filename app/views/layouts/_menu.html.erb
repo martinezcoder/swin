@@ -11,7 +11,7 @@
 						</li>		
 			    	<% if session[:active][:opt] == OPT_COMPETITORS %>
 						<li class="active"><% else %><li><% end %>
-							<%= link_to user_page_path(current_user, @page.id) do %><i class="icon-search"></i> Mis Competidores<% end %>
+							<%= link_to competitors_user_page_path(current_user, @page.id) do %><i class="icon-search"></i> Mis Competidores<% end %>
 						</li>		
 	
 				<li class="divider"></li>
