@@ -29,6 +29,7 @@ class PagesController < ApplicationController
 
   def show
     @page = Page.find(params[:id])
+    @engage = get_engage(@page.fan_count, @page.talking_about_count)
   end
 
   def competitors
@@ -47,10 +48,11 @@ class PagesController < ApplicationController
         page = Page.new
         page.page_id             = p["page_id"]
         page.pic_square          = p["pic_square"]
+#        page.pic_big             = p["pic_big"]
         page.name                = p["name"]
         page.page_url            = p["page_url"]
         page.page_type           = p["type"]
-        page.username            = p["username"]
+#        page.username            = p["username"]
         page.fan_count           = p["fan_count"]
         page.talking_about_count = p["talking_about_count"]
         @pageslist = @pageslist + [page]

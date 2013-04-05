@@ -8,6 +8,43 @@ namespace :dev do
     make_page_relationships
   end
 
+  desc "Fill database with sample data"
+  task update_pages_info: :environment do
+    puts "start"
+    update_pages_info
+    puts "done."
+  end
+  
+  def update_pages_info
+    userme = User.find_by_email("francisjavier@gmail.com")
+    ftoken = userme.authentications.find_by_provider("facebook").token
+    fgraph  = Koala::Facebook::API.new(ftoken)
+    @pages = Page.all
+          
+    @pages.each do |q|
+
+        puts "SELECT xxx from page WHERE page_id = #{q.page_id}"
+
+        r = fgraph.fql_query("SELECT page_id, username, type, page_url, name, pic_square, pic_big, fan_count, talking_about_count from page WHERE page_id = #{q.page_id}")
+        p = r[0]
+
+        puts p["page_id"]
+
+        npage = Page.find_by_page_id("#{p["page_id"]}")
+
+        npage.name = p["name"]
+        npage.username = p["username"]
+        npage.page_type = p["type"]
+        npage.page_url = p["page_url"]
+        npage.pic_square = p["pic_square"]
+        npage.pic_big = p["pic_big"]
+        npage.fan_count = p["fan_count"]
+        npage.talking_about_count = p["talking_about_count"]
+        npage.save!
+    end
+  end
+
+
   def make_users
     fran1 = User.create!(name: "Fran",
                         email: "francisjavier@gmail.com",

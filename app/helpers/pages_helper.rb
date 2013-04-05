@@ -3,6 +3,19 @@
 module PagesHelper
   include FacebookHelper
 
+  def get_engage(fans, actives)
+    if fans > 0
+      engage = actives * 5 *100 / fans
+    else
+      engage = 0
+    end
+    return engage
+  end
+  
+  def get_variation(today, yesterday)
+    return ((today - yesterday) / yesterday) * 100
+  end
+
   def page_create_or_update(p, stream=false, daily=false)
         newpage = Page.find_or_initialize_by_page_id("#{p["page_id"]}")
 
@@ -11,6 +24,7 @@ module PagesHelper
         newpage.page_type = p["type"]
         newpage.page_url = p["page_url"]
         newpage.pic_square = p["pic_square"]
+        newpage.pic_big = p["pic_big"]
         newpage.fan_count = p["fan_count"]
         newpage.talking_about_count = p["talking_about_count"]
         newpage.save!

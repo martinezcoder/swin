@@ -1,20 +1,8 @@
 module DashboardHelper
+  include PagesHelper
 
   def logo (url, img, title, options)
     return '<a href="'+ url +'" target="_blank"><img src="'+ img +'" class="'+ options +'" title="'+ title +'"></a>'
-  end
-
-  def get_engage(fans, actives)
-    if fans > 0
-      engage = actives * 5 *100 / fans
-    else
-      engage = 0
-    end
-    return engage
-  end
-  
-  def get_variation(today, yesterday)
-    return ((today - yesterday) / yesterday) * 100
   end
   
   def html_tooltip_engage(img, title, value, variation)

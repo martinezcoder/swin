@@ -12,7 +12,7 @@ module FacebookHelper
   end
 
   def fb_query_page_list(pages_list)
-    fb_query_page_list = "SELECT page_id, username, type, page_url, name, pic_square, fan_count, talking_about_count from page WHERE page_id in (#{pages_list})"
+    fb_query_page_list = "SELECT page_id, username, type, page_url, name, pic_square, pic_big, fan_count, talking_about_count from page WHERE page_id in (#{pages_list})"
   end
 
   def fb_query_page_stream(p_id, time_from, time_to, n, m)
