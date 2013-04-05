@@ -1,6 +1,6 @@
 		<%= form_tag(user_pages_path(@user), :method => "get") do %>
 		  <%= text_field_tag :update, 'yes', type: "hidden"  %>
-		  <%= button_tag(type: "submit", class: "btn btn-small btn-default") do %>
+		  <%= button_tag(type: "submit", class: "btn btn-small btn-default", data: { confirm: "ATENCIÓN: solo aparecerán páginas con más de 30 fans" }) do %>
 		  	<i class="icon-repeat"></i> Actualiza la lista
 		  <% end %>
 		<% end %>

@@ -9,7 +9,7 @@ include DashboardHelper
   before_filter :has_competitors, except: :empty
 
   def timeline_engage
-    session[:active] = { tab: FACEBOOK, opt: OPT_HOME }
+    session[:active] = { tab: FACEBOOK, opt: OPT_TIMELINE_ENGAGE }
     @page = current_user.pages.find_by_id(get_active_page)
 
     nDays = 7
