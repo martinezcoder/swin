@@ -27,7 +27,7 @@ namespace :db do
   def populate_page_data
     # Groups of nblock pages:    
     nblock = 30
-    nmax = Page.count
+    nmax = Page.maximum("id")
     n = 1
     while n < nmax do  
         if nmax-n < nblock
