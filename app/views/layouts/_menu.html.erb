@@ -13,7 +13,7 @@
 						<li class="active"><% else %><li><% end %>
 							<%= link_to competitors_user_page_path(current_user, @page.id) do %><i class="icon-search"></i> Mis Competidores<% end %>
 						</li>		
-	
+
 				<li class="divider"></li>
 				
 				<li class="nav-header">Métricas</li>
@@ -25,7 +25,10 @@
 					    <li class="active"><% else %><li><% end %>
 					    	<%= link_to dashboard_general_path do %><i class="icon-globe"></i> Vista general<% end %>
 					    </li>
-	
+					<% if session[:active][:opt] == OPT_TIMELINE_ENGAGE %>
+					    <li class="active"><% else %><li><% end %>
+					    	<%= link_to dashboard_path do %><i class="icon-random"></i> Timeline<% end %>
+					    </li>	
 			    	<li class="disabled"><a href="#">Tamaño</a></li>
 			    	<li class="disabled"><a href="#">Crecimiento</a></li>
 				    <li class="disabled"><a href="#">Actividad</a></li>
