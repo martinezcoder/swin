@@ -1,0 +1,19 @@
+<% provide(:title, "Youtube") %>
+
+
+<div class="center">
+	<h2>¿Te gustaría monitorizar canales de Youtube?</h2>
+
+</div>
+
+<div class="center hero-unit">
+
+<section>
+	<% if Rails.env.production? %>
+<div class="fb-comments" data-href="http://apps.facebook.com/swinanalytics/youtube" data-width="470" data-num-posts="30"></div>
+	<% else %>
+<div class="fb-comments" data-href="/youtube/" data-width="470" data-num-posts="30"></div>
+	<% end %>
+</section>
+
+</div>

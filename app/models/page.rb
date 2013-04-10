@@ -20,7 +20,7 @@
 class Page < ActiveRecord::Base
   include PagesHelper
   
-  has_many :user_page_relationships, foreign_key: "page_id"
+  has_many :user_page_relationships, foreign_key: "page_id", dependent: :destroy
   has_many :users, through: :user_page_relationships
   
   # what pages I consider my competitors

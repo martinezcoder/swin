@@ -29,9 +29,15 @@
 
 								<nav class="tabbable"> <!-- Only required for left/right tabs -->
 									<ul class="nav nav-tabs">
-										<li class="active"><a href="#facebook" data-toggle="tab">Facebook</a></li>
-										<li><a href="#twitter" data-toggle="tab">Twitter</a></li>
-										<li><a href="#youtube" data-toggle="tab">Youtube</a></li>
+										<% if session[:active][:tab] == FACEBOOK %><li class="active"><% else %><li><% end %> 
+											<%= link_to "Facebook", dashboard_engage_path %>
+										</li>
+										<% if session[:active][:tab] == TWITTER %><li class="active"><% else %><li><% end %>
+											<%= link_to "Twitter", twitter_path %>
+										</li>
+										<% if session[:active][:tab] == YOUTUBE %><li class="active"><% else %><li><% end %>
+											<%= link_to "Youtube", youtube_path %>
+										</li>
 									</ul>
 
 									<nav class="tabbable"> <!-- Only required for left/right tabs -->

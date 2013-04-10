@@ -56,14 +56,14 @@
 									</div>
 	<% elsif session[:active][:opt] == OPT_NO_COMPETITORS %>
 
-<div class="alert alert-block alert-error fade in">
-	<button data-dismiss="alert" class="close" type="button">×</button>
-	<h4 class="alert-heading">Aún no sigue a ningún competidor.</h4>
-	<p>Para empezar a monitorizar, busca y sigue a tus competidores.</p>
-	<p>
-		<%= link_to "Añadir competidores", competitors_user_page_path(current_user, @page), class: "btn btn-danger" %>
-	</p>
-</div>
+									<div class="alert alert-block alert-error fade in">
+										<button data-dismiss="alert" class="close" type="button">×</button>
+										<h4 class="alert-heading">Aún no sigue a ningún competidor.</h4>
+										<p>Para empezar a monitorizar, busca y sigue a tus competidores.</p>
+										<p>
+											<%= link_to "Añadir competidores", competitors_user_page_path(current_user, @page), class: "btn btn-danger" %>
+										</p>
+									</div>
 									<div class="data_nil">
 										<div class="center">
 											<h1>Bienvenido a SocialWin Analytics</h1>										

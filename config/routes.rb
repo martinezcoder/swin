@@ -24,6 +24,8 @@ Swin::Application.routes.draw do
 
   match '/auth/:provider/callback', to: 'sessions#new'
 
+  match '/youtube', to: 'static_pages#youtube'
+  match '/twitter', to: 'static_pages#twitter'
   match '/habla', to: 'static_pages#habla'
   root to: 'static_pages#home'
 

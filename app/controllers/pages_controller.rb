@@ -14,7 +14,7 @@ class PagesController < ApplicationController
       my_admin_pages_update_from_facebook
     end
     @user = User.find(params[:user_id])
-    @pages = @user.pages
+    @pages = @user.pages.order("id")
 
     if (@pages.count > 0) 
       if get_active_page.nil?

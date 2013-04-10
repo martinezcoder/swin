@@ -1,13 +1,12 @@
 <% if signed_in? %>
 	<% if current_user.pages.count > 0 %>
-	
-		<% if session[:active][:tab] == FACEBOOK %>
+
 			<div class="page_active_dashboard">
-				<%= link_to @page.page_url, target: "_blank" do %>
+				<%= link_to @page do %>
 					<%= image_tag @page.pic_square, alt: @page.name, class: "imgpage", alt: "#{@page.name}", title: "#{@page.name}" %>
 					<strong><%= @page.name %></strong>
 				<% end %>
 			</div>
-		<% end %>
+
 	<% end %>
 <% end %>

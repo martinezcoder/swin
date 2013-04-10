@@ -20,6 +20,16 @@ class StaticPagesController < ApplicationController
     @page = current_user.pages.find_by_id(get_active_page)
   end
 
+  def twitter
+    session[:active] = { tab: TWITTER, opt: nil }
+    @page = current_user.pages.find_by_id(get_active_page)
+  end
+
+  def youtube
+    session[:active] = { tab: YOUTUBE, opt: nil }
+    @page = current_user.pages.find_by_id(get_active_page)
+  end
+
 
 private 
 
