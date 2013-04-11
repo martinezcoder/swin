@@ -15,36 +15,49 @@ include DashboardHelper
     nDays = 7
     engageList = []
     
-    t = Time.now - (nDays*24*60*60)  # nDays ago
+    tToday = Time.now - (nDays*24*60*60)  # nDays ago
+    tYesterday = Time.now - ((nDays+1)*24*60*60)  # nDays ago
 
+    engageToday = 0
     engageYesterday = 0
+    @max = 0
 
-    for i in 0..nDays-1
-      dataDay = @page.page_data_days.where("day = #{t.strftime("%Y%m%d").to_i}")
-      if !dataDay.empty?
-        engage = get_engage(dataDay[0].likes, dataDay[0].prosumers)
-      else
-        engage = 0
-      end
-      @var = get_variation(engage.to_f, engageYesterday.to_f)
-      engageList[i] = [ t.strftime("%d/%m/%Y"), # "#{t.year}/#{t.month}/#{t.day}",
-                        engage,
-                        html_tooltip_engage(@page.pic_square, @page.name, engage, @var),
-                        html_variation(@var),
-                        t.strftime("%Y%m%d").to_i]
-      engageYesterday = engage
-      t = t.tomorrow
+    dataYesterday = @page.page_data_days.where("day = #{tYesterday.strftime("%Y%m%d").to_i}")
+    if !dataYesterday.empty?
+      engageYesterday = get_engage(dataYesterday[0].likes, dataYesterday[0].prosumers)
+    else
+      engageYesterday = 0
     end
 
-    engage = get_engage(@page.fan_count, @page.talking_about_count)
-    @var = get_variation(engage.to_f, engageYesterday.to_f)
+    @max = engageYesterday
+    
+    for i in 0..nDays-1
+      dataToday = @page.page_data_days.where("day = #{tToday.strftime("%Y%m%d").to_i}")
+      if !dataToday.empty?
+        engageToday = get_engage(dataToday[0].likes, dataToday[0].prosumers)
+      else
+        engageToday = 0
+      end
+      @max = [@max, engageToday].max
+      @var = get_variation(engageToday.to_f, engageYesterday.to_f)
+      engageList[i] = [ tToday.strftime("%d/%m/%Y"), # "#{t.year}/#{t.month}/#{t.day}",
+                        engageToday,
+                        html_tooltip_engage(@page.pic_square, @page.name, engageToday, @var),
+                        html_variation(@var),
+                        tToday.strftime("%Y%m%d").to_i]
+      engageYesterday = engageToday
+      tToday = tToday.tomorrow
+    end
+
+    engageToday = get_engage(@page.fan_count, @page.talking_about_count)
+    @var = get_variation(engageToday.to_f, engageYesterday.to_f)
     engageList[nDays] = [ "Hoy",
-                          engage,
-                          html_tooltip_engage(@page.pic_square, @page.name, engage, @var),
+                          engageToday,
+                          html_tooltip_engage(@page.pic_square, @page.name, engageToday, @var),
                           html_variation(@var),
                           Time.now.strftime("%Y%m%d").to_i]
 
-    @var = get_variation(engage.to_f, engageList[0][1]) 
+    @var = get_variation(engageToday.to_f, engageList[0][1]) 
 
     @dataA = []
     @dataB = []
@@ -55,7 +68,6 @@ include DashboardHelper
       @dataB[i] = [] + engageList[i]
     end
 
-    @max = engageList[nDays][1]
     @max = 50 if @max <= 50 
 
   end
@@ -80,6 +92,7 @@ include DashboardHelper
     t = Time.now - (24*60*60) # yesterday
     num = competitors.length
     compList = []
+    @max = 0
 
     for i in 0..num-1 do
 
@@ -100,6 +113,9 @@ include DashboardHelper
                       logo(competitors[i].page_url, competitors[i].pic_square, competitors[i].name, css2),
                       html_tooltip_engage(competitors[i].pic_square, competitors[i].name, engage, variation),
                       html_variation(variation)]
+
+      @max = [@max, engage].max
+
     end
 
     compList = compList.sort_by { |a, b, c, d, e, f| d }
@@ -113,8 +129,6 @@ include DashboardHelper
       @dataA[i][4] = 0
       @dataB[i] = [(i+1).to_s] + compList[i]
     end
-
-    @max = compList[0][3]
     
     @max = 50  if @max <= 50 
 
