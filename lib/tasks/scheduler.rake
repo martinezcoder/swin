@@ -47,6 +47,60 @@ namespace :db do
   end
 
 
+  def fb_list_pages_update(page_id_list)
+    dayYesterday = Time.now.yesterday.strftime("%Y%m%d").to_i
+    me = User.find_by_email("francisjavier@gmail.com")
+    ftoken = me.authentications.find_by_provider("facebook").token
+    fgraph  = Koala::Facebook::API.new(ftoken)
+    fbpages = fgraph.fql_query("SELECT page_id, fan_count, talking_about_count from page WHERE page_id in (#{page_id_list})")
+    fbpages.each do |p|
+      page = Page.find_by_page_id(p["page_id"].to_s)
+      pagedata = PageDataDay.find_or_initialize_by_page_id_and_day(page.id, dayYesterday)     
+      pagedata.likes = p["fan_count"]
+      pagedata.prosumers = p["talking_about_count"]
+
+      pagedata.comments = page.page_streams.where("day = #{dayYesterday}").sum("comments_count")
+      pagedata.shared = page.page_streams.where("day = #{dayYesterday}").sum("share_count")
+      pagedata.total_likes_stream = page.page_streams.where("day = #{dayYesterday}").sum("likes_count")
+      pagedata.posts = page.page_streams.where("day = #{dayYesterday}").count
+
+      pagedata.save!
+      
+      page.fan_count = p["fan_count"]
+      page.talking_about_count = p["talking_about_count"]
+      page.save!
+    end
+  end
+
+  def update_page_stream(page_id, page_st)
+    begin
+      if !page_st["permalink"].nil? and !page_st["permalink"].empty? 
+        stream = PageStream.find_or_initialize_by_page_id_and_created_time(page_id, page_st["created_time"])
+        stream.post_id = page_st["post_id"]
+        stream.permalink = page_st["permalink"]
+        if !page_st["attachment"]["media"].nil? 
+          if !page_st["attachment"]["media"][0].nil?
+            stream.media_type = page_st["attachment"]["media"][0]["type"]
+          end
+        end 
+        stream.actor_id = page_st["actor_id"]
+        stream.target_id = page_st["target_id"]
+        stream.likes_count = page_st["likes"]["count"]
+        stream.comments_count = page_st["comments"]["count"]
+        stream.share_count = page_st["share_count"] 
+        stream.created_time = page_st["created_time"]
+        stream.day = Time.now.yesterday.strftime("%Y%m%d").to_i
+        stream.save!
+      end
+    rescue => error
+      puts error.backtrace
+      puts page_st
+    end
+  end
+
+
+
+
   def populate_page_stream
     me = User.find_by_email("francisjavier@gmail.com")
     ftoken = me.authentications.find_by_provider("facebook").token
@@ -81,57 +135,6 @@ namespace :db do
         n = m
         m = n+50
       end
-    end
-  end
-
-  def fb_list_pages_update(page_id_list)
-    yesterday = Time.now.yesterday.strftime("%Y%m%d").to_i
-    me = User.find_by_email("francisjavier@gmail.com")
-    ftoken = me.authentications.find_by_provider("facebook").token
-    fgraph  = Koala::Facebook::API.new(ftoken)
-    fbpages = fgraph.fql_query("SELECT page_id, fan_count, talking_about_count from page WHERE page_id in (#{page_id_list})")
-    fbpages.each do |p|
-      page = Page.find_by_page_id(p["page_id"].to_s)
-      pagedata = PageDataDay.find_or_initialize_by_page_id_and_day(page.id, yesterday)     
-      pagedata.likes = p["fan_count"]
-      pagedata.prosumers = p["talking_about_count"]
-
-      pagedata.comments = page.page_streams.where("day = #{yesterday}").sum("comments_count")
-      pagedata.shared = page.page_streams.where("day = #{yesterday}").sum("share_count")
-      pagedata.total_likes_stream = page.page_streams.where("day = #{yesterday}").sum("likes_count")
-      pagedata.posts = page.page_streams.where("day = #{yesterday}").count
-      pagedata.day = yesterday
-      pagedata.save!
-      
-      page.fan_count = p["fan_count"]
-      page.talking_about_count = p["talking_about_count"]
-      page.save!
-    end
-  end
-
-  def update_page_stream(page_id, page_st)
-    begin
-      if !page_st["permalink"].nil? and !page_st["permalink"].empty? 
-        stream = PageStream.find_or_initialize_by_page_id_and_created_time(page_id, page_st["created_time"])
-        stream.post_id = page_st["post_id"]
-        stream.permalink = page_st["permalink"]
-        if !page_st["attachment"]["media"].nil? 
-          if !page_st["attachment"]["media"][0].nil?
-            stream.media_type = page_st["attachment"]["media"][0]["type"]
-          end
-        end 
-        stream.actor_id = page_st["actor_id"]
-        stream.target_id = page_st["target_id"]
-        stream.likes_count = page_st["likes"]["count"]
-        stream.comments_count = page_st["comments"]["count"]
-        stream.share_count = page_st["share_count"] 
-        stream.created_time = page_st["created_time"]
-        stream.day = Time.now.yesterday.strftime("%Y%m%d").to_i
-        stream.save!
-      end
-    rescue => error
-      puts error.backtrace
-      puts page_st
     end
   end
 
