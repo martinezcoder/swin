@@ -30,7 +30,15 @@ describe Authentication do
   its(:user) { should == user }
 
   it { should be_valid }
-  
+
+  describe "accessible attributes" do
+    it "should not allow access to user_id" do
+      expect do
+        Authentication.new(user_id: user.id)
+      end.to raise_error(ActiveModel::MassAssignmentSecurity::Error)
+    end    
+  end
+
   describe "when provider is not present" do
     before { @provider.provider = " " }
     it { should_not be_valid }

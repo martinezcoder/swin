@@ -82,7 +82,6 @@ describe User do
       user_with_same_email.email = @user.email.upcase
       user_with_same_email.save
     end
-
     it { should_not be_valid }
   end
 
@@ -109,6 +108,18 @@ describe User do
     it "should be 2 providers" do
       @user.authentications.count.should == 2
     end
+
+
+    it "should destroy associated authentications" do
+      authentications = @user.authentications.dup
+      @user.destroy
+      authentications.should_not be_empty
+      authentications.each do |auth|
+        Authentication.find_by_id(auth.id).should be_nil
+      end
+    end
+
+
   end
 
 
