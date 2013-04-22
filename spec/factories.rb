@@ -3,6 +3,7 @@ FactoryGirl.define do
   factory :user do
     name "FranJMartinez"
     email "fran.martinez@ss.com"
+    terms_of_service '1'
   end
 
   factory :user0 do
@@ -26,6 +27,12 @@ FactoryGirl.define do
     pic_square "http://profile.ak.fbcdn.net/hprofile-ak-snc6/276654_349679691794392_1240268105_q.jpg"
     type "CONSULTING/BUSINESS SERVICES"
     username "socialwin"
+  end
+  
+  factory :authentication do
+    provider "face"
+    uid "0"
+    user
   end
 
 end

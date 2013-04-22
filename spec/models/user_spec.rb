@@ -14,21 +14,28 @@ require 'spec_helper'
 
 describe User do
 
-  before { @user = User.new(name: "Example User", email: "user@example.com") }
+  before { @user = User.new(name: "Example User", email: "user@example.com", terms_of_service: '1') }
 
   subject { @user }
 
   it { should respond_to(:name) }
   it { should respond_to(:email) }
   it { should respond_to(:remember_token) }
-  it { should respond_to(:authentications) }
-  it { should respond_to(:approved_policy) }
-  
+  it { should respond_to(:authentications) }  
+  it { should respond_to(:pages) }
+  it { should respond_to(:user_page_relationships) }
 
   it { should be_valid }
 
-  it { should_not be_approved_policy }
+  describe "should validate acceptance of terms_of_service" do
+    it { should validate_acceptance_of(:terms_of_service) }
+  end
 
+  describe "when terms_of_service is not accepted" do
+    before { @user.terms_of_service = '0' }
+    it { should_not be_valid }
+  end
+  
   describe "when name is not present" do
     before { @user.name = " " }
     it { should_not be_valid }
@@ -83,5 +90,26 @@ describe User do
     before { @user.save }
     its(:remember_token) { should_not be_blank }
   end
+
+
+  describe "authentication associations" do
+
+    before { @user.save }
+    let!(:face_auth) do 
+      FactoryGirl.create(:authentication, user: @user, provider: "facebook", uid: "1")
+    end
+    let!(:twitt_aut) do
+      FactoryGirl.create(:authentication, user: @user, provider: "twitter", uid: "1")
+    end
+
+    it "should have both" do
+      @user.authentications.should == [face_auth, twitt_aut]
+    end
+    
+    it "should be 2 providers" do
+      @user.authentications.count.should == 2
+    end
+  end
+
 
 end

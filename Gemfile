@@ -33,6 +33,7 @@ group :test do
   gem 'factory_girl_rails', '4.1.0'
   gem 'cucumber-rails', '1.3.0', :require => false
   gem 'database_cleaner', '0.7.0'
+  gem 'shoulda'
 end
 
 
