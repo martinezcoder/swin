@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130405100845) do
+ActiveRecord::Schema.define(:version => 20130422164157) do
 
   create_table "authentications", :force => true do |t|
     t.integer  "user_id"
@@ -24,6 +24,16 @@ ActiveRecord::Schema.define(:version => 20130405100845) do
 
   add_index "authentications", ["provider", "uid"], :name => "index_authentications_on_provider_and_uid"
   add_index "authentications", ["user_id", "provider"], :name => "index_authentications_on_user_id_and_provider", :unique => true
+
+  create_table "facebook_lists", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "name"
+    t.string   "photo_url"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "facebook_lists", ["user_id", "created_at"], :name => "index_facebook_lists_on_user_id_and_created_at"
 
   create_table "page_data_days", :force => true do |t|
     t.integer  "page_id"

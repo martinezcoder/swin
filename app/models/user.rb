@@ -19,6 +19,9 @@ class User < ActiveRecord::Base
   # authentications
   has_many :authentications, dependent: :destroy
 
+  # facebook lists
+  has_many :facebook_lists, dependent: :destroy
+
   # pages
   has_many :user_page_relationships, foreign_key: "user_id"
   has_many :pages, through: :user_page_relationships

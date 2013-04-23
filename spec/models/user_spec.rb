@@ -119,8 +119,25 @@ describe User do
       end
     end
 
-
   end
 
+  describe "facebook lists associations" do
 
+    before { @user.save }
+  
+    let!(:face_list) do 
+      FactoryGirl.create(:facebook_list, user: @user)
+    end
+
+    it "should destroy associated facebook lists" do
+      lists = @user.facebook_lists.dup
+      @user.destroy
+      lists.should_not be_empty
+      lists.each do |list|
+        FacebookList.find_by_id(list.id).should be_nil
+      end
+    end
+
+  end
+  
 end
