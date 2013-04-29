@@ -86,7 +86,7 @@ namespace :db do
         stream.actor_id = page_st["actor_id"]
         stream.target_id = page_st["target_id"]
         stream.likes_count = page_st["likes"]["count"]
-        stream.comments_count = page_st["comments"]["count"]
+        stream.comments_count = page_st["comment_info"]["count"]
         stream.share_count = page_st["share_count"] 
         stream.created_time = page_st["created_time"]
         stream.day = Time.now.yesterday.strftime("%Y%m%d").to_i
@@ -115,7 +115,7 @@ namespace :db do
 
       end_loop = false
       while !end_loop do
-        query =  "SELECT post_id, permalink, likes, actor_id, target_id, attachment, comments, share_count, created_time FROM stream WHERE source_id = #{p.page_id} and updated_time > #{time_from} and updated_time <= #{time_to} LIMIT #{n},#{m}"
+        query =  "SELECT post_id, permalink, likes, actor_id, target_id, attachment, comment_info, share_count, created_time FROM stream WHERE source_id = #{p.page_id} and updated_time > #{time_from} and updated_time <= #{time_to} LIMIT #{n},#{m}"
         fbstream = fgraph.fql_query(query)
 
         if fbstream.empty?
