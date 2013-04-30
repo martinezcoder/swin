@@ -13,6 +13,8 @@ describe FacebookList do
   it { should respond_to(:photo_url) }
   it { should respond_to(:user_id) }
   it { should respond_to(:user) }
+  it { should respond_to(:list_page_relationships) }
+  
   its(:user) { should == user }
 
   it { should be_valid }

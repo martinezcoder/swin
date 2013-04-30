@@ -1,3 +1,6 @@
 class ListPageRelationship < ActiveRecord::Base
-  attr_accessible :list_id, :page_id
+  attr_accessible :page_id
+  
+  belongs_to :facebook_list
+  
 end
