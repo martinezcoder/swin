@@ -158,6 +158,9 @@ include DashboardHelper
     css1 = 'mini_logo'
     css2 = 'normal_logo'
 
+    @max_fans = 0
+    @max_actives = 0
+
     num = competitors.length
     compList = []
     for i in 0..num-1 do
@@ -168,6 +171,8 @@ include DashboardHelper
                       competitors[i].talking_about_count,
                       logo(competitors[i].page_url, competitors[i].pic_square, competitors[i].name, css2),
                       html_tooltip_general(competitors[i].pic_square, competitors[i].name, competitors[i].fan_count, competitors[i].talking_about_count)]
+      @max_fans = [@max_fans, competitors[i].fan_count].max
+      @max_actives = [@max_actives, competitors[i].talking_about_count].max
     end
 
     compList = compList.sort_by { |a, b, c, d, e, f, g| d }
@@ -175,17 +180,14 @@ include DashboardHelper
 
     @dataA = []
     @dataB = []
- 
+
+    # nil data for ascendent animation chart 
     for i in 0..compList.length-1 do
       @dataA[i] = [(i+1).to_s] + compList[i]
       @dataA[i][4] = 0
       @dataA[i][5] = 0
       @dataB[i] = [(i+1).to_s] + compList[i]
-    end
-
-    @max_fans = compList[0][3]
-    @max_actives = compList[0][4]
- 
+    end 
 
   end
 
