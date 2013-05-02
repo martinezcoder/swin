@@ -48,6 +48,14 @@ describe FacebookList do
     end
     it { should be_added(page) }
     its(:pages) { should include(page) }
+
+    describe "and remove" do
+      before { @fblist.remove!(page) }
+
+      it { should_not be_added(page) }
+      its(:pages) { should_not include(page) }
+    end
+
   end
 
 end

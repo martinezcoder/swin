@@ -18,4 +18,8 @@ class FacebookList < ActiveRecord::Base
     list_page_relationships.create!(page_id: page.id)
   end
 
+  def remove!(page)
+    list_page_relationships.find_by_page_id(page.id).destroy
+  end
+
 end
