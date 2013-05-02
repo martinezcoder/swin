@@ -3,7 +3,7 @@
 module SessionsHelper
 
   def sign_in(user)
-    cookies.permanent[:remember_token] = user.remember_token
+    cookies[:remember_token] = user.remember_token
     session[:provider] = { FACEBOOK => { status: OFF, active_page: nil }, TWITTER => { status: OFF }, YOUTUBE  => { status: OFF } }
     self.current_user = user
   end
