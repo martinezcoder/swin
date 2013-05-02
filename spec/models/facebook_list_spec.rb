@@ -14,6 +14,9 @@ describe FacebookList do
   it { should respond_to(:user_id) }
   it { should respond_to(:user) }
   it { should respond_to(:list_page_relationships) }
+  it { should respond_to(:pages) }
+  it { should respond_to(:added?) }
+  it { should respond_to(:add!) }
   
   its(:user) { should == user }
 
@@ -35,6 +38,16 @@ describe FacebookList do
   describe "when user_id is not present" do
     before { @fblist.user_id = nil }
     it { should_not be_valid }
+  end
+
+  describe "adding" do
+    let(:page) { FactoryGirl.create(:page) }
+    before do
+      @fblist.save
+      @fblist.add!(page)
+    end
+    it { should be_added(page) }
+    its(:pages) { should include(page) }
   end
 
 end

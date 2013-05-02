@@ -30,4 +30,14 @@ describe ListPageRelationship do
       its(:list) { should == list }
   end
 
+  describe "when list_id is not present" do
+    before { @fblist.list_id = nil }
+    it { should_not be_valid }
+  end
+
+  describe "when page_id is not present" do
+    before { @fblist.page_id = nil }
+    it { should_not be_valid }
+  end
+
 end

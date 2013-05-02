@@ -4,4 +4,6 @@ class ListPageRelationship < ActiveRecord::Base
   belongs_to :list, class_name: "FacebookList"
   belongs_to :page
   
+  validates :page_id, presence: true
+  validates :list_id, presence: true
 end
