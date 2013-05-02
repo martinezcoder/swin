@@ -1,21 +1,14 @@
 <% provide(:title, "Youtube") %>
 
 
-<div class="center">
+<div class="center well">
 	<h2>¿Te gustaría monitorizar cuentas de twitter?</h2>
-
+	<p>Si estás interesado en que desarrollemos el análisis competitivo de Twitter, <strong>haz clic en "Me gusta" o deja un comentario</strong> con tus opiniones. </p>
+	<div class="row"><div class="fb-like" data-href="http://analytics.socialwin.es/twitter" data-send="false" data-layout="box_count" data-width="450" data-show-faces="true"></div></div>
 </div>
 
-<div class="center hero-unit">
-
-<section>
-<div style="text-align:left;">
-	<% if Rails.env.production? %>
+<% if Rails.env.production? %>
 	<div class="fb-comments" data-href="http://apps.facebook.com/socialwinapp/twitter" data-width="470" data-num-posts="30"></div>
-	<% else %>
+<% else %>
 	<div class="fb-comments" data-href="http://apps.facebook.com/swinanalytics/twitter/" data-width="470" data-num-posts="30"></div>
-	<% end %>
-</div>
-</section>
-
-</div>
+<% end %>
