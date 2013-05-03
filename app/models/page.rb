@@ -34,7 +34,7 @@ class Page < ActiveRecord::Base
   has_many :followers, through: :reverse_page_relationships #, source: :follower
 
   has_many :list_page_relationships, foreign_key: "page_id", class_name: "ListPageRelationship", dependent: :destroy
-  has_many :facebook_lists, through: :list_page_relationships
+  has_many :lists, through: :list_page_relationships
 
   has_many :page_streams
   has_many :page_data_days

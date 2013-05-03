@@ -40,11 +40,11 @@ Swin::Application.configure do
   OmniAuth.config.test_mode = true
   
   OmniAuth.config.mock_auth[:facebook] = {
-      'uid' => '1337',
+      'uid' => '123545',
       'provider' => 'facebook',
       'info' => {
         'name' => 'FranJMartinez',
-        'email' => 'fran.martinez@ss.com'
+        'email' => 'fran.martinez@socialwin.es'
         },
       'credentials' => {
         'token' => 'Agfkw32mdl2m3dDEkao'
