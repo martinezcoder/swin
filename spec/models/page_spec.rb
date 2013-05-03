@@ -40,6 +40,10 @@ describe Page do
   it { should respond_to(:page_url) }
   it { should respond_to(:pic_square) }
   it { should respond_to(:pic_big) }
+
+  it { should respond_to(:list_page_relationships) }
+  it { should respond_to(:facebook_lists) }
+
   
   it { should be_valid }
 
