@@ -23,6 +23,7 @@ class PagesController < ApplicationController
         @page = @user.pages.find(get_active_page)
         @competitors = @page.competitors
     else
+      @page = nil
       render 'index_no_pages'
     end
   end
