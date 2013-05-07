@@ -15,7 +15,7 @@ class StaticPagesController < ApplicationController
   end
 
   def habla
-    session[:active] = { tab: FACEBOOK, opt: OPT_HABLA }
+#    session[:active] = { tab: FACEBOOK, opt: OPT_HABLA }
     @page = current_user.pages.find_by_id(get_active_page)
   end
 
