@@ -14,18 +14,9 @@
 							<%= tab_link('Twitter', twitter_path, TWITTER) %>
 							<%= tab_link('Youtube', youtube_path, YOUTUBE) %>
 						</ul>
-			
-						<nav class="tabbable"> <!-- Only required for left/right tabs -->
-							<div class="tab-content">
-								<div class="tab-pane active" id="facebook">
-									<%= yield %>
-								</div>
-								<div class="tab-pane" id="twitter">
-								</div>
-								<div class="tab-pane" id="youtube">
-								</div>
-							</div>
-						</nav>
+
+						<%= yield %>
+
 					</nav>
 
 				</div>

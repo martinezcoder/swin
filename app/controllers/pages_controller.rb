@@ -9,7 +9,7 @@ class PagesController < ApplicationController
   before_filter :user_has_pages, except: [:index, :show]
 
   def index
-    session[:active] = { tab: FACEBOOK, opt: OPT_LISTS }
+    session[:active] = { tab: FACEBOOK }
     if params[:update] == 'yes'
       my_admin_pages_update_from_facebook
     end
@@ -34,7 +34,7 @@ class PagesController < ApplicationController
   end
 
   def competitors
-    session[:active] = { tab: FACEBOOK, opt: OPT_COMPETITORS }
+    session[:active] = { tab: FACEBOOK }
     @title = "Competidores"
     @page = Page.find(params[:id])
     @competitors = @page.competitors.order("created_at DESC")

@@ -9,7 +9,7 @@ include DashboardHelper
   before_filter :has_competitors, except: :empty
 
   def timeline_engage
-    session[:active] = { tab: FACEBOOK, opt: OPT_TIMELINE_ENGAGE }
+    session[:active] = { tab: FACEBOOK }
     @page = current_user.pages.find_by_id(get_active_page)
 
     nDays = 7
@@ -73,13 +73,13 @@ include DashboardHelper
   end
   
   def empty
-    session[:active] = { tab: FACEBOOK, opt: OPT_NO_COMPETITORS }
+    session[:active] = { tab: FACEBOOK }
     @page = current_user.pages.find_by_id(get_active_page)
     @num_competitors = 0
   end
 
   def engage
-    session[:active] = { tab: FACEBOOK, opt: OPT_ENGAGE }    
+    session[:active] = { tab: FACEBOOK }    
     @page = current_user.pages.find_by_id(get_active_page)    
 
     competitors = []
@@ -135,7 +135,7 @@ include DashboardHelper
   end
 
   def general
-    session[:active] = { tab: FACEBOOK, opt: OPT_GENERAL }
+    session[:active] = { tab: FACEBOOK }
     @page = current_user.pages.find_by_id(get_active_page)
 
     competitors = []
