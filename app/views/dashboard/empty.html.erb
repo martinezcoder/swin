@@ -1,5 +1,26 @@
 <% provide(:title, "Busca competidores") %>
 
-<%= render 'dashboard/sections' %>
+<div class="alert alert-block alert-error fade in">
+	<button data-dismiss="alert" class="close" type="button">×</button>
+	<h4 class="alert-heading">Aún no sigue a ningún competidor.</h4>
+	<p>Para empezar a monitorizar, busca y sigue a tus competidores.</p>
+	<p>
+		<%= link_to "Añadir competidores", competitors_user_page_path(current_user, @page), class: "btn btn-danger" %>
+	</p>
+</div>
+<div class="data_nil">
+	<div class="center">
+		<h1>Bienvenido a SocialWin Analytics</h1>										
+	</div>
+</div>
+<div class="data_nil">
+	<div class="center">
+	  	<h2>Añada <strong>algún competidor</strong> para empezar a monitorizar.
+	  		<br><br>Actualmente sigue a <%= @num_competitors || 0 %> competidores</h2>
+	</div>
+</div>
+
+</div>
+
 
 

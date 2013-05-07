@@ -15,17 +15,17 @@ class StaticPagesController < ApplicationController
   end
 
   def habla
-    session[:active] = { tab: FACEBOOK, opt: OPT_HABLA }
+    session[:active] = { tab: FACEBOOK }
     @page = current_user.pages.find_by_id(get_active_page)
   end
 
   def twitter
-    session[:active] = { tab: TWITTER, opt: nil }
+    session[:active] = { tab: TWITTER }
     @page = current_user.pages.find_by_id(get_active_page)
   end
 
   def youtube
-    session[:active] = { tab: YOUTUBE, opt: nil }
+    session[:active] = { tab: YOUTUBE }
     @page = current_user.pages.find_by_id(get_active_page)
   end
   
