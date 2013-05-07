@@ -10,7 +10,6 @@ module ApplicationHelper
     end
   end
 
-
   def menu_link(link_text, icon_type, link_path)
     class_name = current_page?(link_path) ? 'active' : ''
     content_tag(:li, :class => class_name) do
