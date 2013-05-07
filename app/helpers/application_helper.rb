@@ -20,7 +20,7 @@ module ApplicationHelper
   end
 
   def tab_link(link_text, link_path, tab)
-    if tab == session[:active][:tab]
+    if tab == session[:active_tab]
       class_name = 'active'
     else
       class_name = ''
