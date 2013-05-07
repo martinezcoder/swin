@@ -56,9 +56,9 @@ module SessionsHelper
   def user_has_pages
     begin
       pages = current_user.pages
-      redirect_to user_pages_path unless (pages.count > 0)
+      redirect_to user_pages_path(current_user) unless (pages.count > 0)
     rescue
-      redirect_to user_pages_path
+      redirect_to user_pages_path(current_user)
     end 
   end
 
