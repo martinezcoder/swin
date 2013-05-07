@@ -15,15 +15,15 @@ class PagesController < ApplicationController
     end
     @user = User.find(params[:user_id])
     @pages = @user.pages.order("id")
+    @page = nil
 
     if (@pages.count > 0) 
       if get_active_page.nil?
         set_active_page(@user.pages.first)
       end
-        @page = @user.pages.find(get_active_page)
-        @competitors = @page.competitors
+      @page = @user.pages.find(get_active_page)
+      @competitors = @page.competitors
     else
-      @page = nil
       render 'index_no_pages'
     end
   end

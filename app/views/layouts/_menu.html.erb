@@ -1,4 +1,3 @@
-<% if current_user.pages.count > 0 %>
 
 	<div class="menu_metricas">
 		<div style="max-width: 340px; padding: 8px 0;" class="well">
@@ -6,7 +5,7 @@
 
 				<li class="nav-header">Mi Perfil</li>
 					<%= menu_link('Mis Páginas', 'icon-list', user_pages_path(current_user)) %>
-					<%= menu_link('Mis competidores', 'icon-search', competitors_user_page_path(current_user, @page.id)) %>
+					<%= menu_link('Mis competidores', 'icon-search', @page.nil? ? root_url : competitors_user_page_path(current_user, @page)) %>
 				<li class="divider"></li>				
 				<li class="nav-header">Métricas</li>
 					<%= menu_link('Engagement', 'icon-home', dashboard_engage_path) %>
@@ -25,51 +24,4 @@
 			</ul>
 		</div>
 	</div>
-
-<% else %>
-
-	<div class="page_active_dashboard">
-			<% @user = current_user %>
-			<%= image_tag "https://graph.facebook.com/#{get_auth(FACEBOOK).uid}/picture", alt: @user.name, class: "imgpage", alt: "#{@user.name}", title: "#{@user.name}" %>
-			<strong><%= @user.name %></strong>
-	</div>
-
-
-	<div class="menu_metricas">
-		<div style="max-width: 340px; padding: 8px 0;" class="well">
-			<ul class="nav nav-list">
-	
-				<li class="nav-header">Mi Perfil</li>
-			    	<% if session[:active][:opt] == OPT_LISTS %>
-						<li class="active"><% else %><li><% end %>
-							<%= link_to user_pages_path(current_user) do %><i class="icon-list"></i> Mis Listas<% end %>
-						</li>
-				<li class="disabled"><a href="#"><i class="icon-search"></i>Mis competidores</a></li>
-				
-				<li class="divider"></li>
-				
-				<li class="nav-header">Métricas</li>
-
-			    	<li class="disabled"><a href="#">Engagement</a></li>
-			    	<li class="disabled"><a href="#">General</a></li>
-			    	<li class="disabled"><a href="#">Tamaño</a></li>
-			    	<li class="disabled"><a href="#">Crecimiento</a></li>
-				    <li class="disabled"><a href="#">Actividad</a></li>
-				    <li class="disabled"><a href="#">Interacción</a></li>
-				    <li class="disabled"><a href="#">Embajadores</a></li>
-				    <li class="disabled"><a href="#">Influence</a></li>
-				    <li class="disabled"><a href="#">Sentiment</a></li>
-	
-				<li class="divider"></li>
-				    <li class="disabled"><a href="#"><i class="icon-comment"></i> Participa</a></li>
-			</ul>
-		</div>
-	</div>
-
-
-
-<% end %>
-
-
-
 
