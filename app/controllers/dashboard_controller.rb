@@ -12,7 +12,7 @@ include DashboardHelper
     session[:active_tab] = FACEBOOK
     @page = current_user.pages.find_by_id(get_active_page)
 
-    nDays = 7
+    nDays = 14
     engageList = []
     
     tToday = Time.now - (nDays*24*60*60)  # nDays ago
@@ -56,8 +56,8 @@ include DashboardHelper
                           html_tooltip_engage(@page.pic_square, @page.name, engageToday, @var),
                           html_variation(@var),
                           Time.now.strftime("%Y%m%d").to_i]
-
-    @var = get_variation(engageToday.to_f, engageList[0][1]) 
+    @max = [@max, engageToday].max
+    @var = get_variation(engageToday.to_f, engageList[nDays-7][1]) 
 
     @dataA = []
     @dataB = []
