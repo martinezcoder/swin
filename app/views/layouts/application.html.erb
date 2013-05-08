@@ -17,50 +17,7 @@
 				<div class="alert alert-<%= key %>"><%= value %></div>
 			<% end %>
 
-			<% if signed_in? %>	
-			    <div class="row">
-				    <div class="span12">
-					    <div class="row">
-						    <aside class="span2">
-						    	<%= render 'layouts/page_logo' %>
-					    		<%= render 'layouts/menu' %>
-						    </aside>
-						    <div class="span10">
-
-								<nav class="tabbable"> <!-- Only required for left/right tabs -->
-									<ul class="nav nav-tabs">
-										<% if session[:active][:tab] == FACEBOOK %><li class="active"><% else %><li><% end %> 
-											<%= link_to "Facebook", dashboard_engage_path %>
-										</li>
-										<% if session[:active][:tab] == TWITTER %><li class="active"><% else %><li><% end %>
-											<%= link_to "Twitter", twitter_path %>
-										</li>
-										<% if session[:active][:tab] == YOUTUBE %><li class="active"><% else %><li><% end %>
-											<%= link_to "Youtube", youtube_path %>
-										</li>
-									</ul>
-
-									<nav class="tabbable"> <!-- Only required for left/right tabs -->
-										<div class="tab-content">
-											<div class="tab-pane active" id="facebook">
-												<%= yield %>
-											</div>
-											<div class="tab-pane" id="twitter">
-											</div>
-											<div class="tab-pane" id="youtube">
-											</div>
-										</div>
-									</nav>
-
-								</nav>
-						    </div>
-					    </div>
-				    </div>
-			    </div>
-		    <% else %>
-		    	<%= yield %>
-			<% end %>
-
+			<%= render 'layouts/body' %>
 
 			<%= render 'layouts/footer' %>
 
@@ -69,6 +26,5 @@
 			<%= debug(session) if Rails.env.development? %>
 			<%= debug(cookies) if Rails.env.development? %>
 		</div>
-
 	</body>
 </html>

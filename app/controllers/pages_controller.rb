@@ -9,19 +9,20 @@ class PagesController < ApplicationController
   before_filter :user_has_pages, except: [:index, :show]
 
   def index
-    session[:active] = { tab: FACEBOOK, opt: OPT_LISTS }
+    session[:active_tab] = FACEBOOK
     if params[:update] == 'yes'
       my_admin_pages_update_from_facebook
     end
     @user = User.find(params[:user_id])
     @pages = @user.pages.order("id")
+    @page = nil
 
     if (@pages.count > 0) 
       if get_active_page.nil?
         set_active_page(@user.pages.first)
       end
-        @page = @user.pages.find(get_active_page)
-        @competitors = @page.competitors
+      @page = @user.pages.find(get_active_page)
+      @competitors = @page.competitors
     else
       render 'index_no_pages'
     end
@@ -33,7 +34,7 @@ class PagesController < ApplicationController
   end
 
   def competitors
-    session[:active] = { tab: FACEBOOK, opt: OPT_COMPETITORS }
+    session[:active_tab] = FACEBOOK
     @title = "Competidores"
     @page = Page.find(params[:id])
     @competitors = @page.competitors.order("created_at DESC")

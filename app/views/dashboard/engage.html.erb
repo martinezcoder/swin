@@ -2,6 +2,8 @@
 
 <%= render 'dashboard/charts/charts_engage' %>
 
-<%= render 'dashboard/sections' %>
-
-
+<div class="engage_div">
+	<%= render 'dashboard/layouts/engage_medals' %>
+</div>
+<%= render 'dashboard/shared/graph', :graph => "graph_div" %>
+<%= render 'dashboard/shared/table' %>
