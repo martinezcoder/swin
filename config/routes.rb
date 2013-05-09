@@ -8,17 +8,17 @@ Swin::Application.routes.draw do
   resources :sessions, only: [:new, :destroy]
 
   resources :users, only: [:new, :create] do
-    resources :pages, only: :index do
+    resources :pages, only: :index, :path => "/facebook/lists" do
       member do
         get :competitors
         post :activate
       end
     end
   end
-  match '/facebook/:user_id/lists', to: 'pages#index'
+#  match '/users/:user_id/facebook/lists', to: 'pages#index'
 
-  resources :pages, only: :show
-  match '/facebook/:id', to: 'pages#show'
+  resources :pages, :path => "/facebook", only: :show 
+
 
   resources :page_relationships, only: [:create, :destroy]
 
