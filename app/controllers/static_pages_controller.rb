@@ -4,7 +4,7 @@ class StaticPagesController < ApplicationController
   def home
     if signed_in?
       if current_user.pages.count > 0
-        redirect_to dashboard_engage_path
+        redirect_to facebook_engage_path
       else
         redirect_to user_pages_path(current_user)
       end

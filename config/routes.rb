@@ -1,9 +1,9 @@
 Swin::Application.routes.draw do
 
-  match "/dashboard", to: 'dashboard#timeline_engage'
-  match "/dashboard/engage", to: 'dashboard#engage'
-  match "/dashboard/general", to: 'dashboard#general'
-  match "/dashboard/empty", to: 'dashboard#empty'
+  match "/facebook", to: 'facebook#timeline_engage'
+  match "/facebook/engage", to: 'facebook#engage'
+  match "/facebook/general", to: 'facebook#general'
+  match "/facebook/empty", to: 'facebook#empty'
 
   resources :sessions, only: [:new, :destroy]
 
@@ -17,6 +17,7 @@ Swin::Application.routes.draw do
   end
 
   resources :pages, only: :show
+  match '/facebook/:id', to: 'pages#show'
 
   resources :page_relationships, only: [:create, :destroy]
 

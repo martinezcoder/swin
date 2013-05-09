@@ -1,6 +1,6 @@
 # encoding: UTF-8
 
-class DashboardController < ApplicationController
+class FacebookController < ApplicationController
 include DashboardHelper
 
   before_filter :signed_in_user
@@ -207,10 +207,10 @@ private
       page = current_user.pages.find_by_id(get_active_page)
       num_competitors = page.competitors.count
       if num_competitors < min_competitors
-        redirect_to dashboard_empty_path
+        redirect_to facebook_empty_path
       end
     rescue
-      redirect_to dashboard_empty_path
+      redirect_to facebook_empty_path
     end
   end
 
