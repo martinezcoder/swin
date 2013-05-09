@@ -15,6 +15,7 @@ Swin::Application.routes.draw do
       end
     end
   end
+  match '/facebook/:user_id/lists', to: 'pages#index'
 
   resources :pages, only: :show
   match '/facebook/:id', to: 'pages#show'
