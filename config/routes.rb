@@ -1,22 +1,24 @@
 Swin::Application.routes.draw do
 
-  match "/dashboard", to: 'dashboard#timeline_engage'
-  match "/dashboard/engage", to: 'dashboard#engage'
-  match "/dashboard/general", to: 'dashboard#general'
-  match "/dashboard/empty", to: 'dashboard#empty'
+  match "/facebook", to: 'facebook#timeline_engage'
+  match "/facebook/engage", to: 'facebook#engage'
+  match "/facebook/general", to: 'facebook#general'
+  match "/facebook/empty", to: 'facebook#empty'
 
   resources :sessions, only: [:new, :destroy]
 
   resources :users, only: [:new, :create] do
-    resources :pages, only: :index do
+    resources :pages, only: :index, :path => "/facebook/lists" do
       member do
         get :competitors
         post :activate
       end
     end
   end
+#  match '/users/:user_id/facebook/lists', to: 'pages#index'
 
-  resources :pages, only: :show
+  resources :pages, :path => "/facebook", only: :show 
+
 
   resources :page_relationships, only: [:create, :destroy]
 
