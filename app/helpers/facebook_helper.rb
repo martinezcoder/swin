@@ -1,10 +1,13 @@
 # encoding: UTF-8
 
 module FacebookHelper
+
+  def fb_token
+    get_token FACEBOOK
+  end
   
   def fb_graph
-    ftoken = get_token FACEBOOK
-    fb_graph  = Koala::Facebook::API.new(ftoken)
+    fb_graph  = Koala::Facebook::API.new(fb_token)
   end
 
   def fb_query_my_admin_pages
@@ -28,7 +31,7 @@ module FacebookHelper
   end
 
   def fb_get_search_pages_list(name)
-    search = fb_graph.search("#{name}", {type: 'page'})
+    search = fb_graph.search("#{name}", {type: 'page', access_token: fb_token})
 
     page_ids = []
     search.each do |s|
