@@ -78,16 +78,6 @@ end
 
 
 RACK_ENV = ENV['ENVIRONMENT'] ||= 'test'
-OmniAuth.config.test_mode = true
-omniauth_hash =
-    {:provider => "facebook",
-     :uid      => "1234",
-     :info   => {:name       => "John Doe",
-                 :email      => "johndoe@email.com"},
-     :credentials => {:token => "testtoken234tsdf"}}
-
-OmniAuth.config.add_mock(:facebook, omniauth_hash)
-
 
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 ENV["RAILS_ENV"] ||= 'test'
