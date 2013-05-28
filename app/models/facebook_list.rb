@@ -1,5 +1,5 @@
 class FacebookList < ActiveRecord::Base
-  attr_accessible :name, :photo_url
+  attr_accessible :name, :page_id, :photo_url
 
   belongs_to :user
   
@@ -8,7 +8,7 @@ class FacebookList < ActiveRecord::Base
 
   validates :user_id, presence: true
   validates :name, length: { maximum: 50 }
-
+  validates :page_id, presence: true
 
   def added?(page)
     list_page_relationships.find_by_page_id(page.id)    

@@ -13,7 +13,7 @@ class PageRelationshipsController < ApplicationController
   
       mypage.follow!(competitor)
   
-      #if the page is not registered, then get yesterday's activity data
+      #if the page is not registered, then get today's activity data
       if PageDataDay.find_by_page_id(competitor.id).nil?
         page_data_day_update(competitor.id)
       end
@@ -21,7 +21,7 @@ class PageRelationshipsController < ApplicationController
     else
       free = false
     end
-    
+
     respond_to do |format|
       format.html { redirect_to competitors_user_page_path(current_user, mypage, search: params[:search], free: free) }
       format.js

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130508101635) do
+ActiveRecord::Schema.define(:version => 20130524090724) do
 
   create_table "authentications", :force => true do |t|
     t.integer  "user_id"
@@ -31,8 +31,10 @@ ActiveRecord::Schema.define(:version => 20130508101635) do
     t.string   "photo_url"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.integer  "page_id"
   end
 
+  add_index "facebook_lists", ["page_id"], :name => "index_facebook_lists_on_page_id"
   add_index "facebook_lists", ["user_id", "created_at"], :name => "index_facebook_lists_on_user_id_and_created_at"
 
   create_table "list_page_relationships", :force => true do |t|
