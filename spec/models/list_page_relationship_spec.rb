@@ -4,7 +4,7 @@ describe ListPageRelationship do
 
   let(:page) { FactoryGirl.create(:page) }
   let(:user) { FactoryGirl.create(:user) }
-  let(:list) { user.facebook_lists.create }
+  let(:list) { user.facebook_lists.create(page_id: "1234") }
 
 
   before do

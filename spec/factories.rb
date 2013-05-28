@@ -37,6 +37,7 @@ FactoryGirl.define do
 
   factory :facebook_list do
     name "listaprueba"
+    page_id "000000"
     user
   end
 

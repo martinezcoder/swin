@@ -4,7 +4,7 @@ describe FacebookList do
 
   let(:user) { FactoryGirl.create(:user) }
   before do
-    @fblist = user.facebook_lists.build(name: "Lorem ipsum", photo_url: "xxx")
+    @fblist = user.facebook_lists.build(name: "Lorem ipsum", photo_url: "xxx", page_id: "000000")
   end
 
   subject { @fblist }
@@ -12,6 +12,8 @@ describe FacebookList do
   it { should respond_to(:name) }
   it { should respond_to(:photo_url) }
   it { should respond_to(:user_id) }
+  it { should respond_to(:page_id) }
+
   it { should respond_to(:user) }
   it { should respond_to(:list_page_relationships) }
   it { should respond_to(:pages) }
@@ -37,6 +39,11 @@ describe FacebookList do
 
   describe "when user_id is not present" do
     before { @fblist.user_id = nil }
+    it { should_not be_valid }
+  end
+
+  describe "when page_id is not present" do
+    before { @fblist.page_id = nil }
     it { should_not be_valid }
   end
 
