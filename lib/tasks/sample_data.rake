@@ -31,9 +31,9 @@ namespace :dev do
 
   desc "Batch facebook multiquery"
   task batch_facebook_multiquery: :environment do
-    puts "start"
+    puts Time.now.to_s + ": start"
     batch_facebook_multiquery
-    puts "done."
+    puts Time.now.to_s + ": done."
   end
 
   
@@ -184,7 +184,7 @@ namespace :dev do
       puts time_diff @ta, tb
 
       # End Batch process
-=begin
+
       dayYesterday = Time.now.yesterday.strftime("%Y%m%d").to_i
 
       response.length.times do |i|
@@ -209,7 +209,6 @@ namespace :dev do
 
           end
       end    
-=end
 
       q = q+n
     end
@@ -220,6 +219,8 @@ namespace :dev do
   end
 
 
+
+
   def batch_facebook_multiquery
     me = User.find_by_id(1)
     ftoken = me.authentications.find_by_provider("facebook").token
@@ -227,21 +228,29 @@ namespace :dev do
 
     t1 = Time.now
 
-    m = 50
-    i = 0
-    while i < Page.count do
-      n = 0
+    #best
+    #    maxPages = 50
+    #    maxBatch = 15
+    #    maxMultiQueries = 7
+
+    maxPages = 50 # maximum limited by Facebook = 50
+    maxBatch = 15 # maximum limited by Facebook = 50
+    maxMultiQueries = 7 # maximum limited by Facebook = 50
+
+    indexPages = 0
+    pages = Page.all
+    while indexPages < Page.count do
 
       # Start Batch process
       response = @api.batch do |batch_api|
 
-          pages = Page.limit(m).offset(n)
+          pages = Page.limit(maxPages).offset(indexPages).order('id')
 
-          while !pages.empty? and (n < m*m) do
+          nBatch = 0
+          while !pages.empty? and (nBatch < maxBatch) do
 
               qhash = {}
-              (0..5).each do |q|
-    
+              (0..maxMultiQueries-1).each do |q|
                   id_list = []
                   pages.each do |p|
                     id_list = id_list + [p.page_id]
@@ -250,57 +259,41 @@ namespace :dev do
     
                   qhash["query"+q.to_s] = "SELECT page_id, fan_count, talking_about_count from page WHERE page_id in (#{id_list})"
 
-                  n = n+pages.count
-                  pages = Page.limit(m).offset(n)
+                  indexPages += pages.count
+                  puts Time.now.to_s + ": Pages from " + pages[0].id.to_s + " to " + pages[pages.count-1].id.to_s 
 
+                  pages = Page.limit(maxPages).offset(indexPages).order('id')
                   break if (pages.count == 0)
 
               end
-#puts qhash
+
               batch_api.fql_multiquery(qhash)
+              nBatch += 1
           end
 
       @ta=Time.now
       end
       # End Batch process
       tb = Time.now
-      puts time_diff @ta, tb
 
-#puts response
-=begin
-      dayYesterday = Time.now.yesterday.strftime("%Y%m%d").to_i
+      puts Time.now.to_s + ": Facebook response: " + time_diff(@ta, tb).to_s + " seconds."
 
-      response.length.times do |k|
-
-          response[k].each do |p|
-      
-            page = Page.find_by_page_id(p["page_id"].to_s)
-            pagedata = PageDataDay.find_or_initialize_by_page_id_and_day(page.id, dayYesterday)     
-            pagedata.likes = p["fan_count"]
-            pagedata.prosumers = p["talking_about_count"]
-      
-            pagedata.comments = page.page_streams.where("day = #{dayYesterday}").sum("comments_count")
-            pagedata.shared = page.page_streams.where("day = #{dayYesterday}").sum("share_count")
-            pagedata.total_likes_stream = page.page_streams.where("day = #{dayYesterday}").sum("likes_count")
-            pagedata.posts = page.page_streams.where("day = #{dayYesterday}").count
-      
-            pagedata.save!
-            
-            page.fan_count = p["fan_count"]
-            page.talking_about_count = p["talking_about_count"]
-            page.save!
-
+      puts Time.now.to_s + ": Updating pages..." 
+      (0..response.length-1).each do |nResp|
+        (0..response[nResp].length-1).each do |nQuery|
+          (0..response[nResp][nQuery]["fql_result_set"].length-1).each do |nPage|
+            update_page_data(response[nResp][nQuery]["fql_result_set"][nPage])
           end
-      end    
-=end
-      i = i+n
+        end
+      end
 
     end
 
     t2 = Time.now
-#    puts time_diff t1, t2
+    puts Time.now.to_s + ": Processed in: " + time_diff(t1, t2).to_s + " seconds." 
     
   end
+
 
 
   def batch_facebook
@@ -348,5 +341,28 @@ namespace :dev do
   def time_diff(start, finish)
      return (finish - start)
   end  
+
+
+  def update_page_data(p)
+      dayYesterday = Time.now.yesterday.strftime("%Y%m%d").to_i
+
+      page = Page.find_by_page_id(p["page_id"].to_s)
+      pagedata = PageDataDay.find_or_initialize_by_page_id_and_day(page.id, dayYesterday)     
+      pagedata.likes = p["fan_count"]
+      pagedata.prosumers = p["talking_about_count"]
+
+      pagedata.comments = page.page_streams.where("day = #{dayYesterday}").sum("comments_count")
+      pagedata.shared = page.page_streams.where("day = #{dayYesterday}").sum("share_count")
+      pagedata.total_likes_stream = page.page_streams.where("day = #{dayYesterday}").sum("likes_count")
+      pagedata.posts = page.page_streams.where("day = #{dayYesterday}").count
+
+      pagedata.save!
+      
+      page.fan_count = p["fan_count"]
+      page.talking_about_count = p["talking_about_count"]
+      page.save!
+  end
+
+
   
 end
