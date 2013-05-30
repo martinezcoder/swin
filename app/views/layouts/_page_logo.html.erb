@@ -1,4 +1,5 @@
 <% if signed_in? %>
+    <% @page = current_user.pages.find(get_active_page) %>
 	<% if current_user.pages.count > 0 %>
 
 			<div class="page_active_dashboard">

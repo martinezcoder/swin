@@ -14,6 +14,7 @@ Swin::Application.routes.draw do
         post :activate
       end
     end
+    resources :facebook_lists
   end
 #  match '/users/:user_id/facebook/lists', to: 'pages#index'
 
