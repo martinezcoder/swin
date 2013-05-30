@@ -3,6 +3,7 @@
 		<ul class="nav nav-list">
 
 			<li class="nav-header">Mi Perfil</li>
+				<%= menu_link('Mis Listas', 'icon-list', facebook_lists_path) %>
 				<%= menu_link('Mis Páginas', 'icon-list', user_pages_path(current_user)) %>
 				<%= menu_link('Mis competidores', 'icon-search', @page.nil? ? root_url : competitors_user_page_path(current_user, @page)) %>
 			<li class="divider"></li>				
@@ -10,6 +11,7 @@
 				<%= menu_link('Engagement', 'icon-home', facebook_engage_path) %>
 				<%= menu_link('Vista General', 'icon-globe', facebook_general_path) %>
 				<%= menu_link('Timeline', 'icon-random', facebook_path) %>
+<!-- 
 		    	<li class="disabled"><a href="#">Tamaño</a></li>
 		    	<li class="disabled"><a href="#">Crecimiento</a></li>
 			    <li class="disabled"><a href="#">Actividad</a></li>
@@ -17,6 +19,7 @@
 			    <li class="disabled"><a href="#">Embajadores</a></li>
 			    <li class="disabled"><a href="#">Influence</a></li>
 			    <li class="disabled"><a href="#">Sentiment</a></li>
+-->
 			<li class="divider"></li>
 				<%= menu_link('Comentarios', 'icon-comment', habla_path) %>
 		</ul>

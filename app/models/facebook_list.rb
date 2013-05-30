@@ -8,7 +8,7 @@ class FacebookList < ActiveRecord::Base
 
   validates :user_id, presence: true
   validates :name, length: { maximum: 50 }
-  validates :page_id, presence: true
+#  validates :page_id, presence: true
 
   def added?(page)
     list_page_relationships.find_by_page_id(page.id)    
