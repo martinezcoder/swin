@@ -126,15 +126,15 @@ describe User do
 
     before { @user.save }
   
-    let!(:face_list) do 
+    let!(:old_list) do 
       FactoryGirl.create(:facebook_list, user: @user, name: "first list", created_at: 1.day.ago)
     end
-    let!(:second_list) do
+    let!(:new_list) do
       FactoryGirl.create(:facebook_list, user: @user, name: "second list", created_at: 1.hour.ago)
     end
 
     it "should have the right lists in the right order" do
-      @user.facebook_lists.should == [face_list, second_list]
+      @user.facebook_lists.should == [old_list, new_list]
     end
 
     it "should destroy associated facebook lists" do
