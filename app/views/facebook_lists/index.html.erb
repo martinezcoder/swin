@@ -1,27 +1,75 @@
 <h1>Listing lists</h1>
 
-<table>
-  <tr>
-    <th>Id</th>  	
-    <th>Name</th>
-    <th>Page_id</th>
-    <th>User_id</th>
-    <th></th>
-    <th></th>
-  </tr>
 
-<% @facebook_lists.each do |list| %>
-  <tr>
-    <td><%= list.id %></td>
-    <td><%= list.name %></td>
-    <td><%= list.page_id.to_s %></td>
-	<td><%= list.user_id.to_s %></td>
-    <td><%= link_to 'Show', facebook_list_path(list) %></td>
-    <td><%= link_to 'Destroy', list, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
-<% end %>
-</table>
 
-<%= link_to 'Add new...', new_facebook_list_path %>
 
-<br />
+
+<div class="span9 well">
+	<%= link_to 'Add new...', new_facebook_list_path %>
+
+	<h2>Elige una de tus listas para monitorizar y comparar</h2>
+	
+	<ul class="fb_pages">
+		<% @facebook_lists.each do |list| %>
+		
+			<li>
+
+				<div class="fb_stats">
+				  
+				  <div class="fb_stat">
+				  	Name:
+				    <strong id="fb_fans" class="stat">
+				    	<%= list.name %>
+				    </strong>
+				  </div>
+
+				  <div class="fb_stat">
+				  	Master Page List:
+				    <strong id="fb_fans" class="stat">
+				    	<%= list.page_id.to_s %>
+				    </strong>
+				  </div>
+
+				  
+				  <div class="fb_stat">
+				  	Fans:
+				    <strong id="fb_fans" class="stat">0
+				    </strong>
+				  </div>
+
+				  <div class="fb_stat">
+				  	Usuarios activos:
+				    <strong id="fb_talking_about" class="stat">0
+				    </strong>
+				  </div>
+
+					<div class="fb_stat">
+						Competidores:
+						<strong id="fb_talking_about" class="stat">Ninguno
+				    </strong>
+					</div>
+
+					<div class="fb_btn">
+							<i class=" icon-plus icon-white"></i> Activar
+					</div>
+					
+					<div class="fb_stat">
+						<%= link_to 'Show', facebook_list_path(list) %>
+					</div>
+					
+					<div class="fb_stat">
+						<%= link_to 'Destroy', list, method: :delete, data: { confirm: 'Are you sure?' } %>
+					</div>
+
+
+		<% end %>
+
+	</ul>		
+</div>
+
+
+
+
+
+
+
