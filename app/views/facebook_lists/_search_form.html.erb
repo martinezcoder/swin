@@ -1,5 +1,5 @@
 <div class="search-box">
-	<%= form_tag(new_facebook_list_path, :method => "get", class: "form-search") do %>
+	<%= form_tag(rest, :method => "get", class: "form-search") do %>
 
 		<%= text_field_tag(:search, params[:search], autofocus: true, class: "input-large search-query", placeholder: "Buscar competidores...", autocomplete: "off") %>
 		<%= button_tag(type: "submit", class: "btn btn-small btn-danger") do %>

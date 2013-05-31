@@ -1,9 +1,6 @@
 <h1>Listing lists</h1>
 
 
-
-
-
 <div class="span9 well">
 	<%= link_to 'Add new...', new_facebook_list_path %>
 
@@ -48,19 +45,27 @@
 						<strong id="fb_talking_about" class="stat">Ninguno
 				    </strong>
 					</div>
-
-					<div class="fb_btn">
-							<i class=" icon-plus icon-white"></i> Activar
-					</div>
 					
 					<div class="fb_stat">
-						<%= link_to 'Show', facebook_list_path(list) %>
+						<%= link_to 'Show & Edit', edit_facebook_list_path(list) %>
 					</div>
 					
 					<div class="fb_stat">
 						<%= link_to 'Destroy', list, method: :delete, data: { confirm: 'Are you sure?' } %>
 					</div>
 
+
+					<div class="fb_btn">
+					<% if list == get_active_list %>
+						<div class="btn btn-success btn-small">
+							<i class="icon-ok icon-white"></i> Activada
+						</div> 
+					<% else %>
+						<%= link_to activate_facebook_list_path(list), method: :post, class: "btn btn-primary btn-small"  do %>
+							<i class=" icon-plus icon-white"></i> Activar
+						<% end %>
+					<% end %>
+					</div>
 
 		<% end %>
 

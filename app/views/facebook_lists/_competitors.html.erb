@@ -8,8 +8,8 @@
 
 	<% if @more > 0 %>
 		<p>Puede seguir <%= @more %> competidores más.</p>
-		<%= render 'facebook_lists/search_form' %>
-		<%= render 'pages/search_results'%>
+		<%= render :partial => "search_form", :locals => { :rest => request.url } %>
+		<%= render 'search_results'%>
 	<% else %>
 		<p>Ha llegado al máximo de competidores.</p>
 		<p>Para añadir un nuevo competidor, deje de seguir alguno de los competidores actuales.</p>

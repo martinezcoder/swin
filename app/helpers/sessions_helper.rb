@@ -125,6 +125,32 @@ module SessionsHelper
     current_user.authentications.find_by_provider(provider).token
   end
 
+
+  # activate lists
+  def set_active_list(id)
+    list = FacebookList.find(id)
+    cookies.permanent[:fb_list] = id if current_user.facebook_lists.include?(list)
+  end
+
+  def get_active_list
+    begin
+      FacebookList.find_by_id(cookies[:fb_list])
+    rescue
+      nil
+    end    
+  end
+
+  def get_active_list_page
+    begin
+      list = get_active_list
+      page = Page.find(list.page_id)
+      page
+    rescue
+      nil
+    end
+  end
+
+
   def set_active_page(page)
     session[:provider][FACEBOOK][:active_page] = page.id
     if current_user.active_page_rel.blank? ||  page.id != current_user.active_page_rel.page_id

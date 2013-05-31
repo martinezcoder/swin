@@ -1,6 +1,10 @@
 Swin::Application.routes.draw do
 
-  resources :facebook_lists
+  resources :facebook_lists do
+    member do
+      post :activate
+    end
+  end
     
   match "/facebook", to: 'facebook#timeline_engage'
   match "/facebook/engage", to: 'facebook#engage'

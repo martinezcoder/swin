@@ -1,6 +1,6 @@
 <% if signed_in? %>
-    <% @page = current_user.pages.find(get_active_page) %>
-	<% if current_user.pages.count > 0 %>
+    <% @page = get_active_list_page %>
+	<% if current_user.pages.count > 0 and !@page.nil? %>
 
 			<div class="page_active_dashboard">
 				<%= link_to @page do %>
