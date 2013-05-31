@@ -10,7 +10,7 @@ include DashboardHelper
 
   def timeline_engage
     session[:active_tab] = FACEBOOK
-    @page = current_user.pages.find_by_id(get_active_page)
+    @page = get_active_list_page
 
     nDays = 14
     engageList = []

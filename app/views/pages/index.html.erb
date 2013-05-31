@@ -1,23 +1,16 @@
 <% provide(:title, "Mis listas") %>
 
-
-
 <div class="span9 well">
 	<h2>Elige una de tus páginas para monitorizar y comparar</h2>
 	
 	<ul class="fb_pages">
 		<% @pages.each do |page| %>
-		
-			<li>
-				<%= render page, :origin => 'index' %>
-
-			</li>
+			<li><%= render page, :origin => 'index' %></li>
 		<% end %>
-
 	</ul>
 
 	<div style="margin-top:10px;"><%= render 'pages/update_list' %></div>
-		
+
 </div>
 
 

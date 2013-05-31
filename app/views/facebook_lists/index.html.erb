@@ -21,37 +21,24 @@
 				  </div>
 
 				  <div class="fb_stat">
-				  	Master Page List:
+				  	Lider Page:
 				    <strong id="fb_fans" class="stat">
 				    	<%= list.page_id.to_s %>
 				    </strong>
 				  </div>
 
-				  
-				  <div class="fb_stat">
-				  	Fans:
-				    <strong id="fb_fans" class="stat">0
-				    </strong>
-				  </div>
-
-				  <div class="fb_stat">
-				  	Usuarios activos:
-				    <strong id="fb_talking_about" class="stat">0
-				    </strong>
-				  </div>
-
 					<div class="fb_stat">
 						Competidores:
-						<strong id="fb_talking_about" class="stat">Ninguno
+						<%= render 'competitors_mini_logos', :list => list %>
 				    </strong>
 					</div>
 					
 					<div class="fb_stat">
-						<%= link_to 'Show & Edit', edit_facebook_list_path(list) %>
+						<%= link_to 'Editar lista...', edit_facebook_list_path(list) %>
 					</div>
 					
 					<div class="fb_stat">
-						<%= link_to 'Destroy', list, method: :delete, data: { confirm: 'Are you sure?' } %>
+						<%= link_to 'Eliminar lista...', list, method: :delete, data: { confirm: 'Are you sure?' } %>
 					</div>
 
 

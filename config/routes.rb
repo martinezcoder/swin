@@ -1,6 +1,6 @@
 Swin::Application.routes.draw do
 
-  resources :facebook_lists do
+  resources :facebook_lists, :path => "/facebook/lists" do
     member do
       post :activate
     end
