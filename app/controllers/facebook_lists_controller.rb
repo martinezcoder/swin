@@ -67,7 +67,7 @@ class FacebookListsController < ApplicationController
 
     respond_to do |format|
       if @facebook_list.update_attributes(params[:facebook_list])
-        format.html { redirect_to facebook_lists_path }
+        format.html { redirect_to edit_facebook_list_path(params[:id]) }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

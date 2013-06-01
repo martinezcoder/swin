@@ -1,11 +1,14 @@
 <% if signed_in? %>
-    <% @page = get_active_list_page %>
-	<% if current_user.pages.count > 0 and !@page.nil? %>
-
+	<% list = get_active_list %>
+    <% page = get_active_list_page %>
+    
+	<% if current_user.pages.count > 0 and !page.nil? %>
 			<div class="page_active_dashboard">
-				<%= link_to @page do %>
-					<%= image_tag @page.pic_square, alt: @page.name, class: "imgpage", alt: "#{@page.name}", title: "#{@page.name}" %>
-					<strong><%= @page.name %></strong>
+				<strong><%= list.name %> list</strong>
+				<br />
+				<%= link_to page do %>
+					<%= image_tag page.pic_square, alt: page.name, class: "imgpage", alt: "#{page.name}", title: "#{page.name}" %>
+					<strong><%= page.name %></strong>
 				<% end %>
 			</div>
 

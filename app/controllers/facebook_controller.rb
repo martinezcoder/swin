@@ -9,7 +9,12 @@ include DashboardHelper
 
   def timeline_engage
     session[:active_tab] = FACEBOOK
-    @page = get_active_list_page
+    
+    if !(@page = get_active_list_page)
+      list = get_active_list
+      @page = list.pages.first
+      list.set_lider_page(@page)
+    end
 
     nDays = 14
     engageList = []
@@ -74,7 +79,7 @@ include DashboardHelper
   def empty
     session[:active_tab] = FACEBOOK
     @list = get_active_list
-    @num_competitors = 0
+    @num_competitors = @list.pages.count
   end
 
   def engage
@@ -201,7 +206,7 @@ private
 
   def list_has_pages
     begin
-      min_pages = 1
+      min_pages = MIN_COMPETITORS
       list = get_active_list
       num_pages = list.pages.count
       if num_pages < min_pages

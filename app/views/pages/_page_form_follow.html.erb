@@ -1,4 +1,4 @@
-<% if !page.id.nil? %>
+<% if @facebook_list.pages.include?(page) %>
 	<div class="btn btn-mini btn-primary">
 		<i class="icon-ok icon-white"></i> <small>Siguiendo</small>
 	</div>

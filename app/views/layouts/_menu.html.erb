@@ -4,7 +4,7 @@
 
 			<li class="nav-header">Mi Perfil</li>
 				<%= menu_link('Mis Listas', 'icon-list', facebook_lists_path) %>
-				<%= menu_link('Mis competidores', 'icon-search', (lst = get_active_list).nil? ? root_url : edit_facebook_list_path(lst)) %>
+				<%= menu_link('Editar lista activa', 'icon-search', (lst = get_active_list).nil? ? root_url : edit_facebook_list_path(lst)) %>
 			<li class="divider"></li>				
 			<li class="nav-header">Métricas</li>
 				<%= menu_link('Engagement', 'icon-home', facebook_engage_path) %>

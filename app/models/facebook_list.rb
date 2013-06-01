@@ -10,6 +10,11 @@ class FacebookList < ActiveRecord::Base
   validates :name, length: { maximum: 50 }
 #  validates :page_id, presence: true
 
+  def set_lider_page(page)
+    self.page_id = page.id
+    save
+  end
+  
   def added?(page)
     list_page_relationships.find_by_page_id(p.id) 
   end

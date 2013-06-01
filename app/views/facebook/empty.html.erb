@@ -2,16 +2,11 @@
 
 <div class="alert alert-block alert-error fade in">
 	<button data-dismiss="alert" class="close" type="button">×</button>
-	<h4 class="alert-heading">Aún no sigue a ningún competidor.</h4>
-	<p>Para empezar a monitorizar, busca y sigue a tus competidores.</p>
+	<h4 class="alert-heading">Aún no sigue a suficientes competidores. Necesita <%= MIN_COMPETITORS - @num_competitors %> competidores más.</h4>
+	<p>Para empezar a monitorizar, busca y sigue más competidores.</p>
 	<p>
 		<%= link_to "Añadir competidores", edit_facebook_list_path(@list), class: "btn btn-danger" %>
 	</p>
-</div>
-<div class="data_nil">
-	<div class="center">
-		<h1>Bienvenido a SocialWin Analytics</h1>										
-	</div>
 </div>
 <div class="data_nil">
 	<div class="center">

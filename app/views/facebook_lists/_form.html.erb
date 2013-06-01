@@ -11,14 +11,17 @@
     </div>
   <% end %>
 
-  <div class="field">
+  <div class="field span2">
     <%= f.label :name %><br />
     <%= f.text_field :name %>
   </div>
-  <div class="field">
+
+  <div class="field span2">
     <%= f.label :page_id %><br />
     <%= f.text_field :page_id %>
   </div>
+
+  <%= f.select(:page_id, options_for_select(@facebook_list.pages.map {|p| [p.name, p.id]}), :selected => :page_id) %>
   
   <div class="actions">
     <%= f.submit %>
