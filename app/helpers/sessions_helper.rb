@@ -3,8 +3,8 @@
 module SessionsHelper
 
   def sign_in(user)
-    cookies[:remember_token] = user.remember_token
-    session[:provider] = { FACEBOOK => { status: OFF, active_page: nil }, TWITTER => { status: OFF }, YOUTUBE  => { status: OFF } }
+    cookies.permanent[:remember_token] = user.remember_token
+    session[:provider] = { FACEBOOK => { status: OFF }, TWITTER => { status: OFF }, YOUTUBE  => { status: OFF } }
     self.current_user = user
   end
 
@@ -141,25 +141,5 @@ module SessionsHelper
     end
   end
 
-
-  def set_active_page(page)
-    session[:provider][FACEBOOK][:active_page] = page.id
-    if current_user.active_page_rel.blank? ||  page.id != current_user.active_page_rel.page_id
-      page.activate_user_page(current_user)
-    end
-  end
-
-  def get_active_page
-    active_p_id = session[:provider][FACEBOOK][:active_page]  
-    if active_p_id.nil?
-      # active_page_rel is a field of table user_page_relationship
-      active_page_rel = current_user.active_page_rel
-      if !active_page_rel.nil?
-        set_active_page(Page.find(active_page_rel.page_id))
-        active_p_id = session[:provider][FACEBOOK][:active_page]
-      end
-    end
-    return active_p_id
-  end 
   
 end

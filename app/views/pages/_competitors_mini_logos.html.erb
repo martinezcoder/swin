@@ -1,9 +1,0 @@
-      <% if page.competitors.any? %>
-        <div class="user_avatars">
-          <% page.competitors.each do |comp| %>
-          	<%= link_to comp.page_url, target: "_blank", class: "no-decoration"  do %>
-          		<%= image_tag comp.pic_square, class: "mini_logo", alt: comp.name, title: comp.name %>
-          	<% end %>
-          <% end %>
-        </div>
-      <% end %>

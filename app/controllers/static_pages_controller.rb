@@ -16,17 +16,14 @@ class StaticPagesController < ApplicationController
 
   def habla
     session[:active_tab] = FACEBOOK
-    @page = current_user.pages.find_by_id(get_active_page)
   end
 
   def twitter
     session[:active_tab] = TWITTER
-    @page = current_user.pages.find_by_id(get_active_page)
   end
 
   def youtube
     session[:active_tab] = YOUTUBE
-    @page = current_user.pages.find_by_id(get_active_page)
   end
   
 end
