@@ -19,7 +19,7 @@ class UsersController < ApplicationController
         create_new_auth
         turn_on_auth(false)
         my_admin_pages_update_from_facebook
-        redirect_to user_pages_path(@user)
+        redirect_to facebook_lists_path
       end
     else
       flash[:info] = 'No ha aceptado las condiciones de registro'

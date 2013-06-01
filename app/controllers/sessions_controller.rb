@@ -24,7 +24,7 @@ class SessionsController < ApplicationController
         else
           create_new_auth
           turn_on_auth(true)
-          redirect_back_or user_pages_path(current_user)
+          redirect_back_or root_path
         end
       else
         if auth_exist?
@@ -40,7 +40,7 @@ class SessionsController < ApplicationController
             sign_in(@user)           
             create_new_auth
             turn_on_auth(false)
-            redirect_back_or user_pages_path(current_user)
+            redirect_back_or root_path
           end
           
         end

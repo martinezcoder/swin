@@ -2,7 +2,7 @@
 	<% list = get_active_list %>
     <% page = get_active_list_page %>
     
-	<% if current_user.pages.count > 0 and !page.nil? %>
+	<% if !page.nil? %>
 			<div class="page_active_dashboard">
 				<strong><%= list.name %> list</strong>
 				<br />
