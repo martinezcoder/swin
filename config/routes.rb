@@ -5,6 +5,7 @@ Swin::Application.routes.draw do
       post :activate
     end
   end
+  resources :list_page_relationships, only: [:create, :destroy]
     
   match "/facebook", to: 'facebook#timeline_engage'
   match "/facebook/engage", to: 'facebook#engage'

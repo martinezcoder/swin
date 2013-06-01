@@ -30,7 +30,29 @@ class FacebookListsController < ApplicationController
   def edit
     @facebook_list = current_user.facebook_lists.find(params[:id])
 
-    search_competitors
+    @competitors = @facebook_list.pages.order("created_at DESC")
+    @more =  MAX_COMPETITORS - @competitors.count
+
+    fb_list = nil
+    if params.has_key?(:search) && params[:search] != ""
+      pages_ids_list = fb_get_search_pages_list(params[:search])      
+      fb_list = fb_get_pages_info(pages_ids_list)
+      @pageslist = []
+      fb_list.each do |p|
+        page = Page.find_by_page_id(p["page_id"].to_s)
+        if page.nil?
+          page = Page.new
+          page.page_id             = p["page_id"]
+          page.pic_square          = p["pic_square"]
+          page.name                = p["name"]
+          page.page_url            = p["page_url"]
+          page.page_type           = p["type"]
+          page.fan_count           = p["fan_count"]
+          page.talking_about_count = p["talking_about_count"]          
+        end
+        @pageslist = @pageslist + [page]
+      end
+    end
     
     respond_to do |format|
       format.html # new.html.erb
@@ -57,9 +79,7 @@ class FacebookListsController < ApplicationController
   # GET /facebook_lists/new
   # GET /facebook_lists/new.json
   def new
-    @facebook_list = current_user.facebook_lists.new(page_id: 35)
-
-    search_competitors
+    @facebook_list = current_user.facebook_lists.build(page_id: 35)
 
     respond_to do |format|
       format.html # new.html.erb
@@ -71,12 +91,10 @@ class FacebookListsController < ApplicationController
   # POST /facebook_lists.json
   def create
     @facebook_list = current_user.facebook_lists.build(params[:facebook_list])
-    @competitors = @facebook_list.pages.order("created_at DESC")
-    @more =  MAX_COMPETITORS - @competitors.count
     
     respond_to do |format|
       if @facebook_list.save
-        format.html { redirect_to facebook_lists_path }
+        format.html { redirect_to edit_facebook_list_path(@facebook_list) }
         format.json { render json: @facebook_list, status: :created, location: @facebook_list }
       else
         format.html { render action: "new" }
@@ -105,30 +123,5 @@ private
     redirect_to facebook_lists_url if current_user.facebook_lists.find_by_id(list).nil?
   end
 
-
-  def search_competitors
-
-    @competitors = @facebook_list.pages.order("created_at DESC")
-    @more =  MAX_COMPETITORS - @competitors.count
-
-    fb_list = nil
-    if params.has_key?(:search) && params[:search] != ""
-      pages_ids_list = fb_get_search_pages_list(params[:search])      
-      fb_list = fb_get_pages_info(pages_ids_list)
-      @pageslist = []
-      fb_list.each do |p|
-        page = Page.new
-        page.page_id             = p["page_id"]
-        page.pic_square          = p["pic_square"]
-        page.name                = p["name"]
-        page.page_url            = p["page_url"]
-        page.page_type           = p["type"]
-        page.fan_count           = p["fan_count"]
-        page.talking_about_count = p["talking_about_count"]
-        @pageslist = @pageslist + [page]
-      end
-    end
-    
-  end
 
 end

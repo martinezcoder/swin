@@ -1,6 +1,4 @@
-<% @mypage = current_user.pages.find(get_active_page) %>
-
-<% if @mypage.following?(page.page_id) %>
+<% if !page.id.nil? %>
 	<div class="btn btn-mini btn-primary">
 		<i class="icon-ok icon-white"></i> <small>Siguiendo</small>
 	</div>
@@ -8,14 +6,11 @@
 
 	<div id="<%= page.page_id %>" style="display: none;">Cargando...</div>
 
-	<%= form_tag(page_relationships_path, :method => "post" ) do %>
-	
-		<%= text_field_tag :page_id,    page.page_id,    type: "hidden"  %>
-		<%= text_field_tag :search,    params[:search],    type: "hidden"  %>
-
-		<%= button_tag(type: "submit", class: "btn btn-default btn-mini cargar", :data => { "loading-text" => "Cargando..."}, onclick: "WaitDiv(#{page.page_id})") do %>			
-			<strong><small>Seguir</small> <i class=" icon-plus icon-default"></i></strong> 
-		<% end %>
-
+	<%= form_for(@facebook_list.list_page_relationships.build) do |p| %>
+	  <div><%= p.hidden_field :list_id %></div>
+	  <%= text_field_tag :page_id,   page.page_id,    type: "hidden"  %>
+	  <%= text_field_tag :search,    params[:search],    type: "hidden"  %>
+	  <%= p.submit "Seguir", class: "btn btn-default btn-mini cargar", :data => { "loading-text" => "Cargando..."}, onclick: "WaitDiv(#{page.page_id})" %>
 	<% end %>
+
 <% end %>

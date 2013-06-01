@@ -53,15 +53,6 @@ module SessionsHelper
     end
   end
 
-  def user_has_pages
-    begin
-      pages = current_user.pages
-      redirect_to user_pages_path(current_user) unless (pages.count > 0)
-    rescue
-      redirect_to user_pages_path(current_user)
-    end 
-  end
-
 
   # omniauth and socialnetworks authentication functions
 
@@ -128,13 +119,13 @@ module SessionsHelper
 
   # activate lists
   def set_active_list(id)
-    list = FacebookList.find(id)
+    list = current_user.facebook_lists.find(id)
     cookies.permanent[:fb_list] = id if current_user.facebook_lists.include?(list)
   end
 
   def get_active_list
     begin
-      FacebookList.find_by_id(cookies[:fb_list])
+      current_user.facebook_lists.find_by_id(cookies[:fb_list])
     rescue
       nil
     end    

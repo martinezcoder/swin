@@ -4,9 +4,8 @@ class FacebookController < ApplicationController
 include DashboardHelper
 
   before_filter :signed_in_user
-  before_filter :user_has_pages
-  before_filter :has_active_page
-  before_filter :has_competitors, except: :empty
+  before_filter :has_active_list
+  before_filter :list_has_pages, except: :empty
 
   def timeline_engage
     session[:active_tab] = FACEBOOK
@@ -74,17 +73,16 @@ include DashboardHelper
   
   def empty
     session[:active_tab] = FACEBOOK
-    @page = current_user.pages.find_by_id(get_active_page)
+    @list = get_active_list
     @num_competitors = 0
   end
 
   def engage
     session[:active_tab] = FACEBOOK    
-    @page = current_user.pages.find_by_id(get_active_page)    
 
+    @list = get_active_list
     competitors = []
-    competitors[0] = @page
-    competitors = competitors + @page.competitors   
+    competitors += @list.pages   
 
     css1 = 'mini_logo'
     css2 = 'normal_logo'
@@ -136,20 +134,20 @@ include DashboardHelper
 
   def general
     session[:active_tab] = FACEBOOK
-    @page = current_user.pages.find_by_id(get_active_page)
 
+    @list = get_active_list
     competitors = []
-    competitors[0] = @page
-    competitors = competitors + @page.competitors   
+    competitors += @list.pages   
 
-    # update only every if last updated was previous than 1 hours ago 
-    if @page.updated_at < -1.hour.ago
+    # update only every page from facebook if last updated was previous than 1 hours ago 
+    page = competitors[0]
+    if page.updated_at < -1.hour.ago
       # updating competitor data
       page_ids = []
       competitors.each do |p|
         page_ids = page_ids + [p.page_id]
       end 
-      page_ids = page_ids + [@page.page_id]
+      page_ids = page_ids + [page.page_id]
       fb_pages_info_list = fb_get_pages_info(page_ids.join(","))
 
       pages_create_or_update(fb_pages_info_list)
@@ -193,20 +191,20 @@ include DashboardHelper
 
 private
 
-  def has_active_page
+  def has_active_list
     begin
-      redirect_to user_pages_path(current_user) if get_active_page.nil? 
+      redirect_to facebook_lists_path if get_active_list.nil? 
     rescue
-      redirect_to user_pages_path(current_user)
+      redirect_to facebook_lists_path
     end 
   end
 
-  def has_competitors
+  def list_has_pages
     begin
-      min_competitors = 1
-      page = current_user.pages.find_by_id(get_active_page)
-      num_competitors = page.competitors.count
-      if num_competitors < min_competitors
+      min_pages = 1
+      list = get_active_list
+      num_pages = list.pages.count
+      if num_pages < min_pages
         redirect_to facebook_empty_path
       end
     rescue

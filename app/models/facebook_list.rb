@@ -11,7 +11,7 @@ class FacebookList < ActiveRecord::Base
 #  validates :page_id, presence: true
 
   def added?(page)
-    list_page_relationships.find_by_page_id(page.id)    
+    list_page_relationships.find_by_page_id(p.id) 
   end
   
   def add!(page)

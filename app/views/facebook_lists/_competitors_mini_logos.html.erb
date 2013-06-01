@@ -1,7 +1,7 @@
       <% if list.pages.any? %>
         <div class="user_avatars">
           <% list.pages.each do |competitor| %>
-          	<%= link_to competitor.page_url, target: "_blank", class: "no-decoration"  do %>
+          	<%= link_to page_path(competitor.id), class: "no-decoration"  do %>
           		<%= image_tag competitor.pic_square, class: "mini_logo", alt: competitor.name, title: competitor.name %>
           	<% end %>
           <% end %>
