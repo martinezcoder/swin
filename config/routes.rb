@@ -15,11 +15,8 @@ Swin::Application.routes.draw do
   resources :sessions, only: [:new, :destroy]
 
   resources :users, only: [:new, :create]
-#  match '/users/:user_id/facebook/lists', to: 'pages#index'
 
   resources :pages, :path => "/facebook", only: :show 
-
-  resources :page_relationships, only: [:create, :destroy]
 
   match '/signout', to: 'sessions#destroy', via: :delete
 
