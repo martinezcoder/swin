@@ -18,6 +18,7 @@ class FacebookListsController < ApplicationController
   # GET /facebook_lists
   # GET /facebook_lists.json
   def index
+    session[:active_tab] = FACEBOOK
     @facebook_lists = current_user.facebook_lists
 
     respond_to do |format|
@@ -28,6 +29,7 @@ class FacebookListsController < ApplicationController
 
   # GET /facebook_lists/1/edit
   def edit
+    session[:active_tab] = FACEBOOK
     @facebook_list = current_user.facebook_lists.find(params[:id])
     set_active_list(params[:id])
     @competitors = @facebook_list.pages.order("created_at DESC")
@@ -79,6 +81,7 @@ class FacebookListsController < ApplicationController
   # GET /facebook_lists/new
   # GET /facebook_lists/new.json
   def new
+    session[:active_tab] = FACEBOOK
     if current_user.facebook_lists.count < MAX_LISTS
       @facebook_list = current_user.facebook_lists.build(page_id: 35)
   
