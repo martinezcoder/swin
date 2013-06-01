@@ -27,6 +27,7 @@ module SessionsHelper
   def sign_out
     self.current_user = nil
     cookies.delete(:remember_token)
+    cookies.delete(:fb_list)
     session.delete(:active_tab)
     session.delete(:provider)
   end

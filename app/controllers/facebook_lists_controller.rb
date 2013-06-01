@@ -29,7 +29,7 @@ class FacebookListsController < ApplicationController
   # GET /facebook_lists/1/edit
   def edit
     @facebook_list = current_user.facebook_lists.find(params[:id])
-
+    set_active_list(params[:id])
     @competitors = @facebook_list.pages.order("created_at DESC")
     @more =  MAX_COMPETITORS - @competitors.count
 
@@ -79,11 +79,16 @@ class FacebookListsController < ApplicationController
   # GET /facebook_lists/new
   # GET /facebook_lists/new.json
   def new
-    @facebook_list = current_user.facebook_lists.build(page_id: 35)
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @facebook_list }
+    if current_user.facebook_lists.count < MAX_LISTS
+      @facebook_list = current_user.facebook_lists.build(page_id: 35)
+  
+      respond_to do |format|
+        format.html # new.html.erb
+        format.json { render json: @facebook_list }
+      end
+    else
+        format.html { redirect_to facebook_lists_path}
+        format.json { render json: nil, status: :unprocessable_entity }      
     end
   end
 

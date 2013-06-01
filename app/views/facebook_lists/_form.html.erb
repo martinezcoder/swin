@@ -11,21 +11,23 @@
     </div>
   <% end %>
 
-  <div class="field span2">
-    <%= f.label :name %><br />
+<fieldset class="form-actions">
+  <div class="span3">
+    <%= f.label "Nombre de lista", class: "control-label" %>
     <%= f.text_field :name %>
   </div>
 
-  <div class="field span2">
-    <%= f.label :page_id %><br />
-    <%= f.text_field :page_id %>
+  <div class="span3">
+  	<%= f.label "Master page" %>
+  	<%= f.select(:page_id, options_for_select(@facebook_list.pages.map {|p| [p.name, p.id]}, :selected => @facebook_list.page_id)) %>
+  </div>
+  
+  <div class="span3">
+    <%= f.label "Guardar nombre y master de lista" %>
+    <%= f.submit "Actualizar", class: "btn btn-primary" %>
   </div>
 
-  <%= f.select(:page_id, options_for_select(@facebook_list.pages.map {|p| [p.name, p.id]}), :selected => :page_id) %>
-  
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+</fieldset>
 
 <% end %>
 

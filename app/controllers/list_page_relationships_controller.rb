@@ -11,7 +11,7 @@ class ListPageRelationshipsController < ApplicationController
   
       if current_user.facebook_lists.count < MAX_COMPETITORS
         list.add!(page) if !list.pages.include?(page)
-        #if the page is not registered, then get today's activity data
+        # get today's activity data
         if PageDataDay.find_by_page_id(page.id).nil?
           page_data_day_update(page.id)
         end  
@@ -33,8 +33,11 @@ class ListPageRelationshipsController < ApplicationController
       page = Page.find(params[:id])
       list.remove!(page)
 
-      if list.pages.any?
-        list.set_lider_page(list.pages.first)
+      if list.pages.any? 
+        p = Page.find(list.page_id)
+        if !list.pages.include?(p)
+          list.set_lider_page(list.pages.first)
+        end
       end
 
       redirect_to edit_facebook_list_path(list, search: params[:search])

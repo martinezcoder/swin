@@ -1,8 +1,11 @@
-<h1>Listing lists</h1>
-
-
+<h1>Mis Listas</h1>
+<center>
+	<h4>Puedes crear un máximo de <%= MAX_LISTS %> listas</h4>
+</center>
 <div class="span9 well">
-	<%= link_to 'Add new...', new_facebook_list_path %>
+	<% if @facebook_lists.count < MAX_LISTS %>
+		<%= link_to 'Añadir nueva lista...', new_facebook_list_path %>
+	<% end %>
 
 	<h2>Elige una de tus listas para monitorizar y comparar</h2>
 	
@@ -14,14 +17,14 @@
 				<div class="fb_stats">
 				  
 				  <div class="fb_stat">
-				  	Name:
+				  	Nombre de lista:
 				    <strong id="fb_fans" class="stat">
 				    	<%= list.name %>
 				    </strong>
 				  </div>
 
 				  <div class="fb_stat">
-				  	Lider Page:
+				  	Master Page:
 				    <strong id="fb_fans" class="stat">
 				    	<%= list.page_id.to_s %>
 				    </strong>
@@ -38,7 +41,7 @@
 					</div>
 					
 					<div class="fb_stat">
-						<%= link_to 'Eliminar lista...', list, method: :delete, data: { confirm: 'Are you sure?' } %>
+						<%= link_to 'Eliminar lista...', list, method: :delete, class: "text-error", data: { confirm: '¿Estás seguro?' } %>
 					</div>
 
 

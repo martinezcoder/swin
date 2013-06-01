@@ -10,7 +10,7 @@
 	  <div><%= p.hidden_field :list_id %></div>
 	  <%= text_field_tag :page_id,   page.page_id,    type: "hidden"  %>
 	  <%= text_field_tag :search,    params[:search],    type: "hidden"  %>
-	  <%= p.submit "Seguir", class: "btn btn-default btn-mini cargar", :data => { "loading-text" => "Cargando..."}, onclick: "WaitDiv(#{page.page_id})" %>
+	  <%= p.submit "Seguir", class: "btn btn-success btn-small cargar", :data => { "loading-text" => "Cargando..."}, onclick: "WaitDiv(#{page.page_id})" %>
 	<% end %>
 
 <% end %>
