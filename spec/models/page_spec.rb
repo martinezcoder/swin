@@ -40,6 +40,10 @@ describe Page do
   it { should respond_to(:page_url) }
   it { should respond_to(:pic_square) }
   it { should respond_to(:pic_big) }
+
+  it { should respond_to(:list_page_relationships) }
+  it { should respond_to(:lists) }
+
   
   it { should be_valid }
 
@@ -56,4 +60,18 @@ describe Page do
     it { should_not be_valid }
   end
 
+  describe "when page is in a list" do
+    let(:user) { FactoryGirl.create(:user) }
+    let!(:face_list) do 
+      FactoryGirl.create(:facebook_list, user: user, name: "first list", created_at: 1.day.ago)
+    end
+    before {  
+      @page.save!
+      face_list.add!(@page)
+    }
+    
+    its(:lists) { should include(face_list) }
+    
+  end 
+  
 end

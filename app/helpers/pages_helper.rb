@@ -5,7 +5,7 @@ module PagesHelper
 
   def get_engage(fans, actives)
     if fans > 0
-      engage = actives * 5 *100 / fans
+      engage = actives * 6 *100 / fans
     else
       engage = 0
     end
@@ -54,16 +54,14 @@ module PagesHelper
       redirect_to root_path
     end
     fbpages.each do |p|
-      if p["fan_count"].to_i > 30
-        user_page = page_create_or_update(p)
-        current_user.rel_user_page!(Page.find_by_page_id("#{p["page_id"]}"))
-      end
+      user_page = page_create_or_update(p)
+      current_user.rel_user_page!(Page.find_by_page_id("#{p["page_id"]}"))
     end
   end
 
-  def page_data_day_update(p_id, data_date=Time.now.beginning_of_day)
+  def page_data_day_update(p_id, data_date=Time.now)
       page = Page.find_by_id(p_id)
-      pagedata = PageDataDay.find_or_initialize_by_page_id_and_day(page.id, data_date.to_i)     
+      pagedata = PageDataDay.find_or_initialize_by_page_id_and_day(page.id, data_date.strftime("%Y%m%d").to_i)     
       pagedata.likes = page.fan_count
       pagedata.prosumers = page.talking_about_count
       pagedata.comments = page.page_streams.sum("comments_count") || 0

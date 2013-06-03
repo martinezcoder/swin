@@ -19,6 +19,9 @@ class User < ActiveRecord::Base
   # authentications
   has_many :authentications, dependent: :destroy
 
+  # facebook lists
+  has_many :facebook_lists, dependent: :destroy
+
   # pages
   has_many :user_page_relationships, foreign_key: "user_id"
   has_many :pages, through: :user_page_relationships
@@ -39,10 +42,6 @@ class User < ActiveRecord::Base
   # user admin n pages. This method is called from pages_create_or_update in pages_helper
   def rel_user_page!(this_page)
     self.user_page_relationships.find_or_create_by_page_id(this_page.id)
-  end
-
-  def active_page_rel
-    self.user_page_relationships.find_by_active(true)
   end
 
   def token(provider)

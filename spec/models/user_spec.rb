@@ -24,6 +24,7 @@ describe User do
   it { should respond_to(:authentications) }  
   it { should respond_to(:pages) }
   it { should respond_to(:user_page_relationships) }
+  it { should respond_to(:facebook_lists) }
 
   it { should be_valid }
 
@@ -119,8 +120,32 @@ describe User do
       end
     end
 
-
   end
 
+  describe "facebook lists associations" do
 
+    before { @user.save }
+  
+    let!(:old_list) do 
+      FactoryGirl.create(:facebook_list, user: @user, name: "first list", created_at: 1.day.ago)
+    end
+    let!(:new_list) do
+      FactoryGirl.create(:facebook_list, user: @user, name: "second list", created_at: 1.hour.ago)
+    end
+
+    it "should have the right lists in the right order" do
+      @user.facebook_lists.should == [old_list, new_list]
+    end
+
+    it "should destroy associated facebook lists" do
+      lists = @user.facebook_lists.dup
+      @user.destroy
+      lists.should_not be_empty
+      lists.each do |list|
+        FacebookList.find_by_id(list.id).should be_nil
+      end
+    end
+
+  end
+  
 end

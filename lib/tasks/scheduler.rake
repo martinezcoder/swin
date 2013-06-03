@@ -25,8 +25,13 @@ namespace :db do
 
 
   def populate_page_data
+    me = User.find_by_id(1)
+    ftoken = me.authentications.find_by_provider("facebook").token
+    fgraph  = Koala::Facebook::API.new(ftoken)
+
+
     # Groups of nblock pages:    
-    nblock = 30
+    nblock = 50
     nmax = Page.maximum("id")
     n = 1
     while n < nmax do  
@@ -40,18 +45,15 @@ namespace :db do
           id_list = id_list + [p.page_id]
         end
         id_list = id_list.join(",")
-        fb_list_pages_update(id_list)
-        puts "Page.id from #{n} to #{nnext} terminated"
+        fb_list_pages_update(id_list, fgraph)
+#        puts "Page.id from #{n} to #{nnext} terminated"
         n = nnext+1
     end
   end
 
 
-  def fb_list_pages_update(page_id_list)
+  def fb_list_pages_update(page_id_list, fgraph)
     dayYesterday = Time.now.yesterday.strftime("%Y%m%d").to_i
-    me = User.find_by_email("francisjavier@gmail.com")
-    ftoken = me.authentications.find_by_provider("facebook").token
-    fgraph  = Koala::Facebook::API.new(ftoken)
     fbpages = fgraph.fql_query("SELECT page_id, fan_count, talking_about_count from page WHERE page_id in (#{page_id_list})")
     fbpages.each do |p|
       page = Page.find_by_page_id(p["page_id"].to_s)

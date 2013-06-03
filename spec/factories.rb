@@ -1,8 +1,8 @@
 FactoryGirl.define do
 
   factory :user do
-    name "FranJMartinez"
-    email "fran.martinez@ss.com"
+    name "Fran J Martinez"
+    email "fran.martinez@socialwin.es"
     terms_of_service "1"
   end
 
@@ -31,9 +31,15 @@ FactoryGirl.define do
   end
   
   factory :authentication do
-    provider "face"
-    uid "0"
+    provider "facebook"
     user
   end
+
+  factory :facebook_list do
+    name "listaprueba"
+    page_id "000000"
+    user
+  end
+
 
 end

@@ -1,0 +1,75 @@
+<h1>Mis Listas</h1>
+<center>
+	<h4>Puedes crear un máximo de <%= MAX_LISTS %> listas</h4>
+</center>
+<div class="span9 well">
+	<% if @facebook_lists.count < MAX_LISTS %>
+		<%= link_to 'Añadir nueva lista...', new_facebook_list_path %>
+	<% end %>
+
+	<h2>Elige una de tus listas para monitorizar y comparar</h2>
+	
+	<ul class="fb_pages">
+		<% @facebook_lists.each do |list| %>
+		
+			<li>
+
+				<div class="fb_stats">
+				  
+				  <div class="fb_stat">
+				  	Nombre de lista:
+				    <strong id="fb_fans" class="stat">
+				    	<%= list.name %>
+				    </strong>
+				  </div>
+
+				  <div class="fb_stat">
+				  	Lider Page:
+				    <strong id="fb_fans" class="stat">
+				    	<% if list.page_id %>
+					    	<% p = Page.find(list.page_id) %>
+					          	<%= link_to page_path(p.id), class: "no-decoration"  do %>
+					          		<%= image_tag p.pic_square, class: "mini_logo", alt: p.name, title: p.name %>
+					          	<% end %>
+				        <% end %>
+				    </strong>
+				  </div>
+
+					<div class="fb_stat">
+						Competidores:
+						<%= render 'competitors_mini_logos', :list => list %>
+				    </strong>
+					</div>
+					
+					<div class="fb_stat">
+						<%= link_to 'Editar lista...', edit_facebook_list_path(list) %>
+					</div>
+					
+					<div class="fb_stat">
+						<%= link_to 'Eliminar lista...', list, method: :delete, class: "text-error", data: { confirm: '¿Estás seguro?' } %>
+					</div>
+
+
+					<div class="fb_btn">
+					<% if list == get_active_list %>
+						<div class="btn btn-success btn-small disabled">
+							<i class="icon-ok icon-white"></i> Activada
+						</div> 
+					<% else %>
+						<%= link_to activate_facebook_list_path(list), method: :post, class: "btn btn-primary btn-small"  do %>
+							<i class=" icon-plus icon-white"></i> Activar
+						<% end %>
+					<% end %>
+					</div>
+
+		<% end %>
+
+	</ul>		
+</div>
+
+
+
+
+
+
+

@@ -14,7 +14,7 @@ class SessionsController < ApplicationController
       if signed_in?
         if auth_exist?
           if same_user?
-            turn_on_auth(true)
+            turn_on_auth
             redirect_back_or root_path
           else
             # this provider is asigned to other user. Posibility of Merge will be done in next version.
@@ -23,13 +23,13 @@ class SessionsController < ApplicationController
           end
         else
           create_new_auth
-          turn_on_auth(true)
-          redirect_back_or user_pages_path(current_user)
+          turn_on_auth
+          redirect_back_or root_path
         end
       else
         if auth_exist?
           sign_in(current_auth.user)
-          turn_on_auth(false)
+          turn_on_auth
           redirect_back_or root_path
         else
           @user = User.find_by_email(omniauth['info']['email']) 
@@ -39,8 +39,8 @@ class SessionsController < ApplicationController
           else
             sign_in(@user)           
             create_new_auth
-            turn_on_auth(false)
-            redirect_back_or user_pages_path(current_user)
+            turn_on_auth
+            redirect_back_or root_path
           end
           
         end

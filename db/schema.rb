@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130508101635) do
+ActiveRecord::Schema.define(:version => 20130524090724) do
 
   create_table "authentications", :force => true do |t|
     t.integer  "user_id"
@@ -24,6 +24,29 @@ ActiveRecord::Schema.define(:version => 20130508101635) do
 
   add_index "authentications", ["provider", "uid"], :name => "index_authentications_on_provider_and_uid"
   add_index "authentications", ["user_id", "provider"], :name => "index_authentications_on_user_id_and_provider", :unique => true
+
+  create_table "facebook_lists", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "name"
+    t.string   "photo_url"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.integer  "page_id"
+  end
+
+  add_index "facebook_lists", ["page_id"], :name => "index_facebook_lists_on_page_id"
+  add_index "facebook_lists", ["user_id", "created_at"], :name => "index_facebook_lists_on_user_id_and_created_at"
+
+  create_table "list_page_relationships", :force => true do |t|
+    t.integer  "list_id"
+    t.integer  "page_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "list_page_relationships", ["list_id", "page_id"], :name => "index_list_page_relationships_on_list_id_and_page_id", :unique => true
+  add_index "list_page_relationships", ["list_id"], :name => "index_list_page_relationships_on_list_id"
+  add_index "list_page_relationships", ["page_id"], :name => "index_list_page_relationships_on_page_id"
 
   create_table "page_data_days", :force => true do |t|
     t.integer  "page_id"

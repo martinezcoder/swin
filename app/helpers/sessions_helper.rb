@@ -3,8 +3,8 @@
 module SessionsHelper
 
   def sign_in(user)
-    cookies[:remember_token] = user.remember_token
-    session[:provider] = { FACEBOOK => { status: OFF, active_page: nil }, TWITTER => { status: OFF }, YOUTUBE  => { status: OFF } }
+    cookies.permanent[:remember_token] = user.remember_token
+    session[:provider] = { FACEBOOK => { status: OFF }, TWITTER => { status: OFF }, YOUTUBE  => { status: OFF } }
     self.current_user = user
   end
 
@@ -27,6 +27,7 @@ module SessionsHelper
   def sign_out
     self.current_user = nil
     cookies.delete(:remember_token)
+    destroy_active_list_cookie
     session.delete(:active_tab)
     session.delete(:provider)
   end
@@ -51,15 +52,6 @@ module SessionsHelper
       store_location
       redirect_to root_path, notice: "No ha iniciado la sesión. Por favor, inicie la sesión." 
     end
-  end
-
-  def user_has_pages
-    begin
-      pages = current_user.pages
-      redirect_to user_pages_path(current_user) unless (pages.count > 0)
-    rescue
-      redirect_to user_pages_path(current_user)
-    end 
   end
 
 
@@ -102,15 +94,15 @@ module SessionsHelper
     end
   end
 
-  def turn_on_auth(msg)
+  def turn_on_auth
     # actualizamos token si éste ha cambiado
     if !(current_auth.token == omniauth['credentials']['token'])
       current_auth.token = omniauth['credentials']['token']
       current_auth.save
     end
+    my_admin_pages_update_from_facebook
     # poner provider a ON si no está ya puesto
     session[:provider][omniauth['provider']][:status] = ON
-    flash[:notice] = "#{omniauth['provider']} ON" unless !msg
   end
 
   def turn_off_auth(provider)
@@ -125,24 +117,34 @@ module SessionsHelper
     current_user.authentications.find_by_provider(provider).token
   end
 
-  def set_active_page(page)
-    session[:provider][FACEBOOK][:active_page] = page.id
-    if current_user.active_page_rel.blank? ||  page.id != current_user.active_page_rel.page_id
-      page.activate_user_page(current_user)
+
+  # activate lists
+  def set_active_list(id)
+    list = current_user.facebook_lists.find(id)
+    cookies.permanent[:fb_list] = id if current_user.facebook_lists.include?(list)
+  end
+
+  def get_active_list
+    begin
+      current_user.facebook_lists.find_by_id(cookies[:fb_list])
+    rescue
+      nil
+    end    
+  end
+
+  def destroy_active_list_cookie
+    cookies.delete(:fb_list)    
+  end
+  
+  def get_active_list_page
+    begin
+      list = get_active_list
+      page = Page.find(list.page_id)
+      page
+    rescue
+      nil
     end
   end
 
-  def get_active_page
-    active_p_id = session[:provider][FACEBOOK][:active_page]  
-    if active_p_id.nil?
-      # active_page_rel is a field of table user_page_relationship
-      active_page_rel = current_user.active_page_rel
-      if !active_page_rel.nil?
-        set_active_page(Page.find(active_page_rel.page_id))
-        active_p_id = session[:provider][FACEBOOK][:active_page]
-      end
-    end
-    return active_p_id
-  end 
   
 end

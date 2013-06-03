@@ -1,0 +1,23 @@
+
+<script type="text/javascript">
+	function WaitDiv(page)
+	{
+		document.getElementById(page).style.display = 'block';
+	}
+</script>
+
+<% if @pageslist %>
+	<ul class="fb_pages">
+
+		<% if @pageslist.count > 0 %>
+			<% @pageslist.each do |p| %>
+				<li>
+					<%= render p, :origin => 'search' %>
+				</li>
+			<% end %>
+		<% else %>
+			<li>No se ha encontrado ninguna página con el texto '<%= params[:search]%>' </li>
+		<% end %>
+
+	</ul>
+<% end %>

@@ -3,11 +3,7 @@ class StaticPagesController < ApplicationController
   
   def home
     if signed_in?
-      if current_user.pages.count > 0
-        redirect_to facebook_engage_path
-      else
-        redirect_to user_pages_path(current_user)
-      end
+      redirect_to facebook_engage_path
     else
       @pages = Page.count
       @users = User.count
@@ -16,17 +12,14 @@ class StaticPagesController < ApplicationController
 
   def habla
     session[:active_tab] = FACEBOOK
-    @page = current_user.pages.find_by_id(get_active_page)
   end
 
   def twitter
     session[:active_tab] = TWITTER
-    @page = current_user.pages.find_by_id(get_active_page)
   end
 
   def youtube
     session[:active_tab] = YOUTUBE
-    @page = current_user.pages.find_by_id(get_active_page)
   end
   
 end
