@@ -19,12 +19,14 @@
 
   <div class="span3">
   	<%= f.label "Master page" %>
-  	<%= f.select(:page_id, options_for_select(@facebook_list.pages.map {|p| [p.name, p.id]}, :selected => @facebook_list.page_id)) %>
+  	<% if @facebook_list.pages.any? %>
+  		<%= f.select(:page_id, options_for_select(@facebook_list.pages.map {|p| [p.name, p.id]}, :selected => @facebook_list.page_id)) %>
+	<% end %>
   </div>
   
   <div class="span3">
     <%= f.label "Guardar nombre y master de lista" %>
-    <%= f.submit "Actualizar", class: "btn btn-primary" %>
+    <%= f.submit "Guardar lista", class: "btn btn-primary" %>
   </div>
 
 </fieldset>

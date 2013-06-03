@@ -90,23 +90,32 @@ class FacebookListsController < ApplicationController
         format.json { render json: @facebook_list }
       end
     else
+      respond_to do |format|
         format.html { redirect_to facebook_lists_path}
-        format.json { render json: nil, status: :unprocessable_entity }      
+        format.json { render json: nil, status: :unprocessable_entity }
+      end      
     end
   end
 
   # POST /facebook_lists
   # POST /facebook_lists.json
   def create
-    @facebook_list = current_user.facebook_lists.build(params[:facebook_list])
-    
-    respond_to do |format|
-      if @facebook_list.save
-        format.html { redirect_to edit_facebook_list_path(@facebook_list) }
-        format.json { render json: @facebook_list, status: :created, location: @facebook_list }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @facebook_list.errors, status: :unprocessable_entity }
+    if current_user.facebook_lists.count < MAX_LISTS
+      @facebook_list = current_user.facebook_lists.build(params[:facebook_list])
+      
+      respond_to do |format|
+        if @facebook_list.save
+          format.html { redirect_to edit_facebook_list_path(@facebook_list) }
+          format.json { render json: @facebook_list, status: :created, location: @facebook_list }
+        else
+          format.html { render action: "new" }
+          format.json { render json: @facebook_list.errors, status: :unprocessable_entity }
+        end
+      end
+    else
+      respond_to do |format|
+        format.html { redirect_to facebook_lists_path}
+        format.json { render json: nil, status: :unprocessable_entity }
       end
     end
 
@@ -116,8 +125,17 @@ class FacebookListsController < ApplicationController
   # DELETE /users/1
   # DELETE /users/1.json
   def destroy
-    @facebook_lists = current_user.facebook_lists.find(params[:id])
-    @facebook_lists.destroy
+    @facebook_list = current_user.facebook_lists.find(params[:id])
+    if get_active_list == @facebook_list
+      @facebook_list.destroy
+      if current_user.facebook_lists.any?
+        set_active_list(current_user.facebook_lists.first.id)
+      else
+        destroy_active_list_cookie
+      end
+    else
+      @facebook_list.destroy
+    end
 
     respond_to do |format|
       format.html { redirect_to facebook_lists_url }

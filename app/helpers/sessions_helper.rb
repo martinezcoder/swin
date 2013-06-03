@@ -27,7 +27,7 @@ module SessionsHelper
   def sign_out
     self.current_user = nil
     cookies.delete(:remember_token)
-    cookies.delete(:fb_list)
+    destroy_active_list_cookie
     session.delete(:active_tab)
     session.delete(:provider)
   end
@@ -132,6 +132,10 @@ module SessionsHelper
     end    
   end
 
+  def destroy_active_list_cookie
+    cookies.delete(:fb_list)    
+  end
+  
   def get_active_list_page
     begin
       list = get_active_list
