@@ -94,16 +94,15 @@ module SessionsHelper
     end
   end
 
-  def turn_on_auth(msg)
+  def turn_on_auth
     # actualizamos token si éste ha cambiado
     if !(current_auth.token == omniauth['credentials']['token'])
       current_auth.token = omniauth['credentials']['token']
       current_auth.save
-      my_admin_pages_update_from_facebook
     end
+    my_admin_pages_update_from_facebook
     # poner provider a ON si no está ya puesto
     session[:provider][omniauth['provider']][:status] = ON
-    flash[:notice] = "#{omniauth['provider']} ON" unless !msg
   end
 
   def turn_off_auth(provider)

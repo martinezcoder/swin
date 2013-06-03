@@ -17,7 +17,7 @@ class UsersController < ApplicationController
         @omniauth = session[:omniauth]
         session.delete(:omniauth)
         create_new_auth
-        turn_on_auth(false)
+        turn_on_auth
         redirect_to facebook_lists_path
       end
     else
