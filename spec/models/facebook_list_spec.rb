@@ -42,11 +42,6 @@ describe FacebookList do
     it { should_not be_valid }
   end
 
-  describe "when page_id is not present" do
-    before { @fblist.page_id = nil }
-    it { should_not be_valid }
-  end
-
   describe "adding" do
     let(:page) { FactoryGirl.create(:page) }
     before do
@@ -54,6 +49,7 @@ describe FacebookList do
       @fblist.add!(page)
     end
     it { should be_added(page) }
+
     its(:pages) { should include(page) }
 
     describe "and remove" do
@@ -62,7 +58,6 @@ describe FacebookList do
       it { should_not be_added(page) }
       its(:pages) { should_not include(page) }
     end
-
   end
 
 end

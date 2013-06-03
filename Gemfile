@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'rails', '3.2.11'
-gem 'bootstrap-sass', '2.2.2.0'
+gem 'bootstrap-sass', '~> 2.3.1.3'
 
 gem 'pg', '0.14.1'
 
