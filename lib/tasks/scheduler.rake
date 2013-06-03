@@ -4,7 +4,7 @@ namespace :db do
   task update_feed: :environment do
     puts "Updating free acounts..."
         puts Time.now
-        populate_page_data
+        batch_facebook_multiquery
         puts Time.now 
     puts "done."
   end
@@ -14,7 +14,7 @@ namespace :db do
       puts Time.now
       populate_page_stream
       puts Time.now
-      populate_page_data
+      batch_facebook_multiquery
       puts Time.now 
   end
 
@@ -24,38 +24,13 @@ namespace :db do
 
 
 
-  def populate_page_data
-    me = User.find_by_id(1)
-    ftoken = me.authentications.find_by_provider("facebook").token
-    fgraph  = Koala::Facebook::API.new(ftoken)
+  def time_diff(start, finish)
+     return (finish - start)
+  end  
 
+  def update_page_data(p)
+      dayYesterday = Time.now.yesterday.strftime("%Y%m%d").to_i
 
-    # Groups of nblock pages:    
-    nblock = 50
-    nmax = Page.maximum("id")
-    n = 1
-    while n < nmax do  
-        if nmax-n < nblock
-          nnext = nmax
-        else
-          nnext = n + nblock
-        end
-        id_list = []
-        Page.where("id between ? and ?", n, nnext).each do |p|
-          id_list = id_list + [p.page_id]
-        end
-        id_list = id_list.join(",")
-        fb_list_pages_update(id_list, fgraph)
-#        puts "Page.id from #{n} to #{nnext} terminated"
-        n = nnext+1
-    end
-  end
-
-
-  def fb_list_pages_update(page_id_list, fgraph)
-    dayYesterday = Time.now.yesterday.strftime("%Y%m%d").to_i
-    fbpages = fgraph.fql_query("SELECT page_id, fan_count, talking_about_count from page WHERE page_id in (#{page_id_list})")
-    fbpages.each do |p|
       page = Page.find_by_page_id(p["page_id"].to_s)
       pagedata = PageDataDay.find_or_initialize_by_page_id_and_day(page.id, dayYesterday)     
       pagedata.likes = p["fan_count"]
@@ -71,8 +46,85 @@ namespace :db do
       page.fan_count = p["fan_count"]
       page.talking_about_count = p["talking_about_count"]
       page.save!
-    end
   end
+
+
+  def batch_facebook_multiquery
+    me = User.find_by_id(1)
+    ftoken = me.authentications.find_by_provider("facebook").token
+    @api = Koala::Facebook::API.new(ftoken) 
+
+    t1 = Time.now
+
+    #best
+    #    maxPages = 50
+    #    maxBatch = 15
+    #    maxMultiQueries = 7
+
+    maxPages = 48 # maximum limited by Facebook = 50
+    maxBatch = 15 # maximum limited by Facebook = 50
+    maxMultiQueries = 7 # maximum limited by Facebook = 50
+
+    indexPages = 0
+    pages = Page.all
+    while indexPages < Page.count do
+
+      # Start Batch process
+      response = @api.batch do |batch_api|
+
+          pages = Page.limit(maxPages).offset(indexPages).order('id')
+
+          nBatch = 0
+          while !pages.empty? and (nBatch < maxBatch) do
+
+              qhash = {}
+              (0..maxMultiQueries-1).each do |q|
+                  id_list = []
+                  pages.each do |p|
+                    id_list = id_list + [p.page_id]
+                  end
+                  id_list = id_list.join(",")
+    
+                  qhash["query"+q.to_s] = "SELECT page_id, fan_count, talking_about_count from page WHERE page_id in (#{id_list})"
+
+                  indexPages += pages.count
+                  puts Time.now.to_s + ": Pages from " + pages[0].id.to_s + " to " + pages[pages.count-1].id.to_s 
+
+                  pages = Page.limit(maxPages).offset(indexPages).order('id')
+                  break if (pages.count == 0)
+
+              end
+
+              batch_api.fql_multiquery(qhash)
+              nBatch += 1
+          end
+
+      @ta=Time.now
+      end
+      # End Batch process
+      tb = Time.now
+
+      puts Time.now.to_s + ": Facebook response: " + time_diff(@ta, tb).to_s + " seconds."
+
+      puts Time.now.to_s + ": Updating pages..." 
+      (0..response.length-1).each do |nResp|
+        (0..response[nResp].length-1).each do |nQuery|
+          (0..response[nResp][nQuery]["fql_result_set"].length-1).each do |nPage|
+            update_page_data(response[nResp][nQuery]["fql_result_set"][nPage])
+          end
+        end
+      end
+
+    end
+
+    t2 = Time.now
+    puts Time.now.to_s + ": Processed in: " + time_diff(t1, t2).to_s + " seconds." 
+    
+  end
+
+
+
+###########################
 
   def update_page_stream(page_id, page_st)
     begin
