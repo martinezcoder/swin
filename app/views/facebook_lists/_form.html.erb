@@ -17,12 +17,12 @@
     <%= f.text_field :name %>
   </div>
 
-  <div class="span3">
-  	<%= f.label "Master page" %>
-  	<% if @facebook_list.pages.any? %>
-  		<%= f.select(:page_id, options_for_select(@facebook_list.pages.map {|p| [p.name, p.id]}, :selected => @facebook_list.page_id)) %>
-	<% end %>
-  </div>
+  <% if @facebook_list.pages.any? %>	
+	  <div class="span3">
+	  	<%= f.label "Master page" %>
+	  		<%= f.select(:page_id, options_for_select(@facebook_list.pages.map {|p| [p.name, p.id]}, :selected => @facebook_list.page_id)) %>
+	  </div>
+  <% end %>
   
   <div class="span3">
     <%= f.label "Guardar nombre y master de lista" %>

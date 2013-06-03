@@ -5,6 +5,7 @@
 	<h2>Buscador de páginas de Facebook!</h2>
 
 	<% if @more > 0 %>
+		<p>Añade una de tus páginas para liderar la lista!</p>
 		<p>Puede seguir <%= @more %> competidores más.</p>
 		<%= render :partial => "search_form", :locals => { :rest => request.url } %>
 		<%= render 'search_results'%>
