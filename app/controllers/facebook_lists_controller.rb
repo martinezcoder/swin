@@ -34,6 +34,7 @@ class FacebookListsController < ApplicationController
     set_active_list(params[:id])
     @competitors = @facebook_list.pages.order("created_at DESC")
     @more =  MAX_COMPETITORS - @competitors.count
+    @liders = current_user.pages
 
     fb_list = nil
     if params.has_key?(:search) && params[:search] != ""

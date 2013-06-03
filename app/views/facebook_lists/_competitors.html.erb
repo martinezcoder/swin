@@ -2,13 +2,22 @@
 
 <div class="span4 well">
 
-	<h2>Buscador de páginas de Facebook!</h2>
+	<!-- <h2>Buscador de páginas de Facebook!</h2> -->
 
 	<% if @more > 0 %>
-		<p>Añade una de tus páginas para liderar la lista!</p>
 		<p>Puede seguir <%= @more %> competidores más.</p>
 		<%= render :partial => "search_form", :locals => { :rest => request.url } %>
 		<%= render 'search_results'%>
+
+		<p>Añade una de tus páginas para liderar la lista!</p>
+		<ul class="fb_pages">
+			<% @liders.each do |p| %>
+				<li>
+					<%= render p, :origin => 'search' %>
+				</li>
+			<% end %>
+		</ul>
+		<br />
 	<% else %>
 		<p>Ha llegado al máximo de competidores.</p>
 		<p>Para añadir un nuevo competidor, deje de seguir alguno de los competidores actuales.</p>

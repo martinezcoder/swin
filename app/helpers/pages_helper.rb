@@ -54,10 +54,8 @@ module PagesHelper
       redirect_to root_path
     end
     fbpages.each do |p|
-      if p["fan_count"].to_i > 30
-        user_page = page_create_or_update(p)
-        current_user.rel_user_page!(Page.find_by_page_id("#{p["page_id"]}"))
-      end
+      user_page = page_create_or_update(p)
+      current_user.rel_user_page!(Page.find_by_page_id("#{p["page_id"]}"))
     end
   end
 

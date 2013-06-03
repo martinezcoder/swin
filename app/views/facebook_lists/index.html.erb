@@ -24,9 +24,14 @@
 				  </div>
 
 				  <div class="fb_stat">
-				  	Master Page:
+				  	Lider Page:
 				    <strong id="fb_fans" class="stat">
-				    	<%= list.page_id.to_s %>
+				    	<% if list.page_id %>
+					    	<% p = Page.find(list.page_id) %>
+					          	<%= link_to page_path(p.id), class: "no-decoration"  do %>
+					          		<%= image_tag p.pic_square, class: "mini_logo", alt: p.name, title: p.name %>
+					          	<% end %>
+				        <% end %>
 				    </strong>
 				  </div>
 

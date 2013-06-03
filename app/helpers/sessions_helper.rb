@@ -99,6 +99,7 @@ module SessionsHelper
     if !(current_auth.token == omniauth['credentials']['token'])
       current_auth.token = omniauth['credentials']['token']
       current_auth.save
+      my_admin_pages_update_from_facebook
     end
     # poner provider a ON si no está ya puesto
     session[:provider][omniauth['provider']][:status] = ON
