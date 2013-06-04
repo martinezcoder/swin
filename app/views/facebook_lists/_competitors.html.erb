@@ -14,7 +14,7 @@
 			<ul class="fb_pages">
 				<% @liders.each do |p| %>
 					<li>
-						<%= render p, :origin => 'search' if !@competitors.include?(p) %>
+						<%= render p, :origin => 'search' if !@facebook_list.added?(p) %>
 					</li>
 				<% end %>
 			</ul>

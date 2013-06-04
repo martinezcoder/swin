@@ -10,7 +10,7 @@ class ListPageRelationshipsController < ApplicationController
       page = page_create_or_update(fb_page.first) 
   
       if current_user.facebook_lists.count < MAX_COMPETITORS
-        list.add!(page) if !list.pages.include?(page)
+        list.add!(page) if !list.added?(page)
         # get today's activity data
         if PageDataDay.find_by_page_id(page.id).nil?
           page_data_day_update(page.id)
@@ -35,7 +35,7 @@ class ListPageRelationshipsController < ApplicationController
 
       if list.pages.any? 
         p = Page.find(list.page_id)
-        if !list.pages.include?(p)
+        if !list.added?(p)
           list.set_lider_page(list.pages.first)
         end
       end
