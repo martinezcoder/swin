@@ -103,6 +103,13 @@ module SessionsHelper
     my_admin_pages_update_from_facebook
     # poner provider a ON si no está ya puesto
     session[:provider][omniauth['provider']][:status] = ON
+    if list_id = get_active_list_id
+      set_active_list(list_id) 
+    else
+      if list = current_user.facebook_lists.first
+        set_active_list(list.id)
+      end
+    end
   end
 
   def turn_off_auth(provider)
@@ -130,6 +137,10 @@ module SessionsHelper
     rescue
       nil
     end    
+  end
+
+  def get_active_list_id
+    cookies[:fb_list]
   end
 
   def destroy_active_list_cookie
