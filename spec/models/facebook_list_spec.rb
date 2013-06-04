@@ -49,6 +49,7 @@ describe FacebookList do
       @fblist.add!(page)
     end
     it { should be_added(page) }
+
     its(:pages) { should include(page) }
 
     describe "and remove" do
@@ -57,7 +58,6 @@ describe FacebookList do
       it { should_not be_added(page) }
       its(:pages) { should_not include(page) }
     end
-
   end
 
   describe "list not including pages if not in this list but in other list" do
