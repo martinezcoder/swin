@@ -14,6 +14,8 @@ include DashboardHelper
     noValidParams =     err[0] = "[{error: parametros no válidos}]"
     noValidDateFormat = err[1] = "[{error: formato de fecha incorrecto}]"
     noValidDateRange  = err[2] = "[{error: la fecha inicial es posterior a la final}]"
+    maxDateRangeExceeded = err[3] = "[{error: el rango de fechas excede el máximo permitido de 3 meses }]"
+    noDataFound       = err[4] = "[{error: no hay datos disponibles para las fechas especificadas}]"
     
     session[:active_tab] = FACEBOOK
     
@@ -35,6 +37,9 @@ include DashboardHelper
         dateRange = (@data_fin - @data_ini)/60/60/24
         if dateRange < 0 
           raise noValidDateRange
+        end
+        if dateRange > MAX_DATE_RANGE
+          raise maxDateRangeExceeded
         end
     
     rescue Exception => e
@@ -60,34 +65,43 @@ include DashboardHelper
       engageList = []
       counter = 0
       
-      @dataBD.each do |dataDay| 
+      if @dataBD.count == 0
 
-        engageToday = get_engage(dataDay.likes, dataDay.prosumers)
-        @max = [@max, engageToday].max
-        @var = get_variation(engageToday.to_f, engageYesterday.to_f)
+        @error = noDataFound
 
-        engageList[counter] =  
-                          [ Time.strptime(dataDay.day.to_s, "%Y%m%d").strftime("%d/%m/%Y"), 
-                          engageToday,
-                          html_tooltip_engage(@page.pic_square, @page.name, engageToday, @var),
-                          html_variation(@var),
-                          Time.strptime(dataDay.day.to_s, "%Y%m%d").to_i]
+      else
         
-        engageYesterday = engageToday
-        counter += 1
-      end
-
-      @dataA = []
-      @dataB = []
-   
-      for i in 0..counter-1    
-        @dataA[i] = [] + engageList[i]
-        @dataA[i][1] = 0
-        @dataB[i] = [] + engageList[i]
-      end
+        @dataBD.each do |dataDay| 
   
-      @max = 50 if @max <= 50 
+          engageToday = get_engage(dataDay.likes, dataDay.prosumers)
+          @max = [@max, engageToday].max
+          variation = get_variation(engageToday.to_f, engageYesterday.to_f)
+  
+          engageList[counter] =  
+                            [ Time.strptime(dataDay.day.to_s, "%Y%m%d").strftime("%d/%m/%Y"), 
+                            engageToday,
+                            html_tooltip_engage(@page.pic_square, @page.name, engageToday, variation),
+                            html_variation(variation),
+                            dataDay.day]
+          
+          engageYesterday = engageToday
+          counter += 1
+        end
+  
+        @dataA = []
+        @dataB = []
+     
+        for i in 0..counter-1    
+          @dataA[i] = [] + engageList[i]
+          @dataA[i][1] = 0
+          @dataB[i] = [] + engageList[i]
+        end
+    
+        @max = 50 if @max <= 50 
+  
+      end
 
+  
     end
 
   end

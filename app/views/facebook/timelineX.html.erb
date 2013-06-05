@@ -4,17 +4,6 @@
 
 	<%= render 'facebook/charts/charts' %>
 	
-	<h1>Variación semanal:
-	<% if @var == 0 %>
-		<span style="color:green">
-	<% elsif @var > 0 %>
-		<i class="icon-arrow-up"></i><span style="color:green">
-	<% else %>
-		<i class="icon-arrow-down"></i><span style="color:red">
-	<% end %>
-	<%= sprintf( "%0.01f", @var) %> %</span>
-	</h1> 
-	
 	<%= render 'facebook/shared/graph', :graph => "graph_engage_evolution_div" %>
 	<%= render 'facebook/shared/table' %>
 	
