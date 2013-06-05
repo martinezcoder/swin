@@ -1,5 +1,8 @@
 Swin::Application.routes.draw do
 
+  match "/facebook/prueba", to: 'facebook#timelineX'
+
+
   resources :facebook_lists, :path => "/facebook/lists" do
     member do
       post :activate

@@ -7,9 +7,96 @@ include DashboardHelper
   before_filter :has_active_list
   before_filter :list_has_pages, except: :empty
 
-  def timeline_engage
+
+  def timelineX
+    @error = nil
+    err = []
+    noValidParams =     err[0] = "[{error: parametros no válidos}]"
+    noValidDateFormat = err[1] = "[{error: formato de fecha incorrecto}]"
+    noValidDateRange  = err[2] = "[{error: la fecha inicial es posterior a la final}]"
+    
     session[:active_tab] = FACEBOOK
     
+    begin
+        if params.has_key?(:from) && params.has_key?(:to) 
+          if params[:from] == "" || params[:to] == ""
+            raise noValidParams
+          end
+        else
+          raise noValidParams
+        end
+                
+        begin
+            @data_ini = Time.strptime(params[:from], "%Y%m%d")
+            @data_fin = Time.strptime(params[:to], "%Y%m%d")
+        rescue
+          raise noValidDateFormat 
+        end
+        dateRange = (@data_fin - @data_ini)/60/60/24
+        if dateRange < 0 
+          raise noValidDateRange
+        end
+    
+    rescue Exception => e
+      @error = e.message
+    
+      respond_to do |format|
+        format.html # { redirect_to facebook_path }
+        format.json {  render json: @error, status: :unprocessable_entity  }        
+      end
+    
+    else
+
+      if !(@page = get_active_list_page)
+        list = get_active_list
+        @page = list.pages.first
+        list.set_lider_page(@page)
+      end
+
+      @dataBD = @page.page_data_days.select("day, likes, prosumers").where("day between ? and ?", params[:from][0,8], params[:to][0,8]).order('day ASC')
+
+      @max = 0
+      engageYesterday = 0
+      engageList = []
+      counter = 0
+      
+      @dataBD.each do |dataDay| 
+
+        engageToday = get_engage(dataDay.likes, dataDay.prosumers)
+        @max = [@max, engageToday].max
+        @var = get_variation(engageToday.to_f, engageYesterday.to_f)
+
+        engageList[counter] =  
+                          [ Time.strptime(dataDay.day.to_s, "%Y%m%d").strftime("%d/%m/%Y"), 
+                          engageToday,
+                          html_tooltip_engage(@page.pic_square, @page.name, engageToday, @var),
+                          html_variation(@var),
+                          Time.strptime(dataDay.day.to_s, "%Y%m%d").to_i]
+        
+        engageYesterday = engageToday
+        counter += 1
+      end
+
+      @dataA = []
+      @dataB = []
+   
+      for i in 0..counter-1    
+        @dataA[i] = [] + engageList[i]
+        @dataA[i][1] = 0
+        @dataB[i] = [] + engageList[i]
+      end
+  
+      @max = 50 if @max <= 50 
+
+    end
+
+  end
+
+
+
+  def timeline_engage
+    session[:active_tab] = FACEBOOK
+        
     if !(@page = get_active_list_page)
       list = get_active_list
       @page = list.pages.first

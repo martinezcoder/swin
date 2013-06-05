@@ -18,5 +18,7 @@
 class PageDataDay < ActiveRecord::Base
   belongs_to :page
   validates :page_id, presence: true
+  
+  default_scope order: 'page_data_days.day ASC'
 end
 
