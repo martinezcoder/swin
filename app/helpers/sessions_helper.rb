@@ -156,6 +156,5 @@ module SessionsHelper
       nil
     end
   end
-
-  
+    
 end

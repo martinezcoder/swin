@@ -8,6 +8,36 @@ include DashboardHelper
   before_filter :list_has_pages, except: :empty
 
 
+  # it will rend a graph with the evolution of the number of monitored pages
+  def monitored
+    @ndays = params[:days] || 30
+    
+    respond_to do |format|
+      format.html # { redirect_to facebook_path }
+      format.json { 
+          days = (@ndays).to_i
+          render :json => {
+            :type => 'AreaChart',
+            :cols => [['string', 'Fecha'], ['number', 'pages']],
+            :rows => (1..days).to_a.inject([]) do |memo, i|
+              date = i.days.ago.to_date
+              t = date.beginning_of_day
+              pages = PageDataDay.where("day = #{t.strftime("%Y%m%d").to_i}").count
+              memo << [date, pages]
+              memo
+            end.reverse,
+            :options => {
+              :chartArea => { :width => '90%', :height => '75%' },
+              :hAxis => { :showTextEvery => 30 },
+              :legend => 'bottom'
+            }
+          }        
+      }
+    end
+    
+  end
+
+
   def engageX
     @error = nil
     err = []

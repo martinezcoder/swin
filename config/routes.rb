@@ -12,7 +12,7 @@ Swin::Application.routes.draw do
   match "/facebook/general", to: 'facebook#general'
   match "/facebook/empty", to: 'facebook#empty'
   match "/facebook/engageX", to: 'facebook#engageX'
-
+  match "/facebook/monitored", to: 'facebook#monitored'
 
   resources :sessions, only: [:new, :destroy]
 

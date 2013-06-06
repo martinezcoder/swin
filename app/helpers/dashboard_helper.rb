@@ -1,6 +1,14 @@
 module DashboardHelper
   include PagesHelper
 
+  def chart_tag (action, height, params = {})
+    params[:format] ||= :json
+    path = facebook_monitored_path(action: action, params: params, :format => :json)
+    content_tag(:div, :'data-query-chart' => path, :style => "height: #{height}px;") do
+      image_tag('loader.gif', :size => '24x24', :class => 'spinner')
+    end
+  end
+
   def logo (url, img, title, options)
     return '<a href="'+ url +'" target="_blank"><img src="'+ img +'" class="'+ options +'" title="'+ title +'"></a>'
   end
