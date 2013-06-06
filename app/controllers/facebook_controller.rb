@@ -8,14 +8,14 @@ include DashboardHelper
   before_filter :list_has_pages, except: :empty
 
 
-  def timelineX
+  def engageX
     @error = nil
     err = []
-    noValidParams =     err[0] = "[{error: parametros no válidos}]"
-    noValidDateFormat = err[1] = "[{error: formato de fecha incorrecto}]"
-    noValidDateRange  = err[2] = "[{error: la fecha inicial es posterior a la final}]"
+    noValidParams        = err[0] = "[{error: parametros no válidos}]"
+    noValidDateFormat    = err[1] = "[{error: formato de fecha incorrecto}]"
+    noValidDateRange     = err[2] = "[{error: la fecha inicial es posterior a la final}]"
     maxDateRangeExceeded = err[3] = "[{error: el rango de fechas excede el máximo permitido de 3 meses }]"
-    noDataFound       = err[4] = "[{error: no hay datos disponibles para las fechas especificadas}]"
+    noDataFound          = err[4] = "[{error: no hay datos disponibles para las fechas especificadas}]"
     
     session[:active_tab] = FACEBOOK
     
@@ -27,13 +27,14 @@ include DashboardHelper
         else
           raise noValidParams
         end
-                
+        
         begin
             @data_ini = Time.strptime(params[:from], "%Y%m%d")
             @data_fin = Time.strptime(params[:to], "%Y%m%d")
         rescue
           raise noValidDateFormat 
         end
+        
         dateRange = (@data_fin - @data_ini)/60/60/24
         if dateRange < 0 
           raise noValidDateRange

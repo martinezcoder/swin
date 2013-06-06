@@ -1,8 +1,5 @@
 Swin::Application.routes.draw do
 
-  match "/facebook/prueba", to: 'facebook#timelineX'
-
-
   resources :facebook_lists, :path => "/facebook/lists" do
     member do
       post :activate
@@ -14,6 +11,8 @@ Swin::Application.routes.draw do
   match "/facebook/engage", to: 'facebook#engage'
   match "/facebook/general", to: 'facebook#general'
   match "/facebook/empty", to: 'facebook#empty'
+  match "/facebook/engageX", to: 'facebook#engageX'
+
 
   resources :sessions, only: [:new, :destroy]
 
