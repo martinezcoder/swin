@@ -22,12 +22,8 @@ jQuery(function ($) {
 
 			chart.draw(div.get(0));
 
-
-
-
-
-		  if ($('[data-query-table]').length > 0 ) {
-
+			if ($('[data-query-table]').length > 0 ) {
+	
 	            // Draw the chart
 	            $('[data-query-table]').each(function () {
 	            	
@@ -42,42 +38,20 @@ jQuery(function ($) {
 		
 					table.draw(div2.get(0));
 		
-					google.visualization.events.addListener(table, 'ready', onReadyChart);
+					google.visualization.events.addListener(table, 'ready', onReadyTable);
 
-					function onReadyChart() {
+					function onReadyTable() {
 						google.visualization.events.addListener(table.getChart(), 'select', refreshChart);
 					}
 
-					// Called
 					function refreshChart() {
 					  chart.getChart().setSelection(table.getChart().getSelection());
 					}
 
 				});
-
-		  }
+	
+			}
 		  
-
-
-
-/*
-			// Must wait for the ready event in order to
-			// request the chart and subscribe to 'onmouseover'.
-
-			google.visualization.events.addListener(chart, 'ready', onReady);
-
-			function onReady() {
-				google.visualization.events.addListener(chart.getChart(), 'onmouseover', usefulHandler);
-			}
-
-			// Called
-			function usefulHandler() {
-			  alert("Mouseover event!");
-			}
-*/
-
-
-
           });
         });
       }});
