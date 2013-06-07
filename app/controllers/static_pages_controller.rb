@@ -1,6 +1,6 @@
 class StaticPagesController < ApplicationController
   before_filter :signed_in_user, only: :habla
-  before_filter :user_is_admin, only: :admin
+  before_filter :user_is_admin, only: [:admin, :test, :query_test]
   
   def home
     if signed_in?
@@ -50,7 +50,7 @@ class StaticPagesController < ApplicationController
           hAxis: {showTextEvery:30},
           legend: "bottom"
         }
-      }      
+      }
 
     elsif params[:chart] == 'test1'
 

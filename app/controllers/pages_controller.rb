@@ -21,9 +21,8 @@ class PagesController < ApplicationController
                   memo
                 end.reverse,
       :options => {
-        :chartArea => { :width => '90%', :height => '75%' },
-        :hAxis => { :showTextEvery => 30 },
-        :legend => 'bottom'
+        :chartArea => { :width => '80%', :height => '75%' },
+        :hAxis => { :showTextEvery => 15 } 
       }
     }
   end
