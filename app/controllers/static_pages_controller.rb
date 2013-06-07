@@ -27,4 +27,47 @@ class StaticPagesController < ApplicationController
     @ndays = params[:days] || 62
   end  
 
+  def test
+  end
+
+  def query_test
+
+    if params[:chart] == 'test0'
+
+      render json: { 
+        type: params[:type] || 'LineChart',
+        cols: [["string","Fecha"],["number","pages"]],
+        rows: [["2013-04-06",83],
+                  ["2013-04-07",83],
+                  ["2013-04-08",89],
+                  ["2013-04-09",96],
+                  ["2013-04-10",114],
+                  ["2013-04-11",115],
+                  ["2013-04-12",118]],
+        options: 
+        {
+          chartArea: {width:"90%", height:"75%"},
+          hAxis: {showTextEvery:30},
+          legend: "bottom"
+        }
+      }      
+
+    elsif params[:chart] == 'test1'
+
+      render json: { 
+        type: params[:type] || 'LineChart',
+        cols: [["string","Mes"], ["number","Bolivia"], ["number","Ecuador"]],
+        rows: [['2004/05',  165,      938],
+               ['2005/06',  135,      1120],
+               ['2006/07',  157,      1167],
+               ['2007/08',  139,      1110],
+               ['2008/09',  136,      691]],
+        options: {}
+      }
+
+    end
+
+  end
+
+
 end

@@ -16,6 +16,9 @@ Swin::Application.routes.draw do
   match "/users/admin_query", to: 'users#admin_query'
   match "/pages/admin_query", to: 'pages#admin_query'
   match '/admin', to: 'static_pages#admin'
+
+  match '/query_test', to: 'static_pages#query_test'
+  match '/test', to: 'static_pages#test'
   
   resources :sessions, only: [:new, :destroy]
 

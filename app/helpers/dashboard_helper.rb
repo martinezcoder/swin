@@ -1,5 +1,19 @@
 module DashboardHelper
 
+  def chart_test_tag (height, params = {})
+    params[:format] ||= :json
+    path = query_test_path(params: params)
+    if params[:type] == 'Table'
+      content_tag(:div, class: 'mikk', :'data-query-table' => path, :style => "height: #{height}px;") do
+        image_tag('loader.gif', :size => '24x24', :class => 'spinner')
+      end            
+    else
+      content_tag(:div, :'data-query-chart' => path, :style => "height: #{height}px;") do
+        image_tag('loader.gif', :size => '24x24', :class => 'spinner')
+      end
+    end
+  end
+  
   def chart_tag (height, params = {})
     params[:format] ||= :json
     if params[:chart] == 'pages'
