@@ -1,12 +1,11 @@
 module DashboardHelper
-  include PagesHelper
 
   def chart_tag (height, params = {})
     params[:format] ||= :json
-    if params[:chart] == 'pages' 
-      path = facebook_paginas_path(params: params, :format => :json)
+    if params[:chart] == 'pages'
+      path = pages_admin_query_path(params: params)
     elsif params[:chart] == 'usuarios'
-      path = facebook_usuarios_path(params: params, :format => :json)
+      path = users_admin_query_path(params: params)
     end
     content_tag(:div, :'data-query-chart' => path, :style => "height: #{height}px;") do
       image_tag('loader.gif', :size => '24x24', :class => 'spinner')

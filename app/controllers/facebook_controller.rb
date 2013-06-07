@@ -7,68 +7,6 @@ include DashboardHelper
   before_filter :has_active_list
   before_filter :list_has_pages, except: :empty
 
-  before_filter :user_is_admin, only: [:usuarios, :paginas]
-
-  # it will rend a graph with the evolution of the number of monitored pages
-  def paginas
-    @ndays = params[:days] || 62
-        
-    respond_to do |format|
-      format.html # { redirect_to facebook_path }
-      format.json { 
-          days = (@ndays).to_i
-          render :json => {
-            :type => 'LineChart',
-            :cols => [['string', 'Fecha'], ['number', 'pages']],
-            :rows => (1..days).to_a.inject([]) do |memo, i|
-                        date = i.days.ago.to_date
-                        t = date.beginning_of_day
-                        pages = PageDataDay.where("day = #{t.strftime("%Y%m%d").to_i}").count
-                        memo << [date, pages]
-                        memo
-                      end.reverse,
-            :options => {
-              :chartArea => { :width => '90%', :height => '75%' },
-              :hAxis => { :showTextEvery => 30 },
-              :legend => 'bottom'
-            }
-          }
-      }
-    end
-    
-  end
-
-  # it will rend a graph with the evolution of the number of monitored pages
-  def usuarios
-
-    @ndays = params[:days] || 62
-
-    respond_to do |format|
-      format.html 
-      format.json { 
-          days = (@ndays).to_i
-          render :json => {
-            :type => 'LineChart',
-            :cols => [['string', 'Fecha'], ['number', 'users']],
-            :rows => (1..days).to_a.inject([]) do |memo, i|
-                        date = i.days.ago.to_date
-                        t = date.strftime("%Y%m%d")
-                        users = User.where("to_char(created_at, 'YYYYMMDD') = '#{t}'").count
-                        memo << [date, users]
-                        memo
-                      end.reverse,
-            :options => {
-              :chartArea => { :width => '90%', :height => '75%' },
-              :hAxis => { :showTextEvery => 30 },
-              :legend => 'bottom'
-            }
-          }
-      }
-    end
-
-  end
-
-
   def engageX
     @error = nil
     err = []
@@ -377,10 +315,6 @@ private
     rescue
       redirect_to facebook_empty_path
     end
-  end
-
-  def user_is_admin
-    redirect_to root_path if !(current_user.email == "fran.martinez@socialwin.es")
   end
 
 end

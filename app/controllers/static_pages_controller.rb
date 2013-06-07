@@ -1,5 +1,6 @@
 class StaticPagesController < ApplicationController
   before_filter :signed_in_user, only: :habla
+  before_filter :user_is_admin, only: :admin
   
   def home
     if signed_in?
@@ -21,5 +22,9 @@ class StaticPagesController < ApplicationController
   def youtube
     session[:active_tab] = YOUTUBE
   end
-  
+
+  def admin
+    @ndays = params[:days] || 62
+  end  
+
 end

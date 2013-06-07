@@ -7,7 +7,7 @@ jQuery(function ($) {
         $('[data-query-chart]').each(function () {
           var div = $(this)
           // Fetch chart data
-          $.getJSON(div.data('chart'), function (data) {
+          $.getJSON(div.data('query-chart'), function (data) {
             // Create DataTable from received chart data
             var table = new google.visualization.DataTable();
             $.each(data.cols, function () { table.addColumn.apply(table, this); });

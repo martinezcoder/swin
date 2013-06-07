@@ -54,6 +54,10 @@ module SessionsHelper
     end
   end
 
+  def user_is_admin
+    redirect_to root_path if !(current_user.email == "fran.martinez@socialwin.es")
+  end
+
 
   # omniauth and socialnetworks authentication functions
 
