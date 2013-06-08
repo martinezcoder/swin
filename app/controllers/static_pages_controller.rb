@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 class StaticPagesController < ApplicationController
   before_filter :signed_in_user, only: :habla
   before_filter :user_is_admin, only: [:admin, :test, :query_test]
@@ -29,6 +31,10 @@ class StaticPagesController < ApplicationController
 
   def test
   end
+
+  def test2
+  end
+
 
   def query_test
 
@@ -67,6 +73,30 @@ class StaticPagesController < ApplicationController
         options: {}
       }
 
+    elsif params[:chart] == 'gcolumn'
+  
+       render json: {
+                cols: [
+                      {id:"",label:"Topping",pattern:"",type:"string"},
+                      {id:"",label:"Slices", pattern:"",type:"number"},
+                      {id: "", role: "tooltip", type: "string", p: { role: "tooltip" } } 
+                    ],
+                rows: [
+                      {c:[{v:"Mushrooms",f:nil},{v:3,f:nil}, {v: "24 April, Price - 56000, Seller-abcd"}]},
+                      {c:[{v:"Onions",   f:nil},{v:1,f:nil}, {v: "24 April, Price - 56000, Seller-abcd"}]},
+                      {c:[{v:"Olives",   f:nil},{v:1,f:nil}, {v: "24 April, Price - 56000, Seller-abcd"}]},
+                      {c:[{v:"Zucchini", f:nil},{v:1,f:nil}, {v: "24 April, Price - 56000, Seller-abcd"}]},
+                      {c:[{v:"Pepperoni",f:nil},{v:2,f:nil}, {v: "24 April, Price - 56000, Seller-abcd"}]}
+                    ],
+                 options:
+                 { seriesType: "bars",
+                   width: 375, height: 240,
+                           legend: 'none',
+                           pointSize: 5,
+                           backgroundColor: 'transparent',
+                           vAxis: { minValue: 0, maxValue: 10 }
+                         }
+              }
     end
 
   end

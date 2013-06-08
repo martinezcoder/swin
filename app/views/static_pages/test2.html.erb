@@ -1,0 +1,46 @@
+<% @jsonUrl = "http://localhost:3000/query_test?chart=gcolumn" %>
+    <!--Load the AJAX API-->
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript" src="jquery-1.6.2.min.js"></script>
+    <script type="text/javascript">
+    
+    // Load the Visualization API and the piechart package.
+    google.load('visualization', '1', {'packages':['corechart']});
+      
+    // Set a callback to run when the Google Visualization API is loaded.
+    google.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+      var jsonData = $.ajax({
+          //url: "http://localhost:3000/query_test?chart=tooltiptest",
+          url: "<%= @jsonUrl %>",
+          dataType:"json",
+          async: false
+          }).responseText;
+          
+      // Create our data table out of JSON data loaded from server.
+      var data = new google.visualization.DataTable(jsonData);
+
+      // Instantiate and draw our chart, passing in some options.
+      var chart = new google.visualization.ComboChart(document.getElementById('chart_div'));
+      chart.draw(data, { seriesType: "bars",
+      					 width: 375, height: 240,
+                         legend: 'none',
+                         pointSize: 5,
+                         backgroundColor: 'transparent',
+                         vAxis: { minValue: 0, maxValue: 10 }
+                       });
+    }
+
+    </script>
+
+<!-- Este lo carga el script de esta misma página -->
+   <div id="chart_div">
+   	<img alt="Loader" class="spinner" height="24" src="/assets/loader.gif" width="24" />
+   </div>
+
+<!-- Este lo carga el jQuery gcolumn.js -->
+   <div id="chart_div2" data-column-chart="<%= @jsonUrl %>" style="height: 300px;">
+	<img alt="Loader" class="spinner" height="24" src="/assets/loader.gif" width="24" />
+   </div>
+
