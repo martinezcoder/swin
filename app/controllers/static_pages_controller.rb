@@ -35,20 +35,22 @@ class StaticPagesController < ApplicationController
     if params[:chart] == 'test0'
 
       render json: { 
-        type: params[:type] || 'LineChart',
-        cols: [["string","Fecha"],["number","pages"]],
-        rows: [["2013-04-06",83],
-                  ["2013-04-07",83],
-                  ["2013-04-08",89],
-                  ["2013-04-09",96],
-                  ["2013-04-10",114],
-                  ["2013-04-11",115],
-                  ["2013-04-12",118]],
+        type: params[:type] || 'BarChart',
+        cols: [["string","Fecha"],["number","Engage"], ["string", "competidor"]],
+        rows: [["2013-04-06",83, "A"],
+                  ["2013-04-07",83, "A"],
+                  ["2013-04-08",89, "A"],
+                  ["2013-04-09",96, "A"],
+                  ["2013-04-10",114, "A"],
+                  ["2013-04-11",115, "A"],
+                  ["2013-04-12",118, "A"]],
         options: 
         {
+=begin
           chartArea: {width:"90%", height:"75%"},
-          hAxis: {showTextEvery:30},
-          legend: "bottom"
+          hAxis: {showTextEvery:2},
+          legend: ""
+=end
         }
       }
 

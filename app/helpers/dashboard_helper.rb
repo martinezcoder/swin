@@ -4,7 +4,7 @@ module DashboardHelper
     params[:format] ||= :json
     path = query_test_path(params: params)
     if params[:type] == 'Table'
-      content_tag(:div, class: 'mikk', :'data-query-table' => path, :style => "height: #{height}px;") do
+      content_tag(:div, :'data-query-table' => path, :style => "height: #{height}px;") do
         image_tag('loader.gif', :size => '24x24', :class => 'spinner')
       end            
     else
