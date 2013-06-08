@@ -36,14 +36,14 @@ class StaticPagesController < ApplicationController
 
       render json: { 
         type: params[:type] || 'BarChart',
-        cols: [["string","Fecha"],["number","Engage"], ["string", "competidor"]],
-        rows: [["2013-04-06",83, "A"],
-                  ["2013-04-07",83, "A"],
-                  ["2013-04-08",89, "A"],
-                  ["2013-04-09",96, "A"],
-                  ["2013-04-10",114, "A"],
-                  ["2013-04-11",115, "A"],
-                  ["2013-04-12",118, "A"]],
+        cols: [["string","Fecha"],["number","Engage"]],
+        rows: [["2013-04-06",83],
+                  ["2013-04-07",83],
+                  ["2013-04-08",89],
+                  ["2013-04-09",96],
+                  ["2013-04-10",114],
+                  ["2013-04-11",115],
+                  ["2013-04-12",118]],
         options: 
         {
 =begin

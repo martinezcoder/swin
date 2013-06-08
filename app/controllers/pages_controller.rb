@@ -22,7 +22,7 @@ class PagesController < ApplicationController
                 end.reverse,
       :options => {
         :chartArea => { :width => '80%', :height => '75%' },
-        :hAxis => { :showTextEvery => 15 } 
+        :hAxis => { :showTextEvery => 30 } 
       }
     }
   end
