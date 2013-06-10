@@ -2,7 +2,7 @@
 
 class StaticPagesController < ApplicationController
   before_filter :signed_in_user, only: :habla
-  before_filter :user_is_admin, only: [:admin, :test, :query_test]
+  before_filter :user_is_admin, only: [:admin, :test, :test2, :query_test]
   
   def home
     if signed_in?
