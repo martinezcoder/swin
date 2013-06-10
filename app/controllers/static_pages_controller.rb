@@ -1,7 +1,7 @@
 # encoding: UTF-8
 
 class StaticPagesController < ApplicationController
-  before_filter :signed_in_user, only: :habla
+  before_filter :signed_in_user, only: [:habla, :admin, :test, :test2, :query_test]
   before_filter :user_is_admin, only: [:admin, :test, :test2, :query_test]
   
   def home
@@ -11,15 +11,20 @@ class StaticPagesController < ApplicationController
       @pages = Page.count
       @users = User.count
       @searching = false
-      
 
       if params.has_key?(:search) && params[:search] != ""
         @searching = true
-        @fb_search_path = "https://graph.facebook.com/search?type=page&q=#{params[:search]}"
+        if params[:search].include?("https://www.facebook.com")
+          subUrl = params[:search].split('/').last.split('?').first
+          subUrl = subUrl + '?fields=category,name,id'
+        else
+          subUrl = "search?type=page&q=" + params[:search]
+        end
+        @fb_search_path = "https://graph.facebook.com/" + subUrl
       end
-      
     end
   end
+
 
   def habla
     session[:active_tab] = FACEBOOK
