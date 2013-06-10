@@ -16,7 +16,7 @@ class StaticPagesController < ApplicationController
         @searching = true
         if params[:search].include?("https://www.facebook.com")
           subUrl = params[:search].split('/').last.split('?').first
-          subUrl = subUrl + '?fields=category,name,id'
+#          subUrl = subUrl + '?fields=id,name'
         else
           subUrl = "search?type=page&q=" + params[:search]
         end
