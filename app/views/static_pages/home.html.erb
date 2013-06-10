@@ -42,3 +42,12 @@
 	</div>
 
 </div>
+
+<%= render :partial => "facebook_lists/search_form", :locals => { :rest => request.url } %>
+
+<% if @searching %>
+	<!-- Este lo carga el jQuery -->
+   <div id="home_search" data-facebook-search="<%= @fb_search_path %>" style="height: 300px;">
+	<img alt="Loader" class="spinner" height="24" src="/assets/loader.gif" width="24" />
+   </div>
+<% end %>

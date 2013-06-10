@@ -10,6 +10,14 @@ class StaticPagesController < ApplicationController
     else
       @pages = Page.count
       @users = User.count
+      @searching = false
+      
+
+      if params.has_key?(:search) && params[:search] != ""
+        @searching = true
+        @fb_search_path = "https://graph.facebook.com/search?type=page&q=#{params[:search]}"
+      end
+      
     end
   end
 
