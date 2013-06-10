@@ -6,6 +6,7 @@ include DashboardHelper
   before_filter :signed_in_user
   before_filter :has_active_list
   before_filter :list_has_pages, except: :empty
+  before_filter :user_is_admin, only: [:engageX]
 
   def engageX
     @error = nil
