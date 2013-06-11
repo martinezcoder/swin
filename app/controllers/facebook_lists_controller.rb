@@ -47,7 +47,6 @@ class FacebookListsController < ApplicationController
           page = Page.new
           page.page_id             = p["page_id"]
           page.name                = p["name"]
-          page.page_url            = p["page_url"]
           page.page_type           = p["type"]
           page.fan_count           = p["fan_count"]
           page.talking_about_count = p["talking_about_count"]          

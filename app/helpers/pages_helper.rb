@@ -3,9 +3,19 @@
 module PagesHelper
   include FacebookHelper
 
-  def fb_get_picture(page)
-    return "https://graph.facebook.com/" + page.page_id + "/picture"
+  def fb_get_picture(page_id, big=nil)
+    ret = "https://graph.facebook.com/" + page_id.to_s + "/picture"
+    if !big.nil?
+      ret += "?type=large"
+    end
+    return ret
   end
+
+  def fb_get_url(page_id)
+    ret = "https://www.facebook.com/" + page_id.to_s
+    return ret
+  end
+
 
   def get_engage(fans, actives)
     if fans > 0
@@ -24,10 +34,7 @@ module PagesHelper
         newpage = Page.find_or_initialize_by_page_id("#{p["page_id"]}")
 
         newpage.name = p["name"]
-        newpage.username = p["username"]
         newpage.page_type = p["type"]
-        newpage.page_url = p["page_url"]
-        newpage.pic_big = p["pic_big"]
         newpage.fan_count = p["fan_count"]
         newpage.talking_about_count = p["talking_about_count"]
         newpage.save!

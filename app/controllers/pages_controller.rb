@@ -36,10 +36,10 @@ class PagesController < ApplicationController
       @page = Page.find_by_page_id(thisId)
       if @page.nil?
 
-        admin = User.find_by_email("fran.martinez@socialwin.es")
-        fb_token = admin.authentications.find_by_provider(FACEBOOK).token
+        me = User.find_by_email("fran.martinez@socialwin.es")
+        fb_token = me.authentications.find_by_provider(FACEBOOK).token
         fb_graph  = Koala::Facebook::API.new(fb_token)
-        strQuery = "SELECT page_id, username, type, page_url, name, pic_big, fan_count, talking_about_count from page WHERE page_id = #{thisId}"
+        strQuery = "SELECT page_id, type, name, fan_count, talking_about_count from page WHERE page_id = #{thisId}"
         fb_page = fb_graph.fql_query(strQuery)
         
         

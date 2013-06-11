@@ -7,7 +7,6 @@
 #  name                :string(255)
 #  page_type           :string(255)
 #  username            :string(255)
-#  page_url            :string(255)
 #  pic_square          :string(255)
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
@@ -24,9 +23,7 @@ describe Page do
           @page = user.pages.build(
                     page_id: "349679691794392",
                     name: "SocialWin",
-                    page_url: "http://www.facebook.com/pages/SocialWin/349679691794392",
-                    page_type: "CONSULTING/BUSINESS SERVICES",
-                    username: "socialwin"
+                    page_type: "CONSULTING/BUSINESS SERVICES"
                    ) 
          }
   
@@ -34,10 +31,7 @@ describe Page do
 
   it { should respond_to(:page_id) }
   it { should respond_to(:name) }
-  it { should respond_to(:username) }
-  it { should respond_to(:page_type) }    
-  it { should respond_to(:page_url) }
-  it { should respond_to(:pic_big) }
+  it { should respond_to(:page_type) } 
 
   it { should respond_to(:list_page_relationships) }
   it { should respond_to(:lists) }

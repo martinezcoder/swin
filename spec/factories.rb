@@ -23,10 +23,7 @@ FactoryGirl.define do
   factory :page do
     name "SocialWin"
     page_id "349679691794392"
-    page_url "http://www.facebook.com/pages/SocialWin/349679691794392"
     page_type "CONSULTING/BUSINESS SERVICES"
-    username "socialwin"
-    pic_big "xxx"
   end
   
   factory :authentication do

@@ -6,9 +6,6 @@
 #  page_id             :string(255)
 #  name                :string(255)
 #  page_type           :string(255)
-#  username            :string(255)
-#  page_url            :string(255)
-#  pic_square          :string(255)
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
 #  fan_count           :integer
@@ -20,7 +17,7 @@
 class Page < ActiveRecord::Base
   include PagesHelper
 
-  attr_accessible :page_id, :name, :page_type, :username, :page_url, :pic_big 
+  attr_accessible :page_id, :name, :page_type 
 
   has_many :user_page_relationships, foreign_key: "page_id", dependent: :destroy
   has_many :users, through: :user_page_relationships

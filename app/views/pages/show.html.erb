@@ -30,11 +30,11 @@
 	<div style="padding:5px 5px 5px 5px;text-align: center; align:center;">
         <p><strong><%= @page.name %></strong></p>
         <div style="margin-bottom:10px;">
-        <img src="<%= @page.pic_big %>">
+        <img src="<%= fb_get_picture(@page.page_id, big=true) %>">
         </div>
         <p>Fans: <strong> <%= @page.fan_count %> </strong>
         <br/>Activos: <strong> <%= @page.talking_about_count %></strong></p>
-        <small><%= link_to "Ver en Facebook", @page.page_url, target: "_blank" %></small>
+        <small><%= link_to "Ver en Facebook", fb_get_url(@page.page_id), target: "_blank" %></small>
 	</div>
 
 <li id="Twitter_Counter">
