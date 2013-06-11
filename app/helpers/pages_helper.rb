@@ -3,7 +3,7 @@
 module PagesHelper
   include FacebookHelper
 
-  def fb_get_picture(page_id, big=nil)
+  def page_get_picture(page_id, big=nil)
     ret = "https://graph.facebook.com/" + page_id.to_s + "/picture"
     if !big.nil?
       ret += "?type=large"
@@ -11,7 +11,7 @@ module PagesHelper
     return ret
   end
 
-  def fb_get_url(page_id)
+  def page_get_url(page_id)
     ret = "https://www.facebook.com/" + page_id.to_s
     return ret
   end
