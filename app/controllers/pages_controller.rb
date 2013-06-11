@@ -2,6 +2,7 @@
 
 class PagesController < ApplicationController
   include PagesHelper
+  include FacebookHelper
 
   before_filter :user_is_admin, only: [:admin_query]
 
@@ -31,9 +32,18 @@ class PagesController < ApplicationController
     fbtag = "fb-"
     thisId = params[:id]
     if thisId.include?(fbtag)
-      @page = Page.find_by_page_id(thisId.split(fbtag).last)
+      thisId = thisId.split(fbtag).last
+      @page = Page.find_by_page_id(thisId)
       if @page.nil?
-        fb_page = fb_get_pages_info(thisId)
+
+        admin = User.find_by_email("fran.martinez@socialwin.es")
+        fb_token = admin.authentications.find_by_provider(FACEBOOK).token
+        fb_graph  = Koala::Facebook::API.new(fb_token)
+        strQuery = "SELECT page_id, username, type, page_url, name, pic_square, pic_big, fan_count, talking_about_count from page WHERE page_id = #{thisId}"
+        fb_page = fb_graph.fql_query(strQuery)
+        
+        
+        #fb_page = fb_get_pages_info(thisId)
         @page = page_create_or_update(fb_page.first)
       end
       @engage = get_engage(@page.fan_count, @page.talking_about_count)      
