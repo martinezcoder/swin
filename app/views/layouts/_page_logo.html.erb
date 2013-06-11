@@ -7,7 +7,7 @@
 				<strong><%= list.name %> list</strong>
 				<br />
 				<%= link_to page do %>
-					<%= image_tag page.pic_square, alt: page.name, class: "imgpage", alt: "#{page.name}", title: "#{page.name}" %>
+					<%= image_tag fb_get_picture(page), alt: page.name, class: "imgpage", alt: "#{page.name}", title: "#{page.name}" %>
 					<strong><%= page.name %></strong>
 				<% end %>
 			</div>

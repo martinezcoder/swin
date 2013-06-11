@@ -24,7 +24,6 @@ FactoryGirl.define do
     name "SocialWin"
     page_id "349679691794392"
     page_url "http://www.facebook.com/pages/SocialWin/349679691794392"
-    pic_square "http://profile.ak.fbcdn.net/hprofile-ak-snc6/276654_349679691794392_1240268105_q.jpg"
     page_type "CONSULTING/BUSINESS SERVICES"
     username "socialwin"
     pic_big "xxx"

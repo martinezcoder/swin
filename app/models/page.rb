@@ -20,7 +20,7 @@
 class Page < ActiveRecord::Base
   include PagesHelper
 
-  attr_accessible :page_id, :name, :page_type, :username, :page_url, :pic_square, :pic_big 
+  attr_accessible :page_id, :name, :page_type, :username, :page_url, :pic_big 
 
   has_many :user_page_relationships, foreign_key: "page_id", dependent: :destroy
   has_many :users, through: :user_page_relationships

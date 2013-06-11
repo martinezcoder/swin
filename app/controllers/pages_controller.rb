@@ -39,7 +39,7 @@ class PagesController < ApplicationController
         admin = User.find_by_email("fran.martinez@socialwin.es")
         fb_token = admin.authentications.find_by_provider(FACEBOOK).token
         fb_graph  = Koala::Facebook::API.new(fb_token)
-        strQuery = "SELECT page_id, username, type, page_url, name, pic_square, pic_big, fan_count, talking_about_count from page WHERE page_id = #{thisId}"
+        strQuery = "SELECT page_id, username, type, page_url, name, pic_big, fan_count, talking_about_count from page WHERE page_id = #{thisId}"
         fb_page = fb_graph.fql_query(strQuery)
         
         

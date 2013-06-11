@@ -1,6 +1,6 @@
 <% if origin == 'search' %>
 
-	<%= image_tag page.pic_square, class: "imgpage", alt: page.name, title: page.name %>
+	<%= image_tag fb_get_picture(page), class: "imgpage", alt: page.name, title: page.name %>
 	<strong><small>
 		<% if page.name.length > 16 %>
     		<%= page.name[0..16] %>...
@@ -29,7 +29,7 @@
 <% else %>
 	<%= link_to page do %>
 	
-    	<%= image_tag page.pic_square, class: "imgpage", alt: page.name, title: page.name %>
+    	<%= image_tag fb_get_picture(page), class: "imgpage", alt: page.name, title: page.name %>
 	<% end %>
 	<strong>
 		<% if page.name.length > 16 %>

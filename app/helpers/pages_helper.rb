@@ -3,6 +3,10 @@
 module PagesHelper
   include FacebookHelper
 
+  def fb_get_picture(page)
+    return "https://graph.facebook.com/" + page.page_id + "/picture"
+  end
+
   def get_engage(fans, actives)
     if fans > 0
       engage = actives * 6 *100 / fans
@@ -23,7 +27,6 @@ module PagesHelper
         newpage.username = p["username"]
         newpage.page_type = p["type"]
         newpage.page_url = p["page_url"]
-        newpage.pic_square = p["pic_square"]
         newpage.pic_big = p["pic_big"]
         newpage.fan_count = p["fan_count"]
         newpage.talking_about_count = p["talking_about_count"]

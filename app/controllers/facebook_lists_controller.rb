@@ -46,7 +46,6 @@ class FacebookListsController < ApplicationController
         if page.nil?
           page = Page.new
           page.page_id             = p["page_id"]
-          page.pic_square          = p["pic_square"]
           page.name                = p["name"]
           page.page_url            = p["page_url"]
           page.page_type           = p["type"]

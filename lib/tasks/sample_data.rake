@@ -47,7 +47,7 @@ namespace :dev do
 
         puts "SELECT xxx from page WHERE page_id = #{q.page_id}"
 
-        r = fgraph.fql_query("SELECT page_id, username, type, page_url, name, pic_square, pic_big, fan_count, talking_about_count from page WHERE page_id = #{q.page_id}")
+        r = fgraph.fql_query("SELECT page_id, username, type, page_url, name, pic_big, fan_count, talking_about_count from page WHERE page_id = #{q.page_id}")
         p = r[0]
 
         puts p["page_id"]
@@ -58,7 +58,6 @@ namespace :dev do
         npage.username = p["username"]
         npage.page_type = p["type"]
         npage.page_url = p["page_url"]
-        npage.pic_square = p["pic_square"]
         npage.pic_big = p["pic_big"]
         npage.fan_count = p["fan_count"]
         npage.talking_about_count = p["talking_about_count"]
@@ -106,7 +105,7 @@ namespace :dev do
     userme = User.find_by_email("francisjavier@gmail.com")
     ftoken = userme.authentications.find_by_provider("facebook").token
     fgraph  = Koala::Facebook::API.new(ftoken)
-    @pages = fgraph.fql_query("SELECT page_id, username, type, page_url, name, pic_square, fan_count, talking_about_count from page WHERE page_id in (SELECT page_id from page_admin where uid=me())")
+    @pages = fgraph.fql_query("SELECT page_id, username, type, page_url, name, fan_count, talking_about_count from page WHERE page_id in (SELECT page_id from page_admin where uid=me())")
 
     @pages.each do |p|
         newpage = Page.find_or_initialize_by_page_id("#{p["page_id"]}")
@@ -114,7 +113,6 @@ namespace :dev do
         newpage.username = p["username"]
         newpage.page_type = p["type"]
         newpage.page_url = p["page_url"]
-        newpage.pic_square = p["pic_square"]
         newpage.save!
     end
  
@@ -128,7 +126,6 @@ namespace :dev do
       newpage.username = @pages.first["username"]
       newpage.page_type = @pages.first["type"]
       newpage.page_url = @pages.first["page_url"]
-      newpage.pic_square = @pages.first["pic_square"]
       newpage.save!
     end
   end
