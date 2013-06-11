@@ -43,6 +43,18 @@
 
 </div>
 
+<input type="text" value="holaluz" placeholder="Buscar competidores..." name="search" id="search" class="input-large search-query" autofocus="autofocus" autocomplete="off">
+
+<a href="" class="btn btn-small btn-danger" data-search-button="#" type="submit">
+	<strong>
+	Buscar
+	<i class=" icon-search icon-white"></i>
+	</strong>
+</a>
+
+
+
+
 <%= render :partial => "facebook_lists/search_form", :locals => { :rest => request.url } %>
 
 <% if @searching %>
@@ -51,3 +63,7 @@
 	<img alt="Loader" class="spinner" height="24" src="/assets/loader.gif" width="24" />
    </div>
 <% end %>
+
+
+
+

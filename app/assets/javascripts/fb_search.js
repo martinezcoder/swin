@@ -1,4 +1,16 @@
 
+function fbPage(id, name) {
+	var txt  = "<li>"
+		txt += 	"<a href='/facebook/fb-" + id + "'>"
+		txt += 		"<div>"
+  		txt += 			"<img src='https://graph.facebook.com/" + id + "/picture' />" + name;	
+		txt += 		"</div>"
+		txt += 	"</a>"
+		txt += "</li>"
+  	return txt;
+}
+
+
 jQuery(function ($) {
 
   if ($('[data-facebook-search]').length > 0) {
@@ -7,39 +19,41 @@ jQuery(function ($) {
       var valor = fbSearchDiv.data('facebook-search');
 
 	  var searching=valor.indexOf("search");
-
+ 
+ 	  var htmlResult= "<ul>";
+	  
 	  if (searching < 0) {
-	  	fbSearchDiv.html("<br>esto es una URL</br>" + valor);
 
-	  	$.getJSON(valor, function (jsonData) {
-	  		fbSearchDiv.html(jsonData.name);
-	  		fbSearchDiv.append("<img src='https://graph.facebook.com/" + jsonData.id + "/picture'></img>");
-        });
-          	  		
+		    $.ajax({
+		    	url: valor,
+		    	async: false,
+		    	dataType: 'json',
+		    	success: function(jsonData) {
+		    		htmlResult += fbPage(jsonData.id, jsonData.name);
+		    	}
+		    });
+    
 	  }
 	  else
 	  {
 
-          $.getJSON(fbSearchDiv.data('facebook-search'), function (jsonData) {
+		    $.ajax({
+		    	url: fbSearchDiv.data('facebook-search'),
+		    	async: false,
+		    	dataType: 'json',
+		    	success: function(jsonData) {
 
-			fbSearchDiv.html("");
-          	$.each(jsonData.data, function(i, item){
+		          	$.each(jsonData.data, function(i, item){
+						htmlResult += fbPage(item.id, item.name);
+		          	});
 
-				fbSearchDiv.append(item.name);
-				fbSearchDiv.append(":");
-				fbSearchDiv.append("<img src='https://graph.facebook.com/" + item.id + "/picture'></img>");
-				fbSearchDiv.append(":");
-
-          	});
-          	
-          	//div.html(search_result);
-          	
-          	//var jdata = JSON.stringify(jsonData.data);
-          	//div.html(jdata);
-          	           	
-          });
+		    	}
+		    });
 
 	  }
+
+	  htmlResult += "</ul>";
+	  fbSearchDiv.html(htmlResult); 
 
   }
 

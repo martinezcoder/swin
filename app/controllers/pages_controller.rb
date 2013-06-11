@@ -28,8 +28,19 @@ class PagesController < ApplicationController
   end
 
   def show
-    @page = Page.find(params[:id])
-    @engage = get_engage(@page.fan_count, @page.talking_about_count)
+    fbtag = "fb-"
+    thisId = params[:id]
+    if thisId.include?(fbtag)
+      @page = Page.find_by_page_id(thisId.split(fbtag).last)
+      if @page.nil?
+        fb_page = fb_get_pages_info(thisId)
+        @page = page_create_or_update(fb_page.first)
+      end
+      @engage = get_engage(@page.fan_count, @page.talking_about_count)      
+    else
+      @page = Page.find(thisId)
+      @engage = get_engage(@page.fan_count, @page.talking_about_count)      
+    end
   end
 
 end
