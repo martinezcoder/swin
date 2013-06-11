@@ -46,6 +46,7 @@ class StaticPagesController < ApplicationController
   end
 
   def test2
+    @jsonUrl = "http://localhost:3000/query_test?chart=gcolumn"
   end
 
 

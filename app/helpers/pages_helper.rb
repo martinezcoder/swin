@@ -3,6 +3,15 @@
 module PagesHelper
   include FacebookHelper
 
+  def page_engage_chart_tag (height, params = {})
+    params[:format] ||= :json
+    # jsonPath = query_test_path(params: params)
+    jsonPath = page_path(params: params)
+    content_tag(:div, :id => 'chart_div2', :'data-chart' => jsonPath, :style => "height: #{height}px;") do
+      image_tag('loader.gif', :size => '24x24', :class => 'spinner')
+    end
+  end
+  
   def page_get_picture(page_id, big=nil)
     ret = "https://graph.facebook.com/" + page_id.to_s + "/picture"
     if !big.nil?
