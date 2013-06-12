@@ -3,6 +3,97 @@
 module PagesHelper
   include FacebookHelper
 
+  class PageEngagementTimeline
+    attr_accessor :max
+    
+    def initialize(page, date_from, date_to)
+      @dataResult = []
+      @max = 0
+      @error = nil
+      @page = page
+      @date_from = date_from
+      @date_to = date_to
+    end
+
+    def engagement(fans, actives)
+      if fans > 0
+        engagement = actives * 6 *100 / fans
+      else
+        engagement = 0
+      end
+      engagement
+    end
+
+    def variation(today, yesterday)
+      ((today - yesterday) / yesterday) * 100
+    end
+
+    def get_variation(dayFrom, dayTo)
+      begin
+        reg = @page.page_data_days.select("day, likes, prosumers").where("day = ?", dayFrom)
+        valueBefore = engagement(reg[0].likes, reg[0].prosumers)
+        reg = @page.page_data_days.select("day, likes, prosumers").where("day = ?", dayTo)
+        valueAfter = engagement(reg[0].likes, reg[0].prosumers)
+        return variation(valueAfter, valueBefore)
+      rescue
+        return 0
+      end      
+    end
+
+    def get_timeline_array
+      dataRecords = @page.page_data_days.select("day, likes, prosumers").where("day between ? and ?", @date_from[0,8], @date_to[0,8]).order('day ASC')
+
+      engageYesterday = 0
+      engageList = []
+      counter = 0
+      
+      if dataRecords.count == 0
+
+        @dataResult[0] = "[{error: no hay datos disponibles para las fechas especificadas}]"
+
+      else
+
+          dataRecords.each do |dataDay|     
+              engageToday = engagement(dataDay.likes, dataDay.prosumers)
+              @max = [@max, engageToday].max
+              variation = variation(engageToday.to_f, engageYesterday.to_f)
+              
+              html = DashboardHelper::HtmlHardcodes.new()
+              html_tooltip = html.html_tooltip_engage(@page.picture, @page.name, engageToday, variation)
+              html_variation = html.html_variation(variation)
+              
+              engageList[counter] =  
+                                [ Time.strptime(dataDay.day.to_s, "%Y%m%d").strftime("%d/%m/%Y"), 
+                                engageToday,
+                                html_tooltip,
+                                html_variation,
+                                dataDay.day]
+              
+              engageYesterday = engageToday
+              counter += 1
+          end
+  
+          dataA = []
+          dataB = []
+       
+          for i in 0..counter-1    
+            dataA[i] = [] + engageList[i]
+            dataA[i][1] = 0
+            dataB[i] = [] + engageList[i]
+          end
+          @dataResult[1] = dataA
+          @dataResult[2] = dataB
+          
+          @max = 50 if @max <= 50 
+
+      end
+
+      @dataResult
+
+    end
+
+  end
+
   def page_engage_chart_tag (height, params = {})
     params[:format] ||= :json
     # jsonPath = query_test_path(params: params)
@@ -20,12 +111,6 @@ module PagesHelper
     return ret
   end
 
-  def page_get_url(page_id)
-    ret = "https://www.facebook.com/" + page_id.to_s
-    return ret
-  end
-
-
   def get_engage(fans, actives)
     if fans > 0
       engage = actives * 6 *100 / fans
@@ -38,6 +123,7 @@ module PagesHelper
   def get_variation(today, yesterday)
     return ((today - yesterday) / yesterday) * 100
   end
+
 
   def page_create_or_update(p, stream=false, daily=false)
         newpage = Page.find_or_initialize_by_page_id("#{p["page_id"]}")

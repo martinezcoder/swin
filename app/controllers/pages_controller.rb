@@ -43,7 +43,7 @@ class PagesController < ApplicationController
         fb_page = fb_graph.fql_query(strQuery)
 
         @page = page_create_or_update(fb_page.first)
-      end      
+      end
     else
       @page = Page.find(thisId)
     end
@@ -73,7 +73,8 @@ class PagesController < ApplicationController
                  options:
                    { seriesType: "bars",
 #                     series: {1: {type: "line"}},
-                     series: [{type: "bars"}, {type: "line"}],
+#                     series: [{type: "bars"}, {type: "line"}],
+                     series: [nil, {type: "line"}],
                      width: 375, 
                      height: 240,
                      legend: 'none',

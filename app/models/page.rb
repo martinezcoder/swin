@@ -57,8 +57,17 @@ class Page < ActiveRecord::Base
     page_relationships.find_by_competitor_id(other_page.id).destroy
   end
 
-  def activate_user_page(user)
-    user.user_page_relationships.find_by_page_id(self).activate
+
+  def picture(big=nil)
+    ret = "https://graph.facebook.com/" + page_id.to_s + "/picture"
+    if !big.nil?
+      ret += "?type=large"
+    end
+    return ret
+  end
+
+  def url
+    "https://www.facebook.com/" + page_id.to_s
   end
 
 
