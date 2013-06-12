@@ -1,5 +1,4 @@
 @import "bootstrap";
-@import "bootstrap-responsive";
 
 
 /* mixins, variables, etc. */
@@ -22,45 +21,7 @@ $facebookcolor: #3B5998;
 }
 
 
-/* universal */
-
-html {
-  overflow-y: scroll;
-}
-
-body {
-
-  background:url(body-tail.gif) 0 0 repeat-x #fff;
-  position:relative;
-
-
-  padding-top: 60px;
-  font-size: 13px;
-  line-height: 18px;
-}
-
-section {
-  overflow: auto;
-}
-
-textarea {
-  resize: vertical;
-}
-
-.center {
-  text-align: center;
-  h1 {
-    margin-bottom: 10px;
-  }
-}
-
-
-/* typography */
-
-h1, h2, h3, h4, h5, h6 {
-  line-height: 1;
-}
-
+body { padding-top: 60px;}
 
 h1 {
   font-size: 3em;
@@ -654,3 +615,5 @@ select {
   height: 35px;
   font-size: 12px;
 }
+
+@import "bootstrap-responsive";

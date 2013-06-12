@@ -35,7 +35,8 @@ Swin::Application.routes.draw do
   match '/youtube', to: 'static_pages#youtube'
   match '/twitter', to: 'static_pages#twitter'
   match '/habla', to: 'static_pages#habla'
-  root to: 'static_pages#home'
+  
+  root to: 'site#home'
 
 
   # The priority is based upon order of creation:

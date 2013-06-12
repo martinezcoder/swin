@@ -1,0 +1,89 @@
+// Place all the styles related to the home controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+@import "bootstrap";
+
+html, body {height: 100%;}
+
+body { padding-top: 40px;}
+
+h1, h2, h3, h4, h5, h6 {font-weight: normal;}
+#home {
+    background: url("home-back.jpg") repeat scroll 0 0 transparent;
+    padding: 72px 0 0 0;
+}
+@font-face {
+    font-family: 'DominikRegular';
+    src: font-url('dominik.eot');
+    src: font-url('dominik.eot') format('embedded-opentype'),
+         font-url('dominik.woff') format('woff'),
+         font-url('dominik.ttf') format('truetype'),
+         font-url('dominik.svg#DominikRegular') format('svg');
+}
+#slogan1 {
+    color: #6EC7D9;
+    font-family: 'DominikRegular', Arial, 'Verdana';
+    font-weight: normal;
+    font-size: 44px;
+}
+#slogan2 {
+    color: #FFFFFF;
+}
+.screen{
+    margin: 31px auto 0;
+    max-height: 240px;
+    max-width: 500px;
+    overflow: hidden;
+  
+}
+#screen{
+    width: 100%;    
+}
+#video{
+     padding: 72px 0; 
+}
+
+.video{
+    max-width: 520px;
+    margin:0 auto;
+}
+/*boton facebook*/
+.btn-large {
+    border-radius: 1px 1px 1px 1px;
+    font-size: 15px;
+    padding: 12px 17px;
+}
+
+#image-facebook {
+    background: url("facebook.png") repeat scroll 0 0 transparent;
+    display: inline-block;
+    height: 20px;
+    vertical-align: bottom;
+    width: 20px;
+}
+/*metodo*/
+#metodo{
+    background: none repeat scroll 0 0 #E8E9EB;
+    color: #999999;
+    padding: 72px 0 0;
+}
+/*a_quien*/
+#a_quien{
+    padding: 72px 0 0;
+    color: #999999;    
+}
+.quienes{
+    color:#5FAD2E;
+    padding: 24px 0;    
+}
+#marketers{
+  background: url("dirigido1.png") no-repeat scroll 216px 0 / 64px auto transparent;
+}
+#community{
+  background: url("dirigido2.png") no-repeat scroll 216px 0 / 64px auto transparent;  
+}
+#social{
+  background: url("dirigido3.png") no-repeat scroll 216px 0 / 64px auto transparent;  
+}
+
+@import "bootstrap-responsive";

@@ -1,0 +1,8 @@
+@font-face {
+    font-family: 'DominikThinItalic';
+    src: url('dominikthinitalic.eot');
+    src: url('dominikthinitalic.eot') format('embedded-opentype'),
+         url('dominikthinitalic.woff') format('woff'),
+         url('dominikthinitalic.ttf') format('truetype'),
+         url('dominikthinitalic.svg#DominikThinItalic') format('svg');
+}

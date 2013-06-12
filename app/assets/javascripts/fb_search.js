@@ -45,6 +45,7 @@ jQuery(function ($) {
 
 		          	$.each(jsonData.data, function(i, item){
 						htmlResult += fbPage(item.id, item.name);
+						if (i == 3) { return false;}
 		          	});
 
 		    	}

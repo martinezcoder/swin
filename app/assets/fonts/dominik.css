@@ -1,0 +1,8 @@
+@font-face {
+    font-family: 'DominikRegular';
+    src: url('dominik.eot');
+    src: url('dominik.eot') format('embedded-opentype'),
+         url('dominik.woff') format('woff'),
+         url('dominik.ttf') format('truetype'),
+         url('dominik.svg#DominikRegular') format('svg');
+}

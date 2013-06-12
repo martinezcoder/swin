@@ -1,0 +1,29 @@
+<div id="home">
+	<div class="container text-center">
+	    <h1 id="slogan1">¿Cuánto te quiere tu comunidad en Facebook?</h1>
+	    
+	    <p id="slogan2">DESCUBRE EL ENGAGEMENT DE TU FANPAGE</p>
+	    
+	    <div class="container">
+			<div class="base-btn-facebook">
+				<%= link_to "/auth/facebook", id: "btn-facebook", class: "btn btn-primary btn-large" do %>
+					<div id="image-facebook"></div><span id="pipe">|</span> Entra con Facebook
+				<% end %>
+				<div class="clearfix"></div>
+		        <div style="text-align:left;">
+		            <fb:facepile max_rows="2" width="580"></fb:facepile>
+				</div>
+		        <div style="text-align:left;">
+		        	<p style="color:#3B5998;">Monitorizando más de <%=  @pages %> páginas</p>
+		        	<!-- <li>Ya hay <%=  @users %> usuarios registrados1!</li> -->
+		        </div>
+		    </div>
+
+
+
+		</div>
+	    <div class="screen">
+			<%= image_tag "screen.png", :id => "screen" %>
+		</div>
+	</div>
+</div><!--endHome-->

@@ -1,0 +1,63 @@
+
+<div id="search">
+<div class="container">
+		<h3>TOP ENGAGEMENT FACEBOOK</h3>
+		<div class="row">
+			<div class="span6">
+				
+					<ul class="unstyled list-engagement">
+						<li>
+							<div class="podium text-center">N.1</div>
+							<img src="img/podium/cnn.jpg" alt="" />
+							<div class="ranking">
+								<div class="flecha"><i class="icon-arrow-up"></i></div>
+								<div class="puntuacion text-right">986</div>
+							</div>
+						</li>
+						<li>
+							<div class="podium text-center">N.2</div>
+							<img src="img/podium/bmw.png" alt="" />
+							<div class="ranking">
+								<div class="flecha"><i class="icon-arrow-up"></i></div>
+								<div class="puntuacion text-right">950</div>
+							</div>
+						</li>
+						<li>
+							<div class="podium text-center">N.3</div>
+							<img src="img/podium/loreal.png" alt="" />
+							<div class="ranking">
+								<span class="flecha"><i class="icon-arrow-down"></i></span>
+								<div class="puntuacion text-right">932</div>
+							</div>
+						</li>
+					</ul>
+				
+			</div>
+			
+			
+			<div class="span6"><!-- buscador engagement -->
+					<div class="try-search">
+					    <h3 class="violet">¿No tienes fanpage?</h3>
+						<h4>Lo hacemos fácil, ahora puedes conocer el engagement de tus marcas favoritas ;-)</h4>
+
+						<%= form_tag(request.url, :method => "get", class: "navbar-search search") do %>
+					
+							<%= text_field_tag(:search, params[:search], autofocus: true, class: "input-large search-query", placeholder: "Buscar páginas...", autocomplete: "off") %>
+							<%= button_tag(type: "submit", class: "btn btn-info") do %>
+								<strong>Buscar <i class=" icon-search icon-white"></i></strong> 
+							<% end %>
+					
+						<% end %>
+						<div class="clearfix"></div>
+						<% if @searching %>
+							<!-- Este lo carga el jQuery -->
+						   <div id="fb_search" data-facebook-search="<%= @fb_search_path %>" style="height: 300px;">
+							<img alt="Loader" class="spinner" height="24" src="/assets/loader.gif" width="24" />
+						   </div>
+						<% end %>
+
+					</div>	
+			</div>
+		</div>
+</div>
+</div><!--search-->

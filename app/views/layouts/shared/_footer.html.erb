@@ -1,0 +1,98 @@
+<script>
+	if (window.location.hash.search('#_=_') >= 0) {
+	    window.location.hash = '';
+	}
+</script>
+
+
+
+<footer id="base-footer">
+		<div class="container">
+			<div class="row text-left">
+				<div class="span2">
+					<h4>NAVEGACIÓN</h4>
+					<ul class="unstyled">
+						<li><a href="#caracteristicas">Características</a></li>
+<!--						<li><a href="#planes">Planes de precios</a></li> -->
+						<li><%= link_to "Sobre SocialWin",   'http://www.socialwin.es/nosotros/vision/' %></li>
+					</ul>
+				</div>
+				<div class="span2">
+					<h4>REDES SOCIALES</h4>
+					<ul class="unstyled">
+						<li><%= link_to "Twitter", "https://twitter.com/SocialWinTW" %></li>
+						<li><%= link_to "Facebook", "http://www.facebook.com/349679691794392" %></li>
+						<li><%= link_to "LinkedIn", "http://www.linkedin.com/company/socialwin" %></li>
+						<li><%= link_to "YouTube", "https://www.youtube.com/user/SocialWin" %></li>
+						<li><%= link_to "Blog", "http://www.socialwin.es/nosotros/blog/" %></li>
+					</ul>
+				</div>
+
+				<div class="span2">
+								<ul class="clear">
+								<div class="row"><h2>¿Te gusta?</h2></div>
+								<div class="row"><div class="fb-like" data-href="http://analytics.socialwin.es" data-send="false" data-layout="box_count" data-width="450" data-show-faces="true"></div></div>
+								</ul>
+				
+				
+								<div id="Twitter_Counter">
+									<script>
+									!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];
+										if(!d.getElementById(id)) {
+											js=d.createElement(s);
+											js.id=id;
+											js.src="//platform.twitter.com/widgets.js";
+											fjs.parentNode.insertBefore(js,fjs);
+										}
+									}(document,"script","twitter-wjs");
+									</script>
+								
+									<iframe scrolling="no" frameborder="0" allowtransparency="true" 
+											src="http://platform.twitter.com/widgets/tweet_button.1363148939.html#_=1365167447814&amp;
+											count=horizontal&amp;id=twitter-widget-0&amp;lang=es&amp;
+											original_referer=<%= request.protocol + request.host_with_port + request.fullpath %>&amp;
+											size=m&amp;
+											text=Monitoriza tu red social &amp;
+											url=<%= request.protocol + request.host_with_port + request.fullpath %>/&amp;
+											via=SocialWinTW" 
+											class="twitter-share-button twitter-count-horizontal" style="width: 117px; height: 20px;" title="Twitter Tweet Button" data-twttr-rendered="true">		
+									</iframe>
+								</div>
+	
+				</div>
+				<div class="span3">
+					<h4>TWITTER</h4>
+					<div>
+						<a class="twitter-timeline"  href="https://twitter.com/SocialWinTW"  data-widget-id="344473578751811584">Tweets por @SocialWinTW</a>
+						<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+					</div>
+				</div>
+
+				<div class="span2">
+					<h4>CONTACTO</h4>
+					<ul class="unstyled">
+						<li><a href="mailto:info@socialwin.es">info@socialwin.es</a></li>
+					</ul>
+				</div>
+
+			</div>
+			<div class="clientes">
+				<h3 class="text-center">Clientes</h3>
+			</div>
+		</div>
+</footer>
+
+<section id="legal">
+	<div class="container">
+		<div class="logo-legal"></div>
+		
+		<ul class="unstyled inline pull-right">
+			<li><small><%= link_to "Política de privacidad", '/private_policy.html' %></small></li>
+			<li><small><%= link_to "Condiciones del servicio", '/terms.html' %></small></li>
+			<li><p>&copy; SocialWin 2013</p></li>
+		</ul>
+	</div>	
+</section>
+
+
+		
