@@ -57,7 +57,8 @@ module PagesHelper
       engageYesterday = 0
       engageList = []
       counter = 0
-        dataRecords.each do |dataDay|     
+
+      dataRecords.each do |dataDay|     
             engageToday = engagement(dataDay.likes, dataDay.prosumers)
             @max = [@max, engageToday].max
             variation = variation(engageToday.to_f, engageYesterday.to_f)
@@ -77,20 +78,9 @@ module PagesHelper
 
             engageYesterday = engageToday
             counter += 1
-          end
- 
-#          dataA = []
-#          dataB = []
-       
-#          for i in 0..counter-1    
-#            dataA[i] = [] + engageList[i]
-#            dataA[i][1] = 0
-#            dataB[i] = [] + engageList[i]
-#          end
-#          @dataResult[1] = dataA
-#          @dataResult[2] = dataB
+      end
           
-          @max = 50 if @max <= 50 
+      @max = 50 if @max <= 50 
       options[:vAxis] = {minValue: 0, maxValue: @max}
 
       @dataResult =  {}
