@@ -59,8 +59,8 @@ include DashboardHelper
         list.set_lider_page(page)
       end
 
-      timeline = PageEngagementTimeline.new(page, params[:from], params[:to])
-      timelineData = timeline.get_timeline_array
+      timeline = PageMetrics.new(page)
+      timelineData = timeline.get_timeline_array(params[:from], params[:to])
       @error = timelineData[0]
       @dataA = timelineData[1]
       @dataB = timelineData[2]
@@ -81,8 +81,8 @@ include DashboardHelper
       list.set_lider_page(page)
     end
 
-    timeline = PageEngagementTimeline.new(page, 15.days.ago.strftime("%Y%m%d"), Time.now.strftime("%Y%m%d") )
-    timelineData = timeline.get_timeline_array
+    timeline = PageMetrics.new(page)
+    timelineData = timeline.get_timeline_array(15.days.ago.strftime("%Y%m%d"), Time.now.strftime("%Y%m%d"))
     @error = timelineData[0]
     @dataA = timelineData[1]
     @dataB = timelineData[2]

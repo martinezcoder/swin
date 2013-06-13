@@ -3,16 +3,22 @@
 module PagesHelper
   include FacebookHelper
 
-  class PageEngagementTimeline
-    attr_accessor :max
+  def page_engageTimeline_chart_tag (height, params = {})
+    params[:format] ||= :json
+    jsonPath = page_path(params: params)
+    content_tag(:div, :id => params[:divId], :'data-chart' => jsonPath, :style => "height: #{height}px;") do
+      image_tag('loader.gif', :size => '24x24', :class => 'spinner')
+    end
+  end
+
+  class PageMetrics
+    attr_accessor :max, :graphOptions
     
-    def initialize(page, date_from, date_to)
-      @dataResult = []
+    def initialize(page)
       @max = 0
       @error = nil
       @page = page
-      @date_from = date_from
-      @date_to = date_to
+      @graphOptions = {}
     end
 
     def engagement(fans, actives)
@@ -40,8 +46,75 @@ module PagesHelper
       end      
     end
 
-    def get_timeline_array
-      dataRecords = @page.page_data_days.select("day, likes, prosumers").where("day between ? and ?", @date_from[0,8], @date_to[0,8]).order('day ASC')
+    def get_json_engagement_timeline_array(date_from, date_to, options, divId)
+      dataRecords = @page.page_data_days.select("day, likes, prosumers").where("day between ? and ?", date_from[0,8], date_to[0,8]).order('day ASC')
+
+      if dataRecords.count == 0
+        options[:title] = "Ooops, esta página es nueva para SocialWin. Tendrás que esperar unos días para ver esta gráfica completa..."
+        options[:titleTextStyle] = {color: '#0000FF', fontSize: 14}
+          
+      end
+      engageYesterday = 0
+      engageList = []
+      counter = 0
+        dataRecords.each do |dataDay|     
+            engageToday = engagement(dataDay.likes, dataDay.prosumers)
+            @max = [@max, engageToday].max
+            variation = variation(engageToday.to_f, engageYesterday.to_f)
+            
+            html = DashboardHelper::HtmlHardcodes.new()
+            html_tooltip = html.html_tooltip_engage(@page.picture, @page.name, engageToday, variation)
+            html_variation = html.html_variation(variation)
+
+            engageList[counter] = {}
+            engageList[counter][:c] = []
+            engageList[counter][:c][0] = 5
+            engageList[counter][:c][1] = {v: Time.strptime(dataDay.day.to_s, "%Y%m%d").strftime("%d/%m/%Y"), f:nil}
+            engageList[counter][:c][2] = {v: engageToday,    f:nil}
+            engageList[counter][:c][3] = {v: html_tooltip,   f:nil}
+            engageList[counter][:c][4] = {v: html_variation, f:nil}
+            engageList[counter][:c][5] = {v: dataDay.day,    f:nil}
+
+            engageYesterday = engageToday
+            counter += 1
+          end
+ 
+#          dataA = []
+#          dataB = []
+       
+#          for i in 0..counter-1    
+#            dataA[i] = [] + engageList[i]
+#            dataA[i][1] = 0
+#            dataB[i] = [] + engageList[i]
+#          end
+#          @dataResult[1] = dataA
+#          @dataResult[2] = dataB
+          
+          @max = 50 if @max <= 50 
+      options[:vAxis] = {minValue: 0, maxValue: @max}
+
+      @dataResult =  {}
+      @dataResult[:divId] = divId
+      @dataResult[:options] = options
+      @dataResult[:graphShowCols] = [1,2,3]
+      @dataResult[:cols] = [
+                      {id:"",label:"dataNil",pattern:"",type:"number"},
+                      {id:"",label:"Fecha",pattern:"",type:"string"},
+                      {id:"",label:"Engagement", pattern:"",type:"number"},
+                      {id:"",type: "string", p: { role: "tooltip", html: true } },
+                      {id:"",label:"Variación", pattern:"",type:"number"},
+                      {id:"",label:"Id", pattern:"",type:"number"}
+                    ]    
+      @dataResult[:rows] = engageList        
+
+      @dataResult
+
+    end
+
+    def get_timeline_array(date_from, date_to)
+      @dataResult = []
+      
+      dataRecords = @page.page_data_days.select("day, likes, prosumers").where("day between ? and ?", date_from[0,8], date_to[0,8]).order('day ASC')
 
       engageYesterday = 0
       engageList = []
@@ -94,23 +167,7 @@ module PagesHelper
 
   end
 
-  def page_engage_chart_tag (height, params = {})
-    params[:format] ||= :json
-    # jsonPath = query_test_path(params: params)
-    jsonPath = page_path(params: params)
-    content_tag(:div, :id => 'chart_div2', :'data-chart' => jsonPath, :style => "height: #{height}px;") do
-      image_tag('loader.gif', :size => '24x24', :class => 'spinner')
-    end
-  end
   
-  def page_get_picture(page_id, big=nil)
-    ret = "https://graph.facebook.com/" + page_id.to_s + "/picture"
-    if !big.nil?
-      ret += "?type=large"
-    end
-    return ret
-  end
-
   def get_engage(fans, actives)
     if fans > 0
       engage = actives * 6 *100 / fans

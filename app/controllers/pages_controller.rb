@@ -51,38 +51,23 @@ class PagesController < ApplicationController
 
     respond_to do |format|
         format.html # show.html.erb
-        format.json { 
-          render json: 
-          {
+        format.json {
+          options = {
+                    seriesType: "area",
+                    title:'Timeline engagement (fidelidad de los seguidores)', 
+                    titleTextStyle: {fontSize: 14},
+                    colors: ['#0088CC'], 
+                    height: 200, 
+                    animation:{duration: 1500,easing: 'out'}, 
+                    hAxes:[{title:'Última semana'}],
+                    vAxis: {minValue:0, maxValue:100},
+                    fontSize: 10,
+                    legend: {position: 'none', textStyle: {fontSize: 14}},
+                    tooltip: {isHtml: true}
+                  }
+          divId = params[:divId] 
+          render json:  PageMetrics.new(@page).get_json_engagement_timeline_array(8.days.ago.strftime("%Y%m%d"), 1.days.ago.strftime("%Y%m%d"), options, divId)
 
-                cols: [
-                      {id:"",label:"Fecha",pattern:"",type:"string"},
-                      {id:"",label:"Engagement", pattern:"",type:"number"},
-                      {id:"",label:"Variación", pattern:"",type:"number"},
-                      {id: "",role: "tooltip", type: "string", p: { role: "tooltip" } } 
-                    ],
-                rows: [
-                      {c:[{v:"Lunes",    f:nil}, {v:30,f:nil}, {v:15,f:nil}, {v: "Engagement"}]},
-                      {c:[{v:"Martes",   f:nil}, {v:25,f:nil}, {v:10,f:nil}, {v: "Engagement"}]},
-                      {c:[{v:"Miércoles",f:nil}, {v:40,f:nil}, {v:20,f:nil}, {v: "Engagement"}]},
-                      {c:[{v:"Jueves",   f:nil}, {v:44,f:nil}, {v:5,f:nil}, {v: "Engagement"}]},
-                      {c:[{v:"Viernes",  f:nil}, {v:55,f:nil}, {v:30,f:nil}, {v: "Engagement"}]},
-                      {c:[{v:"Sábado",   f:nil}, {v:60,f:nil}, {v:30,f:nil}, {v: "Engagement"}]},
-                      {c:[{v:"Domingo",  f:nil}, {v:40,f:nil}, {v:-10,f:nil}, {v: "Engagement"}]}
-                    ],
-                 options:
-                   { seriesType: "bars",
-#                     series: {1: {type: "line"}},
-#                     series: [{type: "bars"}, {type: "line"}],
-                     series: [nil, {type: "line"}],
-                     width: 375, 
-                     height: 240,
-                     legend: 'none',
-                     pointSize: 5,
-                     backgroundColor: 'transparent',
-                     vAxis: { minValue: 0, maxValue: 100 }
-                    }
-          }  
         }
     end
 

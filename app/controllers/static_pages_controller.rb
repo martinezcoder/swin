@@ -45,11 +45,6 @@ class StaticPagesController < ApplicationController
   def test
   end
 
-  def test2
-    @jsonUrl = "http://localhost:3000/query_test?chart=gcolumn"
-  end
-
-
   def query_test
 
     if params[:chart] == 'test0'

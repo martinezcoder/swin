@@ -10,15 +10,24 @@ jQuery(function ($) {
           $.getJSON(div.data('chart'), function (jsonData) {
             // Create DataTable from received chart data
 	            
-		      // Create our data table out of JSON data loaded from server.
-		      var data = new google.visualization.DataTable(jsonData);
 		
 		      // Instantiate and draw our chart, passing in some options.
-		      var chart = new google.visualization.ComboChart(document.getElementById('chart_div2'));
-		      //var chart = new google.visualization.ComboChart(div);
+//		      var chart = new google.visualization.ComboChart(document.getElementById('chart_div2'));
+		      var chart = new google.visualization.ComboChart(document.getElementById(jsonData.divId));
 		      
-		      chart.draw(data, jsonData.options);
-		  
+//		      chart.draw(data, jsonData.options);
+
+		      // Create our data table out of JSON data loaded from server.
+		      var dataA = new google.visualization.DataTable(jsonData);
+			  var dataChartA = new google.visualization.DataView(dataA);
+		 	  dataChartA.setColumns([1,0]);
+			  chart.draw(dataChartA, jsonData.options);
+
+		      var data = new google.visualization.DataTable(jsonData);
+			  var dataChart = new google.visualization.DataView(data);
+		 	  dataChart.setColumns(jsonData.graphShowCols);
+			  chart.draw(dataChart, jsonData.options);
+	  
           });
         });
       }});
