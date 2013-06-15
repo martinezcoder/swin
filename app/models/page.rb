@@ -17,6 +17,7 @@
 class Page < ActiveRecord::Base
   include PagesHelper
 
+  attr_accessor :pic_square
   attr_accessible :page_id, :name, :page_type 
 
   has_many :user_page_relationships, foreign_key: "page_id", dependent: :destroy
@@ -63,7 +64,7 @@ class Page < ActiveRecord::Base
     if !big.nil?
       ret += "?type=large"
     end
-    return ret
+    return self.pic_square || ret
   end
 
   def url

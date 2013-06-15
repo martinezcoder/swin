@@ -51,6 +51,7 @@ class FacebookListsController < ApplicationController
           page.fan_count           = p["fan_count"]
           page.talking_about_count = p["talking_about_count"]          
         end
+        page.pic_square            = p["pic_square"]
         @pageslist = @pageslist + [page]
       end
     end

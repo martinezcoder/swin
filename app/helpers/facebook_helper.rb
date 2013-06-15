@@ -2,22 +2,6 @@
 
 module FacebookHelper
 
-  class FacebookResponses < Koala::Facebook::API
-    
-    attr_reader :admin, :query
-    
-    def initialize(token)
-      
-    end
-
-    def fb_query_page_list(pages_list)
-      @query = "SELECT page_id, type, name, fan_count, talking_about_count from page WHERE page_id in (#{pages_list})"
-    end
-
-        
-  end  
-    
-
   def fb_token
      get_token FACEBOOK
   end
@@ -31,7 +15,7 @@ module FacebookHelper
   end
 
   def fb_query_page_list(pages_list)
-    fb_query_page_list = "SELECT page_id, type, name, fan_count, talking_about_count from page WHERE page_id in (#{pages_list})"
+    fb_query_page_list = "SELECT page_id, type, name, pic_square, fan_count, talking_about_count from page WHERE page_id in (#{pages_list})"
   end
 
   def fb_query_page_stream(p_id, time_from, time_to, n, m)
