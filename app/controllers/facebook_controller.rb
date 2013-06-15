@@ -124,13 +124,13 @@ include DashboardHelper
 
       engage = get_engage(competitors[i].fan_count, competitors[i].talking_about_count)
       variation = get_variation(engage.to_f,engageY.to_f)
-      compList[i] = [ logo(competitors[i].url, competitors[i].picture, competitors[i].name, css1), 
+      compList[i] = [ logo(competitors[i].url, PagesHelper.get_picture(competitors[i]), competitors[i].name, css1), 
                       competitors[i].name, 
                       competitors[i].page_type, 
                       engage,
 #                      {v: engage, f: '-5.0%'},
-                      logo(competitors[i].url, competitors[i].picture, competitors[i].name, css2),
-                      html_tooltip_engage(competitors[i].picture, competitors[i].name, engage, variation),
+                      logo(competitors[i].url, PagesHelper.get_picture(competitors[i]), competitors[i].name, css2),
+                      html_tooltip_engage(PagesHelper.get_picture(competitors[i]), competitors[i].name, engage, variation),
                       html_variation(variation)]
 
       @max = [@max, engage].max
@@ -183,13 +183,13 @@ include DashboardHelper
     num = competitors.length
     compList = []
     for i in 0..num-1 do
-      compList[i] = [ logo(competitors[i].url, competitors[i].picture, competitors[i].name, css1), 
+      compList[i] = [ logo(competitors[i].url, PagesHelper.get_picture(competitors[i]), competitors[i].name, css1), 
                       competitors[i].name, 
                       competitors[i].page_type, 
                       competitors[i].fan_count,
                       competitors[i].talking_about_count,
-                      logo(competitors[i].url, competitors[i].picture, competitors[i].name, css2),
-                      html_tooltip_general(competitors[i].picture, competitors[i].name, competitors[i].fan_count, competitors[i].talking_about_count)]
+                      logo(competitors[i].url, PagesHelper.get_picture(competitors[i]), competitors[i].name, css2),
+                      html_tooltip_general(PagesHelper.get_picture(competitors[i]), competitors[i].name, competitors[i].fan_count, competitors[i].talking_about_count)]
       @max_fans = [@max_fans, competitors[i].fan_count].max
       @max_actives = [@max_actives, competitors[i].talking_about_count].max
     end

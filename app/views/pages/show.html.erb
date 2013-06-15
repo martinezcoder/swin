@@ -30,7 +30,7 @@
 	<div style="padding:5px 5px 5px 5px;text-align: center; align:center;">
         <p><strong><%= @page.name %></strong></p>
         <div style="margin-bottom:10px;">
-        <img src="<%= @page.picture(big=true) %>">
+        <img src="<%= get_picture(@page, big=true) %>">
         </div>
         <p>Fans: <strong> <%= @page.fan_count %> </strong>
         <br/>Activos: <strong> <%= @page.talking_about_count %></strong></p>

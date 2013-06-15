@@ -3,11 +3,27 @@
 module PagesHelper
   include FacebookHelper
 
+
   def page_engageTimeline_chart_tag (height, params = {})
     params[:format] ||= :json
     jsonPath = page_path(params: params)
     content_tag(:div, :id => params[:divId], :'data-chart' => jsonPath, :style => "height: #{height}px;") do
       image_tag('loader.gif', :size => '24x24', :class => 'spinner')
+    end
+  end
+
+
+  class << self
+    def get_picture(page, big=false)
+      page.picture 
+      # El siguiente método permite que se muestren logos de marcas de bebidas alcohólicas.
+      # el problema con esta llamada está en que, para cada página mostrada realiza una llamada a la API 
+      # de Facebook desde nuestro servidor, ralentizando enormemente el renderizado de la página.
+      # Actualmente el logo lo recogemos haciendo referencia a la url: graph.facebook.com/id/picture
+      # De este modo, es el usuario quien realiza la petición a facebook y descarga al servidor de 
+      # esta tarea. Pero desgraciadamente, no muestra los logos para marcas de bebidas alcoholicas
+      # puesto que para ello hace falta un token de usuario para que Facebook pueda identificar su edad. 
+      # FacebookHelper::FbGraphAPI.new(get_token(FACEBOOK)).get_picture(page.page_id)
     end
   end
 
@@ -64,7 +80,7 @@ module PagesHelper
             variation = variation(engageToday.to_f, engageYesterday.to_f)
             
             html = DashboardHelper::HtmlHardcodes.new()
-            html_tooltip = html.html_tooltip_engage(@page.picture, @page.name, engageToday, variation)
+            html_tooltip = html.html_tooltip_engage(PagesHelper.get_picture(@page), @page.name, engageToday, variation)
             html_variation = html.html_variation(variation)
 
             engageList[counter] = {}
@@ -122,7 +138,7 @@ module PagesHelper
               variation = variation(engageToday.to_f, engageYesterday.to_f)
               
               html = DashboardHelper::HtmlHardcodes.new()
-              html_tooltip = html.html_tooltip_engage(@page.picture, @page.name, engageToday, variation)
+              html_tooltip = html.html_tooltip_engage(PagesHelper.get_picture(@page), @page.name, engageToday, variation)
               html_variation = html.html_variation(variation)
               
               engageList[counter] =  

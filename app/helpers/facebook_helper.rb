@@ -2,6 +2,18 @@
 
 module FacebookHelper
 
+  class FbGraphAPI
+    
+    def initialize(access_token)
+      @fb_graph = Koala::Facebook::API.new(access_token)
+    end
+    
+    def get_picture(page_id)
+      @fb_graph.get_picture(page_id)
+    end
+  end
+
+
   def fb_token
      get_token FACEBOOK
   end
