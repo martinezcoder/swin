@@ -15,7 +15,7 @@ module PagesHelper
 
   class << self
     def get_picture(page, big=false)
-      page.picture 
+      page.picture(big)
       # El siguiente método permite que se muestren logos de marcas de bebidas alcohólicas.
       # el problema con esta llamada está en que, para cada página mostrada realiza una llamada a la API 
       # de Facebook desde nuestro servidor, ralentizando enormemente el renderizado de la página.
