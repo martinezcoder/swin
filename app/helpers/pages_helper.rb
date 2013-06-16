@@ -1,8 +1,6 @@
 # encoding: UTF-8
 
 module PagesHelper
-  include FacebookHelper
-
 
   def page_engageTimeline_chart_tag (height, params = {})
     params[:format] ||= :json
@@ -12,39 +10,49 @@ module PagesHelper
     end
   end
 
+  def self.get_picture(page, access_token, big=false)
+    ret = "https://graph.facebook.com/" + page.page_id.to_s + "/picture?"
+    if big
+      ret += "type=large&"
+    end
+    ret += "access_token=" + access_token
+    return page.pic_square || ret
+  end
 
-  class << self
-    def get_picture(page, big=false)
-      ret = "https://graph.facebook.com/" + page.page_id.to_s + "/picture"
-      if big
-        ret += "?type=large"
-      end
-      return page.pic_square || ret
-      # El siguiente método comentado permite que se muestren logos de marcas de bebidas alcohólicas.
-      # el problema con esta llamada está en que, para cada página mostrada realiza una llamada a la API 
-      # de Facebook desde nuestro servidor, ralentizando enormemente el renderizado de la página.
-      # Para que muestre todas las páginas debemos pasarle el token de facebook...
-      # Actualmente el logo lo recogemos haciendo referencia a la url: graph.facebook.com/id/picture
-      # De este modo, es el usuario quien realiza la petición a facebook y descarga al servidor de 
-      # esta tarea. Pero desgraciadamente, no muestra los logos para marcas de bebidas alcoholicas
-      # puesto que para ello hace falta un token de usuario para que Facebook pueda identificar su edad. 
-      # FacebookHelper::FbGraphAPI.new(get_token(FACEBOOK)).get_picture(page.page_id)
-      # FacebookHelper::FbGraphAPI.new().get_picture(page.page_id)
+  def get_picture(page, big=false)
+    ret = "https://graph.facebook.com/" + page.page_id.to_s + "/picture?"
+    if signed_in?
+      ret += "access_token=" + get_token(FACEBOOK) + "&"
     end
-        
-    def get_url(page)
-      "https://www.facebook.com/" + page.page_id.to_s
+    if big
+      ret += "type=large"
     end
+    return page.pic_square || ret
+    # El siguiente método comentado permite que se muestren logos de marcas de bebidas alcohólicas.
+    # el problema con esta llamada está en que, para cada página mostrada realiza una llamada a la API 
+    # de Facebook desde nuestro servidor, ralentizando enormemente el renderizado de la página.
+    # Para que muestre todas las páginas debemos pasarle el token de facebook...
+    # Actualmente el logo lo recogemos haciendo referencia a la url: graph.facebook.com/id/picture
+    # De este modo, es el usuario quien realiza la petición a facebook y descarga al servidor de 
+    # esta tarea. Pero desgraciadamente, no muestra los logos para marcas de bebidas alcoholicas
+    # puesto que para ello hace falta un token de usuario para que Facebook pueda identificar su edad. 
+    # FacebookHelper::FbGraphAPI.new(get_token(FACEBOOK)).get_picture(page.page_id)
+    # FacebookHelper::FbGraphAPI.new().get_picture(page.page_id)
+  end
+
+  def get_url(page)
+    ret = "https://www.facebook.com/" + page.page_id.to_s
   end
 
   class PageMetrics
     attr_accessor :max, :graphOptions
     
-    def initialize(page)
+    def initialize(page, access_token)
       @max = 0
       @error = nil
       @page = page
       @graphOptions = {}
+      @access_token = access_token
     end
 
     def engagement(fans, actives)
@@ -84,13 +92,14 @@ module PagesHelper
       engageList = []
       counter = 0
 
+      picture = PagesHelper.get_picture(@page, @access_token)
       dataRecords.each do |dataDay|     
             engageToday = engagement(dataDay.likes, dataDay.prosumers)
             @max = [@max, engageToday].max
             variation = variation(engageToday.to_f, engageYesterday.to_f)
             
             html = DashboardHelper::HtmlHardcodes.new()
-            html_tooltip = html.html_tooltip_engage(PagesHelper.get_picture(@page), @page.name, engageToday, variation)
+            html_tooltip = html.html_tooltip_engage(picture, @page.name, engageToday, variation)
             html_variation = html.html_variation(variation)
 
             engageList[counter] = {}
@@ -142,13 +151,14 @@ module PagesHelper
 
       else
 
+          picture = PagesHelper.get_picture(@page, @access_token)
           dataRecords.each do |dataDay|     
               engageToday = engagement(dataDay.likes, dataDay.prosumers)
               @max = [@max, engageToday].max
               variation = variation(engageToday.to_f, engageYesterday.to_f)
               
               html = DashboardHelper::HtmlHardcodes.new()
-              html_tooltip = html.html_tooltip_engage(PagesHelper.get_picture(@page), @page.name, engageToday, variation)
+              html_tooltip = html.html_tooltip_engage(picture, @page.name, engageToday, variation)
               html_variation = html.html_variation(variation)
               
               engageList[counter] =  

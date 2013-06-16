@@ -1,5 +1,5 @@
 <% if origin == 'search' %>
-	<%= image_tag PagesHelper.get_picture(page), class: "imgpage", alt: page.name, title: page.name %>
+	<%= image_tag get_picture(page), class: "imgpage", alt: page.name, title: page.name %>
 	<strong><small>
 		<% if page.name.length > 16 %>
     		<%= page.name[0..16] %>...
@@ -7,7 +7,7 @@
     		<%= page.name %>
     	<% end %>
 	</small></strong>
-	<small><%= link_to "Ver en Facebook", PagesHelper.get_url(page), target: "_blank" %></small>
+	<small><%= link_to "Ver en Facebook", get_url(page), target: "_blank" %></small>
 
   <div class="fb_stats">
 
@@ -28,7 +28,7 @@
 <% else %>
 	<%= link_to page do %>
 	
-    	<%= image_tag PagesHelper.get_picture(page), class: "imgpage", alt: page.name, title: page.name %>
+    	<%= image_tag get_picture(page), class: "imgpage", alt: page.name, title: page.name %>
 	<% end %>
 	<strong>
 		<% if page.name.length > 16 %>
@@ -37,7 +37,7 @@
     		<%= page.name %>
     	<% end %>
 	</strong>
-	<small><%= link_to "Ver en Facebook", PagesHelper.get_url(page), target: "_blank" %></small>
+	<small><%= link_to "Ver en Facebook", get_url(page), target: "_blank" %></small>
 
 	<div class="fb_stats">
 

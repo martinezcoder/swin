@@ -63,7 +63,7 @@ class PagesController < ApplicationController
                     tooltip: {isHtml: true}
                   }
           divId = params[:divId] 
-          render json:  PageMetrics.new(@page).get_json_engagement_timeline_array(8.days.ago.strftime("%Y%m%d"), 1.days.ago.strftime("%Y%m%d"), options, divId)
+          render json:  PageMetrics.new(@page,get_token(FACEBOOK)).get_json_engagement_timeline_array(8.days.ago.strftime("%Y%m%d"), 1.days.ago.strftime("%Y%m%d"), options, divId)
 
         }
     end

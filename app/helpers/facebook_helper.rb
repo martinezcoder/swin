@@ -55,7 +55,7 @@ module FacebookHelper
       end
 
       def get_search_pages_list(name)
-        search_results = search("#{name}", {type: 'page', access_token: @fb_token})
+        search_results = search("#{name}", {type: 'page', access_token: access_token})
         page_ids = []
         search_results.each do |s|
           page_ids = page_ids + [s["id"]]
