@@ -34,7 +34,7 @@
         </div>
         <p>Fans: <strong> <%= @page.fan_count %> </strong>
         <br/>Activos: <strong> <%= @page.talking_about_count %></strong></p>
-        <small><%= link_to "Ver en Facebook", @page.url, target: "_blank" %></small>
+        <small><%= link_to "Ver en Facebook", PagesHelper.get_url(@page), target: "_blank" %></small>
 	</div>
 
 

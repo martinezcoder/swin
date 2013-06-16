@@ -31,17 +31,4 @@ class Page < ActiveRecord::Base
 
   validates :page_id, presence: true
 
-  def picture(big=false)
-    ret = "https://graph.facebook.com/" + page_id.to_s + "/picture"
-    if big
-      ret += "?type=large"
-    end
-    return self.pic_square || ret
-  end
-
-  def url
-    "https://www.facebook.com/" + page_id.to_s
-  end
-
-
 end

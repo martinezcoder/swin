@@ -15,8 +15,13 @@ module PagesHelper
 
   class << self
     def get_picture(page, big=false)
-      page.picture(big)
-      # El siguiente método permite que se muestren logos de marcas de bebidas alcohólicas.
+
+      ret = "https://graph.facebook.com/" + page.page_id.to_s + "/picture"
+      if big
+        ret += "?type=large"
+      end
+      return page.pic_square || ret
+      # El siguiente método comentado permite que se muestren logos de marcas de bebidas alcohólicas.
       # el problema con esta llamada está en que, para cada página mostrada realiza una llamada a la API 
       # de Facebook desde nuestro servidor, ralentizando enormemente el renderizado de la página.
       # Actualmente el logo lo recogemos haciendo referencia a la url: graph.facebook.com/id/picture
@@ -24,6 +29,10 @@ module PagesHelper
       # esta tarea. Pero desgraciadamente, no muestra los logos para marcas de bebidas alcoholicas
       # puesto que para ello hace falta un token de usuario para que Facebook pueda identificar su edad. 
       # FacebookHelper::FbGraphAPI.new(get_token(FACEBOOK)).get_picture(page.page_id)
+    end
+        
+    def get_url(page)
+      "https://www.facebook.com/" + page.page_id.to_s
     end
   end
 
