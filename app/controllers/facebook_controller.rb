@@ -169,8 +169,7 @@ include DashboardHelper
         page_ids = page_ids + [p.page_id]
       end 
       page_ids = page_ids + [page.page_id]
-      fb_pages_info_list = fb_get_pages_info(page_ids.join(","))
-
+      fb_pages_info_list = FacebookHelper::FbGraphAPI.new(get_token(FACEBOOK)).get_pages_info(page_ids.join(","))
       pages_create_or_update(fb_pages_info_list)
     end
 

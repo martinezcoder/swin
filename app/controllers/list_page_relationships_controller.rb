@@ -4,9 +4,8 @@ class ListPageRelationshipsController < ApplicationController
   def create
     begin
       list = current_user.facebook_lists.find_by_id(params[:list_page_relationship][:list_id])
-  
-      fb_page = fb_get_pages_info(params[:page_id])
-  
+
+      fb_page = FacebookHelper::FbGraphAPI.new(get_token(FACEBOOK)).get_page_info(params[:page_id])    
       page = page_create_or_update(fb_page.first) 
   
       if current_user.facebook_lists.count < MAX_COMPETITORS

@@ -38,8 +38,8 @@ class FacebookListsController < ApplicationController
 
     fb_list = nil
     if params.has_key?(:search) && params[:search] != ""
-      pages_ids_list = fb_get_search_pages_list(params[:search])      
-      fb_list = fb_get_pages_info(pages_ids_list)
+      fb_graph = FacebookHelper::FbGraphAPI.new(get_token(FACEBOOK))
+      fb_list = fb_graph.get_search_pages_info(params[:search])
       @pageslist = []
       fb_list.each do |p|
         page = Page.find_by_page_id(p["page_id"].to_s)
