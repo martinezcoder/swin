@@ -1,10 +1,11 @@
 # encoding: UTF-8
 
 class PagesController < ApplicationController
+  rescue_from ActiveRecord::RecordNotFound, :with => :record_not_found
+  before_filter :user_is_admin, only: [:admin_query]
+
   include PagesHelper
   include FacebookHelper
-
-  before_filter :user_is_admin, only: [:admin_query]
 
   # it will rend a graph with the evolution of the number of monitored pages by day
   def admin_query
@@ -73,4 +74,8 @@ class PagesController < ApplicationController
 
   end
 
+ def record_not_found
+    redirect_to page_path(35)
+  end
+  
 end
