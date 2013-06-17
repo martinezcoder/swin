@@ -98,60 +98,33 @@ include DashboardHelper
     @num_competitors = @list.pages.count
   end
 
+
   def engage
-    session[:active_tab] = FACEBOOK    
-
-    @list = get_active_list
-    competitors = []
-    competitors += @list.pages   
-
-    css1 = 'mini_logo'
-    css2 = 'normal_logo'
-
-    t = Time.now - (24*60*60) # yesterday
-    num = competitors.length
-    compList = []
-    @max = 0
-
-    htmls = DashboardHelper::HtmlHardcodes.new()
-    for i in 0..num-1 do
-
-      dataDay = competitors[i].page_data_days.where("day = #{t.strftime("%Y%m%d").to_i}")
-      if !dataDay.empty?
-        engageY = get_engage(dataDay[0].likes, dataDay[0].prosumers)
-      else
-        engageY = 0
-      end
-
-      engage = get_engage(competitors[i].fan_count, competitors[i].talking_about_count)
-      variation = get_variation(engage.to_f,engageY.to_f)
-      compList[i] = [ htmls.logo(get_url(competitors[i]), get_picture(competitors[i]), competitors[i].name, css1), 
-                      competitors[i].name, 
-                      competitors[i].page_type, 
-                      engage,
-#                      {v: engage, f: '-5.0%'},
-                      htmls.logo(get_url(competitors[i]), get_picture(competitors[i]), competitors[i].name, css2),
-                      htmls.html_tooltip_engage(get_picture(competitors[i]), competitors[i].name, engage, variation),
-                      htmls.html_variation(variation)]
-
-      @max = [@max, engage].max
-
-    end
-
-    compList = compList.sort_by { |a, b, c, d, e, f| d }
-    compList = compList.reverse
-
-    @dataA = []
-    @dataB = []
- 
-    for i in 0..compList.length-1 do
-      @dataA[i] = [(i+1).to_s] + compList[i]
-      @dataA[i][4] = 0
-      @dataB[i] = [(i+1).to_s] + compList[i]
-    end
+    session[:active_tab] = FACEBOOK
     
-    @max = 50  if @max <= 50 
+    @list = get_active_list    
+    day = Time.now - (24*60*60) # yesterday
+    
+    fb_metric = PagesHelper::FbMetrics.new(get_token(FACEBOOK))
+    
+    engageData = fb_metric.get_list_engagement_day(@list.pages, day)    
+    
+    @dataA = engageData[0]
+    @dataB = engageData[1]
+    @max = fb_metric.max_value
 
+    @options = "seriesType: 'bars', 
+                title:'Engagement Hoy (fidelidad de los seguidores)',
+                titleTextStyle: {fontSize: 14},
+                colors: ['#0088CC'],
+                height: 200,
+                animation:{duration: 1500,easing: 'out'},
+                hAxes:[{title:'Competidores'}],
+                vAxis: {minValue:0, maxValue:" + @max.to_s + "},
+                fontSize: 10,
+                legend: {position: 'none', textStyle: {fontSize: 14}},
+                tooltip: {isHtml: true}
+                "
   end
 
   def general
