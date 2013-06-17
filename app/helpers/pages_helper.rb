@@ -33,12 +33,13 @@ module PagesHelper
 
 
   class FbMetrics
-    attr_accessor :max_value
+    attr_accessor :max_value, :options
     
     def initialize(access_token)
       @access_token = access_token
       @max_value = 0
       @error = 0
+      @options = {}
     end
     
     # Engagement
@@ -68,12 +69,11 @@ module PagesHelper
         pName = page.name
         pPicture = PagesHelper.get_picture(page, @access_token)
         pUrl = PagesHelper.get_url(page)
-        
+                
         pages_engage_array[i] =  [ htmls.logo(pUrl, pPicture, pName, 'mini_logo'), 
                         pName, 
                         page.page_type, 
                         engage_today,
-  #                      {v: engage, f: '-5.0%'},
                         htmls.logo(pUrl, pPicture, pName, 'normal_logo'),
                         htmls.html_tooltip_engage(pPicture, pName, engage_today, engage_variation),
                         htmls.html_variation(engage_variation)]
@@ -96,8 +96,20 @@ module PagesHelper
         data_list[1][i] = [(i+1).to_s] + page_engage
       end
       
-      @max_value = 50  if @max_value <= 50 
+      @max_value = 50  if @max_value <= 50
 
+      @options =     "seriesType: 'bars', 
+                title:'Engagement Hoy (fidelidad de los seguidores)',
+                titleTextStyle: {fontSize: 14},
+                colors: ['#0088CC'],
+                height: 200,
+                animation:{duration: 1500,easing: 'out'},
+                hAxes:[{title:'Competidores'}],
+                vAxis: {minValue:0, maxValue:" + @max_value.to_s + "},
+                fontSize: 10,
+                legend: {position: 'none', textStyle: {fontSize: 14}},
+                tooltip: {isHtml: true}
+                " 
       return data_list
     end
 

@@ -8,6 +8,42 @@ include DashboardHelper
   before_filter :list_has_pages, except: :empty
   before_filter :user_is_admin, only: [:engageX]
 
+  def empty
+    session[:active_tab] = FACEBOOK
+    @list = get_active_list
+    @num_competitors = @list.pages.count
+  end
+
+
+  def engage
+    session[:active_tab] = FACEBOOK
+
+    if params.has_key?(:pages)
+      user_list = get_active_list
+      list = []
+      params[:pages].split(',').each do |p|
+        if page = Page.find(p.to_i)
+          list = list + [page] if user_list.pages.include?(page) and !list.include?(page)
+        end
+      end 
+      
+    else
+      list = get_active_list.pages 
+    end
+
+    day = Time.now - (24*60*60) # yesterday
+    fb_metric = PagesHelper::FbMetrics.new(get_token(FACEBOOK)) 
+    engageData = fb_metric.get_list_engagement_day(list, day) 
+
+    @dataA = engageData[0]
+    @dataB = engageData[1]
+    @max = fb_metric.max_value
+    @options = fb_metric.options
+    
+  end
+
+
+
   def engageX
     @error = nil
     err = []
@@ -91,41 +127,7 @@ include DashboardHelper
     @var = timeline.get_variation(8.days.ago.strftime("%Y%m%d"), 1.days.ago.strftime("%Y%m%d") )
       
   end
-  
-  def empty
-    session[:active_tab] = FACEBOOK
-    @list = get_active_list
-    @num_competitors = @list.pages.count
-  end
 
-
-  def engage
-    session[:active_tab] = FACEBOOK
-    
-    @list = get_active_list    
-    day = Time.now - (24*60*60) # yesterday
-    
-    fb_metric = PagesHelper::FbMetrics.new(get_token(FACEBOOK))
-    
-    engageData = fb_metric.get_list_engagement_day(@list.pages, day)    
-    
-    @dataA = engageData[0]
-    @dataB = engageData[1]
-    @max = fb_metric.max_value
-
-    @options = "seriesType: 'bars', 
-                title:'Engagement Hoy (fidelidad de los seguidores)',
-                titleTextStyle: {fontSize: 14},
-                colors: ['#0088CC'],
-                height: 200,
-                animation:{duration: 1500,easing: 'out'},
-                hAxes:[{title:'Competidores'}],
-                vAxis: {minValue:0, maxValue:" + @max.to_s + "},
-                fontSize: 10,
-                legend: {position: 'none', textStyle: {fontSize: 14}},
-                tooltip: {isHtml: true}
-                "
-  end
 
   def general
     session[:active_tab] = FACEBOOK
