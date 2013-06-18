@@ -60,10 +60,14 @@ module PagesHelper
       pages_engage_array = []
       page_list.each_with_index do |page, i|
 
-        dayPageData = page.page_data_days.where("day = #{day.strftime("%Y%m%d").to_i}")
-
+#        dayPageData = page.page_data_days.where("day = #{day.strftime("%Y%m%d").to_i}")
+        dayPageData = page.page_data_days.where("day = #{day.yesterday.strftime("%Y%m%d").to_i}")
         engage_yesterday = (dayPageData.empty?? 0 : engagement(dayPageData[0].likes, dayPageData[0].prosumers))
-        engage_today     = engagement(page.fan_count, page.talking_about_count)
+        
+        dayPageData = page.page_data_days.where("day = #{day.strftime("%Y%m%d").to_i}")
+        engage_today = (dayPageData.empty?? 0 : engagement(dayPageData[0].likes, dayPageData[0].prosumers))
+
+#        engage_today     = engagement(page.fan_count, page.talking_about_count)
         engage_variation = variation(engage_today.to_f,engage_yesterday.to_f)
 
         pName = page.name
@@ -96,10 +100,10 @@ module PagesHelper
         data_list[1][i] = [(i+1).to_s] + page_engage
       end
       
-      @max_value = 50  if @max_value <= 50
+      #@max_value = 50  if @max_value <= 50
 
       @options =     "seriesType: 'bars', 
-                title:'Engagement Hoy (fidelidad de los seguidores)',
+                title:'Day Engagement (fidelidad de los seguidores)',
                 titleTextStyle: {fontSize: 14},
                 colors: ['#0088CC'],
                 height: 200,

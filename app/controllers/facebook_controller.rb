@@ -18,22 +18,57 @@ include DashboardHelper
   def engage
     session[:active_tab] = FACEBOOK
 
-    if params.has_key?(:pages)
+    # Tenemos tres opciones de gráficas: 
+    # 1 - barras de engagement de un solo día y varios competidores
+    # 2 - timeline de engagement de un solo competidor desde/hasta
+    # 3 - timeline de engagement de varios competidores desde/hasta
+    engage_day = 0
+    engage_timeline_single = 1
+    engage_timeline_multi = 2
+
+    @type_graph = nil
+    
+    begin
+      if params.has_key?(:date_from) && params.has_key?(:date_to)
+          date_from = Time.strptime(params[:date_from], "%Y%m%d") # historic timeline
+          date_to = Time.strptime(params[:date_to], "%Y%m%d")
+          @type_graph = nil
+      elsif params.has_key?(:date_to)
+          date_to = Time.strptime(params[:date_to], "%Y%m%d") # historic day
+          @type_graph = engage_day
+      else
+          date_to = Time.now - (24*60*60) # yesterday
+          @type_graph = engage_day 
+      end
+    rescue
+      date_to = Time.now - (24*60*60) # yesterday
+      @type_graph = engage_day
+    end
+
+    if params.has_key?(:pages) and params[:pages].split(',').count > 1
+      @type_graph = engage_timeline_multi if @type_graph.nil?
       user_list = get_active_list
       list = []
       params[:pages].split(',').each do |p|
         if page = Page.find(p.to_i)
           list = list + [page] if user_list.pages.include?(page) and !list.include?(page)
         end
-      end 
-      
+      end
     else
-      list = get_active_list.pages 
+      @type_graph = engage_timeline_single if @type_graph.nil? 
+      list = get_active_list.pages
     end
 
-    day = Time.now - (24*60*60) # yesterday
     fb_metric = PagesHelper::FbMetrics.new(get_token(FACEBOOK)) 
-    engageData = fb_metric.get_list_engagement_day(list, day) 
+
+    case @type_graph
+    when engage_day
+      engageData = fb_metric.get_list_engagement_day(list, date_to)
+    when engage_timeline_single
+      engageData get_page_engagement_timeline(page, date_start, date_end)
+    when engage_timeline_multi
+      engageData = get_list_engagement_timeline(page_list, date_start, date_end)
+    end
 
     @dataA = engageData[0]
     @dataB = engageData[1]
