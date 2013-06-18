@@ -33,7 +33,7 @@ module PagesHelper
 
 
   class FbMetrics
-    attr_accessor :max_value, :options
+    attr_accessor :max_value, :options, :error
     
     def initialize(access_token)
       @access_token = access_token
@@ -41,39 +41,92 @@ module PagesHelper
       @error = 0
       @options = {}
     end
-    
+
     # Engagement
     
-    def get_page_engagement_timeline(page, date_start, date_end)
+    def get_page_engagement_timeline(page, date_from, date_to)
+      @error = nil
+      
+      dataRecords = page.page_data_days.select("day, likes, prosumers").where("day between ? and ?", date_from.strftime("%Y%m%d").to_i, date_to.strftime("%Y%m%d").to_i).order('day ASC')
+
+      engageYesterday = 0
+      engageList = []
+      counter = 0
+
+      if dataRecords.count == 0
+        @error = "Oooops: no hay datos disponibles para las fechas especificadas :("
+      else
+          picture = PagesHelper.get_picture(page, @access_token)
+          dataRecords.each do |dataDay|     
+              engageToday = engagement(dataDay.likes, dataDay.prosumers)
+              @max_value = [@max_value, engageToday].max
+              variation = variation(engageToday.to_f, engageYesterday.to_f)
+              
+              html = DashboardHelper::HtmlHardcodes.new()
+              html_tooltip = html.html_tooltip_engage(picture, page.name, engageToday, variation)
+              html_variation = html.html_variation(variation)
+              
+              engageList[counter] =  
+                                [ Time.strptime(dataDay.day.to_s, "%Y%m%d").strftime("%d/%m/%Y"), 
+                                engageToday,
+                                html_tooltip,
+                                html_variation,
+                                dataDay.day]
+              
+              engageYesterday = engageToday
+              counter += 1
+          end
+  
+          dataA = []
+          dataB = []
+       
+          for i in 0..counter-1    
+            dataA[i] = [] + engageList[i]
+            dataA[i][1] = 0
+            dataB[i] = [] + engageList[i]
+          end
+          
+          dataResult = []
+          dataResult[0] = dataA
+          dataResult[1] = dataB 
+      end
+
+      return @error || dataResult
     end
+
+
+
     
     def get_list_engagement_timeline(page_list, date_start, date_end)
+      @error = nil
       if date_start == date_end
-        get_list_engagement_day(list, date_start)
+        get_list_engagement_day(page_list, date_end)
       end      
+
+
     end
 
-    def get_list_engagement_day(page_list, day)
 
+    def get_list_engagement_day(page_list, day)
+      @error = nil
+      
       htmls = DashboardHelper::HtmlHardcodes.new()
 
       pages_engage_array = []
       page_list.each_with_index do |page, i|
 
-#        dayPageData = page.page_data_days.where("day = #{day.strftime("%Y%m%d").to_i}")
         dayPageData = page.page_data_days.where("day = #{day.yesterday.strftime("%Y%m%d").to_i}")
         engage_yesterday = (dayPageData.empty?? 0 : engagement(dayPageData[0].likes, dayPageData[0].prosumers))
         
         dayPageData = page.page_data_days.where("day = #{day.strftime("%Y%m%d").to_i}")
         engage_today = (dayPageData.empty?? 0 : engagement(dayPageData[0].likes, dayPageData[0].prosumers))
 
-#        engage_today     = engagement(page.fan_count, page.talking_about_count)
         engage_variation = variation(engage_today.to_f,engage_yesterday.to_f)
 
         pName = page.name
         pPicture = PagesHelper.get_picture(page, @access_token)
         pUrl = PagesHelper.get_url(page)
-                
+
         pages_engage_array[i] =  [ htmls.logo(pUrl, pPicture, pName, 'mini_logo'), 
                         pName, 
                         page.page_type, 
@@ -119,15 +172,18 @@ module PagesHelper
 
     # Tamaño
     def get_page_size_timeline(page, date_start, date_end)
+      @error = nil
     end    
     
     def get_list_size_timeline(page_list, date_start, date_end)
+      @error = nil
       if date_start == date_end
         get_list_size_day(list, date_start)
       end      
     end
 
     def get_list_size_day(page_list, date)
+      @error = nil
     end
 
     

@@ -1,9 +1,21 @@
 <% provide(:title, "Engagement") %>
 
-<%= render 'facebook/charts/engagement_day_chart' %>
+<% if @type_graph == 0%>
+	<div class="engage_div">
+		<%= render 'facebook/layouts/engage_medals' %>
+	</div>
 
-<div class="engage_div">
-	<%= render 'facebook/layouts/engage_medals' %>
-</div>
-<%= render 'facebook/shared/graph', :graph => "graph_div" %>
+	<%= render 'facebook/charts/chart_bars' %>
+	<%= render 'facebook/shared/graph', :graph => "graph_div" %>
+
+<% else %>
+
+	<%= render 'facebook/charts/chart_timeline' %>
+	<%= render 'facebook/shared/graph', :graph => "graph_engage_evolution_div" %>
+
+<% end %>
+
+
 <%= render 'facebook/shared/table' %>
+
+
