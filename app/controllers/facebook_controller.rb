@@ -24,7 +24,7 @@ include DashboardHelper
     engage_timeline  = 1
 
     @type_graph = nil
-    
+
     begin
       if params.has_key?(:date_from) && params.has_key?(:date_to)
           date_from = Time.strptime(params[:date_from], "%Y%m%d") # historic timeline
