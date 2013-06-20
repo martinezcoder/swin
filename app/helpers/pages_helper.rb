@@ -226,7 +226,7 @@ module PagesHelper
     def get_page_size_timeline(page, date_start, date_end)
       @error = nil
     end    
-    
+
     def get_list_size_timeline(page_list, date_start, date_end)
       @error = nil
       if date_start == date_end
@@ -237,7 +237,7 @@ module PagesHelper
     def get_list_size_day(page_list, date)
       @error = nil
     end
-    
+
     protected
 
       def engagement(fans, actives)
@@ -248,7 +248,7 @@ module PagesHelper
         end
         engagement
       end
-  
+
       def variation(new_data, old_data)
         ((new_data - old_data) / old_data) * 100
       end

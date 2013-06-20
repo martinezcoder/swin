@@ -30,15 +30,17 @@ include DashboardHelper
           date_from = Time.strptime(params[:date_from], "%Y%m%d") # historic timeline
           date_to = Time.strptime(params[:date_to], "%Y%m%d")
           dateRange = (date_to - date_from)/60/60/24
+          @type_graph = engage_timeline
           if dateRange < 0 
             flash[:info] = "ATENCIÓN: rango de fechas no válido"
             raise
           elsif dateRange > MAX_DATE_RANGE
             flash[:info] = "ATENCIÓN: el rango debe ser inferior a tres meses"
             raise
+          elsif date_from == date_to
+            @type_graph = engage_day
           end
-
-          @type_graph = engage_timeline
+          
       elsif params.has_key?(:date_to)
           date_to = Time.strptime(params[:date_to], "%Y%m%d") # historic day
       else
@@ -47,6 +49,7 @@ include DashboardHelper
     rescue
       flash[:info] = "Opps, algo no ha ido bien..." if flash[:info].nil?
       date_to = Time.now - (24*60*60) # yesterday
+      @type_graph = engage_day
     end
 
     if @type_graph.nil? 
@@ -54,7 +57,7 @@ include DashboardHelper
     end
 
     # Hasta aquí:
-    # @type_graph = engage_timeline ==> Si existe date_from y date_to
+    # @type_graph = engage_timeline ==> Si existe date_from y date_to con fechas diferentes
     # @type_graph = engage_day      ==> en cualquier otro caso
 
     engage_timeline_single = 2
@@ -66,10 +69,10 @@ include DashboardHelper
 
       list = []
       num_competitors = 0
-      competitors = params[:pages].split(',')
-      competitors.each do |p|
+      @params_pages = params[:pages] 
+      @params_pages.each do |p|
         if page = Page.find_by_id(p.to_i)
-           if user_list.pages.include?(page) and !list.include?(page)
+           if @user_list.pages.include?(page) and !list.include?(page)
              list = list + [page]
              num_competitors += 1
            end 
@@ -81,12 +84,12 @@ include DashboardHelper
       elsif num_competitors == 1
         if @type_graph == engage_timeline
           @type_graph = engage_timeline_single 
-          page = Page.find_by_id(competitors[0])
+          page = Page.find_by_id(@params_pages[0])
         else
           list = get_active_list.pages
         end
       else
-        date_to = Time.now - (24*60*60) # yesterday
+#        date_to = Time.now - (24*60*60) # yesterday
         @type_graph = engage_day
         list = get_active_list.pages # all competitors      
       end

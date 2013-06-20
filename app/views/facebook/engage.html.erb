@@ -1,7 +1,8 @@
 <% provide(:title, "Engagement") %>
 
+<%= render 'facebook/layouts/competitors', :list =>  @user_list %>
+	
 <% if @type_graph == 0 %>
-	<%= render 'facebook/layouts/competitors', :list =>  @user_list %>
 	<div class="engage_div">
 		<%= render 'facebook/layouts/engage_medals' %>
 	</div>
