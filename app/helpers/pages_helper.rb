@@ -7,7 +7,8 @@ module PagesHelper
   end
   
   def get_picture(page, big=false)
-    PagesHelper.get_picture(page, get_token(FACEBOOK), big)
+    fb_token = signed_in? ? get_token(FACEBOOK) : nil
+    PagesHelper.get_picture(page, fb_token, big)
   end
 
   class << self
@@ -16,7 +17,7 @@ module PagesHelper
       if big
         ret += "type=large&"
       end
-      ret += "access_token=" + access_token
+      ret += "access_token=" + access_token if access_token
       return page.pic_square || ret
       # El siguiente método comentado permite que se muestren logos de marcas de bebidas alcohólicas. El problema con esta llamada está en que, para cada página mostrada realiza una llamada a la API de Facebook desde nuestro servidor, ralentizando enormemente el renderizado de la página.
       # Para que muestre todas las páginas debemos pasarle el token de facebook...
@@ -35,7 +36,7 @@ module PagesHelper
   class FbMetrics
     attr_accessor :max_value, :options, :error
     
-    def initialize(access_token)
+    def initialize(access_token = nil)
       @access_token = access_token
       @max_value = 0
       @error = 0
