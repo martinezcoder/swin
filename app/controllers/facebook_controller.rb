@@ -60,7 +60,7 @@ include DashboardHelper
     engage_timeline_single = 2
     engage_timeline_multi  = 3
 
-    user_list = get_active_list
+    @user_list = get_active_list
 
     if params.has_key?(:pages) && params[:pages] != ""
 
@@ -127,11 +127,12 @@ include DashboardHelper
   def timeline_engage
     
     session[:active_tab] = FACEBOOK
-        
+    
+    @list = get_active_list
+
     if !(page = get_active_list_page)
-      list = get_active_list
-      page = list.pages.first
-      list.set_lider_page(page)
+      page = @list.pages.first
+      @list.set_lider_page(page)
     end
 
 #    redirect_to facebook_engage_path(pages: page.id, date_from: 8.days.ago.strftime("%Y%m%d"), date_to: 1.days.ago.strftime("%Y%m%d"))
