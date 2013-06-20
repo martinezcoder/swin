@@ -29,6 +29,7 @@ class PagesController < ApplicationController
     }
   end
 
+
   def show
     fbtag = "fb-"
     thisId = params[:id]
@@ -42,35 +43,27 @@ class PagesController < ApplicationController
         @page = page_create_or_update(fb_page[0])
       end
     else
-      @page = Page.find(thisId)
+      @page = Page.find_by_id(thisId)
     end
-    @engage = get_engage(@page.fan_count, @page.talking_about_count)
+
+    fb_metric = PagesHelper::FbMetrics.new(get_token(FACEBOOK))
+    engageData = fb_metric.get_page_engagement_timeline(@page, 8.days.ago, 1.days.ago)
+    @dataA = engageData[0]
+    @dataB = engageData[1]
+    @max = fb_metric.max_value
+    @options = fb_metric.options 
+
+    @engage = fb_metric.get_engagement(@page.fan_count, @page.talking_about_count)
 
     respond_to do |format|
         format.html # show.html.erb
-        format.json {
-          options = {
-                    seriesType: "area",
-                    title:'Timeline engagement (fidelidad de los seguidores)', 
-                    titleTextStyle: {fontSize: 14},
-                    colors: ['#0088CC'], 
-                    height: 200, 
-                    animation:{duration: 1500,easing: 'out'}, 
-                    hAxes:[{title:'Última semana'}],
-                    vAxis: {minValue:0, maxValue:100},
-                    fontSize: 10,
-                    legend: {position: 'none', textStyle: {fontSize: 14}},
-                    tooltip: {isHtml: true}
-                  }
-          divId = params[:divId] 
-          render json:  PageMetrics.new(@page,get_token(FACEBOOK)).get_json_engagement_timeline_array(8.days.ago.strftime("%Y%m%d"), 1.days.ago.strftime("%Y%m%d"), options, divId)
-
-        }
+        format.json { render json: engageData }
     end
 
   end
 
- def record_not_found
+
+  def record_not_found
     redirect_to page_path(35)
   end
   

@@ -6,7 +6,6 @@ include DashboardHelper
   before_filter :signed_in_user
   before_filter :has_active_list
   before_filter :list_has_pages, except: :empty
-  before_filter :user_is_admin, only: [:engageX]
 
   def empty
     session[:active_tab] = FACEBOOK
@@ -125,8 +124,8 @@ include DashboardHelper
   end
 
 
-
   def timeline_engage
+    
     session[:active_tab] = FACEBOOK
         
     if !(page = get_active_list_page)
@@ -135,83 +134,17 @@ include DashboardHelper
       list.set_lider_page(page)
     end
 
-    timeline = PagesHelper::PageMetrics.new(page, get_token(FACEBOOK))
-    timelineData = timeline.get_timeline_array(15.days.ago.strftime("%Y%m%d"), Time.now.strftime("%Y%m%d"))
-    @error = timelineData[0]
-    @dataA = timelineData[1]
-    @dataB = timelineData[2]
-    @max = timeline.max
+#    redirect_to facebook_engage_path(pages: page.id, date_from: 8.days.ago.strftime("%Y%m%d"), date_to: 1.days.ago.strftime("%Y%m%d"))
 
-    @var = timeline.get_variation(8.days.ago.strftime("%Y%m%d"), 1.days.ago.strftime("%Y%m%d") )
-      
+    fb_metric = PagesHelper::FbMetrics.new(get_token(FACEBOOK))
+    engageData = fb_metric.get_page_engagement_timeline(page, 16.days.ago, 1.days.ago)
+    @dataA = engageData[0]
+    @dataB = engageData[1]
+    @max = fb_metric.max_value
+    @options = fb_metric.options 
+
+    @var = fb_metric.get_variation_between_dates(page, 8.days.ago.strftime("%Y%m%d"), 1.days.ago.strftime("%Y%m%d") )
   end
-
-
-
-  def engageX
-    @error = nil
-    err = []
-    noValidParams        = err[0] = "[{error: parametros no válidos}]"
-    noValidDateFormat    = err[1] = "[{error: formato de fecha incorrecto}]"
-    noValidDateRange     = err[2] = "[{error: la fecha inicial es posterior a la final}]"
-    maxDateRangeExceeded = err[3] = "[{error: el rango de fechas excede el máximo permitido de 3 meses }]"
-    noDataFound          = err[4] = "[{error: no hay datos disponibles para las fechas especificadas}]"
-    
-    session[:active_tab] = FACEBOOK
-    
-    begin
-        if params.has_key?(:from) && params.has_key?(:to) 
-          if params[:from] == "" || params[:to] == ""
-            raise noValidParams
-          end
-        else
-          raise noValidParams
-        end
-        
-        begin
-            data_ini = Time.strptime(params[:from], "%Y%m%d")
-            data_fin = Time.strptime(params[:to], "%Y%m%d")
-        rescue
-          raise noValidDateFormat 
-        end
-        
-        dateRange = (data_fin - data_ini)/60/60/24
-        if dateRange < 0 
-          raise noValidDateRange
-        end
-        if dateRange > MAX_DATE_RANGE
-          raise maxDateRangeExceeded
-        end
-    
-    rescue Exception => e
-      @error = e.message
-    
-      respond_to do |format|
-        format.html # { redirect_to facebook_path }
-        format.json {  render json: @error, status: :unprocessable_entity  }        
-      end
-    
-    else
-
-      if !(page = get_active_list_page)
-        list = get_active_list
-        page = list.pages.first
-        list.set_lider_page(page)
-      end
-
-      timeline = PageMetrics.new(page, get_token(FACEBOOK))
-      timelineData = timeline.get_timeline_array(params[:from], params[:to])
-      @error = timelineData[0]
-      @dataA = timelineData[1]
-      @dataB = timelineData[2]
-      @max = timeline.max
-  
-    end
-
-  end
-
-
-
 
 
   def general

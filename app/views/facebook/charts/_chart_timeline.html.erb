@@ -47,7 +47,7 @@
     dataTableB.addRows(rowDataB);
 
     var table = new google.visualization.Table(document.getElementById('table'));
-    var chart = new google.visualization.ComboChart(document.getElementById('graph_engage_evolution_div'));
+    var chart = new google.visualization.ComboChart(document.getElementById('<%= graph %>'));
 
 	var formatter = new google.visualization.NumberFormat({fractionDigits: 0});
 	formatter.format(dataTableB, 1);
@@ -55,7 +55,6 @@
   	// Data
   	var dataChartA = new google.visualization.DataView(dataTableA);
 	dataChartA.setColumns([0, 1]);
-//	dataChartA.sort();
 	chart.draw(dataChartA, options);
 
     var dataChartB = new google.visualization.DataView(dataTableB);

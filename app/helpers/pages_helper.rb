@@ -42,31 +42,46 @@ module PagesHelper
       @options = {}
     end
 
+    def get_engagement(fans, actives)
+       engagement(fans, actives)      
+    end
+    
+    def get_variation_between_dates(page, dayFrom, dayTo)
+      begin
+        reg = page.page_data_days.select("day, likes, prosumers").where("day = ?", dayFrom)
+        valueBefore = engagement(reg[0].likes, reg[0].prosumers)
+        reg = page.page_data_days.select("day, likes, prosumers").where("day = ?", dayTo)
+        valueAfter = engagement(reg[0].likes, reg[0].prosumers)
+        return variation(valueAfter, valueBefore)
+      rescue
+        return 0
+      end      
+    end
+    
     # Engagement
     
     def get_page_engagement_timeline(page, date_from, date_to)
       @error = nil
-      
+
       dataRecords = page.page_data_days.select("day, likes, prosumers").where("day between ? and ?", date_from.strftime("%Y%m%d").to_i, date_to.strftime("%Y%m%d").to_i).order('day ASC')
 
-      engageYesterday = 0
-      engageList = []
-      counter = 0
-
       if dataRecords.count == 0
-        @error = "Oooops: no hay datos disponibles para las fechas especificadas :("
+        @error = "Oooops: no hay datos disponibles para las fechas especificadas :( "
       else
+          engageYesterday = 0
+          engageList = []
+
+          html = DashboardHelper::HtmlHardcodes.new()
           picture = PagesHelper.get_picture(page, @access_token)
-          dataRecords.each do |dataDay|     
+          dataRecords.each_with_index do |dataDay, i|     
               engageToday = engagement(dataDay.likes, dataDay.prosumers)
               @max_value = [@max_value, engageToday].max
               variation = variation(engageToday.to_f, engageYesterday.to_f)
-              
-              html = DashboardHelper::HtmlHardcodes.new()
+
               html_tooltip = html.html_tooltip_engage(picture, page.name, engageToday, variation)
               html_variation = html.html_variation(variation)
-              
-              engageList[counter] =  
+
+              engageList[i] =  
                                 [ Time.strptime(dataDay.day.to_s, "%Y%m%d").strftime("%d/%m/%Y"), 
                                 engageToday,
                                 html_tooltip,
@@ -74,18 +89,17 @@ module PagesHelper
                                 dataDay.day]
               
               engageYesterday = engageToday
-              counter += 1
           end
-  
+
           dataA = []
           dataB = []
-       
-          for i in 0..counter-1    
-            dataA[i] = [] + engageList[i]
+
+          engageList.each_with_index do |day, i|    
+            dataA[i] = [] + day
             dataA[i][1] = 0
-            dataB[i] = [] + engageList[i]
+            dataB[i] = [] + day
           end
-          
+
           dataResult = []
           dataResult[0] = dataA
           dataResult[1] = dataB 
@@ -94,16 +108,57 @@ module PagesHelper
       return @error || dataResult
     end
 
-
-
     
-    def get_list_engagement_timeline(page_list, date_start, date_end)
+    def get_list_engagement_timeline(page_list, date_from, date_to)
       @error = nil
-      if date_start == date_end
-        get_list_engagement_day(page_list, date_end)
-      end      
 
+      max_cols = page_list.count
+      
+      time_index = date_from
+      time_end = date_to
 
+      myArray = []
+      myArray[0] = []
+      myArray[0][0] = 'Dia'
+
+      page_list.each_with_index do |p, i|
+        myArray[0][i+1] = p.id
+      end
+
+      list_names = Page.select('id, name').where("id in (?)", page_list)
+      list_ids = list_names.pluck(:id)
+
+      row = 1
+      while time_index <= time_end
+        regs = PageDataDay.select("day, page_id, likes, prosumers").where("day = ? and page_id in (?)", time_index.strftime("%Y%m%d").to_i, list_ids)
+        
+        myArray[row] = []
+        myArray[row][0] = time_index.strftime("%Y/%m/%d")
+
+        for column in 1..max_cols
+          pid = myArray[0][column]
+          p = Page.find_by_id(pid.to_i)
+          page_data = regs.where("page_id = ?", p.id)
+          if page_data.count > 0
+            myArray[row][column] = engagement(page_data.first.likes, page_data.first.prosumers)
+          else
+            myArray[row][column] = -1
+          end
+
+        end
+       
+        row += 1
+        time_index = time_index.tomorrow
+      end
+      
+      page_list.each_with_index do |page, i|
+        myArray[0][i+1] = page.name
+      end
+
+      data_list = []  
+      data_list[0] = myArray
+      data_list[1] = myArray
+      return data_list
     end
 
 
@@ -152,8 +207,6 @@ module PagesHelper
         dataNil[4] = 0
         data_list[1][i] = [(i+1).to_s] + page_engage
       end
-      
-      #@max_value = 50  if @max_value <= 50
 
       @options =     "seriesType: 'bars', 
                 title:'Day Engagement (fidelidad de los seguidores)',
@@ -165,8 +218,7 @@ module PagesHelper
                 vAxis: {minValue:0, maxValue:" + @max_value.to_s + "},
                 fontSize: 10,
                 legend: {position: 'none', textStyle: {fontSize: 14}},
-                tooltip: {isHtml: true}
-                " 
+                tooltip: {isHtml: true}" 
       return data_list
     end
 
@@ -185,220 +237,42 @@ module PagesHelper
     def get_list_size_day(page_list, date)
       @error = nil
     end
-
-    
-    
-        
     
     protected
 
-    def engagement(fans, actives)
-      if fans > 0
-        engagement = actives * 6 *100 / fans
-      else
-        engagement = 0
+      def engagement(fans, actives)
+        if fans > 0
+          engagement = actives * 6 *100 / fans
+        else
+          engagement = 0
+        end
+        engagement
       end
-      engagement
-    end
-
-    def variation(new, old)
-      ((new - old) / old) * 100
-    end
-
-  end
-
-
-  def page_engageTimeline_chart_tag (height, params = {})
-    params[:format] ||= :json
-    jsonPath = page_path(params: params)
-    content_tag(:div, :id => params[:divId], :'data-chart' => jsonPath, :style => "height: #{height}px;") do
-      image_tag('loader.gif', :size => '24x24', :class => 'spinner')
-    end
-  end
-
-
-
-  class PageMetrics
-    attr_accessor :max, :graphOptions
-    
-    def initialize(page, access_token)
-      @max = 0
-      @error = nil
-      @page = page
-      @graphOptions = {}
-      @access_token = access_token
-    end
-
-    def engagement(fans, actives)
-      if fans > 0
-        engagement = actives * 6 *100 / fans
-      else
-        engagement = 0
-      end
-      engagement
-    end
-
-    def variation(today, yesterday)
-      ((today - yesterday) / yesterday) * 100
-    end
-
-    def get_variation(dayFrom, dayTo)
-      begin
-        reg = @page.page_data_days.select("day, likes, prosumers").where("day = ?", dayFrom)
-        valueBefore = engagement(reg[0].likes, reg[0].prosumers)
-        reg = @page.page_data_days.select("day, likes, prosumers").where("day = ?", dayTo)
-        valueAfter = engagement(reg[0].likes, reg[0].prosumers)
-        return variation(valueAfter, valueBefore)
-      rescue
-        return 0
-      end      
-    end
-
-    def get_json_engagement_timeline_array(date_from, date_to, options, divId)
-      dataRecords = @page.page_data_days.select("day, likes, prosumers").where("day between ? and ?", date_from[0,8], date_to[0,8]).order('day ASC')
-
-      if dataRecords.count == 0
-        options[:title] = "Ooops, esta página es nueva para SocialWin. Tendrás que esperar unos días para ver esta gráfica completa..."
-        options[:titleTextStyle] = {color: '#0000FF', fontSize: 14}
-          
-      end
-      engageYesterday = 0
-      engageList = []
-      counter = 0
-
-      picture = PagesHelper.get_picture(@page, @access_token)
-      dataRecords.each do |dataDay|     
-            engageToday = engagement(dataDay.likes, dataDay.prosumers)
-            @max = [@max, engageToday].max
-            variation = variation(engageToday.to_f, engageYesterday.to_f)
-            
-            html = DashboardHelper::HtmlHardcodes.new()
-            html_tooltip = html.html_tooltip_engage(picture, @page.name, engageToday, variation)
-            html_variation = html.html_variation(variation)
-
-            engageList[counter] = {}
-            engageList[counter][:c] = []
-            engageList[counter][:c][0] = 0
-            engageList[counter][:c][1] = {v: Time.strptime(dataDay.day.to_s, "%Y%m%d").strftime("%d/%m/%Y"), f:nil}
-            engageList[counter][:c][2] = {v: engageToday,    f:nil}
-            engageList[counter][:c][3] = {v: html_tooltip,   f:nil}
-            engageList[counter][:c][4] = {v: html_variation, f:nil}
-            engageList[counter][:c][5] = {v: dataDay.day,    f:nil}
-
-            engageYesterday = engageToday
-            counter += 1
-      end
-          
-      @max = 50 if @max <= 50 
-      options[:vAxis] = {minValue: 0, maxValue: @max}
-
-      @dataResult =  {}
-      @dataResult[:divId] = divId
-      @dataResult[:options] = options
-      @dataResult[:graphShowCols] = [1,2,3]
-      @dataResult[:cols] = [
-                      {id:"",label:"dataNil",pattern:"",type:"number"},
-                      {id:"",label:"Fecha",pattern:"",type:"string"},
-                      {id:"",label:"Engagement", pattern:"",type:"number"},
-                      {id:"",type: "string", p: { role: "tooltip", html: true } },
-                      {id:"",label:"Variación", pattern:"",type:"number"},
-                      {id:"",label:"Id", pattern:"",type:"number"}
-                    ]    
-      @dataResult[:rows] = engageList        
-
-      @dataResult
-
-    end
-
-    def get_timeline_array(date_from, date_to)
-      @dataResult = []
-      
-      dataRecords = @page.page_data_days.select("day, likes, prosumers").where("day between ? and ?", date_from[0,8], date_to[0,8]).order('day ASC')
-
-      engageYesterday = 0
-      engageList = []
-      counter = 0
-      
-      if dataRecords.count == 0
-
-        @dataResult[0] = "[{error: no hay datos disponibles para las fechas especificadas}]"
-
-      else
-
-          picture = PagesHelper.get_picture(@page, @access_token)
-          dataRecords.each do |dataDay|     
-              engageToday = engagement(dataDay.likes, dataDay.prosumers)
-              @max = [@max, engageToday].max
-              variation = variation(engageToday.to_f, engageYesterday.to_f)
-              
-              html = DashboardHelper::HtmlHardcodes.new()
-              html_tooltip = html.html_tooltip_engage(picture, @page.name, engageToday, variation)
-              html_variation = html.html_variation(variation)
-              
-              engageList[counter] =  
-                                [ Time.strptime(dataDay.day.to_s, "%Y%m%d").strftime("%d/%m/%Y"), 
-                                engageToday,
-                                html_tooltip,
-                                html_variation,
-                                dataDay.day]
-              
-              engageYesterday = engageToday
-              counter += 1
-          end
   
-          dataA = []
-          dataB = []
-       
-          for i in 0..counter-1    
-            dataA[i] = [] + engageList[i]
-            dataA[i][1] = 0
-            dataB[i] = [] + engageList[i]
-          end
-          @dataResult[1] = dataA
-          @dataResult[2] = dataB
-          
-          @max = 50 if @max <= 50 
-
+      def variation(new_data, old_data)
+        ((new_data - old_data) / old_data) * 100
       end
 
-      @dataResult
-
-    end
-
-  end
-
-  
-  def get_engage(fans, actives)
-    if fans > 0
-      engage = actives * 6 *100 / fans
-    else
-      engage = 0
-    end
-    return engage
-  end
-  
-  def get_variation(today, yesterday)
-    return ((today - yesterday) / yesterday) * 100
   end
 
 
   def page_create_or_update(p, stream=false, daily=false)
-        newpage = Page.find_or_initialize_by_page_id("#{p["page_id"]}")
+      newpage = Page.find_or_initialize_by_page_id("#{p["page_id"]}")
 
-        newpage.name = p["name"]
-        newpage.page_type = p["type"]
-        newpage.fan_count = p["fan_count"]
-        newpage.talking_about_count = p["talking_about_count"]
-        newpage.save!
-        if stream == UPDATE_STREAM
-          page_data_stream_update(page_id)
-        end
+      newpage.name = p["name"]
+      newpage.page_type = p["type"]
+      newpage.fan_count = p["fan_count"]
+      newpage.talking_about_count = p["talking_about_count"]
+      newpage.save!
+      if stream == UPDATE_STREAM
+        page_data_stream_update(page_id)
+      end
 
-        if daily == UPDATE_DAY
-          page_data_day_update(p_id, data_date=Time.now.beginning_of_day)
-        end
+      if daily == UPDATE_DAY
+        page_data_day_update(p_id, data_date=Time.now.beginning_of_day)
+      end
 
-        newpage
+      newpage
   end
 
   def pages_create_or_update(pagelist)
@@ -434,12 +308,9 @@ module PagesHelper
       pagedata.save!
   end
 
-
-
   def page_data_stream_update(page_id)
     fb_page_id = Page.find_by_id(page_id).page_id
     page_stream = FacebookHelper::FbGraphAPI.new(get_token(FACEBOOK)).get_page_stream(fb_page_id)
-#    page_stream = fb_get_page_stream(fb_page_id)
 
     for i in 0..page_stream.count-1
       ps = page_stream[i]

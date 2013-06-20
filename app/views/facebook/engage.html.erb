@@ -1,17 +1,22 @@
 <% provide(:title, "Engagement") %>
 
-<% if @type_graph == 0%>
+<% if @type_graph == 0 %>
 	<div class="engage_div">
 		<%= render 'facebook/layouts/engage_medals' %>
 	</div>
 
-	<%= render 'facebook/charts/chart_bars' %>
+	<%= render 'facebook/charts/chart_bars', :graph => "graph_div" %>
 	<%= render 'facebook/shared/graph', :graph => "graph_div" %>
 
-<% else %>
+<% elsif  @type_graph == 2 %>
 
-	<%= render 'facebook/charts/chart_timeline' %>
-	<%= render 'facebook/shared/graph', :graph => "graph_engage_evolution_div" %>
+	<%= render 'facebook/charts/chart_timeline', :graph => "graph_div" %>
+	<%= render 'facebook/shared/graph', :graph => "graph_div" %>
+
+<% elsif  @type_graph == 3 %>
+
+	<%= render 'facebook/charts/chart_lines', :graph => "graph_div" %>
+	<%= render 'facebook/shared/graph', :graph => "graph_div" %>
 
 <% end %>
 

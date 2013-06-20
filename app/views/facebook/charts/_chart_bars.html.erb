@@ -45,7 +45,7 @@
     dataTableB.addRows(rowDataB);
 
     var table = new google.visualization.Table(document.getElementById('table'));
-    var chart = new google.visualization.ComboChart(document.getElementById('graph_div'));
+    var chart = new google.visualization.ComboChart(document.getElementById('<%= graph %>'));
 
 	var formatter = new google.visualization.NumberFormat({fractionDigits: 0});
 	formatter.format(dataTableB, 4);
