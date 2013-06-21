@@ -1,7 +1,5 @@
 module DashboardHelper
 
-
-
   class HtmlHardcodes
 
       def logo (url, img, title, options)

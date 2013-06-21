@@ -1,17 +1,15 @@
 // Place all the styles related to the home controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+$linkColor: #3B5998;
+$baseBorderRadius:1px;
+$btnInfoBackground: #2D255E;
+$btnInfoBackgroundHighlight: #2D255E;
+$btnDangerBackground: #2D255E; /*para boton busqueda*/
+$btnDangerBackgroundHighlight:#2D255E;
+
 @import "bootstrap";
-
 html, body {height: 100%;}
-
-body { padding-top: 40px;}
-
-h1, h2, h3, h4, h5, h6 {font-weight: normal;}
-#home {
-    background: url("home-back.jpg") repeat scroll 0 0 transparent;
-    padding: 72px 0 0 0;
-}
 @font-face {
     font-family: 'DominikRegular';
     src: font-url('dominik.eot');
@@ -20,70 +18,425 @@ h1, h2, h3, h4, h5, h6 {font-weight: normal;}
          font-url('dominik.ttf') format('truetype'),
          font-url('dominik.svg#DominikRegular') format('svg');
 }
+.sw-blue{
+  color: #6EC7D9;
+}
+.sw-violet{
+  color:#50388C;
+}
+body { 
+  font-family: 'DominikRegular', Helvetica,'Lucida Grande', Verdana;  
+  padding-top: 51px;
+  color:#999999;  
+  min-width:320px;
+}
+ul{
+  list-style:none;
+  padding:0;
+  margin:0;
+ } 
+h1, h2, h3, h4, h5, h6 {font-weight: normal;}
+p{
+    font-size: 1.06em;
+    line-height: 1.4;
+    margin: 0 0 13px;
+}
+hr, .hr{
+  margin: 0 0 23px;
+}
+#lazo{
+  position:absolute;
+  top:0;
+  right:0;
+}
+#home {
+    background: url("home-back-unfoc.jpg"); //  slide-01.jpg
+    background-color:#000000;
+    background-position: relative;
+    background-repeat:none;
+    padding: 55px 10px 0;
+}
 #slogan1 {
     color: #6EC7D9;
-    font-family: 'DominikRegular', Arial, 'Verdana';
+    font-family: 'DominikRegular', Helvetica,'Lucida Grande', Verdana;
     font-weight: normal;
-    font-size: 44px;
+    font-size: 38px;
 }
 #slogan2 {
-    color: #FFFFFF;
+    color: #EBEBEB;
+    font-size: 18px;
+    font-weight: 200;
+    line-height: 30px;
+    margin-bottom: 20px;
+}
+#monitorizando{
+    color: #EBEBEB;
+    font-size: 15px;
+    font-weight: bold;
+    line-height: 30px;
+    margin-bottom: 20px; 
+}
+
+/*boton facebook*/
+.base-btn-facebook {
+    background: none repeat scroll 0 0 rgba(109, 197, 215, 0.3);
+    height: 46px;
+    margin: 0 auto;
+    padding: 6px;
+    width: 246px;
+}
+.btn-large{
+    border-radius: 1px 1px 1px 1px;
+    font-size: 15px;
+    padding: 12px 7px;
+    font-family:'lucida grande',tahoma,Verdana,Arial,sans-serif;
+    width: 228px;
+}
+.box-image-facebook {
+    border-right: 2px solid #C4C4C4;
+    display: inline-block;
+    margin-right: 10px;
+    text-align: left;
+    vertical-align: top;
+    width: 40px;
+}
+#image-facebook {
+    background: url("facebook.png") repeat scroll 0 0 transparent;
+    float: left;
+    height: 20px;
+    margin-left: 6px;
+    vertical-align: bottom;
+    width: 20px;
 }
 .screen{
     margin: 31px auto 0;
     max-height: 240px;
-    max-width: 500px;
+    max-width: 601px;
     overflow: hidden;
-  
+    padding: 0 15px;
 }
 #screen{
     width: 100%;    
 }
-#video{
-     padding: 72px 0; 
+#descubre{
+    color: #6EC7D9;
+    font-family: 'DominikRegular', Helvetica,'Lucida Grande', Verdana;  
 }
 
+/*video*/
+#video{  
+    padding: 54px 0 30px;
+}
 .video{
-    max-width: 520px;
-    margin:0 auto;
-}
-/*boton facebook*/
-.btn-large {
-    border-radius: 1px 1px 1px 1px;
-    font-size: 15px;
-    padding: 12px 17px;
+    margin: 20px auto;
+    max-width: 500px;
 }
 
-#image-facebook {
-    background: url("facebook.png") repeat scroll 0 0 transparent;
-    display: inline-block;
-    height: 20px;
-    vertical-align: bottom;
-    width: 20px;
+/*responsive video flex*/
+.flex-video {
+  position: relative;
+  padding-top: 25px;
+  padding-bottom: 67.5%;
+  height: 0;
+  margin-bottom: 16px;
+  overflow: hidden;
 }
+.flex-video.widescreen { padding-bottom: 57.25%; }
+.flex-video.vimeo { padding-top: 0; }
+
+.flex-video iframe,
+.flex-video object,
+.flex-video embed {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+
+/*top-search podium */
+.list-engagement li {
+    display: inline-block;
+    line-height: 20px;
+    margin: 0 24px;
+    -webkit-box-shadow:  2px 2px 2px 0px rgba(0, 0, 0, 0.2);
+    box-shadow:  2px 2px 2px 0px rgba(0, 0, 0, 0.2);    
+} 
+.podium{
+    background-color: #E8E9EB;
+    color: #666666;
+    font-weight: bold;
+
+}
+.flecha-up{
+    background: url("Buscador_SW_72dpi_0009_flechas.png") no-repeat scroll 1px 2px transparent;
+    display: inline-block;
+    height: 30px;
+    width: 30px;
+}
+.flecha-down{
+    background: url("Buscador_SW_72dpi_0009_flechas.png") no-repeat scroll 1px -29px transparent;
+    display: inline-block;
+    height: 30px;
+    width: 30px;
+}
+.puntuacion {
+    display: inline-block;
+    font-size: 22px;
+    padding-top: 11px;
+    vertical-align: top;
+    width: 65px;
+}
+
+/*top search searcher*/
+#top-search{
+    padding: 20px 0 60px;
+}
+em#lent{
+    left: 12px;
+    position: absolute;
+    top: 14px;
+}
+.search {
+    background-color: #665098;
+    display: inline;
+    padding: 7px 10px 7px 7px;
+}
+.navbar-search .search-query {
+    font-size: 16px;
+    padding: 4px 4px 4px 26px;
+}
+.input-xlarge {
+    width: 307px;
+}
+.btn-sw-search{
+    margin-left: 6px;
+    width: 100px;
+}
+
+/*boton facebook*/
+#fb_search{
+  margin: 10px 0;
+}
+#fb_img {
+    -webkit-box-shadow:  2px 2px 2px 0px rgba(0, 0, 0, 0.2);
+    box-shadow:  2px 2px 2px 0px rgba(0, 0, 0, 0.2);    
+} 
+#fb_search ul{
+  list-style:none;
+  padding:0;
+  margin:0;
+}
+#fb_search li{
+    background: none repeat scroll 0 0 #F8F8F8;
+    display: block;
+    height: 50px;
+    margin: 8px 0;
+    max-width: 374px;
+    min-width: 47%;
+    vertical-align: top;
+}
+.name {
+    display: inline-block;
+    line-height: 12px;
+    padding: 4px 4px 4px 10px;
+    vertical-align: middle;
+    width: 270px;
+
+}
+.name p{
+      word-wrap: break-word; 
+}
+.spinner{
+  margin:0 auto;
+  margin-left:160px;
+  margin-top:50px;
+}
+
 /*metodo*/
 #metodo{
     background: none repeat scroll 0 0 #E8E9EB;
     color: #999999;
-    padding: 72px 0 0;
+    padding: 35px 0 48px;
 }
-/*a_quien*/
+.img-metodo{
+    display: block;
+    margin: 0 auto 17px;
+    max-height: 145px;
+}
+
+
+/*target*/
 #a_quien{
-    padding: 72px 0 0;
-    color: #999999;    
+    color: #999999;
+    padding: 50px 0 0; 
 }
 .quienes{
     color:#5FAD2E;
     padding: 24px 0;    
 }
 #marketers{
-  background: url("dirigido1.png") no-repeat scroll 216px 0 / 64px auto transparent;
+    background: url("dirigido1.png") no-repeat scroll 121px 0 / 68px auto transparent;
+    height: 19px;
 }
 #community{
-  background: url("dirigido2.png") no-repeat scroll 216px 0 / 64px auto transparent;  
+    background: url("dirigido2.png") no-repeat scroll 136px 0 / 68px auto transparent;
+    height: 19px;
 }
 #social{
-  background: url("dirigido3.png") no-repeat scroll 216px 0 / 64px auto transparent;  
+    background: url("dirigido3.png") no-repeat scroll 143px 0 / 68px auto transparent;
+    height: 19px; 
 }
 
+/* informes */
+#informes_sectoriales{
+    color: #999999;
+    padding: 72px 0 0;
+}
+.base-informes{
+  background: url("base-informes2.jpg") no-repeat scroll 0 -236px #5F4B8E;
+}
+.transparencia {
+    background-color: rgba(255, 255, 255, 0.5);
+    color: rgba(255, 255, 255, 0.9);
+    height: 400px;
+    padding: 6px 5px;
+}
+#info1{
+    color: #FFFFFF;
+    padding-top: 12px;
+}
+#info2{
+    color: #50388C;
+    padding: 14px 20px 0;
+}
+#info3{
+    color:#50388C;
+    padding: 0 20px;  
+}
+
+
+/*partners*/
+#partners{
+    color: #999999;
+    padding: 62px 0;
+}
+#partners li{
+    background: none repeat scroll 0 0 transparent;
+    display: inline-block;
+    min-height: 65px;
+    vertical-align: top;
+    width: 24.5%;  
+} 
+.image-partner{
+  background:#000;
+  height: 50px;
+  margin:0 auto;
+}
+#seedrocket{
+   background: url("partners/seedRocket-color.png") no-repeat scroll 0 0 transparent;
+    width: 228px;
+}
+#bertelsmann{
+    background: url("partners/2.bertelsmann.jpg") no-repeat scroll 0 0 transparent;
+    width: 201px;
+}
+#iebs{
+    background: url("partners/3.iebs.jpg") no-repeat scroll 0 0 transparent;
+    width: 184px; 
+}
+#gigas{
+    background: url("partners/4.gigas.jpg") no-repeat scroll 0 0 transparent;
+    width: 121px;
+}
+
+
+#metricson{
+    background: url("partners/5.metricson.jpg") no-repeat scroll 0 0 transparent;
+    width: 206px;
+}
+#lasalle{
+    background: url("partners/lasalle-color.png") no-repeat scroll 0 0 transparent;
+    width: 149px;
+}
+#digitalweek{
+    background: url("partners/digitalweek-color.png") no-repeat scroll 0 0 transparent;
+    width: 120px;
+}
+#busco{
+    background: url("partners/buscoseo-color.png") no-repeat scroll 0 0 transparent;
+    width: 104px; 
+}
+
+
+#global{
+    background: url("partners/global-color.png") no-repeat scroll 0 0 transparent;
+    width: 103px; 
+}
+#socialday{
+    background: url("partners/10.Mashable.jpg") no-repeat scroll 0 0 transparent;  
+    width:115px;
+}
+#congres{
+    background: url("partners/w-congress-color.png") no-repeat scroll 0 0 transparent;
+    width: 46px;
+}
+#school{
+    background: url("partners/w_school-color.png") no-repeat scroll 0 0 transparent;
+    width: 45px; 
+}
+
+
+
+
+/*### search-page ######################################################*/
+/*######################################################################*/
+#search-page{
+    padding: 10px 0 76px;
+}
+#consulta{
+  color: #6EC7D9;
+}
+.arrow {
+    background: url("go.png") repeat scroll 0 0 transparent;
+    display: inline;
+    float: right;
+    height: 40px;
+    margin-top: 4px;
+    width: 40px;
+}
+#div-search-box{
+    display: block;
+    height: 50px;
+    margin: 0 auto;
+}
+#quieres{
+    margin: 48px auto 5px;
+    max-width: 327px;
+}
+#conectarConFacebook{
+    margin-top: 41px;
+}
+
+
+@media only screen and (max-device-width: 800px), only screen and (device-width: 1024px) and (device-height: 600px), only screen and (width: 1280px) and (orientation: landscape), only screen and (device-width: 800px), only screen and (max-width: 767px) {
+  .flex-video { padding-top: 0; }
+}
+
+
+
 @import "bootstrap-responsive";
+
+@media (max-width: 767px) {
+  body {
+    padding-right: 0;
+    padding-left: 0;
+  }
+  .navbar-fixed-top,
+  .navbar-fixed-bottom,
+  .navbar-static-top {
+    margin-right: 0;
+    margin-left: 0;
+  }
+}
