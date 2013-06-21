@@ -6,7 +6,7 @@ module DashboardHelper
     path = query_test_path(params: params)
     if params[:type] == 'Table'
       content_tag(:div, :'data-query-table' => path, :style => "height: #{height}px;") do
-        image_tag('loader.gif', :size => '24x24', :class => 'spinner')
+        image_tag('hummingbirds.gif', :size => '24x24', :class => 'spinner')
       end            
     else
       content_tag(:div, :'data-query-chart' => path, :style => "height: #{height}px;") do

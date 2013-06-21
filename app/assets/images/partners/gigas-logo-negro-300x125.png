@@ -1,0 +1,66 @@
+="new 0 0 256 256" xml:space="preserve">
+<path fill="#343434" d="M255.902,128c0,17.744-3.301,34.345-9.934,49.899c-6.602,15.555-15.752,29.116-27.386,40.684
+	c-11.633,11.602-25.193,20.719-40.684,27.386C162.41,252.666,145.81,256,128.065,256c-17.711,0-34.345-3.334-49.867-10.031
+	c-15.555-6.667-29.116-15.784-40.717-27.386c-11.568-11.567-20.718-25.129-27.384-40.684c-6.667-15.555-10-32.155-10-49.899
+	s3.333-34.345,10-49.899c6.666-15.555,15.816-29.083,27.384-40.684C49.083,25.815,62.644,16.698,78.199,10
+	c15.522-6.667,32.155-10,49.867-10c17.744,0,34.345,3.333,49.834,10c15.49,6.699,29.051,15.816,40.684,27.417
+	c11.634,11.601,20.784,25.129,27.386,40.684C252.602,93.655,255.902,110.256,255.902,128z M120.223,214.336
+	c2.157,2.124,4.706,3.202,7.614,3.202c2.941,0,5.654-1.078,8.105-3.202l78.328-78.493c2.125-2.124,3.203-4.737,3.269-7.843
+	c0.065-3.104-1.045-5.719-3.269-7.843l-78.328-78.493c-2.125-2.124-4.739-3.202-7.876-3.202c-3.072,0-5.686,1.079-7.843,3.202
+	l-11.83,11.863c-2.157,2.124-3.268,4.672-3.3,7.679c-0.033,2.974,1.045,5.653,3.3,8.006l39.41,39.41h-98.23
+	c-3.072,0-5.686,1.046-7.843,3.137c-2.124,2.059-3.202,4.641-3.202,7.745v16.667c0,3.104,1.111,5.751,3.3,7.94
+	c2.19,2.19,4.771,3.268,7.745,3.268h98.23l-39.41,39.41c-2.157,2.156-3.268,4.737-3.3,7.777c-0.033,3.039,1.045,5.686,3.3,7.908
+	L120.223,214.336L120.223,214.336z"/>
+</svg>
+</div>
+</div>
+
+<script>
+
+
+document.getElements(".e121836243119").addEvent('load', function() {
+  var load_nodes = this.getSVGDocument().getElementsByTagName('path');
+  for (var i = 0; i < load_nodes.length; ++i) {
+    load_nodes[i].setAttribute('fill', '#000000');
+  }
+
+  var svgs = this.getSVGDocument().getElementsByTagName('svg');
+  for (var i = 0; i < svgs.length; ++i) {
+    svgs[i].setAttribute('height', '40');
+    svgs[i].setAttribute('width', '40');
+  }
+
+});
+
+document.getElements(".e121836243119").each(function(pEl) {
+  if(pEl.getSVGDocument && pEl.getSVGDocument()) {
+    var nodes = pEl.getSVGDocument().getElementsByTagName('path');
+    for (var i = 0; i < nodes.length; ++i) {
+      nodes[i].setAttribute('fill', '#000000');
+    }
+
+    var svgs = pEl.getSVGDocument().getElementsByTagName('svg');
+      for (var i = 0; i < svgs.length; ++i) {
+        svgs[i].setAttribute('height', '40');
+        svgs[i].setAttribute('width', '40');
+    }
+
+  }
+  else if (pEl.getElementsByTagName('path')){
+    var paths = pEl.getElementsByTagName('path');
+    for (var i = 0; i < paths.length; ++i) {
+      paths[i].setAttribute('fill', '#000000');
+    }
+
+    var svgs = pEl.getElementsByTagName('svg');
+      for (var i = 0; i < svgs.length; ++i) {
+        svgs[i].setAttribute('height', '40');
+        svgs[i].setAttribute('width', '40');
+      }
+
+  }
+});
+
+</script><div  id="el43160_6c017af47ba8f8150881c0408996a09a" style="left:49px;top:228px;z-index:10008;locked:0;border-width:0px;border-radius:0px;-o-border-radius:0px;-moz-border-radius:0px;-webkit-border-radius:0px;border-color:#888;border-style:solid;actions:Array;behavior: url(/css/PIE.htc);width:100px;height:100px;position:absolute;"><img src="data/elements_standard_base_clipart_placeholder.png" style="width:100px;height:100px;" alt="" title="" /></div><div  id="el46549_df4b4b886d808da4b0d4daa4cc7f14f3" style="left:49px;top:350px;z-index:10057;locked:0;border-width:0px;border-radius:0px;-o-border-radius:0px;-moz-border-radius:0px;-webkit-border-radius:0px;border-color:#888;border-style:solid;actions:Array;behavior: url(/css/PIE.htc);width:100px;height:100px;position:absolute;"><img src="data/elements_standard_base_clipart_placeholder.png" style="width:100px;height:100px;" alt="" title="" /></div><div id="el46582_0ec1869039f2edd55cee80ad7e5ad591" style=left:399px;top:380px;z-index:10101;locked:0;color:#000000;border-width:0px;border-style:solid;width:40px;height:40px;position:absolute;  >
+  <div style="width:100%;height:100%;position:absolute;top: 0;left: 0;"></div>
+  <div

@@ -36,6 +36,9 @@ Swin::Application.routes.draw do
   match '/twitter', to: 'static_pages#twitter'
   match '/habla', to: 'static_pages#habla'
   
+  
+  
+  match '/search_page', to: 'site#search_page'
   root to: 'site#home'
 
 

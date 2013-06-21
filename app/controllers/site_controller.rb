@@ -5,6 +5,10 @@ class SiteController < ApplicationController
   def home 
       @pages = Page.count
       @users = User.count
+
+  end
+
+  def search_page
       @searching = false
 
       if params.has_key?(:search) && params[:search] != ""
@@ -16,8 +20,6 @@ class SiteController < ApplicationController
           subUrl = "search?type=page&q=" + params[:search]
         end
         @fb_search_path = "https://graph.facebook.com/" + subUrl
-      end
-
+      end    
   end
-
 end

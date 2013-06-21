@@ -65,17 +65,6 @@ ActiveRecord::Schema.define(:version => 20130611144429) do
   add_index "page_data_days", ["page_id", "day"], :name => "index_page_data_days_on_page_id_and_day", :unique => true
   add_index "page_data_days", ["page_id"], :name => "index_page_data_days_on_page_id"
 
-  create_table "page_relationships", :force => true do |t|
-    t.integer  "follower_id"
-    t.integer  "competitor_id"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
-  end
-
-  add_index "page_relationships", ["competitor_id"], :name => "index_page_relationships_on_competitor_id"
-  add_index "page_relationships", ["follower_id", "competitor_id"], :name => "index_page_relationships_on_follower_id_and_competitor_id", :unique => true
-  add_index "page_relationships", ["follower_id"], :name => "index_page_relationships_on_follower_id"
-
   create_table "page_streams", :force => true do |t|
     t.integer  "page_id"
     t.string   "post_id"
