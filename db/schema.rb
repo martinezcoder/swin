@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130611144429) do
+ActiveRecord::Schema.define(:version => 20130621194916) do
 
   create_table "authentications", :force => true do |t|
     t.integer  "user_id"
@@ -36,6 +36,20 @@ ActiveRecord::Schema.define(:version => 20130611144429) do
 
   add_index "facebook_lists", ["page_id"], :name => "index_facebook_lists_on_page_id"
   add_index "facebook_lists", ["user_id", "created_at"], :name => "index_facebook_lists_on_user_id_and_created_at"
+
+  create_table "fb_top_engages", :force => true do |t|
+    t.integer  "day"
+    t.integer  "page_id"
+    t.string   "page_fb_id"
+    t.integer  "fan_count"
+    t.integer  "variation"
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
+    t.integer  "talking_about_count"
+  end
+
+  add_index "fb_top_engages", ["day"], :name => "index_fb_top_engages_on_day"
+  add_index "fb_top_engages", ["page_id"], :name => "index_fb_top_engages_on_page_id"
 
   create_table "list_page_relationships", :force => true do |t|
     t.integer  "list_id"
@@ -64,6 +78,17 @@ ActiveRecord::Schema.define(:version => 20130611144429) do
   add_index "page_data_days", ["day"], :name => "index_page_data_days_on_day"
   add_index "page_data_days", ["page_id", "day"], :name => "index_page_data_days_on_page_id_and_day", :unique => true
   add_index "page_data_days", ["page_id"], :name => "index_page_data_days_on_page_id"
+
+  create_table "page_relationships", :force => true do |t|
+    t.integer  "follower_id"
+    t.integer  "competitor_id"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
+  add_index "page_relationships", ["competitor_id"], :name => "index_page_relationships_on_competitor_id"
+  add_index "page_relationships", ["follower_id", "competitor_id"], :name => "index_page_relationships_on_follower_id_and_competitor_id", :unique => true
+  add_index "page_relationships", ["follower_id"], :name => "index_page_relationships_on_follower_id"
 
   create_table "page_streams", :force => true do |t|
     t.integer  "page_id"
