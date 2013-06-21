@@ -1,10 +1,11 @@
 # encoding: UTF-8
 
 class PagesController < ApplicationController
+  rescue_from ActiveRecord::RecordNotFound, :with => :record_not_found
+  before_filter :user_is_admin, only: [:admin_query]
+
   include PagesHelper
   include FacebookHelper
-
-  before_filter :user_is_admin, only: [:admin_query]
 
   # it will rend a graph with the evolution of the number of monitored pages by day
   def admin_query
@@ -28,6 +29,7 @@ class PagesController < ApplicationController
     }
   end
 
+
   def show
     fbtag = "fb-"
     thisId = params[:id]
@@ -35,57 +37,34 @@ class PagesController < ApplicationController
       thisId = thisId.split(fbtag).last
       @page = Page.find_by_page_id(thisId)
       if @page.nil?
-
-        me = User.find_by_email("fran.martinez@socialwin.es")
-        fb_token = me.authentications.find_by_provider(FACEBOOK).token
-        fb_graph  = Koala::Facebook::API.new(fb_token)
-        strQuery = "SELECT page_id, type, name, fan_count, talking_about_count from page WHERE page_id = #{thisId}"
-        fb_page = fb_graph.fql_query(strQuery)
-
-        @page = page_create_or_update(fb_page.first)
+#        me = User.find_by_email("fran.martinez@socialwin.es")
+#        fb_token = me.authentications.find_by_provider(FACEBOOK).token
+        fb_page = FacebookHelper::FbGraphAPI.new().get_page_info(thisId)
+        @page = page_create_or_update(fb_page[0])
       end
     else
-      @page = Page.find(thisId)
+      @page = Page.find_by_id(thisId)
     end
-    @engage = get_engage(@page.fan_count, @page.talking_about_count)
+
+    fb_metric = PagesHelper::FbMetrics.new(get_token(FACEBOOK))
+    engageData = fb_metric.get_page_engagement_timeline(@page, 8.days.ago, 1.days.ago)
+    @dataA = engageData[0]
+    @dataB = engageData[1]
+    @max = fb_metric.max_value
+    @options = fb_metric.options 
+
+    @engage = fb_metric.get_engagement(@page.fan_count, @page.talking_about_count)
 
     respond_to do |format|
         format.html # show.html.erb
-        format.json { 
-          render json: 
-          {
-
-                cols: [
-                      {id:"",label:"Fecha",pattern:"",type:"string"},
-                      {id:"",label:"Engagement", pattern:"",type:"number"},
-                      {id:"",label:"Variación", pattern:"",type:"number"},
-                      {id: "",role: "tooltip", type: "string", p: { role: "tooltip" } } 
-                    ],
-                rows: [
-                      {c:[{v:"Lunes",    f:nil}, {v:30,f:nil}, {v:15,f:nil}, {v: "Engagement"}]},
-                      {c:[{v:"Martes",   f:nil}, {v:25,f:nil}, {v:10,f:nil}, {v: "Engagement"}]},
-                      {c:[{v:"Miércoles",f:nil}, {v:40,f:nil}, {v:20,f:nil}, {v: "Engagement"}]},
-                      {c:[{v:"Jueves",   f:nil}, {v:44,f:nil}, {v:5,f:nil}, {v: "Engagement"}]},
-                      {c:[{v:"Viernes",  f:nil}, {v:55,f:nil}, {v:30,f:nil}, {v: "Engagement"}]},
-                      {c:[{v:"Sábado",   f:nil}, {v:60,f:nil}, {v:30,f:nil}, {v: "Engagement"}]},
-                      {c:[{v:"Domingo",  f:nil}, {v:40,f:nil}, {v:-10,f:nil}, {v: "Engagement"}]}
-                    ],
-                 options:
-                   { seriesType: "bars",
-#                     series: {1: {type: "line"}},
-#                     series: [{type: "bars"}, {type: "line"}],
-                     series: [nil, {type: "line"}],
-                     width: 375, 
-                     height: 240,
-                     legend: 'none',
-                     pointSize: 5,
-                     backgroundColor: 'transparent',
-                     vAxis: { minValue: 0, maxValue: 100 }
-                    }
-          }  
-        }
+        format.json { render json: engageData }
     end
 
   end
 
+
+  def record_not_found
+    redirect_to page_path(35)
+  end
+  
 end

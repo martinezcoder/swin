@@ -1,5 +1,6 @@
 
 /*header*/
+<<<<<<< HEAD
 .navbar .brand {
     color: #777777;
     display: block;
@@ -24,6 +25,34 @@
     background: none repeat scroll 0 0 rgba(109, 197, 215, 0.3);
     color: #555555;
 } 
+=======
+  .navbar .brand {
+      color: #777777;
+      display: block;
+      float: left;
+      font-size: 20px;
+      font-weight: 200;
+      margin-left: 0px;
+      padding: 6px 3px;
+      text-shadow: 0 1px 0 white;
+  }
+  .navbar-inner{
+      background: #ffffff;  
+  }
+  .navbar .nav > li > a {
+      font-size: 13px;
+      padding: 13px 15px 7px;
+  }   
+  .navbar .nav {
+      margin-top: 13px;
+  }
+  .navbar .nav li.dropdown.open > .dropdown-toggle, .navbar .nav li.dropdown.active > .dropdown-toggle, .navbar .nav li.dropdown.open.active > .dropdown-toggle {
+      background: none repeat scroll 0 0 rgba(109, 197, 215, 0.3);
+      color: #555555;
+  } 
+
+
+>>>>>>> 0c3c9acdaabf5a017f5a40fb6704d0e5d2e00912
 .dropdown-menu{
     background: #D3EDF3;
 }
@@ -50,6 +79,7 @@
      color: #FFFFFF;
 }
 #tw-window{
+<<<<<<< HEAD
 
 }
 /*clientes*/
@@ -85,6 +115,43 @@
 }
 
 
+=======
+
+}
+/*clientes*/
+.clientes ul#clientes {
+    border-top: 1px solid #B6B6B6;
+    list-style: none outside none;
+    margin: 0;
+    padding: 0 0 14px;
+}
+.clientes li {
+    display: inline-block;
+}
+.imag-clients {
+    background-color: #666666;
+    height: 55px;
+    margin-top: 10px;
+    width: 126px;
+}
+.imag-clients img{
+  width:100%;
+}
+
+
+/*legal*/
+#legal{
+    padding-bottom: 12px;
+}
+.logo-legal{
+  padding:4px 4px;
+}
+#legal ul {
+    margin-top: 27px;
+}
+
+
+>>>>>>> 0c3c9acdaabf5a017f5a40fb6704d0e5d2e00912
 
 /*search button*/
 .navbar-search em.icon-search {
