@@ -1,29 +1,31 @@
 
 /*header*/
-.navbar .brand {
-    color: #777777;
-    display: block;
-    float: left;
-    font-size: 20px;
-    font-weight: 200;
-    margin-left: 0px;
-    padding: 6px 3px;
-    text-shadow: 0 1px 0 white;
-}
-.navbar-inner{
-    background: #ffffff;  
-}
-.navbar .nav > li > a {
-    font-size: 13px;
-    padding: 13px 15px 7px;
-}   
-.navbar .nav {
-    margin-top: 13px;
-}
-.navbar .nav li.dropdown.open > .dropdown-toggle, .navbar .nav li.dropdown.active > .dropdown-toggle, .navbar .nav li.dropdown.open.active > .dropdown-toggle {
-    background: none repeat scroll 0 0 rgba(109, 197, 215, 0.3);
-    color: #555555;
-} 
+  .navbar .brand {
+      color: #777777;
+      display: block;
+      float: left;
+      font-size: 20px;
+      font-weight: 200;
+      margin-left: 0px;
+      padding: 6px 3px;
+      text-shadow: 0 1px 0 white;
+  }
+  .navbar-inner{
+      background: #ffffff;  
+  }
+  .navbar .nav > li > a {
+      font-size: 13px;
+      padding: 13px 15px 7px;
+  }   
+  .navbar .nav {
+      margin-top: 13px;
+  }
+  .navbar .nav li.dropdown.open > .dropdown-toggle, .navbar .nav li.dropdown.active > .dropdown-toggle, .navbar .nav li.dropdown.open.active > .dropdown-toggle {
+      background: none repeat scroll 0 0 rgba(109, 197, 215, 0.3);
+      color: #555555;
+  } 
+
+
 .dropdown-menu{
     background: #D3EDF3;
 }

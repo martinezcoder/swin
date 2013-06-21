@@ -1,6 +1,6 @@
 class SiteController < ApplicationController
   
-  layout 'site'
+  layout "site"
   
   def home 
       @pages = Page.count
