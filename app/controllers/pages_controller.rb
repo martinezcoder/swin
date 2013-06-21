@@ -46,7 +46,8 @@ class PagesController < ApplicationController
       @page = Page.find_by_id(thisId)
     end
 
-    fb_metric = PagesHelper::FbMetrics.new(get_token(FACEBOOK))
+#    fb_metric = PagesHelper::FbMetrics.new(get_token(FACEBOOK))
+    fb_metric = PagesHelper::FbMetrics.new()
     engageData = fb_metric.get_page_engagement_timeline(@page, 8.days.ago, 1.days.ago)
     @dataA = engageData[0]
     @dataB = engageData[1]

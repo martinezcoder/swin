@@ -11,8 +11,9 @@
 			
 			<!-- Logo -->
 			<div class="brand">
-				<a href="index.html" title="SocialWin">
-				<%= image_tag "logo-social196x56.png", {:width => 145}  %> 
+				<%= link_to root_path do %>
+					<%= image_tag "logo-social196x56.png", width: 145, title: "SocialWin", alt: "SocialWin"  %>
+				<% end %> 
 				<!-- :size => "196x56"{-->
 				</a>
 			</div>
