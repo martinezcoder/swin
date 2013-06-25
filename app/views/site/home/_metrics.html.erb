@@ -6,30 +6,18 @@
 		<div class="span6">
 			<h3>Top 3 Engagement Facebook</h3>
 			<ul class="unstyled list-engagement">
-				<li>
-					<div class="podium text-center">N.1</div>
-					<%= image_tag "podium/cnn.jpg" %>
-					<div class="ranking">
-						<div class="flecha-up"></div>
-						<div class="puntuacion text-right">986</div>
-					</div>
-				</li>
-				<li>
-					<div class="podium text-center">N.2</div>
-					<%= image_tag "podium/bmw.png" %>
-					<div class="ranking">
-						<div class="flecha-up"></div>
-						<div class="puntuacion text-right">950</div>
-					</div>
-				</li>
-				<li>
-					<div class="podium text-center">N.3</div>
-					<%= image_tag "podium/loreal.png" %>
-					<div class="ranking">
-						<div class="flecha-down"></div>
-						<div class="puntuacion text-right">932</div>
-					</div>
-				</li>
+				<% if @top_engage %>
+					<%  @top_engage.each_with_index do |page, i| %>
+						<li>
+							<div class="podium text-center">N.<%= i+1 %></div>
+							<%= image_tag get_picture(Page.find_by_id(page.page_id), true) %>
+							<div class="ranking">
+								<div class="flecha-up"></div>
+								<div class="puntuacion text-right"><%= page.engagement %></div>
+							</div>
+						</li>				
+					<% end %>
+				<% end %>
 			</ul>
 		</div><!--endSpan6-->
 		

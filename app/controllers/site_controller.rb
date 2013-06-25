@@ -5,7 +5,12 @@ class SiteController < ApplicationController
   def home 
       @pages = Page.count
       @users = User.count
-
+      
+      kk = FbMetrics.new()
+      @top_engage = FbTopEngage.where("day = ?", Time.now.yesterday.strftime("%Y%m%d").to_i)
+      @top_engage.each do |p|
+        p.engagement = kk.get_engagement(p.fan_count, p.talking_about_count)
+      end
   end
 
   def search_page

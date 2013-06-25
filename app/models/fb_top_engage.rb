@@ -1,4 +1,5 @@
 class FbTopEngage < ActiveRecord::Base
+  attr_accessor :engagement
   
   belongs_to :page
   
