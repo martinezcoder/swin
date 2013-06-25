@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130621194916) do
+ActiveRecord::Schema.define(:version => 20130625133919) do
 
   create_table "authentications", :force => true do |t|
     t.integer  "user_id"
@@ -48,6 +48,7 @@ ActiveRecord::Schema.define(:version => 20130621194916) do
     t.integer  "talking_about_count"
   end
 
+  add_index "fb_top_engages", ["day", "page_id"], :name => "index_fb_top_engages_on_day_and_page_id", :unique => true
   add_index "fb_top_engages", ["day"], :name => "index_fb_top_engages_on_day"
   add_index "fb_top_engages", ["page_id"], :name => "index_fb_top_engages_on_page_id"
 
