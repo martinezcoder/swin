@@ -11,7 +11,14 @@ namespace :db do
   def fb_top_engage
     day_yesterday = Time.now.yesterday.strftime("%Y%m%d").to_i
 
-    topPagesYesterday = PageDataDay.select("page_id, likes, prosumers, ((prosumers*100)/likes)*6").where("day = ? and likes > 100000", day_yesterday).order('2 DESC').limit(3)
+    txt = "CASE " + 
+            " WHEN prosumers > 1000000 THEN ((prosumers*100)/likes)*50" +
+            " WHEN prosumers > 100000 THEN ((prosumers*100)/likes)*25" +
+            " WHEN prosumers > 10000 THEN ((prosumers*100)/likes)*15" +
+          " END"
+
+
+    topPagesYesterday = PageDataDay.select("page_id, likes, prosumers, " + txt ).where("day = ? and likes > 100000", day_yesterday).order('2 DESC').limit(3)
 
     begin
       topPagesYesterday.each do |p|

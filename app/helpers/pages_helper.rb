@@ -249,7 +249,7 @@ module PagesHelper
 
       def engagement(fans, actives)
         if fans > 0
-          engagement = actives * 6 *100 / fans
+          engagement = actives * peso_engage(fans) *100 / fans
         else
           engagement = 0
         end
@@ -258,6 +258,27 @@ module PagesHelper
   
       def variation(new_data, old_data)
         ((new_data - old_data) / old_data) * 100
+      end
+      
+    private
+     
+      def peso_engage(fans)
+        case fans
+          when 0..99
+            1
+          when 100..999
+            3
+          when 1000..9999
+            5
+          when 10000..99999
+            10
+          when 100000..999999
+            15
+          when 1000000..9999999
+            25
+          else
+            50
+        end
       end
 
   end
