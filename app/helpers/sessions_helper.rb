@@ -59,7 +59,7 @@ module SessionsHelper
   end
 
   def membership_user?
-    if ["fran.martinez@socialwin.es"].include?(current_user.email)
+    if ["fran.martinez@socialwin.es", "thomas.bartczak@socialwin.es"].include?(current_user.email)
       true
     else
       false

@@ -2,7 +2,7 @@
 
 <%= render 'facebook/charts/chart_timeline', :graph => "graph_div" %>
 
-<%= render 'facebook/layouts/competitors', :list => @list %>
+<%= render 'facebook/layouts/competitors', :list => @list, :mypath => facebook_path %>
 
 <h1>Variación semanal:
 <% if @var == 0 %>

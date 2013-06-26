@@ -94,7 +94,6 @@ include DashboardHelper
           list = get_active_list.pages
         end
       else
-#        date_to = Time.now - (24*60*60) # yesterday
         @type_graph = engage_day
         list = get_active_list.pages # all competitors      
       end
@@ -135,15 +134,20 @@ include DashboardHelper
   def timeline_engage
     
     session[:active_tab] = FACEBOOK
-    
+
     @list = get_active_list
 
-    if !(page = get_active_list_page)
-      page = @list.pages.first
-      @list.set_lider_page(page)
+    if params.has_key?("page")
+      list = []
+      @params_page = params["page"]      
+      page = Page.find_by_id(@params_page)
+    else  
+      if !(page = get_active_list_page)
+        page = @list.pages.first
+        @list.set_lider_page(page)
+      end
+      params["page"] = page.id.to_s
     end
-
-#    redirect_to facebook_engage_path(pages: page.id, date_from: 8.days.ago.strftime("%Y%m%d"), date_to: 1.days.ago.strftime("%Y%m%d"))
 
     fb_metric = PagesHelper::FbMetrics.new(get_token(FACEBOOK))
     engageData = fb_metric.get_page_engagement_timeline(page, 16.days.ago, 1.days.ago)

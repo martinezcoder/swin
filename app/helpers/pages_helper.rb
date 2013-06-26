@@ -50,13 +50,13 @@ module PagesHelper
     def get_variation_between_dates(page, dayFrom, dayTo)
       begin
         reg = page.page_data_days.select("day, likes, prosumers").where("day = ?", dayFrom)
-        valueBefore = engagement(reg[0].likes, reg[0].prosumers)
+        valueOld = engagement(reg[0].likes, reg[0].prosumers)
         reg = page.page_data_days.select("day, likes, prosumers").where("day = ?", dayTo)
-        valueAfter = engagement(reg[0].likes, reg[0].prosumers)
-        return variation(valueAfter, valueBefore)
+        valueNew = engagement(reg[0].likes, reg[0].prosumers)
+        return variation(valueOld, valueNew)
       rescue
         return 0
-      end      
+      end
     end
     
     # Engagement
@@ -77,7 +77,7 @@ module PagesHelper
           dataRecords.each_with_index do |dataDay, i|     
               engageToday = engagement(dataDay.likes, dataDay.prosumers)
               @max_value = [@max_value, engageToday].max
-              variation = variation(engageToday.to_f, engageYesterday.to_f)
+              variation = variation(engageYesterday.to_f, engageToday.to_f)
 
               html_tooltip = html.html_tooltip_engage(picture, page.name, engageToday, variation)
               html_variation = html.html_variation(variation)
@@ -177,7 +177,7 @@ module PagesHelper
         dayPageData = page.page_data_days.where("day = #{day.strftime("%Y%m%d").to_i}")
         engage_today = (dayPageData.empty?? 0 : engagement(dayPageData[0].likes, dayPageData[0].prosumers))
 
-        engage_variation = variation(engage_today.to_f,engage_yesterday.to_f)
+        engage_variation = variation(engage_yesterday.to_f, engage_today.to_f)
 
         pName = page.name
         pPicture = PagesHelper.get_picture(page, @access_token)
@@ -250,7 +250,7 @@ module PagesHelper
         engagement
       end
 
-      def variation(new_data, old_data)
+      def variation(old_data, new_data)
         ((new_data - old_data) / old_data) * 100
       end
 
