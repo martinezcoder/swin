@@ -26,25 +26,30 @@ include DashboardHelper
     @type_graph = nil
 
     begin
-      if params.has_key?(:date_from) && params.has_key?(:date_to)
-          date_from = Time.strptime(params[:date_from], "%Y%m%d") # historic timeline
-          date_to = Time.strptime(params[:date_to], "%Y%m%d")
-          dateRange = (date_to - date_from)/60/60/24
-          @type_graph = engage_timeline
-          if dateRange < 0 
-            flash[:info] = "ATENCIÓN: rango de fechas no válido"
-            raise
-          elsif dateRange > MAX_DATE_RANGE
-            flash[:info] = "ATENCIÓN: el rango debe ser inferior a tres meses"
-            raise
-          elsif date_from == date_to
-            @type_graph = engage_day
-          end
-          
-      elsif params.has_key?(:date_to)
-          date_to = Time.strptime(params[:date_to], "%Y%m%d") # historic day
+      if !membership_user?
+        date_to = Time.now - (24*60*60) # yesterday
+        @type_graph = engage_day
       else
-          date_to = Time.now - (24*60*60) # yesterday
+        if params.has_key?(:date_from) && params.has_key?(:date_to)
+            date_from = Time.strptime(params[:date_from], "%Y%m%d") # historic timeline
+            date_to = Time.strptime(params[:date_to], "%Y%m%d")
+            dateRange = (date_to - date_from)/60/60/24
+            @type_graph = engage_timeline
+            if dateRange < 0 
+              flash[:info] = "ATENCIÓN: rango de fechas no válido"
+              raise
+            elsif dateRange > MAX_DATE_RANGE
+              flash[:info] = "ATENCIÓN: el rango debe ser inferior a tres meses"
+              raise
+            elsif date_from == date_to
+              @type_graph = engage_day
+            end
+            
+        elsif params.has_key?(:date_to)
+            date_to = Time.strptime(params[:date_to], "%Y%m%d") # historic day
+        else
+            date_to = Time.now - (24*60*60) # yesterday
+        end
       end
     rescue
       flash[:info] = "Opps, algo no ha ido bien..." if flash[:info].nil?

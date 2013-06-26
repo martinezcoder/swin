@@ -11,7 +11,7 @@ module ApplicationHelper
   end
 
   def menu_link(link_text, icon_type, link_path)
-    class_name = current_page?(link_path) ? 'active' : ''
+    class_name = (request.path == link_path) ? 'active' : ''
     content_tag(:li, :class => class_name) do
       link_to link_path do
         icon_type.nil? ? link_text : content_tag(:i, '', :class => icon_type) + ' ' + link_text
