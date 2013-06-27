@@ -87,11 +87,13 @@ aside {
       border: 0;
       padding-top: 0;
     }
+
     span {
       display: block;
       margin-bottom: 3px;
       line-height: 1;
     }
+
     h1 {
       font-size: 1.4em;
       text-align: left;
@@ -104,10 +106,11 @@ aside {
   }
 }
 
-.well{
+aside .well{
   max-width:340px;
   padding:8px 0;
 }
+
 .gravatar {
   float: left;
   margin-right: 10px;
