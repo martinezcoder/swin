@@ -9,20 +9,24 @@ $facebookcolor: #3B5998;
 @mixin box_sizing {
   -moz-box-sizing: border-box; 
   -webkit-box-sizing: border-box; 
-  box-sizing: border-box;
+  box-sizing: border-box;  font-weight: bold;
 }
 
 
 @mixin recuadrogris {
-  background-color: #eeeeee;
+  background-color:transparent ; // #eeeeee
   -webkit-border-radius: 6px;
   -moz-border-radius: 6px;
   border-radius: 6px;
 }
 
 
-body { padding-top: 60px;}
-
+body { padding-top: 54px;}
+#app_content {
+    padding-bottom: 37px;
+    padding-top: 10px;
+}
+/*
 h1 {
   font-size: 3em;
   letter-spacing: -2px;
@@ -43,9 +47,9 @@ p {
   font-size: 1.1em;
   line-height: 1.7em;
 }
+*/
 
-
-/* header */
+/* header 
 
 #logo {
   float: left;
@@ -55,7 +59,6 @@ p {
   // text-transform: uppercase;
   letter-spacing: -1px;
   padding-top: 9px;
-  font-weight: bold;
   line-height: 1;
   &:hover {
     color: $azulSocialWin;
@@ -63,7 +66,7 @@ p {
   }
 }
 
-
+*/
 
 /* sidebar */
 // se usa en users/show.html.erb
@@ -92,6 +95,10 @@ aside {
   }
 }
 
+.well{
+  max-width:340px;
+  padding:8px 0;
+}
 .gravatar {
   float: left;
   margin-right: 10px;
@@ -178,9 +185,10 @@ input {
 
 /* buttons */
 
-.btn-large{
+/*.btn-large{
   font-size: 15px;
 } 
+*/
 
 .signinmenu li a{ 
     margin-left: 15px;
@@ -322,7 +330,8 @@ input {
   float: left;
   padding: 10px;
   margin: 0 0 10px 0px;
-  background:transparent url(/assets/hummingbirds.gif) center no-repeat;
+  border: 6px solid #EEEEEE;
+  background:url(/assets/hummingbirds.gif) center no-repeat transparent ;
   min-height: 100px;
   &:first-child {
     margin: 0 5px 10px 0px;
@@ -421,7 +430,7 @@ input {
       box-shadow: rgb(150,150,150) 2px 2px 2px;  
   
       #engageNumber {
-        font: bold 16px verdana, sans-serif;
+       /* font: bold 16px verdana, sans-serif; */
       /*  text-shadow: rgba(0,0,0,0.5) 1px 1px 1px; */
         color: white;
       }
@@ -484,7 +493,8 @@ input {
   color: $facebookcolor;  
 }
 
-.home {
+
+/*.home {
   background:url(home.jpg) 0 0 no-repeat #fff;
   height: 600px;
 
@@ -550,5 +560,6 @@ select {
   height: 35px;
   font-size: 12px;
 }
+*/
 
 @import "bootstrap-responsive";

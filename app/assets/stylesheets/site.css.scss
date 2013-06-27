@@ -17,12 +17,16 @@ html, body {height: 100%;}
          font-url('dominik.woff') format('woff'),
          font-url('dominik.ttf') format('truetype'),
          font-url('dominik.svg#DominikRegular') format('svg');
+    font-weight: normal;     
 }
 .sw-blue{
   color: #6EC7D9;
 }
 .sw-violet{
   color:#50388C;
+}
+.sw-green{
+  color: #5FAD2E;
 }
 body { 
   font-family: 'DominikRegular', Helvetica,'Lucida Grande', Verdana;  
@@ -42,7 +46,7 @@ p{
     margin: 0 0 13px;
 }
 hr, .hr{
-  margin: 0 0 23px;
+    margin: -13px 0 23px;
 }
 #lazo{
   position:absolute;
@@ -84,6 +88,7 @@ hr, .hr{
     margin: 0 auto;
     padding: 6px;
     width: 246px;
+    color:#ffffff;
 }
 .btn-large{
     border-radius: 1px 1px 1px 1px;
@@ -125,7 +130,7 @@ hr, .hr{
 
 /*video*/
 #video{  
-    padding: 54px 0 30px;
+    padding: 54px 10px 30px;
 }
 .video{
     margin: 20px auto;
@@ -191,7 +196,7 @@ hr, .hr{
 
 /*top search searcher*/
 #top-search{
-    padding: 20px 0 60px;
+    padding: 20px 10px 60px;
 }
 em#lent{
     left: 12px;
@@ -229,7 +234,6 @@ em#lent{
   margin:0;
 }
 #fb_search li{
-    background: none repeat scroll 0 0 #F8F8F8;
     display: block;
     height: 50px;
     margin: 8px 0;
@@ -242,8 +246,7 @@ em#lent{
     line-height: 12px;
     padding: 4px 4px 4px 10px;
     vertical-align: middle;
-    width: 270px;
-
+    width: 63%;
 }
 .name p{
       word-wrap: break-word; 
@@ -258,7 +261,7 @@ em#lent{
 #metodo{
     background: none repeat scroll 0 0 #E8E9EB;
     color: #999999;
-    padding: 35px 0 48px;
+    padding: 35px 10px 48px;
 }
 .img-metodo{
     display: block;
@@ -270,14 +273,14 @@ em#lent{
 /*target*/
 #a_quien{
     color: #999999;
-    padding: 50px 0 0; 
+    padding: 50px 10px 0;
 }
 .quienes{
     color:#5FAD2E;
     padding: 24px 0;    
 }
 #marketers{
-    background: url("dirigido1.png") no-repeat scroll 121px 0 / 68px auto transparent;
+    background: url("dirigido1.png") no-repeat scroll 134px 0 / 68px auto transparent;
     height: 19px;
 }
 #community{
@@ -285,8 +288,8 @@ em#lent{
     height: 19px;
 }
 #social{
-    background: url("dirigido3.png") no-repeat scroll 143px 0 / 68px auto transparent;
-    height: 19px; 
+    background: url("dirigido3.png") no-repeat scroll 138px 0 / 68px auto transparent;
+    height: 19px;
 }
 
 /* informes */
@@ -309,11 +312,16 @@ em#lent{
 }
 #info2{
     color: #50388C;
+    font-weight: bold;
     padding: 14px 20px 0;
-}
+}    
 #info3{
-    color:#50388C;
-    padding: 0 20px;  
+    color: #50388C;
+    font-weight: bold;
+    padding: 0 20px; 
+}
+#info4{
+    color: #50388C;
 }
 
 
@@ -325,9 +333,10 @@ em#lent{
 #partners li{
     background: none repeat scroll 0 0 transparent;
     display: inline-block;
+    margin: 13px 21px 10px;
     min-height: 65px;
+    min-width: 245px;
     vertical-align: top;
-    width: 24.5%;  
 } 
 .image-partner{
   background:#000;
@@ -339,7 +348,7 @@ em#lent{
     width: 228px;
 }
 #bertelsmann{
-    background: url("partners/2.bertelsmann.jpg") no-repeat scroll 0 0 transparent;
+    background: url("partners/2.bertelsmann.jpg") no-repeat scroll 0 10px transparent;
     width: 201px;
 }
 #iebs{
@@ -363,6 +372,7 @@ em#lent{
 #digitalweek{
     background: url("partners/digitalweek-color.png") no-repeat scroll 0 0 transparent;
     width: 120px;
+
 }
 #busco{
     background: url("partners/buscoseo-color.png") no-repeat scroll 0 0 transparent;
@@ -375,36 +385,42 @@ em#lent{
     width: 103px; 
 }
 #socialday{
-    background: url("partners/10.Mashable.jpg") no-repeat scroll 0 0 transparent;  
-    width:115px;
+    background: url("partners/10.Mashable.jpg") no-repeat scroll 0 0 / 91px 88px transparent;
+    height: 87px;
+    width: 115px;
 }
 #congres{
     background: url("partners/w-congress-color.png") no-repeat scroll 0 0 transparent;
+    margin-top: 11px;
     width: 46px;
 }
 #school{
     background: url("partners/w_school-color.png") no-repeat scroll 0 0 transparent;
+    margin-top: 11px;
     width: 45px; 
 }
 
 
 
-
+/*######################################################################*/
 /*### search-page ######################################################*/
 /*######################################################################*/
 #search-page{
-    padding: 10px 0 76px;
+    padding: 0 10px 76px;
 }
 #consulta{
   color: #6EC7D9;
 }
 .arrow {
-    background: url("go.png") repeat scroll 0 0 transparent;
+    background: url("arrows-engagement.png") repeat scroll -64px -5px transparent;
     display: inline;
     float: right;
-    height: 40px;
-    margin-top: 4px;
-    width: 40px;
+    height: 46px;
+    margin-top: 0;
+    width: 45px;
+}
+.arrow:hover{
+    background: url("arrows-engagement.png") repeat scroll -130px -5px transparent; 
 }
 #div-search-box{
     display: block;
@@ -420,8 +436,83 @@ em#lent{
 }
 
 
+/*######################################################################*/
+/*### search-engagement-page ############################################*/
+/*######################################################################*/
+#search-engagement-page {
+    padding: 17px 10px 85px;
+}
+.form-case {
+    margin: 20px 0 10px;
+}
+.podium-case {
+    margin: 32px 0 10px;
+}
+
+
+/*######################################################################*/
+/*### sobre socialwin ############################################*/
+/*######################################################################*/
+#cita{
+    background: none repeat scroll 0 0 #E8E9EB;
+    padding: 38px 10px 85px;
+}
+.cita-case{
+    color: #3F3F3F;
+    margin: 0 auto;
+    max-width: 830px;    
+}
+#cita-thomas{
+    line-height: 23px;
+    margin: 0 auto;
+
+}
+#cita-thomas-sign{
+    color: #3F3F3F;
+    margin: 0 auto;
+    max-width: 830px;
+}
+#informe-social-media {
+    padding: 20px 10px 30px;
+}
+
+#informe-social-media .container.text-center > p {
+    margin: 0 0 51px;
+}
+.descargar-informe{
+      border-color: #EDEDED;
+    color: #999999;
+    font-weight: bold;
+    font-family:Helvetica;
+}
+#informe-social-media .span6 p {
+    padding: 4px 97px 13px;
+}
+
+#blog {
+    padding: 23px 10px 43px;
+}
+.post{
+  
+}
+.titulo-post {
+    background-color: #EDEEE5;
+    color: #4D4D4D;
+    font-family: Helvetica;
+    font-weight: bold;
+    margin: 5px 0 17px;
+    padding: 15px 30px;
+}
+.content-post{}
+
+#equipo{
+    padding: 23px 10px 43px;  
+}
+
+
 @media only screen and (max-device-width: 800px), only screen and (device-width: 1024px) and (device-height: 600px), only screen and (width: 1280px) and (orientation: landscape), only screen and (device-width: 800px), only screen and (max-width: 767px) {
   .flex-video { padding-top: 0; }
+  .navbar-fixed-top {top: 0px;}
 }
 
 
@@ -439,4 +530,11 @@ em#lent{
     margin-right: 0;
     margin-left: 0;
   }
+  #lazo{display:none;}
+  .navbar-fixed-top {top: 0px;}
+}
+
+
+.navbar-fixed-top {
+    top: 0px;
 }

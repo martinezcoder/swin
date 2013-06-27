@@ -2,8 +2,8 @@
 
 <h1><%= @page.name %></h1>
 
-     <div style="padding:5px 5px 5px 5px;text-align: center;align:center;">
-        <div style="margin:10px auto 10px auto;
+     <div ><!--style="padding:5px 5px 5px 5px;text-align: center;align:center;" -->
+        <div ><!-- style="margin:10px auto 10px auto;
        				width: 40px;
        				padding: 20px;
        				font-size: 1.7em;
@@ -18,7 +18,7 @@
                     -moz-box-shadow: rgb(150,150,150) 2px 2px 2px;
                     -webkit-box-shadow: rgb(150,150,150) 2px 2px 2px;
                     box-shadow: rgb(150,150,150) 2px 2px 2px;
-                    ">
+                    "-->
             <strong><%= @engage %></strong>
         </div>
       </div>
@@ -27,19 +27,20 @@
 
 
 
-	<div style="padding:5px 5px 5px 5px;text-align: center; align:center;">
+	<div ><!--style="padding:5px 5px 5px 5px;text-align: center; align:center;" -->
         <p><strong><%= @page.name %></strong></p>
-        <div style="margin-bottom:10px;">
-        <img src="<%= get_picture(@page, big=true) %>">
+        <div ><!-- style="margin-bottom:10px;"-->
+        	<img src="<%= get_picture(@page, big=true) %>">
         </div>
-        <p>Fans: <strong> <%= @page.fan_count %> </strong>
-        <br/>Activos: <strong> <%= @page.talking_about_count %></strong></p>
+        <p>Fans: <strong> <%= @page.fan_count %> </strong><br/>
+        Activos: <strong> <%= @page.talking_about_count %></strong></p>
         <small><%= link_to "Ver en Facebook", get_url(@page), target: "_blank" %></small>
 	</div>
 
 	<%= render 'facebook/charts/chart_timeline', :graph => "graph_div" %>
 	<%= render 'facebook/shared/graph', :graph => "graph_div" %>
 	
+<!--
 <li id="Twitter_Counter">
 	<script>
 	!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];
@@ -63,3 +64,4 @@
 			class="twitter-share-button twitter-count-horizontal" style="width: 117px; height: 20px;" title="Twitter Tweet Button" data-twttr-rendered="true">		
 	</iframe>
 </li>
+-->

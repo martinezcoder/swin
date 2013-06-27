@@ -6,8 +6,8 @@
 	<div class="row">
 		
 		<div class="span6">
-			<p><strong>Resultados para:</strong></p>
-			<p>Ir al rsultado de engagement</p>
+			<p><strong>Resultados para: </strong><%=  params[:search] %></p>
+			<p>Ir al resultado de engagement</p>
 				<% if @searching %>
 					<!-- Este lo carga el jQuery -->
 				   <div id="fb_search" data-facebook-search="<%= @fb_search_path %>" >
@@ -17,10 +17,10 @@
 		</div><!--endSpan6-->	
 		
 		<div class="span6">
-			    <p>Nueva búsqueda</p>
+			    <p><strong>Nueva búsqueda</strong></p>
 			    <p>Tip. si no encuentras lo que buscas, inserta la URL de la página deseada.</p>
     			<div id="div-search-box">
-						<%= form_tag(search_page_path, :method => "get", class: "navbar-search search") do %>
+						<%= form_tag(search_path, :method => "get", class: "navbar-search search") do %>
 						<fieldset>
 							<em class="icon-search" id="lent"></em> 
 							<%= text_field_tag(:search, params[:search], class: "input-xlarge search-query", placeholder: "Buscar páginas...", autocomplete: "off") %>

@@ -39,7 +39,7 @@
 			    <h3 class="sw-violet">¿No tienes fanpage?</h3>
 				<h4 class="sw-blue">Lo hacemos fácil, ahora puedes conocer el engagement de tus marcas favoritas ;-)</h4>
 				
-				<%= form_tag(search_page_path, :method => "get", class: "navbar-search search") do %>
+				<%= form_tag(search_path, :method => "get", class: "navbar-search search") do %>
 				<fieldset>
 					<em class="icon-search" id="lent"></em> 
 					<%= text_field_tag(:search, params[:search], class: "input-xlarge search-query", placeholder: "Buscar páginas...", autocomplete: "off") %>

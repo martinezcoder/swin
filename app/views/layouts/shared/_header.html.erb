@@ -12,7 +12,7 @@
 			<!-- Logo -->
 			<div class="brand">
 				<a href="index.html" title="SocialWin">
-				<%= image_tag "logo-social196x56.png", {:width => 145}  %> 
+				<%=link_to (image_tag "logo-social196x56.png", {:width => 145}), '/' %> 
 				<!-- :size => "196x56"{-->
 				</a>
 			</div>
@@ -20,13 +20,17 @@
 			<!-- Main Menu / Colapse-->	
 			<div class="nav-collapse collapse">
 				<ul class="nav pull-right">
-				   <li><a class="scroll" href="#">CONSULTA ENGAGEMENT</a></li>
-				   <li><a class="scroll" href="#">SOBRE SOCIALWIN</a></li>
+					<!--<li><%= link_to "PLANES DE PRECIOS"  %></li>-->
+					<!--<li><%= link_to "CARACTERÍSTICAS"  %></li>-->
+					<%= menu_link('CONSULTA ENGAGEMENT', '', search_path) %>
+					<%= menu_link('SOBRE SOCIALWIN', '', about_path) %>
+					
+				   
 					<% if signed_in? %>
 						
-						<li class="dropdown"> <!--id="fat-menu"--> 
+						<li class="dropdown" id="config"> <!--id="fat-menu"--> 
 	
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+							<a href="#"  data-toggle="dropdown"><!--class="dropdown-toggle"-->
 								<%= image_for current_user %>
 								<span class="user-session"><%= current_user.name %></span><b class="caret"></b>
 							</a>
@@ -37,15 +41,16 @@
 							</ul>
 						</li>
 	
-	
 					<% else %>
 	
-						<li  class="dropdown"><!--id="fat-menu"-->
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+						<li  class="dropdown" id="config"><!--id="fat-menu"     -->
+							
+							<a href="#" data-toggle="dropdown"><!-- class="dropdown-toggle"-->
 								EMPEZAR AHORA <b class="caret"></b>
 							</a>
-							<ul class="dropdown-menu signinmenu">
-								<li><%= link_to "Facebook", '/auth/facebook', class: "btn btn-small btn-primary" %></li>
+							
+							<ul class="dropdown-menu "><!--signinmenu-->
+								<li><%= link_to "Facebook", '/auth/facebook' %></li><!--, class: "btn btn-small btn-primary" -->
 								<!-- <li><%= link_to "Twitter", "/auth/twitter", class: "btn btn-small btn-info" %></li> -->
 							</ul>
 						</li>

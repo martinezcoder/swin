@@ -13,13 +13,13 @@
 				<h4>REDES SOCIALES</h4>
 
 				<ul class="unstyled">
-					<li><%= link_to "Twitter", "https://twitter.com/SocialWinTW" %></li>
-					<li><%= link_to "Facebook", "http://www.facebook.com/349679691794392" %></li>
-					<li><%= link_to "LinkedIn", "http://www.linkedin.com/company/socialwin" %></li>
-					<li><%= link_to "YouTube", "https://www.youtube.com/user/SocialWin" %></li>
-					<li><%= link_to "Google+", " https://plus.google.com/u/0/106528211751763873508" %></li>
-					<li><%= link_to "Pinterest", "http://pinterest.com/socialwin/" %></li>	
-					<li><%= link_to "Rss", "http://feeds.feedburner.com/SocialWin" %></li>													
+					<li><%= link_to "Twitter", "https://twitter.com/SocialWinTW", :target => "_blank" %></li>
+					<li><%= link_to "Facebook", "https://www.facebook.com/SocialWinAnalytics", :target => "_blank" %></li>
+					<li><%= link_to "LinkedIn", "http://www.linkedin.com/company/socialwin", :target => "_blank" %></li>
+					<li><%= link_to "YouTube", "https://www.youtube.com/user/SocialWin", :target => "_blank" %></li>
+					<li><%= link_to "Google+", " https://plus.google.com/u/0/106528211751763873508", {:target => "_blank", :rel => 'publisher'} %></li>
+					<li><%= link_to "Pinterest", "http://pinterest.com/socialwin/", :target => "_blank" %></li>	
+					<li><%= link_to "Rss", "http://feeds.feedburner.com/SocialWin", :target => "_blank" %></li>													
 					<!--<li><%= link_to "Blog", "http://www.socialwin.es/nosotros/blog/" %></li>-->
 				</ul>
 			</div>
@@ -44,20 +44,20 @@
 
 		</div><!--endRow-->
 		
-		<div class="clientes">
+		<!--<div class="clientes">
 			<h3 class="text-center">Clientes</h3>
 			<ul id="clientes">
-				<li><a href="#"><div class="imag-clients"><% image_tag "clientes/aol-bn.png" %></div></a></li>
-				<li><a href="#"><div class="imag-clients"><% image_tag "clientes/gaes-bn.png" %></div></a></li>
-				<li><a href="#"><div class="imag-clients"><% image_tag "clientes/turisme-bn.png"  %></div></a></li>
-				<li><a href="#"><div class="imag-clients"><% image_tag "clientes/catalunyacaixa-bn.png" %></div></a></li>
-				<li><a href="#"><div class="imag-clients"><% image_tag "clientes/AmericanRedCross-bn.png"  %></div></a></a></li>
-				<li><a href="#"><div class="imag-clients"><% image_tag "clientes/seat-bn.png"  %></div></a></li>
-				<li><a href="#"><div class="imag-clients"><% image_tag "clientes/watx-bn.png" %></div></a></li>
-				<li><a href="#"><div class="imag-clients"><% image_tag "clientes/grupoduplex-bn.png" %></div></a></li>
-				<li><a href="#"><div class="imag-clients"><% image_tag "clientes/telepolis-bn.png"  %></div></a></li>
+				<li><a href="#"><div class="imag-clients" id="aol"></div></a></li>
+				<li><a href="#"><div class="imag-clients" id="gaes"></div></a></li>
+				<li><a href="#"><div class="imag-clients" id="barcelona"></div></a></li>
+				<li><a href="#"><div class="imag-clients" id="catalunya"></div></a></li>
+				<li><a href="#"><div class="imag-clients" id="american"></div></a></li>
+				<li><a href="#"><div class="imag-clients" id="seat"></div></a></li>
+				<li><a href="#"><div class="imag-clients" id="watx"></div></a></li>
+				<li><a href="#"><div class="imag-clients" id="grupo"></div></a></li>
+				<li><a href="#"><div class="imag-clients" id="telepolis"></div></a></li>
 			</ul>
-		</div>
+		</div>-->
 	</div><!--container-->
 </footer>
 
@@ -72,7 +72,7 @@
 				<ul class="unstyled inline pull-right">
 					<li><small><%= link_to "Política de privacidad", '/private_policy.html' %></small></li>
 					<li><small><%= link_to "Condiciones del servicio", '/terms.html' %></small></li>
-					<li><small>&copy; SocialWin 2013</small></li>
+					<li><small style="color: #333333;">&copy; SocialWin 2013</small></li>
 				</ul>
 			</div>
 		</div>

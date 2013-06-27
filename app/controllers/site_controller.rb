@@ -8,7 +8,7 @@ class SiteController < ApplicationController
 
   end
 
-  def search_page
+  def search
       @searching = false
 
       if params.has_key?(:search) && params[:search] != ""
@@ -21,5 +21,8 @@ class SiteController < ApplicationController
         end
         @fb_search_path = "https://graph.facebook.com/" + subUrl
       end    
+  end
+  
+  def about
   end
 end
