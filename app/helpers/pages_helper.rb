@@ -55,6 +55,7 @@ module PagesHelper
         valueNew = engagement(reg[0].likes, reg[0].prosumers)
         return variation(valueOld, valueNew)
       rescue
+       # probably because no data has been catched from these days and this page
         return 0
       end
     end
@@ -251,7 +252,7 @@ module PagesHelper
       end
 
       def variation(old_data, new_data)
-        ((new_data - old_data) / old_data) * 100
+        return (new_data - old_data)
       end
 
   end
