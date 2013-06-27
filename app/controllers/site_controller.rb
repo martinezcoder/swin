@@ -7,10 +7,12 @@ class SiteController < ApplicationController
       @users = User.count
       
       metrics = FbMetrics.new()
-      @top_engage = FbTopEngage.where("day = ?", Time.now.yesterday.strftime("%Y%m%d").to_i)
-      @top_engage.each do |tops|
+      top_engage_list = FbTopEngage.where("day = ?", Time.now.yesterday.strftime("%Y%m%d").to_i)
+      top_engage_list.each do |tops|
         tops.engagement = metrics.get_engagement(tops.fan_count, tops.talking_about_count)
       end
+
+      @top_engage = top_engage_list.sort_by{|data| data.engagement}.reverse
 
   end
 
