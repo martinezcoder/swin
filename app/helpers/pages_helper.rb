@@ -7,7 +7,8 @@ module PagesHelper
   end
   
   def get_picture(page, big=false)
-    PagesHelper.get_picture(page, get_token(FACEBOOK), big)
+    fb_token = signed_in? ? get_token(FACEBOOK) : nil
+    PagesHelper.get_picture(page, fb_token, big)
   end
 
   class << self
@@ -16,7 +17,7 @@ module PagesHelper
       if big
         ret += "type=large&"
       end
-      ret += "access_token=" + access_token
+      ret += "access_token=" + access_token if access_token
       return page.pic_square || ret
       # El siguiente método comentado permite que se muestren logos de marcas de bebidas alcohólicas. El problema con esta llamada está en que, para cada página mostrada realiza una llamada a la API de Facebook desde nuestro servidor, ralentizando enormemente el renderizado de la página.
       # Para que muestre todas las páginas debemos pasarle el token de facebook...
@@ -35,7 +36,7 @@ module PagesHelper
   class FbMetrics
     attr_accessor :max_value, :options, :error
     
-    def initialize(access_token)
+    def initialize(access_token = nil)
       @access_token = access_token
       @max_value = 0
       @error = 0
@@ -49,16 +50,23 @@ module PagesHelper
     def get_variation_between_dates(page, dayFrom, dayTo)
       begin
         reg = page.page_data_days.select("day, likes, prosumers").where("day = ?", dayFrom)
-        valueBefore = engagement(reg[0].likes, reg[0].prosumers)
+        valueOld = engagement(reg[0].likes, reg[0].prosumers)
         reg = page.page_data_days.select("day, likes, prosumers").where("day = ?", dayTo)
-        valueAfter = engagement(reg[0].likes, reg[0].prosumers)
-        return variation(valueAfter, valueBefore)
+        valueNew = engagement(reg[0].likes, reg[0].prosumers)
+        return variation(valueOld, valueNew)
       rescue
+       # probably because no data has been catched from these days and this page
         return 0
-      end      
+      end
     end
     
     # Engagement
+
+    def get_top_engagement()
+      @error = nil
+
+      return @error || dataResult
+    end
     
     def get_page_engagement_timeline(page, date_from, date_to)
       @error = nil
@@ -67,6 +75,9 @@ module PagesHelper
 
       if dataRecords.count == 0
         @error = "Oooops: no hay datos disponibles para las fechas especificadas :( "
+        dataResult = []
+        dataResult[0] = []
+        dataResult[1] = [] 
       else
           engageYesterday = 0
           engageList = []
@@ -76,7 +87,7 @@ module PagesHelper
           dataRecords.each_with_index do |dataDay, i|     
               engageToday = engagement(dataDay.likes, dataDay.prosumers)
               @max_value = [@max_value, engageToday].max
-              variation = variation(engageToday.to_f, engageYesterday.to_f)
+              variation = variation(engageYesterday.to_f, engageToday.to_f)
 
               html_tooltip = html.html_tooltip_engage(picture, page.name, engageToday, variation)
               html_variation = html.html_variation(variation)
@@ -104,8 +115,19 @@ module PagesHelper
           dataResult[0] = dataA
           dataResult[1] = dataB 
       end
+      @options = "seriesType: 'area', 
+                title:'Evolución engagement (fidelidad de los seguidores)',
+                titleTextStyle: {fontSize: 14},
+                colors: ['#0088CC'],
+                height: 200,
+                animation:{duration: 1500,easing: 'out'},
+                hAxes:[{title:''}],
+                vAxis: {minValue:0, maxValue:" + @max_value.to_s + "},
+                fontSize: 10,
+                legend: {position: 'none', textStyle: {fontSize: 14}},
+                tooltip: {isHtml: true}" 
 
-      return @error || dataResult
+      return dataResult
     end
 
     
@@ -176,7 +198,7 @@ module PagesHelper
         dayPageData = page.page_data_days.where("day = #{day.strftime("%Y%m%d").to_i}")
         engage_today = (dayPageData.empty?? 0 : engagement(dayPageData[0].likes, dayPageData[0].prosumers))
 
-        engage_variation = variation(engage_today.to_f,engage_yesterday.to_f)
+        engage_variation = variation(engage_yesterday.to_f, engage_today.to_f)
 
         pName = page.name
         pPicture = PagesHelper.get_picture(page, @access_token)
@@ -226,7 +248,7 @@ module PagesHelper
     def get_page_size_timeline(page, date_start, date_end)
       @error = nil
     end    
-    
+
     def get_list_size_timeline(page_list, date_start, date_end)
       @error = nil
       if date_start == date_end
@@ -237,20 +259,41 @@ module PagesHelper
     def get_list_size_day(page_list, date)
       @error = nil
     end
-    
+
     protected
 
       def engagement(fans, actives)
         if fans > 0
-          engagement = actives * 6 *100 / fans
+          engagement = actives * peso_engage(fans) *100 / fans
         else
           engagement = 0
         end
         engagement
       end
-  
-      def variation(new_data, old_data)
-        ((new_data - old_data) / old_data) * 100
+
+      def variation(old_data, new_data)
+        return (new_data - old_data)
+      end
+      
+    private
+     
+      def peso_engage(fans)
+        case fans
+          when 0..99
+            1
+          when 100..999
+            3
+          when 1000..9999
+            5
+          when 10000..99999
+            10
+          when 100000..999999
+            15
+          when 1000000..9999999
+            25
+          else
+            50
+        end
       end
 
   end

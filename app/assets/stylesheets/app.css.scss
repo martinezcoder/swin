@@ -21,12 +21,20 @@ $facebookcolor: #3B5998;
 }
 
 
-body { padding-top: 54px;}
+body{
+    background:url(body-tail.gif) 0 0 repeat-x #fff;
+    position:relative;
+    padding-top:54px;
+    font-size:13px;
+    line-height:18px
+}
+
 #app_content {
     padding-bottom: 37px;
     padding-top: 10px;
 }
-/*
+
+
 h1 {
   font-size: 3em;
   letter-spacing: -2px;
@@ -47,9 +55,9 @@ p {
   font-size: 1.1em;
   line-height: 1.7em;
 }
-*/
 
-/* header 
+
+/* header */ 
 
 #logo {
   float: left;
@@ -66,7 +74,8 @@ p {
   }
 }
 
-*/
+
+
 
 /* sidebar */
 // se usa en users/show.html.erb

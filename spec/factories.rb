@@ -37,5 +37,14 @@ FactoryGirl.define do
     user
   end
 
+  factory :fb_top_engage do
+      day 20130505
+      page_id 35
+      page_fb_id "349679691794392"
+      fan_count 150000
+      talking_about_count 15
+      variation 3
+  end
+  
 
 end

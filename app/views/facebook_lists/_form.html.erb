@@ -19,13 +19,13 @@
 
   <% if @facebook_list.pages.any? %>	
 	  <div class="span3">
-	  	<%= f.label "Master page" %>
+	  	<%= f.label "Foto de la lista" %>
 	  		<%= f.select(:page_id, options_for_select(@facebook_list.pages.map {|p| [p.name, p.id]}, :selected => @facebook_list.page_id)) %>
 	  </div>
   <% end %>
   
   <div class="span3">
-    <%= f.label "Guardar nombre y master de lista" %>
+    <%= f.label "Guardar nombre y foto de lista" %>
     <%= f.submit "Guardar lista", class: "btn btn-primary" %>
   </div>
 

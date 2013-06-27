@@ -26,8 +26,9 @@ class Page < ActiveRecord::Base
   has_many :list_page_relationships, foreign_key: "page_id", class_name: "ListPageRelationship", dependent: :destroy
   has_many :lists, through: :list_page_relationships
 
-  has_many :page_streams
-  has_many :page_data_days
+  has_many :page_streams,   dependent: :destroy
+  has_many :page_data_days, dependent: :destroy
+  has_many :fb_top_engage,  dependent: :destroy
 
   validates :page_id, presence: true
 
