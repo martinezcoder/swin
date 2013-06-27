@@ -1,7 +1,7 @@
 # encoding: UTF-8
 
 class PagesController < ApplicationController
-  rescue_from ActiveRecord::RecordNotFound, :with => :record_not_found
+#  rescue_from ActiveRecord::RecordNotFound, :with => :record_not_found
   before_filter :user_is_admin, only: [:admin_query]
 
   include PagesHelper

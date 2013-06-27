@@ -506,6 +506,12 @@ input {
 }
 
 
+.page_active_dashboard {
+    a:hover {
+      text-decoration: none;
+    }
+}
+
 /*.home {
   background:url(home.jpg) 0 0 no-repeat #fff;
   height: 600px;

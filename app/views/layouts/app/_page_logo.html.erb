@@ -3,14 +3,11 @@
     <% page = get_active_list_page %>
     
 	<% if !page.nil? %>
-			<div class="page_active_dashboard">
+		<div class="page_active_dashboard">
+			<%= link_to edit_facebook_list_path(list) do %>
+				<%= image_tag get_picture(page), alt: page.name, class: "imgpage", alt: "#{page.name}", title: "#{page.name}" %>
 				<strong><%= list.name %> list</strong>
-				<br />
-				<%= link_to page do %>
-					<%= image_tag get_picture(page), alt: page.name, class: "imgpage", alt: "#{page.name}", title: "#{page.name}" %>
-					<strong><%= page.name %></strong>
-				<% end %>
-			</div>
-
+			<% end %>
+		</div>
 	<% end %>
 <% end %>
