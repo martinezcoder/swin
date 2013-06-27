@@ -2,7 +2,7 @@
 
 <%= render 'facebook/charts/charts_general' %>
 
-<%= render 'facebook/layouts/competitors', :list => @list %>
+<%= render 'facebook/layouts/competitors', :list => @user_list, :mypath => facebook_general_path %>
 
 <%= render 'facebook/shared/graph', :graph => "graph_fans_div" %>
 <%= render 'facebook/shared/graph', :graph => "graph_actives_div" %>

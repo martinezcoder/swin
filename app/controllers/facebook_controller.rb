@@ -163,9 +163,34 @@ include DashboardHelper
   def general
     session[:active_tab] = FACEBOOK
 
-    @list = get_active_list
-    competitors = []
-    competitors += @list.pages   
+
+
+
+
+
+    @user_list = get_active_list
+
+    if params.has_key?(:pages) && params[:pages] != ""
+
+      competitors = []
+      num_competitors = 0
+      @params_pages = params[:pages] 
+      @params_pages.each do |p|
+        if page = Page.find_by_id(p.to_i)
+           if @user_list.pages.include?(page) and !competitors.include?(page)
+             competitors = competitors + [page]
+             num_competitors += 1
+           end 
+        end
+      end
+
+      if num_competitors <= 1
+        competitors = @user_list.pages
+      end
+
+    else 
+      competitors = @user_list.pages
+    end
 
     # update only every page from facebook if last updated was previous than 1 hours ago 
     page = competitors[0]
