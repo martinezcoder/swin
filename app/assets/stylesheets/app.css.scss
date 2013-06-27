@@ -21,7 +21,13 @@ $facebookcolor: #3B5998;
 }
 
 
-body { padding-top: 60px;}
+body{
+    background:url(body-tail.gif) 0 0 repeat-x #fff;
+    position:relative;
+    padding-top:60px;
+    font-size:13px;
+    line-height:18px
+}
 
 h1 {
   font-size: 3em;

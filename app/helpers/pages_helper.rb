@@ -75,6 +75,9 @@ module PagesHelper
 
       if dataRecords.count == 0
         @error = "Oooops: no hay datos disponibles para las fechas especificadas :( "
+        dataResult = []
+        dataResult[0] = []
+        dataResult[1] = [] 
       else
           engageYesterday = 0
           engageList = []
@@ -112,8 +115,19 @@ module PagesHelper
           dataResult[0] = dataA
           dataResult[1] = dataB 
       end
+      @options = "seriesType: 'area', 
+                title:'Evolución engagement (fidelidad de los seguidores)',
+                titleTextStyle: {fontSize: 14},
+                colors: ['#0088CC'],
+                height: 200,
+                animation:{duration: 1500,easing: 'out'},
+                hAxes:[{title:''}],
+                vAxis: {minValue:0, maxValue:" + @max_value.to_s + "},
+                fontSize: 10,
+                legend: {position: 'none', textStyle: {fontSize: 14}},
+                tooltip: {isHtml: true}" 
 
-      return @error || dataResult
+      return dataResult
     end
 
     

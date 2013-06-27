@@ -118,7 +118,7 @@ include DashboardHelper
     if @errors.nil?
       @dataA = engageData[0]
       @dataB = engageData[1]
-      @max = fb_metric.max_value
+      #@max = fb_metric.max_value
       @options = fb_metric.options 
     else
       flash[:info] = @errors
@@ -162,11 +162,6 @@ include DashboardHelper
 
   def general
     session[:active_tab] = FACEBOOK
-
-
-
-
-
 
     @user_list = get_active_list
 

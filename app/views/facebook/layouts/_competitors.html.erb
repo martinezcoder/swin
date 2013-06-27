@@ -1,5 +1,6 @@
 <% if list.pages.any? %>
 <div class="competitors_div">
+
 	<div id="competitors_title">
 	<%= form_tag(mypath) do %>
 		<% list.pages.each do |competitor| %>
@@ -32,4 +33,5 @@
 	<% end %>
 	</div>
 </div>
+
 <% end %>

@@ -51,8 +51,11 @@ class PagesController < ApplicationController
     engageData = fb_metric.get_page_engagement_timeline(@page, 8.days.ago, 1.days.ago)
     @dataA = engageData[0]
     @dataB = engageData[1]
-    @max = fb_metric.max_value
-    @options = fb_metric.options 
+    @options = fb_metric.options
+
+    if (@error = fb_metric.error)
+      @error = "Oops, esta página es nueva para nosotros, tendrás que esperar unos días..."
+    end
 
     @engage = fb_metric.get_engagement(@page.fan_count, @page.talking_about_count)
 
