@@ -37,13 +37,6 @@
 						
 							<ul class="dropdown-menu">
 								<li><%= link_to facebook_engage_path do %><i class="icon-th-large"></i> Dashboard<% end %></li>
-								<% current_user.facebook_lists.each do |list| %>
-									<li>
-										<%= link_to activate_facebook_list_path(list), method: :post do %>
-										<i class=" icon-plus icon-white"></i> Activar
-										<% end %>
-									</li>
-								<% end %>
 								<li><%= link_to signout_path, method: "delete" do %><i class="icon-remove"></i> Cerrar sesión<% end %></li>
 								
 							</ul>
