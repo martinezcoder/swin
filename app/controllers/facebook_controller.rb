@@ -156,7 +156,7 @@ include DashboardHelper
     @max = fb_metric.max_value
     @options = fb_metric.options 
 
-    @var = fb_metric.get_variation_between_dates(page, 8.days.ago.strftime("%Y%m%d"), 1.days.ago.strftime("%Y%m%d") )
+    @var = fb_metric.get_engagement_variations_between_dates(page, 8.days.ago.strftime("%Y%m%d"), 1.days.ago.strftime("%Y%m%d"))[:engagement]
   end
 
 

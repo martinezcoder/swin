@@ -47,16 +47,26 @@ module PagesHelper
        engagement(fans, actives)      
     end
     
-    def get_variation_between_dates(page, dayFrom, dayTo)
+    def get_engagement_variations_between_dates(page, dayFrom, dayTo)
       begin
-        reg = page.page_data_days.select("day, likes, prosumers").where("day = ?", dayFrom)
-        valueOld = engagement(reg[0].likes, reg[0].prosumers)
-        reg = page.page_data_days.select("day, likes, prosumers").where("day = ?", dayTo)
-        valueNew = engagement(reg[0].likes, reg[0].prosumers)
-        return variation(valueOld, valueNew)
+        regOld = page.page_data_days.select("day, likes, prosumers").where("day = ?", dayFrom)
+        regNew = page.page_data_days.select("day, likes, prosumers").where("day = ?", dayTo)
+
+        engageOld = engagement(regOld[0].likes, regOld[0].prosumers)
+        engageNew = engagement(regNew[0].likes, regNew[0].prosumers)
+        
+        fansOld = regOld[0].likes
+        fansNew = regNew[0].likes
+        
+        activesOld = regOld[0].prosumers
+        activesNew = regNew[0].prosumers
+
+        return {engagement: variation(engageOld,  engageNew), 
+                     fans: variation(fansOld,    fansNew), 
+                  actives: variation(activesOld, activesNew)}
       rescue
-       # probably because no data has been catched from these days and this page
-        return 0
+      # probably because no data has been catched from these days and this page
+        return {engagement: 0, fans: 0, actives: 0}
       end
     end
     

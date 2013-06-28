@@ -59,6 +59,8 @@ class PagesController < ApplicationController
 
     @engage = fb_metric.get_engagement(@page.fan_count, @page.talking_about_count)
 
+    @variations = fb_metric.get_engagement_variations_between_dates(@page, 8.days.ago.strftime("%Y%m%d"), 1.days.ago.strftime("%Y%m%d"))
+
     respond_to do |format|
         format.html # show.html.erb
         format.json { render json: engageData }
