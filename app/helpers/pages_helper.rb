@@ -278,6 +278,8 @@ module PagesHelper
     private
      
       def peso_engage(fans)
+        6
+=begin        
         case fans
           when 0..99
             1
@@ -294,6 +296,7 @@ module PagesHelper
           else
             50
         end
+=end
       end
 
   end
