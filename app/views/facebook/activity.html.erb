@@ -1,11 +1,8 @@
-<% provide(:title, "Engagement") %>
+<% provide(:title, "Tamaño") %>
 
-<%= render 'facebook/layouts/competitors', :list =>  @user_list, :mypath => facebook_engage_path %>
-
+<%= render 'facebook/layouts/competitors', :list => @user_list, :mypath => facebook_activity_path %>
+	
 <% if @type_graph == 0 %>
-	<div class="engage_div">
-		<%= render 'facebook/layouts/engage_medals' %>
-	</div>
 
 	<%= render 'facebook/charts/chart_bars', :graph => "graph_div" %>
 	<%= render 'facebook/shared/graph', :graph => "graph_div" %>
@@ -24,5 +21,3 @@
 
 
 <%= render 'facebook/shared/table' %>
-
-

@@ -34,13 +34,14 @@ module PagesHelper
 
 
   class FbMetrics
-    attr_accessor :max_value, :options, :error
+    attr_accessor :max_value, :options, :error, :metric_name
     
     def initialize(access_token = nil)
       @access_token = access_token
       @max_value = 0
       @error = 0
       @options = {}
+      @metric_name = ""
     end
 
     def get_engagement(fans, actives)
@@ -77,10 +78,83 @@ module PagesHelper
 
       return @error || dataResult
     end
-    
-    def get_page_engagement_timeline(page, date_from, date_to)
-      @error = nil
 
+
+    def get_list_in_a_day(page_list, day, metric_name)
+      @error = nil
+      @metric_name = metric_name
+    
+      htmls = DashboardHelper::HtmlHardcodes.new()
+
+      pages_metric_array = []
+      page_list.each_with_index do |page, i|
+
+        dayPageDataY = page.page_data_days.where("day = #{day.yesterday.strftime("%Y%m%d").to_i}")
+        dayPageDataT = page.page_data_days.where("day = #{day.yesterday.strftime("%Y%m%d").to_i}")
+        case @metric_name
+        when "Tamaño"
+          value_yesterday = (dayPageDataY.empty? ? 0 : dayPageDataY[0].likes)
+          value_today = (dayPageDataT.empty? ? 0 : dayPageDataT[0].likes)
+        when "Actividad"
+          value_yesterday = (dayPageDataY.empty? ? 0 : dayPageDataY[0].prosumers)
+          value_today = (dayPageDataT.empty? ? 0 : dayPageDataT[0].prosumers)
+        when "Engagement"
+          value_yesterday = (dayPageDataY.empty?? 0 : engagement(dayPageDataY[0].likes, dayPageDataY[0].prosumers))
+          value_today = (dayPageDataT.empty?? 0 : engagement(dayPageDataT[0].likes, dayPageDataT[0].prosumers))
+        end
+
+
+        value_variation = variation(value_yesterday.to_f, value_today.to_f)
+
+        pName = page.name
+        pPicture = PagesHelper.get_picture(page, @access_token)
+        pUrl = PagesHelper.get_url(page)
+
+        pages_metric_array[i] =  [ htmls.logo(pUrl, pPicture, pName, 'mini_logo'), 
+                        pName, 
+                        page.page_type, 
+                        value_today,
+                        htmls.logo(pUrl, pPicture, pName, 'normal_logo'),
+                        htmls.html_tooltip(pPicture, pName, value_today, value_variation),
+                        htmls.html_variation(value_variation)]
+  
+        @max_value = [@max_value, value_today].max
+      end
+      
+      pages_metric_array = pages_metric_array.sort_by { |a, b, c, d, e, f| d }
+      pages_metric_array = pages_metric_array.reverse
+
+      data_list = []  
+      data_list[0] = []
+      data_list[1] = []
+
+      pages_metric_array.each_with_index do |page_value, i|
+        dataNil = data_list[0][i] = []
+        dataNil[0] = (i+1).to_s
+        dataNil[1] = dataNil[2] = dataNil[3] = dataNil[5] = dataNil[6] = dataNil[7] = ""
+        dataNil[4] = 0
+        data_list[1][i] = [(i+1).to_s] + page_value
+      end
+
+      @options =     "seriesType: 'bars', 
+                title:'Tamaño',
+                titleTextStyle: {fontSize: 14},
+                colors: ['#0088CC'],
+                height: 200,
+                animation:{duration: 1500,easing: 'out'},
+                hAxes:[{title:'Competidores'}],
+                vAxis: {minValue:0, maxValue:" + @max_value.to_s + "},
+                fontSize: 10,
+                legend: {position: 'none', textStyle: {fontSize: 14}},
+                tooltip: {isHtml: true}" 
+      return data_list
+    end
+
+    
+    def get_page_timeline(page, date_from, date_to, metric_name)
+      @error = nil
+      @metric_name = metric_name
+      
       dataRecords = page.page_data_days.select("day, likes, prosumers").where("day between ? and ?", date_from.strftime("%Y%m%d").to_i, date_to.strftime("%Y%m%d").to_i).order('day ASC')
 
       if dataRecords.count == 0
@@ -89,44 +163,53 @@ module PagesHelper
         dataResult[0] = []
         dataResult[1] = [] 
       else
-          engageYesterday = 0
-          engageList = []
+        value_yesterday = 0
+        valueList = []
 
-          html = DashboardHelper::HtmlHardcodes.new()
-          picture = PagesHelper.get_picture(page, @access_token)
-          dataRecords.each_with_index do |dataDay, i|     
-              engageToday = engagement(dataDay.likes, dataDay.prosumers)
-              @max_value = [@max_value, engageToday].max
-              variation = variation(engageYesterday.to_f, engageToday.to_f)
+        html = DashboardHelper::HtmlHardcodes.new()
+        picture = PagesHelper.get_picture(page, @access_token)
+        dataRecords.each_with_index do |dataDay, i|     
 
-              html_tooltip = html.html_tooltip_engage(picture, page.name, engageToday, variation)
-              html_variation = html.html_variation(variation)
+            case @metric_name
+            when "Tamaño"
+              value_today = dataDay.likes
+            when "Actividad"
+              value_today = dataDay.prosumers
+            when "Engagement"
+              value_today = engagement(dataDay.likes, dataDay.prosumers)
+            end
 
-              engageList[i] =  
-                                [ Time.strptime(dataDay.day.to_s, "%Y%m%d").strftime("%d/%m/%Y"), 
-                                engageToday,
-                                html_tooltip,
-                                html_variation,
-                                dataDay.day]
-              
-              engageYesterday = engageToday
-          end
+            @max_value = [@max_value, value_today].max
+            variation = variation(value_yesterday.to_f, value_today.to_f)
 
-          dataA = []
-          dataB = []
+            html_tooltip = html.html_tooltip(picture, page.name, value_today, variation)
+            html_variation = html.html_variation(variation)
 
-          engageList.each_with_index do |day, i|    
-            dataA[i] = [] + day
-            dataA[i][1] = 0
-            dataB[i] = [] + day
-          end
+            valueList[i] =  
+                              [ Time.strptime(dataDay.day.to_s, "%Y%m%d").strftime("%d/%m/%Y"), 
+                              value_today,
+                              html_tooltip,
+                              html_variation,
+                              dataDay.day]
+            
+            value_yesterday = value_today
+        end
 
-          dataResult = []
-          dataResult[0] = dataA
-          dataResult[1] = dataB 
+        dataA = []
+        dataB = []
+
+        valueList.each_with_index do |day, i|    
+          dataA[i] = [] + day
+          dataA[i][1] = 0
+          dataB[i] = [] + day
+        end
+
+        dataResult = []
+        dataResult[0] = dataA
+        dataResult[1] = dataB 
       end
       @options = "seriesType: 'area', 
-                title:'Evolución engagement (fidelidad de los seguidores)',
+                title:'" + @metric_name + "',
                 titleTextStyle: {fontSize: 14},
                 colors: ['#0088CC'],
                 height: 200,
@@ -141,9 +224,10 @@ module PagesHelper
     end
 
     
-    def get_list_engagement_timeline(page_list, date_from, date_to)
+    def get_list_timeline(page_list, date_from, date_to, metric_name)
       @error = nil
-
+      @metric_name = metric_name
+      
       max_cols = page_list.count
       
       time_index = date_from
@@ -172,7 +256,14 @@ module PagesHelper
           p = Page.find_by_id(pid.to_i)
           page_data = regs.where("page_id = ?", p.id)
           if page_data.count > 0
-            myArray[row][column] = engagement(page_data.first.likes, page_data.first.prosumers)
+            case @metric_name
+            when "Tamaño"
+              myArray[row][column] = page_data.first.likes
+            when "Actividad"
+              myArray[row][column] = page_data.first.prosumers
+            when "Engagement"
+              myArray[row][column] = engagement(page_data.first.likes, page_data.first.prosumers)
+            end
           else
             myArray[row][column] = -1
           end
@@ -194,81 +285,7 @@ module PagesHelper
     end
 
 
-    def get_list_engagement_day(page_list, day)
-      @error = nil
-      
-      htmls = DashboardHelper::HtmlHardcodes.new()
 
-      pages_engage_array = []
-      page_list.each_with_index do |page, i|
-
-        dayPageData = page.page_data_days.where("day = #{day.yesterday.strftime("%Y%m%d").to_i}")
-        engage_yesterday = (dayPageData.empty?? 0 : engagement(dayPageData[0].likes, dayPageData[0].prosumers))
-        
-        dayPageData = page.page_data_days.where("day = #{day.strftime("%Y%m%d").to_i}")
-        engage_today = (dayPageData.empty?? 0 : engagement(dayPageData[0].likes, dayPageData[0].prosumers))
-
-        engage_variation = variation(engage_yesterday.to_f, engage_today.to_f)
-
-        pName = page.name
-        pPicture = PagesHelper.get_picture(page, @access_token)
-        pUrl = PagesHelper.get_url(page)
-
-        pages_engage_array[i] =  [ htmls.logo(pUrl, pPicture, pName, 'mini_logo'), 
-                        pName, 
-                        page.page_type, 
-                        engage_today,
-                        htmls.logo(pUrl, pPicture, pName, 'normal_logo'),
-                        htmls.html_tooltip_engage(pPicture, pName, engage_today, engage_variation),
-                        htmls.html_variation(engage_variation)]
-  
-        @max_value = [@max_value, engage_today].max
-      end
-      
-      pages_engage_array = pages_engage_array.sort_by { |a, b, c, d, e, f| d }
-      pages_engage_array = pages_engage_array.reverse
-
-      data_list = []  
-      data_list[0] = []
-      data_list[1] = []
-
-      pages_engage_array.each_with_index do |page_engage, i|
-        dataNil = data_list[0][i] = []
-        dataNil[0] = (i+1).to_s
-        dataNil[1] = dataNil[2] = dataNil[3] = dataNil[5] = dataNil[6] = dataNil[7] = ""
-        dataNil[4] = 0
-        data_list[1][i] = [(i+1).to_s] + page_engage
-      end
-
-      @options =     "seriesType: 'bars', 
-                title:'Day Engagement (fidelidad de los seguidores)',
-                titleTextStyle: {fontSize: 14},
-                colors: ['#0088CC'],
-                height: 200,
-                animation:{duration: 1500,easing: 'out'},
-                hAxes:[{title:'Competidores'}],
-                vAxis: {minValue:0, maxValue:" + @max_value.to_s + "},
-                fontSize: 10,
-                legend: {position: 'none', textStyle: {fontSize: 14}},
-                tooltip: {isHtml: true}" 
-      return data_list
-    end
-
-    # Tamaño
-    def get_page_size_timeline(page, date_start, date_end)
-      @error = nil
-    end    
-
-    def get_list_size_timeline(page_list, date_start, date_end)
-      @error = nil
-      if date_start == date_end
-        get_list_size_day(list, date_start)
-      end      
-    end
-
-    def get_list_size_day(page_list, date)
-      @error = nil
-    end
 
     protected
 

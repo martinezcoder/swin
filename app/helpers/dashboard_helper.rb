@@ -6,7 +6,7 @@ module DashboardHelper
         return '<a href="'+ url +'" target="_blank"><img src="'+ img +'" class="'+ options +'" title="'+ title +'"></a>'
       end
       
-      def html_tooltip_engage(img, title, value, variation)
+      def html_tooltip(img, title, value, variation)
           ret = 
          '<div style="padding:5px 5px 5px 5px;'+ 
                      'text-align: center;'+
@@ -19,22 +19,9 @@ module DashboardHelper
                          end + '%</span></strong>' +
     
             '<div style="'+
-                        'margin:10px auto 10px auto;'+
-                        'width: 30px;'+
-                        'padding: 2px  5px;'+
+                        'padding:5px 5px 5px 5px;'+
                         'font-size: 1.7em;'+
-                        'color: #FFF;'+
-      
-                        'border: 1px solid #0088CC;'+ 
-                        'background-color: #0088CC;'+
-      
-                        '-moz-border-radius: 5px;'+
-                        '-webkit-border-radius: 5px;'+
-                        'border-radius: 5px;'+
-                        
-                        '-moz-box-shadow: rgb(150,150,150) 2px 2px 2px;'+
-                        '-webkit-box-shadow: rgb(150,150,150) 2px 2px 2px;'+
-                        'box-shadow: rgb(150,150,150) 2px 2px 2px;'+
+                        'color: #0088CC;'+
                         '">'+
                 '<strong>'+ value.to_s + '</strong>'+
             '</div>'+
@@ -47,27 +34,7 @@ module DashboardHelper
           '</div>'
     
          return ret
-      end
-      
-      def html_tooltip_general(img, title, fans, actives)
-          ret = 
-         '<div style="padding:5px 5px 5px 5px;'+ 
-                     'text-align: center;'+
-                     'align:center;'+
-                     '">'+
-            '<p><strong>'+ title + '</strong></p>' +
-            '<div style="'+
-                        'margin-bottom:10px;'+
-                        '">'+
-            '<img src="'+ img +'">'+
-            '</div>'+
-            '<p>Fans: <strong>'+ fans.to_s.reverse.gsub(/...(?=.)/,'\&.').reverse + '</strong>' +
-            '<br/>Activos: <strong>'+ actives.to_s.reverse.gsub(/...(?=.)/,'\&.').reverse + '</strong></p>' +
-          '</div>'
-    
-         return ret
-      end
-    
+      end    
     
       def html_variation(variation)
           ret = '<div style="margin-left:10px;">'

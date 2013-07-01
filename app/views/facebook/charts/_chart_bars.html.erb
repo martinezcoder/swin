@@ -27,7 +27,7 @@
     dataTableA.addColumn('string', 'Icono');
     dataTableA.addColumn('string', 'Nombre');
     dataTableA.addColumn('string', 'Tipo');
-    dataTableA.addColumn('number', 'Engagement');
+    dataTableA.addColumn('number', '<%= @metric_name %>');
     dataTableA.addColumn('string', 'pic');
     dataTableA.addColumn({'type': 'string', 'role': 'tooltip', 'p': {'html': true}});
     dataTableA.addColumn('string', 'Variación');
@@ -38,7 +38,7 @@
     dataTableB.addColumn('string', 'Icono');
     dataTableB.addColumn('string', 'Nombre');
     dataTableB.addColumn('string', 'Tipo');
-    dataTableB.addColumn('number', 'Engagement');
+    dataTableB.addColumn('number', '<%= @metric_name %>');
     dataTableB.addColumn('string', 'pic');
     dataTableB.addColumn({'type': 'string', 'role': 'tooltip', 'p': {'html': true}});
     dataTableB.addColumn('string', 'Variación');

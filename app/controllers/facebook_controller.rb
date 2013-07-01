@@ -107,11 +107,11 @@ include DashboardHelper
 
     case @type_graph
       when engage_day
-        engageData = fb_metric.get_list_engagement_day(list, date_to)
+        engageData = fb_metric.get_list_in_a_day(list, date_to, "Engagement")
       when engage_timeline_single
-        engageData = fb_metric.get_page_engagement_timeline(page, date_from, date_to)
+        engageData = fb_metric.get_page_timeline(page, date_from, date_to, "Engagement")
       when engage_timeline_multi
-        engageData = fb_metric.get_list_engagement_timeline(list, date_from, date_to)
+        engageData = fb_metric.get_list_timeline(list, date_from, date_to, "Engagement")
     end
 
     @errors = fb_metric.error
@@ -120,14 +120,246 @@ include DashboardHelper
       @dataB = engageData[1]
       #@max = fb_metric.max_value
       @options = fb_metric.options 
+      @metric_name = fb_metric.metric_name
     else
       flash[:info] = @errors
       date_to = Time.now - (24*60*60) # yesterday
       @type_graph = engage_day
       list = get_active_list.pages # all competitors      
-      engageData = fb_metric.get_list_engagement_day(list, date_to)           
+      engageData = fb_metric.get_list_in_a_day(list, date_to, "Engagement")         
     end
 
+  end
+
+  def size
+    # Tenemos tres opciones de gráficas: 
+    # 1 - barras de tamaño de un solo día y varios competidores
+    # 2 - timeline de tamaño de un solo competidor desde/hasta
+    # 3 - timeline de tamaño de varios competidores desde/hasta
+    size_day       = 0
+    size_timeline  = 1
+
+    @type_graph = nil
+
+    begin
+      if !membership_user?
+        date_to = Time.now - (24*60*60) # yesterday
+        @type_graph = size_day
+      else
+        if params.has_key?(:date_from) && params.has_key?(:date_to)
+            date_from = Time.strptime(params[:date_from], "%Y%m%d") # historic timeline
+            date_to = Time.strptime(params[:date_to], "%Y%m%d")
+            dateRange = (date_to - date_from)/60/60/24
+            @type_graph = size_timeline
+            if dateRange < 0 
+              flash[:info] = "ATENCIÓN: rango de fechas no válido"
+              raise
+            elsif dateRange > MAX_DATE_RANGE
+              flash[:info] = "ATENCIÓN: el rango debe ser inferior a tres meses"
+              raise
+            elsif date_from == date_to
+              @type_graph = size_day
+            end
+            
+        elsif params.has_key?(:date_to)
+            date_to = Time.strptime(params[:date_to], "%Y%m%d") # historic day
+        else
+            date_to = Time.now - (24*60*60) # yesterday
+        end
+      end
+    rescue
+      flash[:info] = "Opps, algo no ha ido bien..." if flash[:info].nil?
+      date_to = Time.now - (24*60*60) # yesterday
+      @type_graph = size_day
+    end
+
+    if @type_graph.nil? 
+      @type_graph = size_day
+    end
+
+    # Hasta aquí:
+    # @type_graph = size_timeline ==> Si existe date_from y date_to con fechas diferentes
+    # @type_graph = size_day      ==> en cualquier otro caso
+
+    size_timeline_single = 2
+    size_timeline_multi  = 3
+
+    @user_list = get_active_list
+
+    if params.has_key?(:pages) && params[:pages] != ""
+
+      list = []
+      num_competitors = 0
+      @params_pages = params[:pages] 
+      @params_pages.each do |p|
+        if page = Page.find_by_id(p.to_i)
+           if @user_list.pages.include?(page) and !list.include?(page)
+             list = list + [page]
+             num_competitors += 1
+           end 
+        end
+      end
+
+      if num_competitors > 1
+        @type_graph = size_timeline_multi if @type_graph == size_timeline
+      elsif num_competitors == 1
+        if @type_graph == size_timeline
+          @type_graph = size_timeline_single 
+          page = Page.find_by_id(@params_pages[0])
+        else
+          list = get_active_list.pages
+        end
+      else
+        @type_graph = size_day
+        list = get_active_list.pages # all competitors      
+      end
+
+    else
+      @type_graph = size_timeline_multi if @type_graph == size_timeline 
+      list = get_active_list.pages
+    end
+
+    fb_metric = PagesHelper::FbMetrics.new(get_token(FACEBOOK)) 
+
+    case @type_graph
+      when size_day
+        sizeData = fb_metric.get_list_in_a_day(list, date_to, "Tamaño")
+      when size_timeline_single
+        sizeData = fb_metric.get_page_timeline(page, date_from, date_to, "Tamaño")
+      when size_timeline_multi
+        sizeData = fb_metric.get_list_timeline(list, date_from, date_to, "Tamaño")
+    end
+
+    @errors = fb_metric.error
+    if @errors.nil?
+      @dataA = sizeData[0]
+      @dataB = sizeData[1]
+      #@max = fb_metric.max_value
+      @options = fb_metric.options 
+      @metric_name = fb_metric.metric_name
+    else
+      flash[:info] = @errors
+      date_to = Time.now - (24*60*60) # yesterday
+      @type_graph = size_day
+      list = get_active_list.pages # all competitors      
+      sizeData = fb_metric.get_list_in_a_day(list, date_to, "Tamaño")         
+    end    
+  end
+
+
+  def activity
+    # Tenemos tres opciones de gráficas: 
+    # 1 - barras de actividad de un solo día y varios competidores
+    # 2 - timeline de actividad de un solo competidor desde/hasta
+    # 3 - timeline de actividad de varios competidores desde/hasta
+    activity_day       = 0
+    activity_timeline  = 1
+
+    @type_graph = nil
+
+    begin
+      if !membership_user?
+        date_to = Time.now - (24*60*60) # yesterday
+        @type_graph = activity_day
+      else
+        if params.has_key?(:date_from) && params.has_key?(:date_to)
+            date_from = Time.strptime(params[:date_from], "%Y%m%d") # historic timeline
+            date_to = Time.strptime(params[:date_to], "%Y%m%d")
+            dateRange = (date_to - date_from)/60/60/24
+            @type_graph = activity_timeline
+            if dateRange < 0 
+              flash[:info] = "ATENCIÓN: rango de fechas no válido"
+              raise
+            elsif dateRange > MAX_DATE_RANGE
+              flash[:info] = "ATENCIÓN: el rango debe ser inferior a tres meses"
+              raise
+            elsif date_from == date_to
+              @type_graph = activity_day
+            end
+            
+        elsif params.has_key?(:date_to)
+            date_to = Time.strptime(params[:date_to], "%Y%m%d") # historic day
+        else
+            date_to = Time.now - (24*60*60) # yesterday
+        end
+      end
+    rescue
+      flash[:info] = "Opps, algo no ha ido bien..." if flash[:info].nil?
+      date_to = Time.now - (24*60*60) # yesterday
+      @type_graph = activity_day
+    end
+
+    if @type_graph.nil? 
+      @type_graph = activity_day
+    end
+
+    # Hasta aquí:
+    # @type_graph = activity_timeline ==> Si existe date_from y date_to con fechas diferentes
+    # @type_graph = activity_day      ==> en cualquier otro caso
+
+    activity_timeline_single = 2
+    activity_timeline_multi  = 3
+
+    @user_list = get_active_list
+
+    if params.has_key?(:pages) && params[:pages] != ""
+
+      list = []
+      num_competitors = 0
+      @params_pages = params[:pages] 
+      @params_pages.each do |p|
+        if page = Page.find_by_id(p.to_i)
+           if @user_list.pages.include?(page) and !list.include?(page)
+             list = list + [page]
+             num_competitors += 1
+           end 
+        end
+      end
+
+      if num_competitors > 1
+        @type_graph = activity_timeline_multi if @type_graph == activity_timeline
+      elsif num_competitors == 1
+        if @type_graph == activity_timeline
+          @type_graph = activity_timeline_single 
+          page = Page.find_by_id(@params_pages[0])
+        else
+          list = get_active_list.pages
+        end
+      else
+        @type_graph = activity_day
+        list = get_active_list.pages # all competitors      
+      end
+
+    else
+      @type_graph = activity_timeline_multi if @type_graph == activity_timeline 
+      list = get_active_list.pages
+    end
+
+    fb_metric = PagesHelper::FbMetrics.new(get_token(FACEBOOK)) 
+
+    case @type_graph
+      when activity_day
+        activityData = fb_metric.get_list_in_a_day(list, date_to, "Actividad")
+      when activity_timeline_single
+        activityData = fb_metric.get_page_timeline(page, date_from, date_to, "Actividad")
+      when activity_timeline_multi
+        activityData = fb_metric.get_list_timeline(list, date_from, date_to, "Actividad")
+    end
+
+    @errors = fb_metric.error
+    if @errors.nil?
+      @dataA = activityData[0]
+      @dataB = activityData[1]
+      #@max = fb_metric.max_value
+      @options = fb_metric.options 
+      @metric_name = fb_metric.metric_name
+    else
+      flash[:info] = @errors
+      date_to = Time.now - (24*60*60) # yesterday
+      @type_graph = activity_day
+      list = get_active_list.pages # all competitors      
+      activityData = fb_metric.get_list_in_a_day(list, date_to, "Actividad")         
+    end    
   end
 
 
@@ -150,7 +382,7 @@ include DashboardHelper
     end
 
     fb_metric = PagesHelper::FbMetrics.new(get_token(FACEBOOK))
-    engageData = fb_metric.get_page_engagement_timeline(page, 16.days.ago, 1.days.ago)
+    engageData = fb_metric.get_page_timeline(page, 16.days.ago, 1.days.ago, "Engagement")
     @dataA = engageData[0]
     @dataB = engageData[1]
     @max = fb_metric.max_value
@@ -159,83 +391,6 @@ include DashboardHelper
     @var = fb_metric.get_engagement_variations_between_dates(page, 8.days.ago.strftime("%Y%m%d"), 1.days.ago.strftime("%Y%m%d"))[:engagement]
   end
 
-
-  def general
-    session[:active_tab] = FACEBOOK
-
-    @user_list = get_active_list
-
-    if params.has_key?(:pages) && params[:pages] != ""
-
-      competitors = []
-      num_competitors = 0
-      @params_pages = params[:pages] 
-      @params_pages.each do |p|
-        if page = Page.find_by_id(p.to_i)
-           if @user_list.pages.include?(page) and !competitors.include?(page)
-             competitors = competitors + [page]
-             num_competitors += 1
-           end 
-        end
-      end
-
-      if num_competitors <= 1
-        competitors = @user_list.pages
-      end
-
-    else 
-      competitors = @user_list.pages
-    end
-
-    # update only every page from facebook if last updated was previous than 1 hours ago 
-    page = competitors[0]
-    if page.updated_at < -1.hour.ago
-      # updating competitor data
-      page_ids = []
-      competitors.each do |p|
-        page_ids = page_ids + [p.page_id]
-      end 
-      page_ids = page_ids + [page.page_id]
-      fb_pages_info_list = FacebookHelper::FbGraphAPI.new(get_token(FACEBOOK)).get_pages_info(page_ids.join(","))
-      pages_create_or_update(fb_pages_info_list)
-    end
-
-    css1 = 'mini_logo'
-    css2 = 'normal_logo'
-
-    @max_fans = 0
-    @max_actives = 0
-
-    num = competitors.length
-    compList = []
-    htmls = DashboardHelper::HtmlHardcodes.new()
-    for i in 0..num-1 do
-      compList[i] = [ htmls.logo(get_url(competitors[i]), get_picture(competitors[i]), competitors[i].name, css1), 
-                      competitors[i].name, 
-                      competitors[i].page_type, 
-                      competitors[i].fan_count,
-                      competitors[i].talking_about_count,
-                      htmls.logo(get_url(competitors[i]), get_picture(competitors[i]), competitors[i].name, css2),
-                      htmls.html_tooltip_general(get_picture(competitors[i]), competitors[i].name, competitors[i].fan_count, competitors[i].talking_about_count)]
-      @max_fans = [@max_fans, competitors[i].fan_count].max
-      @max_actives = [@max_actives, competitors[i].talking_about_count].max
-    end
-
-    compList = compList.sort_by { |a, b, c, d, e, f, g| d }
-    compList = compList.reverse
-
-    @dataA = []
-    @dataB = []
-
-    # nil data for ascendent animation chart 
-    for i in 0..compList.length-1 do
-      @dataA[i] = [(i+1).to_s] + compList[i]
-      @dataA[i][4] = 0
-      @dataA[i][5] = 0
-      @dataB[i] = [(i+1).to_s] + compList[i]
-    end 
-
-  end
 
 private
 

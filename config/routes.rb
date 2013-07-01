@@ -9,7 +9,8 @@ Swin::Application.routes.draw do
     
   match "/facebook", to: 'facebook#timeline_engage'
   match "/facebook/engage", to: 'facebook#engage'
-  match "/facebook/general", to: 'facebook#general'
+  match "/facebook/size", to: 'facebook#size'
+  match "/facebook/activity", to: 'facebook#activity'
   match "/facebook/empty", to: 'facebook#empty'
 
   match "/facebook/engage/:pages/:date_to/:date_from", to: 'facebook#engage'
