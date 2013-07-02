@@ -90,9 +90,9 @@ module PagesHelper
       page_list.each_with_index do |page, i|
 
         dayPageDataY = page.page_data_days.where("day = #{day.yesterday.strftime("%Y%m%d").to_i}")
-        dayPageDataT = page.page_data_days.where("day = #{day.yesterday.strftime("%Y%m%d").to_i}")
+        dayPageDataT = page.page_data_days.where("day = #{day.strftime("%Y%m%d").to_i}")
         case @metric_name
-        when "Tamaño"
+        when "Tamaño" 
           value_yesterday = (dayPageDataY.empty? ? 0 : dayPageDataY[0].likes)
           value_today = (dayPageDataT.empty? ? 0 : dayPageDataT[0].likes)
         when "Actividad"
@@ -137,7 +137,7 @@ module PagesHelper
       end
 
       @options =     "seriesType: 'bars', 
-                title:'Tamaño',
+                title:'"+ @metric_name +"',
                 titleTextStyle: {fontSize: 14},
                 colors: ['#0088CC'],
                 height: 200,
@@ -155,6 +155,7 @@ module PagesHelper
       @error = nil
       @metric_name = metric_name
       
+      dataFirst   = page.page_data_days.select("day, likes, prosumers").where("day = ?", date_from.yesterday.strftime("%Y%m%d").to_i)      
       dataRecords = page.page_data_days.select("day, likes, prosumers").where("day between ? and ?", date_from.strftime("%Y%m%d").to_i, date_to.strftime("%Y%m%d").to_i).order('day ASC')
 
       if dataRecords.count == 0
@@ -163,9 +164,17 @@ module PagesHelper
         dataResult[0] = []
         dataResult[1] = [] 
       else
-        value_yesterday = 0
         valueList = []
 
+        case @metric_name
+        when "Tamaño"
+          value_yesterday = dataFirst.any? ? dataFirst.first.likes : 0
+        when "Actividad"
+          value_yesterday = dataFirst.any? ? dataFirst.first.prosumers : 0
+        when "Engagement"
+          value_yesterday = dataFirst.any? ?  engagement(dataFirst.first.likes, dataFirst.first.prosumers) : 0
+        end
+        
         html = DashboardHelper::HtmlHardcodes.new()
         picture = PagesHelper.get_picture(page, @access_token)
         dataRecords.each_with_index do |dataDay, i|     
@@ -180,10 +189,10 @@ module PagesHelper
             end
 
             @max_value = [@max_value, value_today].max
-            variation = variation(value_yesterday.to_f, value_today.to_f)
+            value_variation = variation(value_yesterday.to_f, value_today.to_f)
 
-            html_tooltip = html.html_tooltip(picture, page.name, value_today, variation)
-            html_variation = html.html_variation(variation)
+            html_tooltip = html.html_tooltip(picture, page.name, value_today, value_variation)
+            html_variation = html.html_variation(value_variation)
 
             valueList[i] =  
                               [ Time.strptime(dataDay.day.to_s, "%Y%m%d").strftime("%d/%m/%Y"), 
@@ -192,7 +201,8 @@ module PagesHelper
                               html_variation,
                               dataDay.day]
             
-            value_yesterday = value_today
+            value_yesterday = value_today  
+             
         end
 
         dataA = []

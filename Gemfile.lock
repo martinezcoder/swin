@@ -123,6 +123,7 @@ GEM
       metaclass (~> 0.0.1)
     multi_json (1.7.5)
     multipart-post (1.2.0)
+    newrelic_rpm (3.6.5.130)
     nokogiri (1.5.9)
     oauth (0.4.7)
     oauth2 (0.8.1)
@@ -246,6 +247,7 @@ DEPENDENCIES
   guard-spork (= 1.2.0)
   jquery-rails (= 2.2.0)
   koala (= 1.6.0)
+  newrelic_rpm
   omniauth (= 1.1.1)
   omniauth-facebook (= 1.4.1)
   omniauth-twitter (= 0.0.14)

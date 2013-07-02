@@ -114,6 +114,7 @@ include DashboardHelper
         engageData = fb_metric.get_list_timeline(list, date_from, date_to, "Engagement")
     end
 
+
     @errors = fb_metric.error
     if @errors.nil?
       @dataA = engageData[0]
@@ -361,6 +362,7 @@ include DashboardHelper
       activityData = fb_metric.get_list_in_a_day(list, date_to, "Actividad")         
     end    
   end
+
 
 
   def timeline_engage

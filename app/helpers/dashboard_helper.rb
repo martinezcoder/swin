@@ -12,12 +12,6 @@ module DashboardHelper
                      'text-align: center;'+
                      'align:center;'+
                      '">'+
-            '<strong>'+  if variation >= 0 
-                            '<span style="color:green">+' + sprintf( "%0.01f", variation) 
-                         else
-                            '<span style="color:red">' + sprintf( "%0.01f", variation)
-                         end + '%</span></strong>' +
-    
             '<div style="'+
                         'padding:5px 5px 5px 5px;'+
                         'font-size: 1.7em;'+
@@ -25,6 +19,12 @@ module DashboardHelper
                         '">'+
                 '<strong>'+ value.to_s + '</strong>'+
             '</div>'+
+            '<strong>'+  if variation >= 0 
+                            '<span style="color:green">+' + sprintf( "%0.01f", variation) 
+                         else
+                            '<span style="color:red">' + sprintf( "%0.01f", variation)
+                         end + '%</span></strong>' +
+    
             '<div style="'+
                         'margin:10px 0px;'+
                         '">'+

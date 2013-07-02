@@ -11,7 +11,8 @@ gem 'omniauth-twitter', '0.0.14'
 
 gem 'koala', '1.6.0'
 
-  
+gem 'newrelic_rpm'
+
 group :development, :test do
   gem 'rspec-rails', '2.12.0'
   gem 'faker', '1.1.2'
