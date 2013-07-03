@@ -6,10 +6,8 @@
 	    <h5 id="slogan2">DESCUBRE EL ENGAGEMENT DE TU FANPAGE</h5>
 	    
 	    <div class="container">
-			<div class="base-btn-facebook">
-				<%= link_to "/auth/facebook", id: "btn-facebook", class: "btn btn-primary btn-large" do %>
-					<div class="box-image-facebook"><div id="image-facebook"></div></div> Conectar con Facebook
-				<% end %>
+	    	<div class="base-btn-facebook-center">
+				<%= render "site/shared/facebook_button_signin" %>
 		    </div>
 		 </div>  
 		  				
@@ -18,7 +16,7 @@
 
 		
 	    <div class="screen">
-			<%= image_tag "screen.png", :id => "screen" %>
+			<%= image_tag "sw-ipad.png", :id => "screen" %><!--"screen.png" -->
 		</div>
 		
 	</div><!--container-->

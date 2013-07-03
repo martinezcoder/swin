@@ -1,67 +1,102 @@
 <% provide(:title, @page.name) %>
-
-<h1><%= @page.name %></h1>
-
-     <div ><!--style="padding:5px 5px 5px 5px;text-align: center;align:center;" -->
-        <div ><!-- style="margin:10px auto 10px auto;
-       				width: 40px;
-       				padding: 20px;
-       				font-size: 1.7em;
-       				color: #FFF;'+
-  					border: 1px solid #0088CC; 
-                    background-color: #0088CC;
-  
-                    -moz-border-radius: 5px;
-                    -webkit-border-radius: 5px;
-                    border-radius: 5px;
-                    
-                    -moz-box-shadow: rgb(150,150,150) 2px 2px 2px;
-                    -webkit-box-shadow: rgb(150,150,150) 2px 2px 2px;
-                    box-shadow: rgb(150,150,150) 2px 2px 2px;
-                    "-->
-            <strong><%= @engage %></strong>
-        </div>
-      </div>
-
-
-
-
-
-	<div ><!--style="padding:5px 5px 5px 5px;text-align: center; align:center;" -->
-        <p><strong><%= @page.name %></strong></p>
-        <div ><!-- style="margin-bottom:10px;"-->
-        	<img src="<%= get_picture(@page, big=true) %>">
-        </div>
-        <p>Fans: <strong> <%= @page.fan_count %> </strong><br/>
-        Activos: <strong> <%= @page.talking_about_count %></strong></p>
-        <small><%= link_to "Ver en Facebook", get_url(@page), target: "_blank" %></small>
+<div id="show">
+<div class="container-fluid">
+	<div class="span12">
+		<h3 class="consulta">Consulta de ENGAGEMENT</h3>
 	</div>
-
-	<%= render 'facebook/charts/chart_timeline', :graph => "graph_div" %>
-	<%= render 'facebook/shared/graph', :graph => "graph_div" %>
 	
-<!--
-<li id="Twitter_Counter">
-	<script>
-	!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];
-		if(!d.getElementById(id)) {
-			js=d.createElement(s);
-			js.id=id;
-			js.src="//platform.twitter.com/widgets.js";
-			fjs.parentNode.insertBefore(js,fjs);
-		}
-	}(document,"script","twitter-wjs");
-	</script>
+	<div lass="row-fluid">
+		<div class="span5">
+			
+			<div class="presentacion">
+				<img src="<%= get_picture(@page, big=true) %>">
+				<div class="detalles">
+					<div class="nombre-foto"><%= @page.name %></div>
+					<div class="fecha">01/03/2013</div>
+				</div>
+			</div>
+			
+			<a class="btn" id="btn-ver-resultados">Ver resultados de hoy</a>
+			
+			<div class="escudo-engagement">
+				<%= image_tag "show-engagement/escudo.png" %>
+				<div class="num-engage"><%= @engage %></div>
+				<div class="word-engage">ENGAGEMENT</div>
+				<div class="name-engage"><%= @page.name %></div>
+			</div>
+		    
+		    <div class="clearfix"></div>
+		    	<!--btn-group-comparte -->
+		    <div class="btn-group "><!-- comparte-engagement-btn -->
+		    	<a class="btn dropdown-toggle btn-comparte" data-toggle="dropdown">
+		    		¡Comparte tu Engagement! <span class="comparte-icon"></span>
+	    		</a>
+			    <ul class="dropdown-menu">
+			    	<li><a class="btn"><span class="comparte-twitter"></span> Twitter</a></li>
+			    	<li><a class="btn"><span class="comparte-linkedin"></span> LinkedeIn</a></li>
+			    	<li><a class="btn"><span class="comparte-facebook"></span> Facebook</a></li>
+			    	<li><a class="btn"><span class="comparte-correo"></span> Correo electrónico</a></li>
+			    </ul>	    		
+			</div>    
 
-	<iframe scrolling="no" frameborder="0" allowtransparency="true" 
-			src="http://platform.twitter.com/widgets/tweet_button.1363148939.html#_=1365167447814&amp;
-			count=horizontal&amp;id=twitter-widget-0&amp;lang=es&amp;
-			original_referer=<%= request.protocol + request.host_with_port + request.fullpath %>&amp;
-			size=m&amp;
-			text=Hey, mira que engagement tiene hoy <%= @page.name %> en Facebook &amp;
-			url=<%= request.protocol + request.host_with_port + request.fullpath %>/&amp;
-			via=SocialWinTW" 
-			class="twitter-share-button twitter-count-horizontal" style="width: 117px; height: 20px;" title="Twitter Tweet Button" data-twttr-rendered="true">		
-	</iframe>
-</li>
--->
+			<div id="conectarConFacebook">
+				<div id="quieres">
+					<p><strong>¿Quieres comparar varios competidores?</strong></p>
+					<p><strong>¡Prueba GRATIS SocialWin Analytics!</strong></p>							
+				</div>
+				<!--btnConectarConFacebook-->	
+				<%= render 'site/shared/facebook_button_signin' %>
+			</div>	
+			
+		</div><!-- span5-->
+		
+		<div class="span7">
+			<div class="tabla-metricas">
+				    <table class="table">
+						<thead>
+							<tr>
+								<th>Métricas</th>
+								<th>Valor</th>
+								<th>Var%</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>Fans totales: </td>
+								<td><strong> <%= @page.fan_count %> </strong></td>
+								<td>+3%</td>
+							</tr>
+							<tr>
+								<td>Fans activos:</td>
+								<td><strong> <%= @page.fan_count %> </strong></td>
+								<td>-13%</td>
+							</tr>
+							<tr>
+								<td>Engagement (últimos 7 días):</td>
+								<td><strong> Inventado </strong></td>
+								<td>-44%</td>
+							</tr>							
+						</tbody>
+    				</table>
+				
+				<small><%= link_to "Ver en Facebook", get_url(@page), target: "_blank" %></small>
+				
+			</div>
+			
+			<div class="grafica-engagement">
+					<div class="grafica-header">Engagement últimos 7 días</div>
+					<%= render 'facebook/charts/chart_timeline', :graph => "graph_div" %>
+					<%= render 'facebook/shared/graph', :graph => "graph_div" %>
+			</div>
+			
+			<div class="clearfix"></div>
+			
+			<div id="div-search-box">
+				<p><strong>Nueva busqueda</strong></p>
+				<%= render 'site/shared/search_box' %>
+			</div>
+		</div><!-- span6 -->
+	</div>
+	
+</div>
+</div><!-- idShow -->

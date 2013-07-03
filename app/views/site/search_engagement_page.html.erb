@@ -5,28 +5,13 @@
 	<div class="row">
 		
 		<div class="span6">
+			<%= render 'site/shared/search_box' %>
 			<h3 class="sw-violet">¿No tienes fanpage?</h3>
 			<h4 class="sw-blue">Lo hacemos fácil, ahora puedes conocer el engagement de tus marcas favoritas ;-)</h4>
+			<%= render 'site/shared/facebook_button_signin' %>
 		</div>
 		
 		<div class="span6">
-			<div class="form-case">
-			<%= form_tag(search_page_path, :method => "get", class: "navbar-search search") do %>
-				<fieldset>
-					<em class="icon-search" id="lent"></em> 
-					<%= text_field_tag(:search, params[:search], class: "input-xlarge search-query", placeholder: "Buscar páginas...", autocomplete: "off") %>
-					<%= button_tag(type: "submit", class: "btn btn-danger btn-sw-search") do %>
-						BUSCAR
-					<% end %>
-				</fieldset>
-				<% end %>
-			</div>	
-		</div>
-		
-	</div>
-	<div lcass="row">
-		
-		<div class="span6 offset3">
 			<div class="podium-case">
 			<h3>Top 3 Engagement Facebook</h3>
 			<ul class="unstyled list-engagement">
@@ -56,7 +41,7 @@
 				</li>
 			</ul>
 			</div><!--podium case-->
-		</div>
+		</div><!--span6-->
 		
 	</div><!--row-->
 </div>

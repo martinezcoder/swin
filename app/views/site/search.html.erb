@@ -17,34 +17,20 @@
 		</div><!--endSpan6-->	
 		
 		<div class="span6">
-			    <p><strong>Nueva búsqueda</strong></p>
-			    <p>Tip. si no encuentras lo que buscas, inserta la URL de la página deseada.</p>
-    			<div id="div-search-box">
-						<%= form_tag(search_path, :method => "get", class: "navbar-search search") do %>
-						<fieldset>
-							<em class="icon-search" id="lent"></em> 
-							<%= text_field_tag(:search, params[:search], class: "input-xlarge search-query", placeholder: "Buscar páginas...", autocomplete: "off") %>
-							<%= button_tag(type: "submit", class: "btn btn-danger btn-sw-search") do %>
-								Buscar
-							<% end %>
-						</fieldset>
-						<% end %>
-				</div>	
-				
+		    <p><strong>Nueva búsqueda</strong><br/>
+		    	<small>Tip. si no encuentras lo que buscas, inserta la URL de la página deseada.</small>
+		    </p>
+			<%= render 'site/shared/search_box' %>
+			
 
+			<div id="conectarConFacebook">
+				<div id="quieres">
+					<p><strong>¿Quieres comparar varios competidores?</strong></p>
+					<p><strong>¡Prueba GRATIS SocialWin Analytics!</strong></p>							
+				</div>			
 				<!--btnConectarConFacebook-->	
-				<div id="conectarConFacebook">
-					<div id="quieres">
-						<p><strong>¿Quieres comparar varios competidores?</strong></p>
-						<p><strong>¡Prueba GRATIS SocialWin Analytics!</strong></p>							
-					</div>
-				
-					<div class="base-btn-facebook">
-						<%= link_to "/auth/facebook", id: "btn-facebook", class: "btn btn-primary btn-large" do %>
-							<div id="image-facebook"></div><span id="pipe">|</span> Conectar con Facebook
-						<% end %>
-			    	</div>	
-		    	</div>
+				<%= render 'site/shared/facebook_button_signin' %>
+			</div>	
 		</div><!--endSpan6-->	
 			
 	</div><!--endRow-->	
