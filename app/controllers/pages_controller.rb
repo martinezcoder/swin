@@ -61,7 +61,7 @@ class PagesController < ApplicationController
 
 #    fb_metric = PagesHelper::FbMetrics.new(get_token(FACEBOOK))
     fb_metric = PagesHelper::FbMetrics.new()
-    engageData = fb_metric.get_page_engagement_timeline(@page, day.ago(7.days), day)
+    engageData = fb_metric.get_page_engagement_timeline(@page, day.ago(6.days), day)
     @dataA = engageData[0]
     @dataB = engageData[1]
     @options = fb_metric.options
@@ -83,21 +83,20 @@ class PagesController < ApplicationController
     @engage = fb_metric.get_engagement(@data_day.likes, @data_day.prosumers)
 
     @variations = {}
-    if @data_day_week_ago = PageDataDay.find_by_page_id_and_day(@page.id, day.ago(7.days).strftime('%Y%m%d'))
-  
+    if @data_day_week_ago = PageDataDay.find_by_page_id_and_day(@page.id, day.ago(6.days).strftime('%Y%m%d'))
       likes_week_ago     = @data_day_week_ago.likes
       prosumers_week_ago = @data_day_week_ago.prosumers
       engage_week_ago    = fb_metric.get_engagement(likes_week_ago, prosumers_week_ago)
-
       @variations[:engage] = fb_metric.get_variation(engage_week_ago, @engage)
       @variations[:likes]  = fb_metric.get_variation(likes_week_ago, @data_day.likes)
       @variations[:prosumers] = fb_metric.get_variation(prosumers_week_ago, @data_day.prosumers)
-
     else
       @variations[:engage] = "  "
       @variations[:likes]  = "  "
       @variations[:prosumers] = "  "
     end
+
+    @thisUrl = request.url
 
   end
 

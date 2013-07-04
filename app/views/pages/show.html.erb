@@ -1,4 +1,4 @@
-<% provide(:title, @page.name) %>
+<% provide(:title, "Engagement de " + @page.name + " el día " + @day) %>
 
 <div id="show">
 <div class="container-fluid">
@@ -18,7 +18,7 @@
 			</div>
 			
 			<% if @day != Time.now.yesterday.strftime('%d/%m/%Y') %>
-				<%= link_to 'Ver último resultado', page_path('fb-'+@page.page_id), id:'btn-ver-resultados', class: 'btn'  %>
+				<%= link_to 'Ver último resultado', page_path(id: 'fb-'+@page.page_id, day: Time.now.yesterday.strftime('%Y%m%d')), id:'btn-ver-resultados', class: 'btn'  %>
 			<% end %>
 			
 			<div class="escudo-engagement">
@@ -27,18 +27,29 @@
 				<div class="word-engage">ENGAGEMENT</div>
 				<div class="name-engage"><%= @page.name %></div>
 			</div>
-		    
+
 		    <div class="clearfix"></div>
 		    	<!--btn-group-comparte -->
 		    <div class="btn-group "><!-- comparte-engagement-btn -->
 		    	<a class="btn dropdown-toggle btn-comparte" data-toggle="dropdown">
-		    		¡Comparte tu Engagement! <span class="comparte-icon"></span>
+		    		¡Comparte su Engagement! <span class="comparte-icon"></span>
 	    		</a>
 			    <ul class="dropdown-menu">
-			    	<li><a class="btn"><span class="comparte-twitter"></span> Twitter</a></li>
-			    	<li><a class="btn"><span class="comparte-linkedin"></span> LinkedeIn</a></li>
-			    	<li><a class="btn"><span class="comparte-facebook"></span> Facebook</a></li>
-			    	<li><a class="btn"><span class="comparte-correo"></span> Correo electrónico</a></li>
+					<li>
+						 <a class="btn" 
+						    href="http://twitter.com/share?url=<%= @thisUrl %>&text=Descubre el engagement de <%= @page.name  %> vía @SocialWinApp" target="_blank" onClick="window.open(this.href, this.target, 'width=500,height=400'); return false;">
+							<span class="comparte-twitter"></span> Twitter</a>	
+					</li>
+					<li>
+						<a href="http://www.linkedin.com/shareArticle?mini=true&url=<%= @thisUrl %>&title=<%= yield(:title) %>&summary=Descubre el <%= yield(:title) %>&source=<%= @thisUrl %>" class="btn" target="_blank" onClick="window.open(this.href, this.target, 'width=500,height=400'); return false;">
+						<span class="comparte-linkedin"></span> LinkedIn</a> 
+					</li>
+					<li>
+						<a class="btn" href="http://www.facebook.com/sharer.php?s=100&p[title]=<%= yield(:title) %>&p[summary]=Descubre el <%= yield(:title) %>&p[url]=<%= @thisUrl %>&p[images][0]=https://graph.facebook.com/<%= @page.page_id %>/picture"
+						 target="_blank" onClick="window.open(this.href, this.target, 'width=500,height=400'); return false;">
+						<span class="comparte-facebook"></span> Facebook
+						</a>
+					</li>
 			    </ul>	    		
 			</div>    
 
