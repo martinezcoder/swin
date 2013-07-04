@@ -44,7 +44,11 @@ module PagesHelper
     end
 
     def get_engagement(fans, actives)
-       engagement(fans, actives)      
+      engagement(fans, actives)      
+    end
+
+    def get_variation(old_data, new_data)
+      variation(old_data.to_f, new_data.to_f)
     end
     
     def get_engagement_variations_between_dates(page, dayFrom, dayTo)
@@ -282,7 +286,8 @@ module PagesHelper
       end
 
       def variation(old_data, new_data)
-        return (new_data - old_data)
+        variation = ((new_data - old_data) / old_data) * 100
+        variation.round(2)
       end
       
     private

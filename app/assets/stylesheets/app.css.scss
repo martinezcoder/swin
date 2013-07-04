@@ -1,5 +1,7 @@
-@import "bootstrap";
+$linkColor: #6DC5D7; //#3B5998;
+$baseBorderRadius:1px;
 
+@import "bootstrap";
 
 /* mixins, variables, etc. */
 $grayMediumLight: #eaeaea;
@@ -11,16 +13,12 @@ $facebookcolor: #3B5998;
   -webkit-box-sizing: border-box; 
   box-sizing: border-box;  font-weight: bold;
 }
-
-
 @mixin recuadrogris {
   background-color:transparent ; // #eeeeee
   -webkit-border-radius: 6px;
   -moz-border-radius: 6px;
   border-radius: 6px;
 }
-
-
 body{
     background:url(body-tail.gif) 0 0 repeat-x #fff;
     position:relative;
@@ -28,20 +26,16 @@ body{
     font-size:13px;
     line-height:18px
 }
-
 #app_content {
     padding-bottom: 37px;
     padding-top: 10px;
 }
-
-
 h1 {
   font-size: 3em;
   letter-spacing: -2px;
   margin-bottom: 30px;
   text-align: center;
 }
-
 h2 {
   font-size: 1.7em;
   letter-spacing: -1px;
@@ -50,15 +44,12 @@ h2 {
   font-weight: normal;
   color: $grayLight;
 }
-
 p {
   font-size: 1.1em;
   line-height: 1.7em;
 }
 
-
 /* header */ 
-
 #logo {
   float: left;
   margin-right: 10px;
@@ -74,11 +65,7 @@ p {
   }
 }
 
-
-
-
-/* sidebar */
-// se usa en users/show.html.erb
+/* sidebar */ // se usa en users/show.html.erb
 aside {
   section {
     padding: 10px 0;
@@ -87,13 +74,13 @@ aside {
       border: 0;
       padding-top: 0;
     }
-
+/*
     span {
       display: block;
       margin-bottom: 3px;
-      line-height: 1;
+      line-height: 1;  
     }
-
+*/
     h1 {
       font-size: 1.4em;
       text-align: left;
@@ -110,14 +97,12 @@ aside .well{
   max-width:340px;
   padding:8px 0;
 }
-
 .gravatar {
   float: left;
   margin-right: 10px;
   height: 25px;
   width: 25px;
 }
-
 .comp_avatar {
   float: left;
   margin-right: 10px;
@@ -125,29 +110,23 @@ aside .well{
   height: 20px;
   width: 20px;
 }
-
 .mini_logo {
   height: 25px;
   width: 25px;
 }
-
 .normal_logo {
   height: 50px;
   width: 50px; 
 }
-
-
 .header_logo {
   height: 30px;
   width: 30px; 
 }
-
 .no-decoration {
     &:hover{ 
       text-decoration: none;
     }
 }
-
 .user-session {
   display: inline-block;
   max-width: 175px;
@@ -158,7 +137,6 @@ aside .well{
 }
 
 /* miscellaneous */
-
 .debug_dump {
   clear: both;
   float: left;
@@ -169,7 +147,6 @@ aside .well{
 
   
 /* forms */
-
 input, textarea, select, .uneditable-input {
   border: 1px solid #bbb;
   width: 100%;
@@ -177,11 +154,9 @@ input, textarea, select, .uneditable-input {
   margin-bottom: 15px;
   @include box_sizing;
 }
-
 input {
   height: auto !important;
 }
-
 #error_explanation {
   color: #f00;
   ul {
@@ -189,7 +164,6 @@ input {
     margin: 0 0 18px 0;
   }
 } 
-
 .field_with_errors {
   @extend .control-group;
   @extend .error;
@@ -201,18 +175,14 @@ input {
   font-size: 15px;
 } 
 */
-
 .signinmenu li a{ 
     margin-left: 15px;
     margin-right: 15px;
     color: white;
-
 }
 
 
 /* facebook pages */
-
- 
 #facepageloop {
   //float: right;
   margin: 10px 0 10px 0px;
@@ -313,34 +283,26 @@ input {
 .search-box {
   margin-top:1px; 
 }
-
 .mini_page_dashboard {
   float: right;
   overflow: hidden;
 }
-
 .page_active_dashboard {
   margin-left: 20px;
   overflow: auto;  
 }
-
 .newline {
   clear: both;
 }
-
 .menu_metricas {
   padding-top: 10px;
 }
-
 .menu_competitors {
   padding-top: 40px;
 }
-
-
 .data_graph {
   display: inline-block;
   float: left;
-  padding: 10px;
   margin: 0 0 10px 0px;
   border: 6px solid #EEEEEE;
   background:url(/assets/hummingbirds.gif) center no-repeat transparent ;
@@ -361,10 +323,9 @@ input {
   margin: 0 0 10px 0px;
   background:transparent url(/assets/hummingbirds.gif) center no-repeat;
   min-height: 160px;
+  border: 6px solid #EEEEEE;
   @include recuadrogris;
 }
-
-
 .data_nil {
   padding: 15px;
   margin: 0 0 10px 0px;
@@ -372,7 +333,6 @@ input {
   min-height: 100px;
   @include recuadrogris;
 }
-
 .data_follow {
   padding: 5px;
   margin: 0 0 10px 0px;
@@ -383,13 +343,11 @@ input {
   -moz-border-radius: 6px;
   border-radius: 6px;
 }
-
 .input-search {
   margin-bottom: 0px;
 }
 
 // Engage Medals!
-
 .competitors_div {
   overflow: hidden;
   padding: 10px 15px;
@@ -398,7 +356,6 @@ input {
 }
 
 #competitors_title {
-
   #competitorBox { 
     float:left; 
     position:relative;
@@ -412,6 +369,9 @@ input {
   padding: 10px 15px;
   margin: 0 0 10px 0px;
   @include recuadrogris;
+    background-color: transparent;
+    border: 6px solid #EEEEEE;
+    border-radius: 6px 6px 6px 6px;
 }
 
 #engage_medals {
@@ -495,12 +455,9 @@ input {
     box-shadow: 0px 0px 19px #A09F9F;
     @include recuadrogris;
 }
-
-
 .color_socialwin {
   color: $azulSocialWin;
 }
-
 .color_facebook {
   color: $facebookcolor;  
 }
@@ -532,52 +489,237 @@ input {
       color: #555;
     }
   }
+/*ESTILOS ALEX******************************************************************************************/
+.accordion {
+    border: 6px solid #EEEEEE;
+    border-radius: 6px 6px 6px 6px;
+    margin-bottom: 11px;
 }
 
-
-.loginhome {
-  margin-left: 120px;
-  margin-top: 80px;  
+/*#####################################################*/
+/*### SHOW ENGAGE PUBLIC PAGE ##########################*/
+/*#####################################################*/
+.body, body{
+    background: none repeat scroll 0 0 #FFFFFF;
+    min-width:320px;
 }
-
-
-a.fbutton { 
-  text-decoration: none;
+#show{
+    padding:0 10px;
 }
-
-.fbutton {
-    font-size: 20px;
-    font-style: normal;
-    font-weight: 300;
-    height: 56px;
-    line-height: 56px;
-    margin: 5px auto;
-    padding: 0 25px 0 55px;
-
-    border: medium none;
-    border-radius: 4px 4px 4px 4px;
-    color: #FFFFFF;
-    cursor: pointer;
+.consulta{
+    color: #6EC7D9;
+    padding: 13px 0 5px;
+    font-weight:normal;
+    font-family:'DominikRegular',Helvetica,'Lucida Grande',Verdana;
+}
+.presentacion > img {
+    border: 1px solid #BFBFBF;
     display: inline-block;
-    padding: 4px 20px;
+    max-width: 55px;
+    vertical-align: top;
+}
+.detalles {
+    display: inline-block;
+    padding: 3px 7px;
+    vertical-align: top;
+}
+.nombre-foto {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 6px;
+}
+.resultados-de-hoy {
+    background: none repeat scroll 0 0 #EEEEEE;
+    font-weight: bold;
+    margin: 10px 0;
+    padding: 11px 0;
     text-align: center;
-    transition: background-color 0.25s ease 0s;
+    width: 300px;
+}
+#btn-ver-resultados {
+    border: 1px solid #C8C8C8;
+    border-radius: 1px 1px 1px 1px;
+    font-weight: bold;
+    margin: 17px 0;
+    max-width: 349px;
+    padding: 8px 0;
+    width: 84%;
+}
+.escudo-engagement {
+    margin: 0 0 36px 26px;
+    max-width: 349px;
+    position: relative;
+}
+.escudo-engagement > img {
+    height: 100%;
+    width: 100%;
+}
+.num-engage {
+    font-size: 92px;
+    left: 25%;
+    position: absolute;
+    top: 38%;
+}
+.word-engage {
+    font-size: 22px;
+    left: 19%;
+    position: absolute;
+    top: 65%;
+}
+.name-engage {
+    font-size: 33px;
+    margin-bottom: 20px;
+    margin-right: 15%;
+    text-align: center;
+}
+.comparte-word > p {
+    font-weight: bold;
+}
+.btn-group {
+    display: inline-block;
+    font-size: 0;
+    max-width: 349px;
+    position: relative;
+    vertical-align: middle;
+    white-space: nowrap;
+    width: 93%;
+}
+.btn-group-comparte{
+
+}
+.comparte-engagement-btn{
+    font-weight: bold;
+    padding: 5px 0;
+    width: 84%;
+}
+.btn-comparte {
+    background-color: #B4E3EC;
+    background-image: linear-gradient(to bottom, #B4E3EC, #59CADA);
+    background-repeat: repeat-x;
+    border-color:0;
+    border-color: #6CDDED;
+    padding: 7px 0;
+    width: 100%;
+}
+.btn-comparte:hover, .btn-comparte:focus, .btn-comparte:active, .btn-comparte.active, .btn-comparte.disabled, .btn-comparte[disabled] {
+    background-color: #6DC5D7;
+}
+.comparte-icon{
+    background: url("sw-sprite.png") no-repeat scroll -57px -284px transparent;
+    display: inline-block;
+    height: 23px;
+    margin-left: 4px;
+    margin-right: 5px;
+    vertical-align: middle;
+    width: 26px;
+}
+.comparte-twitter{
+    background: url("sw-sprite.png") no-repeat scroll -144px -33px transparent;
+    display: inline-block;
+    height: 23px;
+    margin-left: 4px;
+    margin-right: 5px;
+    vertical-align: middle;
+    width: 26px;
+}
+.dropdown-menu > li > a:hover .comparte-twitter{
+    background: url("sw-sprite.png") no-repeat scroll -56px -34px transparent;
+}
+.comparte-linkedin{
+    background: url("sw-sprite.png") no-repeat scroll -143px -155px transparent;
+    display: inline-block;
+    height: 23px;
+    margin-left: 4px;
+    margin-right: 5px;
+    vertical-align: middle;
+    width: 26px;
+}
+.dropdown-menu > li > a:hover .comparte-linkedin{
+   background: url("sw-sprite.png") no-repeat scroll -56px -155px transparent;
+}
+.comparte-facebook{
+    background: url("sw-sprite.png") no-repeat scroll -142px -73px transparent;
+    display: inline-block;
+    height: 23px;
+    margin-left: 4px;
+    margin-right: 5px;
+    vertical-align: middle;
+    width: 26px;
+}
+.dropdown-menu > li > a:hover .comparte-facebook{
+    background: url("sw-sprite.png") no-repeat scroll -55px -73px transparent;
+}
+.comparte-correo{
+    background: url("sw-sprite.png") no-repeat scroll -143px -196px transparent;
+    display: inline-block;
+    height: 23px;
+    margin-left: 4px;
+    margin-right: 5px;
+    vertical-align: middle;
+    width: 26px;
+}
+.dropdown-menu > li > a:hover .comparte-correo{
+    background: url("sw-sprite.png") no-repeat scroll -56px -196px transparent;
+}
+.open .comparte-icon {
+    background: url("sw-sprite.png") no-repeat scroll -148px -284px transparent;
+}
+.btn-group.open .btn.dropdown-toggle {
+    background-color: #6DC5D7;
+}
+.comparte-icon:hover{
+    background: url("sw-sprite.png") no-repeat scroll -57px -284px transparent;
+    display: inline-block;
+    height: 23px;
+    margin-left: 4px;
+    margin-right: 5px;
+    vertical-align: middle;
+    width: 26px;
+}
+.open > .dropdown-menu {
+    display: block;
+    left: 180px;
+}
+.dropdown-menu li a {
+    padding: 2px 10px 2px 2px;
+    text-align: left;
+}
+/*boton facebook*/
+#conectarConFacebook {
+    display: block;
+    height: 144px;
+    margin: 73px 0 25px;
+    text-align: left;
+}
+.tabla-metricas {
+    width: 100%;
+}
+thead tr th {
+    background: none repeat scroll 0 0 #EEEEEE;
+    border-right: 1px solid #FFFFFF;
+}
+.grafica-engagement {
+    width: 100%;
+}
+.grafica-header {
+    background-color: #EEEEEE;
+    font-weight: bold;
+    margin: 10px 0;
+    padding: 10px 0 10px 10px;
+}
+.full_width {
+    width: 100%;
+}
+.data_graph {
+    background: url("/assets/hummingbirds.gif") no-repeat scroll center center transparent;
+    border: 6px solid #EEEEEE;
+    border-radius: 6px 6px 6px 6px;
+    display: block;
+    margin: 0;
+    min-height: 100px;
+    padding: 0;
+    margin: 0 0 10px;
 }
 
-.fbutton.facebook.ico {
-    background: url("/assets/facebook_button.png") no-repeat scroll 15px center #3B5998;
-    padding-left: 50px;
-    &:hover {
-      color: #FFFFFF;
-      background: url("/assets/facebook_button.png") no-repeat scroll 15px center #617DB7;
-    }
-}
-
-select {
-  width: 220px;
-  height: 35px;
-  font-size: 12px;
-}
-*/
 
 @import "bootstrap-responsive";

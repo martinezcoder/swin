@@ -1,24 +1,12 @@
-// Place all the styles related to the home controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
-$linkColor: #3B5998;
+$linkColor: #6DC5D7;//#3B5998
 $baseBorderRadius:1px;
 $btnInfoBackground: #2D255E;
 $btnInfoBackgroundHighlight: #2D255E;
-$btnDangerBackground: #2D255E; /*para boton busqueda*/
-$btnDangerBackgroundHighlight:#2D255E;
+// $btnDangerBackground: #2D255E; /*para boton busqueda*/
+// $btnDangerBackgroundHighlight:#2D255E;
 
 @import "bootstrap";
-html, body {height: 100%;}
-@font-face {
-    font-family: 'DominikRegular';
-    src: font-url('dominik.eot');
-    src: font-url('dominik.eot') format('embedded-opentype'),
-         font-url('dominik.woff') format('woff'),
-         font-url('dominik.ttf') format('truetype'),
-         font-url('dominik.svg#DominikRegular') format('svg');
-    font-weight: normal;     
-}
+
 .sw-blue{
   color: #6EC7D9;
 }
@@ -30,7 +18,7 @@ html, body {height: 100%;}
 }
 body { 
   font-family: 'DominikRegular', Helvetica,'Lucida Grande', Verdana;  
-  padding-top: 51px;
+  padding-top: 54px;
   color:#999999;  
   min-width:320px;
 }
@@ -54,10 +42,7 @@ hr, .hr{
   right:0;
 }
 #home {
-    background: url("home-back-unfoc.jpg"); //  slide-01.jpg
-    background-color:#000000;
-    background-position: relative;
-    background-repeat:none;
+    background: url("slide-01.jpg") no-repeat scroll 0 0 / 100% 100% #000000; //  home-back-unfoc
     padding: 55px 10px 0;
 }
 #slogan1 {
@@ -81,38 +66,7 @@ hr, .hr{
     margin-bottom: 20px; 
 }
 
-/*boton facebook*/
-.base-btn-facebook {
-    background: none repeat scroll 0 0 rgba(109, 197, 215, 0.3);
-    height: 46px;
-    margin: 0 auto;
-    padding: 6px;
-    width: 246px;
-    color:#ffffff;
-}
-.btn-large{
-    border-radius: 1px 1px 1px 1px;
-    font-size: 15px;
-    padding: 12px 7px;
-    font-family:'lucida grande',tahoma,Verdana,Arial,sans-serif;
-    width: 228px;
-}
-.box-image-facebook {
-    border-right: 2px solid #C4C4C4;
-    display: inline-block;
-    margin-right: 10px;
-    text-align: left;
-    vertical-align: top;
-    width: 40px;
-}
-#image-facebook {
-    background: url("facebook.png") repeat scroll 0 0 transparent;
-    float: left;
-    height: 20px;
-    margin-left: 6px;
-    vertical-align: bottom;
-    width: 20px;
-}
+
 .screen{
     margin: 31px auto 0;
     max-height: 240px;
@@ -165,9 +119,17 @@ hr, .hr{
     display: inline-block;
     line-height: 20px;
     margin: 0 24px;
+    max-height: 187px;
+    max-width: 125px;
+    overflow: hidden;
+    vertical-align: top;
     -webkit-box-shadow:  2px 2px 2px 0px rgba(0, 0, 0, 0.2);
     box-shadow:  2px 2px 2px 0px rgba(0, 0, 0, 0.2);    
 } 
+.list-engagement li img{
+    max-width:100px;
+    max-height:100px;
+}
 .podium{
     background-color: #E8E9EB;
     color: #666666;
@@ -194,35 +156,11 @@ hr, .hr{
     width: 65px;
 }
 
-/*top search searcher*/
-#top-search{
-    padding: 20px 10px 60px;
-}
-em#lent{
-    left: 12px;
-    position: absolute;
-    top: 14px;
-}
-.search {
-    background-color: #665098;
-    display: inline;
-    padding: 7px 10px 7px 7px;
-}
-.navbar-search .search-query {
-    font-size: 16px;
-    padding: 4px 4px 4px 26px;
-}
-.input-xlarge {
-    width: 307px;
-}
-.btn-sw-search{
-    margin-left: 6px;
-    width: 100px;
-}
+
 
 /*boton facebook*/
 #fb_search{
-  margin: 10px 0;
+    margin: 10px 0 42px;
 }
 #fb_img {
     -webkit-box-shadow:  2px 2px 2px 0px rgba(0, 0, 0, 0.2);
@@ -266,7 +204,7 @@ em#lent{
 .img-metodo{
     display: block;
     margin: 0 auto 17px;
-    max-height: 145px;
+    max-height: 146px;
 }
 
 
@@ -301,7 +239,7 @@ em#lent{
   background: url("base-informes2.jpg") no-repeat scroll 0 -236px #5F4B8E;
 }
 .transparencia {
-    background-color: rgba(255, 255, 255, 0.5);
+    background-color: rgba(255, 255, 255, 0.6);
     color: rgba(255, 255, 255, 0.9);
     height: 400px;
     padding: 6px 5px;
@@ -336,8 +274,16 @@ em#lent{
     margin: 13px 21px 10px;
     min-height: 65px;
     min-width: 245px;
+    opacity: 0.7;
     vertical-align: top;
 } 
+#partners li:hover{
+    -webkit-box-shadow:1px 2px 3px #B2B2B2;
+    box-shadow: 1px 2px 3px #B2B2B2;
+    opacity: 1;
+    transition: box-shadow 300ms ease-out 0s;
+    transition: opacity 300ms ease-out 0s;
+}
 .image-partner{
   background:#000;
   height: 50px;
@@ -353,51 +299,58 @@ em#lent{
 }
 #iebs{
     background: url("partners/3.iebs.jpg") no-repeat scroll 0 0 transparent;
-    width: 184px; 
-}
+    margin-top: 12px;
+    width: 184px;
+}    
 #gigas{
     background: url("partners/4.gigas.jpg") no-repeat scroll 0 0 transparent;
+    margin-top: 4px;
     width: 121px;
 }
 
 
 #metricson{
     background: url("partners/5.metricson.jpg") no-repeat scroll 0 0 transparent;
+    padding-bottom: 10px;
     width: 206px;
 }
 #lasalle{
     background: url("partners/lasalle-color.png") no-repeat scroll 0 0 transparent;
+    margin-top: 3px;
     width: 149px;
 }
 #digitalweek{
     background: url("partners/digitalweek-color.png") no-repeat scroll 0 0 transparent;
+    margin-top: 2px;
     width: 120px;
-
 }
 #busco{
     background: url("partners/buscoseo-color.png") no-repeat scroll 0 0 transparent;
-    width: 104px; 
+    margin-top: 4px;
+    width: 104px;
 }
 
 
 #global{
     background: url("partners/global-color.png") no-repeat scroll 0 0 transparent;
-    width: 103px; 
+    margin-top: 7px;
+    width: 103px;
 }
 #socialday{
-    background: url("partners/10.Mashable.jpg") no-repeat scroll 0 0 / 91px 88px transparent;
+    background: url("partners/10.Mashable.jpg") no-repeat scroll 11px 0px / 91px 88px transparent;
     height: 87px;
+    margin-top: 3px;
     width: 115px;
 }
 #congres{
     background: url("partners/w-congress-color.png") no-repeat scroll 0 0 transparent;
-    margin-top: 11px;
+    margin-top: 8px;
     width: 46px;
 }
 #school{
     background: url("partners/w_school-color.png") no-repeat scroll 0 0 transparent;
-    margin-top: 11px;
-    width: 45px; 
+    margin-top: 8px;
+    width: 45px;
 }
 
 
@@ -409,7 +362,8 @@ em#lent{
     padding: 0 10px 76px;
 }
 #consulta{
-  color: #6EC7D9;
+    color: #6EC7D9;
+    padding: 13px 0 5px;
 }
 .arrow {
     background: url("arrows-engagement.png") repeat scroll -64px -5px transparent;
@@ -422,17 +376,12 @@ em#lent{
 .arrow:hover{
     background: url("arrows-engagement.png") repeat scroll -130px -5px transparent; 
 }
-#div-search-box{
-    display: block;
-    height: 50px;
-    margin: 0 auto;
-}
 #quieres{
-    margin: 48px auto 5px;
+    margin: 48px 0 5px;
     max-width: 327px;
 }
 #conectarConFacebook{
-    margin-top: 41px;
+    margin-top: 37px;
 }
 
 
@@ -441,9 +390,6 @@ em#lent{
 /*######################################################################*/
 #search-engagement-page {
     padding: 17px 10px 85px;
-}
-.form-case {
-    margin: 20px 0 10px;
 }
 .podium-case {
     margin: 32px 0 10px;
@@ -455,7 +401,7 @@ em#lent{
 /*######################################################################*/
 #cita{
     background: none repeat scroll 0 0 #E8E9EB;
-    padding: 38px 10px 85px;
+    padding: 68px 10px 36px;
 }
 .cita-case{
     color: #3F3F3F;
@@ -463,14 +409,23 @@ em#lent{
     max-width: 830px;    
 }
 #cita-thomas{
+    font-size: 20px;
     line-height: 23px;
     margin: 0 auto;
-
 }
+
 #cita-thomas-sign{
     color: #3F3F3F;
-    margin: 0 auto;
+    font-family: Helvetica;
+    margin: 7px auto 0;
     max-width: 830px;
+    font-size:15px;
+}
+#firma{
+    background: url("nosotros/firma_thomas.png") no-repeat scroll -3px -27px transparent;
+    height: 130px;
+    margin: 7px 0;
+    width: 225px;
 }
 #informe-social-media {
     padding: 20px 10px 30px;
@@ -489,12 +444,15 @@ em#lent{
     padding: 4px 97px 13px;
 }
 
+#smd {
+    background: none repeat scroll 0 0 #000000;
+    height: 300px;
+}
+/*blog*/
 #blog {
     padding: 23px 10px 43px;
 }
-.post{
-  
-}
+.post{}
 .titulo-post {
     background-color: #EDEEE5;
     color: #4D4D4D;
@@ -504,10 +462,82 @@ em#lent{
     padding: 15px 30px;
 }
 .content-post{}
-
 #equipo{
-    padding: 23px 10px 43px;  
+    background: none repeat scroll 0 0 #E8E9EB;
+    padding: 23px 10px 43px; 
 }
+#colaboradores > li {
+    display: inline-block;
+    margin: 0 0 24px;
+    vertical-align: top;
+    width: 386px;
+}
+.col-imagen {
+    display: inline-block;
+    height: 158px;
+    overflow: hidden;
+    position: relative;
+    vertical-align: top;
+    width: 113px;
+
+}
+
+
+ .col-imagen img{
+    height: 158px;
+    width: 113px;
+    transform-origin: center center 0;
+    transition: all 0.3s ease 0s;
+}
+.col-imagen img:hover{
+    height:168px;
+    width: 133px; 
+    margin: -5px 0 0 -5px;
+
+}
+.col-info {
+    display: inline-block;
+    padding: 0 10px;
+    vertical-align: top;
+    width: 177px;
+}
+.col-nombre {
+    color: #595959;
+    font-family: Helvetica,Arial;
+    font-weight: bold;
+    margin: 0 0 7px;
+}
+.col-rol {
+    color: #5A5A5A;
+    font-family: Helvetica,Arial;    
+    font-size: 14px;
+    font-style: italic;
+    margin: 0 0 6px;
+}
+.col-descripcion {
+    color: #535353;
+    font-family: Helvetica;
+    font-size: 12px;
+}
+.leer-mas {
+    margin: 10px 0 5px;
+    color:#999999;
+}
+.ver-todo-blog {
+    font-family: 'DominikRegular',Helvetica,'Lucida Grande',Verdana;
+    font-size: 12px;
+    margin: 10px 0;
+    text-align: center;
+    text-decoration: underline;
+}
+hr.hr-nosotros {
+    background: none repeat scroll 0 0 #FFFFFF;
+    box-shadow: 0 2px 2px 0 #B6B6B6;
+    height: 3px;
+}
+
+
+
 
 
 @media only screen and (max-device-width: 800px), only screen and (device-width: 1024px) and (device-height: 600px), only screen and (width: 1280px) and (orientation: landscape), only screen and (device-width: 800px), only screen and (max-width: 767px) {
