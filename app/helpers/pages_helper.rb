@@ -396,4 +396,14 @@ module PagesHelper
     end
   end
 
+  def color_integer(var)
+    begin
+      if var != 0
+        (var > 0 and !var.nil?) ? 'green' : 'red'
+      end
+    rescue
+      'red'
+    end 
+  end
+
 end

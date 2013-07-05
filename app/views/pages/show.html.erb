@@ -52,15 +52,18 @@
 					</li>
 			    </ul>	    		
 			</div>    
-
-			<div id="conectarConFacebook">
-				<div id="quieres">
-					<p><strong>¿Quieres comparar varios competidores?</strong></p>
-					<p><strong>¡Prueba GRATIS SocialWin Analytics!</strong></p>							
+			<% if signed_in? %>
+				<div class="space"></div>
+			<% else %>
+				<div id="conectarConFacebook">
+					<div id="quieres">
+						<p><strong>¿Quieres comparar varios competidores?</strong></p>
+						<p><strong>¡Prueba GRATIS SocialWin Analytics!</strong></p>							
+					</div>
+					<!--btnConectarConFacebook-->	
+					<%= render 'site/shared/facebook_button_signin' %>
 				</div>
-				<!--btnConectarConFacebook-->	
-				<%= render 'site/shared/facebook_button_signin' %>
-			</div>	
+			<% end %>
 			
 		</div><!-- span5-->
 		
@@ -78,17 +81,17 @@
 							<tr>
 								<td>Fans totales: </td>
 								<td><strong> <%= @data_day.likes %> </strong></td>
-								<td><%= @variations[:likes] %>%</td>
+								<td><span class="<%= color_integer(@variations[:likes].to_i) %>"><%= @variations[:likes] %>%</span></td>
 							</tr>
 							<tr>
 								<td>Fans activos:</td>
 								<td><strong> <%= @data_day.prosumers %> </strong></td>
-								<td><%= @variations[:prosumers] %>%</td>
+								<td><span class="<%= color_integer(@variations[:prosumers].to_i) %>"><%= @variations[:prosumers]%>%</span></td>
 							</tr>
 							<tr>
 								<td>Engagement (últimos 7 días):</td>
 								<td><strong> <%= @engage %> </strong></td>
-								<td><%= @variations[:engage] %>%</td>
+								<td><span class="<%= color_integer(@variations[:engage].to_i) %>"><%= @variations[:engage] %>%</span></td>
 							</tr>							
 						</tbody>
     				</table>
@@ -102,13 +105,14 @@
 					<%= render 'facebook/charts/chart_timeline', :graph => "graph_div" %>
 					<%= render 'facebook/shared/graph', :graph => "graph_div" %>
 			</div>
-			
-			<div class="clearfix"></div>
-			
-			<div id="div-search-box">
-				<p><strong>Nueva busqueda</strong></p>
-				<%= render 'site/shared/search_box' %>
-			</div>
+			<% if not signed_in? %>			
+				<div class="clearfix"></div>
+				
+				<div id="div-search-box">
+					<p><strong>Nueva busqueda</strong></p>
+					<%= render 'site/shared/search_box' %>
+				</div>
+			<% end %>
 		</div><!-- span6 -->
 	</div>
 	

@@ -18,7 +18,7 @@ jQuery(function ($) {
       var fbSearchDiv = $('[data-facebook-search]');
       var valor = fbSearchDiv.data('facebook-search');
 	  var searching=valor.indexOf("search");
- 	  var htmlResult= "<ul>";
+ 	  var htmlResult = "<ul>";
 	
 	  if (searching < 0) {
 		    $.ajax({

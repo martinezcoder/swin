@@ -91,9 +91,9 @@ class PagesController < ApplicationController
       @variations[:likes]  = fb_metric.get_variation(likes_week_ago, @data_day.likes)
       @variations[:prosumers] = fb_metric.get_variation(prosumers_week_ago, @data_day.prosumers)
     else
-      @variations[:engage] = "  "
-      @variations[:likes]  = "  "
-      @variations[:prosumers] = "  "
+      @variations[:engage] = nil
+      @variations[:likes]  = nil
+      @variations[:prosumers] = nil
     end
 
     @thisUrl = request.url

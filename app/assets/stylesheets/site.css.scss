@@ -84,7 +84,7 @@ hr, .hr{
 
 /*video*/
 #video{  
-    padding: 54px 10px 30px;
+    padding: 30px 10px;
 }
 .video{
     margin: 20px auto;
@@ -156,7 +156,10 @@ hr, .hr{
     width: 65px;
 }
 
-
+.try-search{
+    margin: 0 auto;
+    max-width: 500px;
+}
 
 /*boton facebook*/
 #fb_search{
@@ -260,6 +263,8 @@ hr, .hr{
 }
 #info4{
     color: #50388C;
+    font-size: 15px;
+    text-decoration: underline;
 }
 
 
@@ -381,7 +386,7 @@ hr, .hr{
     max-width: 327px;
 }
 #conectarConFacebook{
-    margin-top: 37px;
+    margin-top: 56px;
 }
 
 
