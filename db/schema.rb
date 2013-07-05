@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130524090724) do
+ActiveRecord::Schema.define(:version => 20130705085955) do
 
   create_table "authentications", :force => true do |t|
     t.integer  "user_id"
@@ -36,6 +36,21 @@ ActiveRecord::Schema.define(:version => 20130524090724) do
 
   add_index "facebook_lists", ["page_id"], :name => "index_facebook_lists_on_page_id"
   add_index "facebook_lists", ["user_id", "created_at"], :name => "index_facebook_lists_on_user_id_and_created_at"
+
+  create_table "fb_top_engages", :force => true do |t|
+    t.integer  "day"
+    t.integer  "page_id"
+    t.string   "page_fb_id"
+    t.integer  "fan_count"
+    t.integer  "variation"
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
+    t.integer  "talking_about_count"
+  end
+
+  add_index "fb_top_engages", ["day", "page_id"], :name => "index_fb_top_engages_on_day_and_page_id", :unique => true
+  add_index "fb_top_engages", ["day"], :name => "index_fb_top_engages_on_day"
+  add_index "fb_top_engages", ["page_id"], :name => "index_fb_top_engages_on_page_id"
 
   create_table "list_page_relationships", :force => true do |t|
     t.integer  "list_id"
@@ -114,6 +129,16 @@ ActiveRecord::Schema.define(:version => 20130524090724) do
   end
 
   add_index "pages", ["page_id"], :name => "index_pages_on_page_id", :unique => true
+
+  create_table "sessions", :force => true do |t|
+    t.string   "session_id", :null => false
+    t.text     "data"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "sessions", ["session_id"], :name => "index_sessions_on_session_id"
+  add_index "sessions", ["updated_at"], :name => "index_sessions_on_updated_at"
 
   create_table "user_page_relationships", :force => true do |t|
     t.integer  "user_id"
