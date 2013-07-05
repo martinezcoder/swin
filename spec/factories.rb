@@ -23,11 +23,7 @@ FactoryGirl.define do
   factory :page do
     name "SocialWin"
     page_id "349679691794392"
-    page_url "http://www.facebook.com/pages/SocialWin/349679691794392"
-    pic_square "http://profile.ak.fbcdn.net/hprofile-ak-snc6/276654_349679691794392_1240268105_q.jpg"
     page_type "CONSULTING/BUSINESS SERVICES"
-    username "socialwin"
-    pic_big "xxx"
   end
   
   factory :authentication do
@@ -41,5 +37,14 @@ FactoryGirl.define do
     user
   end
 
+  factory :fb_top_engage do
+      day 20130505
+      page_id 35
+      page_fb_id "349679691794392"
+      fan_count 150000
+      talking_about_count 15
+      variation 3
+  end
+  
 
 end

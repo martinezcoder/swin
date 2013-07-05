@@ -1,0 +1,733 @@
+$linkColor: #6DC5D7; //#3B5998;
+$baseBorderRadius:1px;
+
+@import "bootstrap";
+
+/* mixins, variables, etc. */
+$grayMediumLight: #eaeaea;
+$azulSocialWin: #76d4e5; 
+$facebookcolor: #3B5998; 
+
+@mixin box_sizing {
+  -moz-box-sizing: border-box; 
+  -webkit-box-sizing: border-box; 
+  box-sizing: border-box;  font-weight: bold;
+}
+@mixin recuadrogris {
+  background-color:transparent ; // #eeeeee
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  border-radius: 6px;
+}
+body{
+    background:url(body-tail.gif) 0 0 repeat-x #fff;
+    position:relative;
+    padding-top:54px;
+    font-size:13px;
+    line-height:18px
+}
+#app_content {
+    padding-bottom: 37px;
+    padding-top: 10px;
+}
+h1 {
+  font-size: 3em;
+  letter-spacing: -2px;
+  margin-bottom: 30px;
+  text-align: center;
+}
+h2 {
+  font-size: 1.7em;
+  letter-spacing: -1px;
+  margin-bottom: 30px;
+  text-align: center;
+  font-weight: normal;
+  color: $grayLight;
+}
+p {
+  font-size: 1.1em;
+  line-height: 1.7em;
+}
+
+/* header */ 
+#logo {
+  float: left;
+  margin-right: 10px;
+  font-size: 1.7em;
+  color: $blue;
+  // text-transform: uppercase;
+  letter-spacing: -1px;
+  padding-top: 9px;
+  line-height: 1;
+  &:hover {
+    color: $azulSocialWin;
+    text-decoration: none;
+  }
+}
+
+/* sidebar */ // se usa en users/show.html.erb
+aside {
+  section {
+    padding: 10px 0;
+    border-top: 1px solid $grayLighter;
+    &:first-child {
+      border: 0;
+      padding-top: 0;
+    }
+/*
+    span {
+      display: block;
+      margin-bottom: 3px;
+      line-height: 1;  
+    }
+*/
+    h1 {
+      font-size: 1.4em;
+      text-align: left;
+      letter-spacing: -1px;
+      margin-bottom: 3px;
+      margin-top: 0px;
+    }
+    p { clear:both;
+    }
+  }
+}
+
+aside .well{
+  max-width:340px;
+  padding:8px 0;
+}
+.gravatar {
+  float: left;
+  margin-right: 10px;
+  height: 25px;
+  width: 25px;
+}
+.comp_avatar {
+  float: left;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  height: 20px;
+  width: 20px;
+}
+.mini_logo {
+  height: 25px;
+  width: 25px;
+}
+.normal_logo {
+  height: 50px;
+  width: 50px; 
+}
+.header_logo {
+  height: 30px;
+  width: 30px; 
+}
+.no-decoration {
+    &:hover{ 
+      text-decoration: none;
+    }
+}
+.user-session {
+  display: inline-block;
+  max-width: 175px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  vertical-align: top;
+  white-space: nowrap;
+}
+
+/* miscellaneous */
+.debug_dump {
+  clear: both;
+  float: left;
+  width: 100%;
+  margin-top: 45px;
+  @include box_sizing;
+}
+
+  
+/* forms */
+input, textarea, select, .uneditable-input {
+  border: 1px solid #bbb;
+  width: 100%;
+  padding: 3px;
+  margin-bottom: 15px;
+  @include box_sizing;
+}
+input {
+  height: auto !important;
+}
+#error_explanation {
+  color: #f00;
+  ul {
+    list-style: none;
+    margin: 0 0 18px 0;
+  }
+} 
+.field_with_errors {
+  @extend .control-group;
+  @extend .error;
+}
+
+/* buttons */
+
+/*.btn-large{
+  font-size: 15px;
+} 
+*/
+.signinmenu li a{ 
+    margin-left: 15px;
+    margin-right: 15px;
+    color: white;
+}
+
+
+/* facebook pages */
+#facepageloop {
+  //float: right;
+  margin: 10px 0 10px 0px;
+  width: 100%;
+  
+  a {
+    display:block;
+    border: 1px solid $grayMediumLight;
+    padding: 10px;
+    text-decoration:none;
+    color: $facebookcolor; 
+    &:hover {
+      border: 1px solid #AAC1D4;
+      background-color: aliceblue;
+    }
+  }
+
+  .logofacebookpage {
+    font-size:14px;
+    color: #36c;
+    margin-bottom: 5px;
+    
+    img {
+      margin-right:20px; 
+    }
+  }
+  
+  h2 {
+    letter-spacing: 0px;
+  }
+  
+}
+
+/* pages index */
+
+.fb_pages {
+  list-style: none;
+  margin: 0;
+  color: $facebookcolor; 
+
+  li {
+    overflow: auto;
+
+    padding: 10px 10px;
+    border-bottom: 1px solid $grayLighter;
+    &:hover {
+      background-color: white;
+    }
+  }
+}
+
+
+.fb_stats {
+  overflow: auto;
+
+  .fb_stat {
+    float: left;
+    padding: 0 10px;
+    border-left: 1px solid $grayLighter;
+    color: gray;
+    min-width: 80px;
+    &:first-child {
+      padding-left: 11px;
+      border: 0;
+    }
+  }
+
+  .mini {
+    min-width: 50px;
+  }
+  
+  .fb_btn {
+    float: right;
+    padding: 0 10px;
+    border-left: 1px solid $grayLighter;
+    color: gray;
+    min-width: 80px;
+    .btn {
+          margin: 20px 0 0 20px;
+    }
+  }
+
+  strong {
+    display: block;
+  }
+}
+
+
+.imgpage {
+  float: left;
+  padding: 5px;
+  border: solid 2px transparent;
+  &:hover {
+    border: solid 2px #eee;
+  }
+}
+
+.search-box {
+  margin-top:1px; 
+}
+.mini_page_dashboard {
+  float: right;
+  overflow: hidden;
+}
+.page_active_dashboard {
+  margin-left: 20px;
+  overflow: auto;  
+}
+.newline {
+  clear: both;
+}
+.menu_metricas {
+  padding-top: 10px;
+}
+.menu_competitors {
+  padding-top: 40px;
+}
+.data_graph {
+  display: inline-block;
+  float: left;
+  margin: 0 0 10px 0px;
+  border: 6px solid #EEEEEE;
+  background:url(/assets/hummingbirds.gif) center no-repeat transparent ;
+  min-height: 100px;
+  &:first-child {
+    margin: 0 5px 10px 0px;
+  }
+  @include recuadrogris;  
+}
+
+.full_width {
+    width: 98%;
+}
+
+
+.data_table {
+  padding: 10px;
+  margin: 0 0 10px 0px;
+  background:transparent url(/assets/hummingbirds.gif) center no-repeat;
+  min-height: 160px;
+  border: 6px solid #EEEEEE;
+  @include recuadrogris;
+}
+.data_nil {
+  padding: 15px;
+  margin: 0 0 10px 0px;
+  background:solid center no-repeat;
+  min-height: 100px;
+  @include recuadrogris;
+}
+.data_follow {
+  padding: 5px;
+  margin: 0 0 10px 0px;
+  background:solid center no-repeat;
+  border: solid 1px #eee;
+  min-height: 100px;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  border-radius: 6px;
+}
+.input-search {
+  margin-bottom: 0px;
+}
+
+// Engage Medals!
+.competitors_div {
+  overflow: hidden;
+  padding: 10px 15px;
+  margin: 0 0 10px 0px;
+  @include recuadrogris;
+}
+
+#competitors_title {
+  #competitorBox { 
+    float:left; 
+    position:relative;
+    margin-right: 35px;
+    margin-bottom: 10px;
+  }
+}
+
+.engage_div {
+  overflow: hidden;
+  padding: 10px 15px;
+  margin: 0 0 10px 0px;
+  @include recuadrogris;
+    background-color: transparent;
+    border: 6px solid #EEEEEE;
+    border-radius: 6px 6px 6px 6px;
+}
+
+#engage_medals {
+
+  #engageBox { 
+    float:left; 
+    position:relative;
+    margin-right: 35px;
+    margin-bottom: 25px;
+    .engageMedal {
+      position:absolute;
+      top:10px;
+      left:14px;
+      width: 30px;
+      height: 25px;
+      margin: 20px; 
+      padding-top: 5px; 
+      text-align: center;
+      border: 1px solid #0088CC; 
+      background-color: #0088CC;
+  
+      -moz-border-radius: 15px 15px 35px 35px;
+      -webkit-border-radius: 15px 15px 25px 25px;
+      border-radius: 15px 15px 35px 35px;
+    
+      -moz-box-shadow: rgb(150,150,150) 2px 2px 2px;
+      -webkit-box-shadow: rgb(150,150,150) 2px 2px 2px;
+      box-shadow: rgb(150,150,150) 2px 2px 2px;  
+  
+      #engageNumber {
+       /* font: bold 16px verdana, sans-serif; */
+      /*  text-shadow: rgba(0,0,0,0.5) 1px 1px 1px; */
+        color: white;
+      }
+  
+    }
+          
+    .golden {
+      border: 1px solid #FFD700; 
+      background-color: #FFD700;
+      background: radial-gradient(contain circle, #FFD700, #006699);
+      background:  -moz-radial-gradient(center, ellipse, #FFD700 10%, #006699 200%);
+      background:  -webkit-radial-gradient(center, ellipse, #FFD700 10%, #006699 200%);
+    
+      -moz-box-shadow: rgb(240,210,20) 0px 0px 10px;
+      -webkit-box-shadow: rgb(240,210,20) 0px 0px 10px;
+      box-shadow: rgb(240,210,20) 0px 0px 10px;  
+    }
+  
+    .silver {
+      border: 1px solid #C0C0C0;
+      background-color: #C0C0C0;
+      background: radial-gradient(contain circle, #C0C0C0, #006699);
+      background:  -moz-radial-gradient(center, ellipse, #C0C0C0 10%, #006699 200%);
+      background:  -webkit-radial-gradient(center, ellipse, #C0C0C0 10%, #006699 200%);
+      
+      -moz-box-shadow: rgb(150,150,150) 2px 2px 2px;
+      -webkit-box-shadow: rgb(150,150,150) 2px 2px 2px;
+      box-shadow: rgb(150,150,150) 2px 2px 2px;  
+  
+    }
+       
+    .bronze {
+      border: 1px solid #D2B48C;
+      background-color: #D2B48C;
+      background: radial-gradient(contain circle, #D2B48C, #006699);
+      background:  -moz-radial-gradient(center, ellipse, #D2B48C 10%, #006699 300%);
+      background:  -webkit-radial-gradient(center, ellipse, #D2B48C 10%, #006699 300%);
+    }
+  
+  }
+
+}
+
+
+.boxshadow {
+    background-color: white;  
+    background-repeat: no-repeat;
+    border-color: #F8F8F8;
+    border-style: solid;
+    box-shadow: 0px 0px 19px #A09F9F;
+    @include recuadrogris;
+}
+.color_socialwin {
+  color: $azulSocialWin;
+}
+.color_facebook {
+  color: $facebookcolor;  
+}
+
+
+.page_active_dashboard {
+    a:hover {
+      text-decoration: none;
+    }
+}
+
+/*.home {
+  background:url(home.jpg) 0 0 no-repeat #fff;
+  height: 600px;
+
+  .titulos {
+    margin-top: 200px;
+    
+    h1 {
+      text-align: left;
+      margin: 0px 0px 0px 10px;
+      color: $azulSocialWin;
+      font-size: 30px;
+    }
+    
+    p {
+      text-align: left;
+      margin: 40px 0px 0px 10px;
+      color: #555;
+    }
+  }
+/*ESTILOS ALEX******************************************************************************************/
+.accordion {
+    border: 6px solid #EEEEEE;
+    border-radius: 6px 6px 6px 6px;
+    margin-bottom: 11px;
+}
+
+/*#####################################################*/
+/*### SHOW ENGAGE PUBLIC PAGE ##########################*/
+/*#####################################################*/
+.body, body{
+    background: none repeat scroll 0 0 #FFFFFF;
+    min-width:320px;
+}
+#show{
+    padding:0 10px;
+}
+.consulta{
+    color: #6EC7D9;
+    padding: 13px 0 5px;
+    font-weight:normal;
+    font-family:'DominikRegular',Helvetica,'Lucida Grande',Verdana;
+}
+.presentacion > img {
+    border: 1px solid #BFBFBF;
+    display: inline-block;
+    max-width: 55px;
+    vertical-align: top;
+}
+.detalles {
+    display: inline-block;
+    padding: 3px 7px;
+    vertical-align: top;
+}
+.nombre-foto {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 6px;
+}
+.resultados-de-hoy {
+    background: none repeat scroll 0 0 #EEEEEE;
+    font-weight: bold;
+    margin: 10px 0;
+    padding: 11px 0;
+    text-align: center;
+    width: 300px;
+}
+#btn-ver-resultados {
+    border: 1px solid #C8C8C8;
+    border-radius: 1px 1px 1px 1px;
+    font-weight: bold;
+    margin: 17px 0;
+    max-width: 349px;
+    padding: 8px 0;
+    width: 84%;
+}
+.escudo-engagement {
+    margin: 0 0 36px 26px;
+    max-width: 349px;
+    position: relative;
+}
+.escudo-engagement > img {
+    height: 100%;
+    width: 100%;
+}
+.num-engage {
+    font-size: 92px;
+    left: 19%;
+    position: absolute;
+    text-align: center;
+    top: 38%;
+    width: 45%;
+}
+.word-engage {
+    font-size: 22px;
+    left: 19%;
+    position: absolute;
+    top: 65%;
+}
+.name-engage {
+    font-size: 33px;
+    line-height: 1;
+    margin-bottom: 20px;
+    margin-right: 15%;
+    text-align: center;
+}
+.comparte-word > p {
+    font-weight: bold;
+}
+.btn-group {
+    display: inline-block;
+    font-size: 0;
+    max-width: 349px;
+    position: relative;
+    vertical-align: middle;
+    white-space: nowrap;
+    width: 93%;
+}
+.btn-group-comparte{
+
+}
+.comparte-engagement-btn{
+    font-weight: bold;
+    padding: 5px 0;
+    width: 84%;
+}
+.btn-comparte {
+    background-color: #B4E3EC;
+    background-image: linear-gradient(to bottom, #B4E3EC, #59CADA);
+    background-repeat: repeat-x;
+    border-color:0;
+    border-color: #6CDDED;
+    padding: 7px 0;
+    width: 100%;
+}
+.btn-comparte:hover, .btn-comparte:focus, .btn-comparte:active, .btn-comparte.active, .btn-comparte.disabled, .btn-comparte[disabled] {
+    background-color: #6DC5D7;
+}
+.comparte-icon{
+    background: url("sw-sprite.png") no-repeat scroll -57px -284px transparent;
+    display: inline-block;
+    height: 23px;
+    margin-left: 4px;
+    margin-right: 5px;
+    vertical-align: middle;
+    width: 26px;
+}
+.comparte-twitter{
+    background: url("sw-sprite.png") no-repeat scroll -144px -33px transparent;
+    display: inline-block;
+    height: 23px;
+    margin-left: 4px;
+    margin-right: 5px;
+    vertical-align: middle;
+    width: 26px;
+}
+.dropdown-menu > li > a:hover .comparte-twitter{
+    background: url("sw-sprite.png") no-repeat scroll -56px -34px transparent;
+}
+.comparte-linkedin{
+    background: url("sw-sprite.png") no-repeat scroll -143px -155px transparent;
+    display: inline-block;
+    height: 23px;
+    margin-left: 4px;
+    margin-right: 5px;
+    vertical-align: middle;
+    width: 26px;
+}
+.dropdown-menu > li > a:hover .comparte-linkedin{
+   background: url("sw-sprite.png") no-repeat scroll -56px -155px transparent;
+}
+.comparte-facebook{
+    background: url("sw-sprite.png") no-repeat scroll -142px -73px transparent;
+    display: inline-block;
+    height: 23px;
+    margin-left: 4px;
+    margin-right: 5px;
+    vertical-align: middle;
+    width: 26px;
+}
+.dropdown-menu > li > a:hover .comparte-facebook{
+    background: url("sw-sprite.png") no-repeat scroll -55px -73px transparent;
+}
+.comparte-correo{
+    background: url("sw-sprite.png") no-repeat scroll -143px -196px transparent;
+    display: inline-block;
+    height: 23px;
+    margin-left: 4px;
+    margin-right: 5px;
+    vertical-align: middle;
+    width: 26px;
+}
+.dropdown-menu > li > a:hover .comparte-correo{
+    background: url("sw-sprite.png") no-repeat scroll -56px -196px transparent;
+}
+.open .comparte-icon {
+    background: url("sw-sprite.png") no-repeat scroll -148px -284px transparent;
+}
+.btn-group.open .btn.dropdown-toggle {
+    background-color: #6DC5D7;
+}
+.comparte-icon:hover{
+    background: url("sw-sprite.png") no-repeat scroll -57px -284px transparent;
+    display: inline-block;
+    height: 23px;
+    margin-left: 4px;
+    margin-right: 5px;
+    vertical-align: middle;
+    width: 26px;
+}
+.open > .dropdown-menu {
+    display: block;
+    left: 180px;
+}
+.dropdown-menu li a {
+    padding: 2px 10px 2px 2px;
+    text-align: left;
+}
+.space {
+    height: 19px;
+}
+/*boton facebook*/
+#conectarConFacebook {
+    display: block;
+    height: 144px;
+    margin: 58px 0 25px;
+    text-align: left;
+}
+.tabla-metricas {
+    width: 100%;
+}
+thead tr th {
+    background: none repeat scroll 0 0 #EEEEEE;
+    border-right: 1px solid #FFFFFF;
+}
+.green{color:#009933;}
+.red{color:#D70800;}
+.grafica-engagement {
+    width: 100%;
+}
+.grafica-header {
+    background-color: #EEEEEE;
+    font-weight: bold;
+    margin: 10px 0;
+    padding: 10px 0 10px 10px;
+}
+.full_width {
+    width: 100%;
+}
+.data_graph {
+    background: url("/assets/hummingbirds.gif") no-repeat scroll center center transparent;
+    border: 6px solid #EEEEEE;
+    border-radius: 6px 6px 6px 6px;
+    display: block;
+    margin: 0;
+    min-height: 100px;
+    padding: 0;
+    margin: 0 0 10px;
+}
+
+
+@import "bootstrap-responsive";

@@ -7,75 +7,6 @@ include DashboardHelper
   before_filter :has_active_list
   before_filter :list_has_pages, except: :empty
 
-  def timeline_engage
-    session[:active_tab] = FACEBOOK
-    
-    if !(@page = get_active_list_page)
-      list = get_active_list
-      @page = list.pages.first
-      list.set_lider_page(@page)
-    end
-
-    nDays = 14
-    engageList = []
-    
-    tToday = Time.now - (nDays*24*60*60)  # nDays ago
-    tYesterday = Time.now - ((nDays+1)*24*60*60)  # nDays ago
-
-    engageToday = 0
-    engageYesterday = 0
-    @max = 0
-
-    dataYesterday = @page.page_data_days.where("day = #{tYesterday.strftime("%Y%m%d").to_i}")
-    if !dataYesterday.empty?
-      engageYesterday = get_engage(dataYesterday[0].likes, dataYesterday[0].prosumers)
-    else
-      engageYesterday = 0
-    end
-
-    @max = engageYesterday
-    
-    for i in 0..nDays-1
-      dataToday = @page.page_data_days.where("day = #{tToday.strftime("%Y%m%d").to_i}")
-      if !dataToday.empty?
-        engageToday = get_engage(dataToday[0].likes, dataToday[0].prosumers)
-      else
-        engageToday = 0
-      end
-      @max = [@max, engageToday].max
-      @var = get_variation(engageToday.to_f, engageYesterday.to_f)
-      engageList[i] = [ tToday.strftime("%d/%m/%Y"), # "#{t.year}/#{t.month}/#{t.day}",
-                        engageToday,
-                        html_tooltip_engage(@page.pic_square, @page.name, engageToday, @var),
-                        html_variation(@var),
-                        tToday.strftime("%Y%m%d").to_i]
-      engageYesterday = engageToday
-      tToday = tToday.tomorrow
-    end
-
-    engageToday = get_engage(@page.fan_count, @page.talking_about_count)
-    @var = get_variation(engageToday.to_f, engageYesterday.to_f)
-    engageList[nDays] = [ "Hoy",
-                          engageToday,
-                          html_tooltip_engage(@page.pic_square, @page.name, engageToday, @var),
-                          html_variation(@var),
-                          Time.now.strftime("%Y%m%d").to_i]
-    @max = [@max, engageToday].max
-    @var = get_variation(engageToday.to_f, engageList[nDays-7][1]) 
-
-    @dataA = []
-    @dataB = []
- 
-    for i in 0..nDays    
-      @dataA[i] = [] + engageList[i]
-      @dataA[i][1] = 0
-      @dataB[i] = [] + engageList[i]
-    end
-
-    @max = 50 if @max <= 50 
-
-  end
-  
   def empty
     session[:active_tab] = FACEBOOK
     @list = get_active_list
@@ -83,66 +14,183 @@ include DashboardHelper
   end
 
   def engage
-    session[:active_tab] = FACEBOOK    
+    session[:active_tab] = FACEBOOK
 
-    @list = get_active_list
-    competitors = []
-    competitors += @list.pages   
+    # Tenemos tres opciones de gráficas: 
+    # 1 - barras de engagement de un solo día y varios competidores
+    # 2 - timeline de engagement de un solo competidor desde/hasta
+    # 3 - timeline de engagement de varios competidores desde/hasta
+    engage_day       = 0
+    engage_timeline  = 1
 
-    css1 = 'mini_logo'
-    css2 = 'normal_logo'
+    @type_graph = nil
 
-    t = Time.now - (24*60*60) # yesterday
-    num = competitors.length
-    compList = []
-    @max = 0
-
-    for i in 0..num-1 do
-
-      dataDay = competitors[i].page_data_days.where("day = #{t.strftime("%Y%m%d").to_i}")
-      if !dataDay.empty?
-        engageY = get_engage(dataDay[0].likes, dataDay[0].prosumers)
+    begin
+      if !membership_user?
+        date_to = Time.now - (24*60*60) # yesterday
+        @type_graph = engage_day
       else
-        engageY = 0
+        if params.has_key?(:date_from) && params.has_key?(:date_to)
+            date_from = Time.strptime(params[:date_from], "%Y%m%d") # historic timeline
+            date_to = Time.strptime(params[:date_to], "%Y%m%d")
+            dateRange = (date_to - date_from)/60/60/24
+            @type_graph = engage_timeline
+            if dateRange < 0 
+              flash[:info] = "ATENCIÓN: rango de fechas no válido"
+              raise
+            elsif dateRange > MAX_DATE_RANGE
+              flash[:info] = "ATENCIÓN: el rango debe ser inferior a tres meses"
+              raise
+            elsif date_from == date_to
+              @type_graph = engage_day
+            end
+            
+        elsif params.has_key?(:date_to)
+            date_to = Time.strptime(params[:date_to], "%Y%m%d") # historic day
+        else
+            date_to = Time.now - (24*60*60) # yesterday
+        end
+      end
+    rescue
+      flash[:info] = "Opps, algo no ha ido bien..." if flash[:info].nil?
+      date_to = Time.now - (24*60*60) # yesterday
+      @type_graph = engage_day
+    end
+
+    if @type_graph.nil? 
+      @type_graph = engage_day
+    end
+
+    # Hasta aquí:
+    # @type_graph = engage_timeline ==> Si existe date_from y date_to con fechas diferentes
+    # @type_graph = engage_day      ==> en cualquier otro caso
+
+    engage_timeline_single = 2
+    engage_timeline_multi  = 3
+
+    @user_list = get_active_list
+
+    if params.has_key?(:pages) && params[:pages] != ""
+
+      begin
+        list = []
+        num_competitors = 0
+        @params_pages = params[:pages] 
+        @params_pages.each do |p|
+          if page = Page.find_by_id(p.to_i)
+             if @user_list.pages.include?(page) and !list.include?(page)
+               list = list + [page]
+               num_competitors += 1
+             end 
+          end
+        end
+      rescue
+        list = get_active_list.pages
+        num_competitors = list.count
       end
 
-      engage = get_engage(competitors[i].fan_count, competitors[i].talking_about_count)
-      variation = get_variation(engage.to_f,engageY.to_f)
-      compList[i] = [ logo(competitors[i].page_url, competitors[i].pic_square, competitors[i].name, css1), 
-                      competitors[i].name, 
-                      competitors[i].page_type, 
-                      engage,
-#                      {v: engage, f: '-5.0%'},
-                      logo(competitors[i].page_url, competitors[i].pic_square, competitors[i].name, css2),
-                      html_tooltip_engage(competitors[i].pic_square, competitors[i].name, engage, variation),
-                      html_variation(variation)]
+      if num_competitors > 1
+        @type_graph = engage_timeline_multi if @type_graph == engage_timeline
+      elsif num_competitors == 1
+        if @type_graph == engage_timeline
+          @type_graph = engage_timeline_single 
+          page = Page.find_by_id(@params_pages[0])
+        else
+          list = get_active_list.pages
+        end
+      else
+        @type_graph = engage_day
+        list = get_active_list.pages # all competitors      
+      end
 
-      @max = [@max, engage].max
-
+    else
+      @type_graph = engage_timeline_multi if @type_graph == engage_timeline 
+      list = get_active_list.pages
     end
 
-    compList = compList.sort_by { |a, b, c, d, e, f| d }
-    compList = compList.reverse
+    fb_metric = PagesHelper::FbMetrics.new(get_token(FACEBOOK)) 
 
-    @dataA = []
-    @dataB = []
- 
-    for i in 0..compList.length-1 do
-      @dataA[i] = [(i+1).to_s] + compList[i]
-      @dataA[i][4] = 0
-      @dataB[i] = [(i+1).to_s] + compList[i]
+    case @type_graph
+      when engage_day
+        engageData = fb_metric.get_list_engagement_day(list, date_to)
+      when engage_timeline_single
+        engageData = fb_metric.get_page_engagement_timeline(page, date_from, date_to)
+      when engage_timeline_multi
+        engageData = fb_metric.get_list_engagement_timeline(list, date_from, date_to)
     end
-    
-    @max = 50  if @max <= 50 
+
+    @errors = fb_metric.error
+    if @errors.nil?
+      @dataA = engageData[0]
+      @dataB = engageData[1]
+      #@max = fb_metric.max_value
+      @options = fb_metric.options 
+    else
+      flash[:info] = @errors
+      date_to = Time.now - (24*60*60) # yesterday
+      @type_graph = engage_day
+      list = get_active_list.pages # all competitors      
+      engageData = fb_metric.get_list_engagement_day(list, date_to)           
+    end
 
   end
+
+
+  def timeline_engage
+    
+    session[:active_tab] = FACEBOOK
+
+    @list = get_active_list
+
+    if params.has_key?("page")
+      list = []
+      @params_page = params["page"]      
+      page = Page.find_by_id(@params_page)
+    else  
+      if !(page = get_active_list_page)
+        page = @list.pages.first
+        @list.set_lider_page(page)
+      end
+      params["page"] = page.id.to_s
+    end
+
+    fb_metric = PagesHelper::FbMetrics.new(get_token(FACEBOOK))
+    engageData = fb_metric.get_page_engagement_timeline(page, 16.days.ago, 1.days.ago)
+    @dataA = engageData[0]
+    @dataB = engageData[1]
+    @max = fb_metric.max_value
+    @options = fb_metric.options 
+
+    @var = fb_metric.get_engagement_variations_between_dates(page, 8.days.ago.strftime("%Y%m%d"), 1.days.ago.strftime("%Y%m%d"))[:engagement]
+  end
+
 
   def general
     session[:active_tab] = FACEBOOK
 
-    @list = get_active_list
-    competitors = []
-    competitors += @list.pages   
+    @user_list = get_active_list
+
+    if params.has_key?(:pages) && params[:pages] != ""
+
+      competitors = []
+      num_competitors = 0
+      @params_pages = params[:pages] 
+      @params_pages.each do |p|
+        if page = Page.find_by_id(p.to_i)
+           if @user_list.pages.include?(page) and !competitors.include?(page)
+             competitors = competitors + [page]
+             num_competitors += 1
+           end 
+        end
+      end
+
+      if num_competitors <= 1
+        competitors = @user_list.pages
+      end
+
+    else 
+      competitors = @user_list.pages
+    end
 
     # update only every page from facebook if last updated was previous than 1 hours ago 
     page = competitors[0]
@@ -153,8 +201,7 @@ include DashboardHelper
         page_ids = page_ids + [p.page_id]
       end 
       page_ids = page_ids + [page.page_id]
-      fb_pages_info_list = fb_get_pages_info(page_ids.join(","))
-
+      fb_pages_info_list = FacebookHelper::FbGraphAPI.new(get_token(FACEBOOK)).get_pages_info(page_ids.join(","))
       pages_create_or_update(fb_pages_info_list)
     end
 
@@ -166,14 +213,15 @@ include DashboardHelper
 
     num = competitors.length
     compList = []
+    htmls = DashboardHelper::HtmlHardcodes.new()
     for i in 0..num-1 do
-      compList[i] = [ logo(competitors[i].page_url, competitors[i].pic_square, competitors[i].name, css1), 
+      compList[i] = [ htmls.logo(get_url(competitors[i]), get_picture(competitors[i]), competitors[i].name, css1), 
                       competitors[i].name, 
                       competitors[i].page_type, 
                       competitors[i].fan_count,
                       competitors[i].talking_about_count,
-                      logo(competitors[i].page_url, competitors[i].pic_square, competitors[i].name, css2),
-                      html_tooltip_general(competitors[i].pic_square, competitors[i].name, competitors[i].fan_count, competitors[i].talking_about_count)]
+                      htmls.logo(get_url(competitors[i]), get_picture(competitors[i]), competitors[i].name, css2),
+                      htmls.html_tooltip_general(get_picture(competitors[i]), competitors[i].name, competitors[i].fan_count, competitors[i].talking_about_count)]
       @max_fans = [@max_fans, competitors[i].fan_count].max
       @max_actives = [@max_actives, competitors[i].talking_about_count].max
     end

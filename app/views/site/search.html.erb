@@ -1,0 +1,41 @@
+
+<div id="search-page">
+<div class="container">	
+	<h3 id="consulta">Consulta de ENGAGEMENT</h3>
+	
+	<div class="row">
+		<% if @searching %>
+		<div class="span6">
+			<p><strong>Resultados para: </strong><%=  params[:search] %></p>
+			<p>Ir al resultado de engagement</p>
+				
+					<!-- Este lo carga el jQuery -->
+				   <div id="fb_search" data-facebook-search="<%= @fb_search_path %>" >
+					  <img alt="Loader" class="spinner" height="48" src="/assets/hummingbirds.gif" width="48" />
+				   </div>
+						
+		</div><!--endSpan6-->	
+		<% end %>	
+		<div class="span6">
+		    <p><strong>Nueva búsqueda</strong><br/>
+		    	<small>Tip. si no encuentras lo que buscas, inserta la URL de la página deseada.</small>
+		    </p>
+			<%= render 'site/shared/search_box' %>
+			
+		<% if !signed_in? %>
+			<div id="conectarConFacebook">
+				<div id="quieres">
+					<p><strong>¿Quieres comparar varios competidores?</strong></p>
+					<p><strong>¡Prueba GRATIS SocialWin Analytics!</strong></p>							
+				</div>			
+				<!--btnConectarConFacebook-->	
+				<%= render 'site/shared/facebook_button_signin' %>
+			</div>	
+		<% end %>			
+		</div><!--endSpan6-->	
+			
+	</div><!--endRow-->	
+</div>					
+</div>				
+
+			

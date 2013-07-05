@@ -1,0 +1,13 @@
+<% if signed_in? %>
+	<% list = get_active_list %>
+    <% page = get_active_list_page %>
+    
+	<% if !page.nil? %>
+		<div class="page_active_dashboard">
+			<%= link_to page_path(page) do %>
+				<%= image_tag get_picture(page), alt: page.name, class: "imgpage", alt: "#{page.name}", title: "#{page.name}" %>
+				<strong><%= list.name %> list</strong>
+			<% end %>
+		</div>
+	<% end %>
+<% end %>

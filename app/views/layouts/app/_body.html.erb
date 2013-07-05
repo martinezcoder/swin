@@ -1,0 +1,26 @@
+<% if signed_in? %>	
+
+<div class="container" id="app_content">
+	<div class="row">
+		<aside class="span2">
+			<%= render 'layouts/app/page_logo' %>
+			<%= render 'layouts/app/menu' %>
+		</aside>
+		
+		<div class="span10">
+			<nav class="tabbable"> <!-- Only required for left/right tabs -->
+				<ul class="nav nav-tabs">
+					<%= tab_link('Facebook', facebook_engage_path, FACEBOOK) %>
+					<%= tab_link('Twitter', twitter_path, TWITTER) %>
+					<%= tab_link('Youtube', youtube_path, YOUTUBE) %>
+				</ul>
+
+				<%= yield %>
+			</nav>
+		</div>
+	</div>
+</div><!--container-->	
+
+<% else %>
+	<%= yield %>
+<% end %>

@@ -1,6 +1,8 @@
 <% provide(:title, "Evolución del engagement") %>
 
-<%= render 'facebook/charts/charts' %>
+<%= render 'facebook/charts/chart_timeline', :graph => "graph_div" %>
+
+<%= render 'facebook/layouts/competitors', :list => @list, :mypath => facebook_path %>
 
 <h1>Variación semanal:
 <% if @var == 0 %>
@@ -13,6 +15,5 @@
 <%= sprintf( "%0.01f", @var) %> %</span>
 </h1> 
 
-<%= render 'facebook/shared/graph', :graph => "graph_engage_evolution_div" %>
+<%= render 'facebook/shared/graph', :graph => "graph_div" %>
 <%= render 'facebook/shared/table' %>
-

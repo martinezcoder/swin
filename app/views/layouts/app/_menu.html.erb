@@ -1,0 +1,29 @@
+<div class="menu_metricas">
+	<div class="well">
+		
+		<ul class="nav nav-list">
+			<li class="nav-header">Mi Perfil</li>
+				<%= menu_link('Mis Listas', 'icon-list', facebook_lists_path) %>
+				<%= menu_link('Editar lista activa', 'icon-search', (lst = get_active_list).nil? ? root_url : edit_facebook_list_path(lst)) %>
+			<li class="divider"></li>				
+			<li class="nav-header">Métricas</li>
+				<%= menu_link('Engagement', 'icon-home', facebook_engage_path) %>
+				<%= menu_link('Vista General', 'icon-globe', facebook_general_path) %>
+				<%= menu_link('Timeline', 'icon-random', facebook_path) %>
+
+<!-- 
+		    	<li class="disabled"><a href="#">Tamaño</a></li>
+		    	<li class="disabled"><a href="#">Crecimiento</a></li>
+			    <li class="disabled"><a href="#">Actividad</a></li>
+			    <li class="disabled"><a href="#">Interacción</a></li>
+			    <li class="disabled"><a href="#">Embajadores</a></li>
+			    <li class="disabled"><a href="#">Influence</a></li>
+			    <li class="disabled"><a href="#">Sentiment</a></li>
+-->
+			<li class="divider"></li>
+				<%= menu_link('Comentarios', 'icon-comment', habla_path) %>
+		</ul>
+		
+	</div><!--wel-->
+</div>
+

@@ -11,6 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
+
 ActiveRecord::Schema.define(:version => 20130705085955) do
 
   create_table "authentications", :force => true do |t|
@@ -118,14 +119,10 @@ ActiveRecord::Schema.define(:version => 20130705085955) do
     t.string   "page_id"
     t.string   "name"
     t.string   "page_type"
-    t.string   "username"
-    t.string   "page_url"
-    t.text     "pic_square"
     t.datetime "created_at",          :null => false
     t.datetime "updated_at",          :null => false
     t.integer  "fan_count"
     t.integer  "talking_about_count"
-    t.text     "pic_big"
   end
 
   add_index "pages", ["page_id"], :name => "index_pages_on_page_id", :unique => true

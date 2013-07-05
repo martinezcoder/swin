@@ -3,6 +3,30 @@
 class UsersController < ApplicationController
   include PagesHelper
 
+  before_filter :user_is_admin, only: [:admin_query]
+
+  # it will rend a graph with the evolution of the number of users by date
+  def admin_query
+    @ndays = params[:days] || 62
+
+    days = (@ndays).to_i
+    render :json => {
+      :type => 'ColumnChart',
+      :cols => [['string', 'Fecha'], ['number', 'users']],
+      :rows => (1..days).to_a.inject([]) do |memo, i|
+                  date = i.days.ago.to_date
+                  t = date.strftime("%Y%m%d")
+                  users = User.where("to_char(created_at, 'YYYYMMDD') = '#{t}'").count
+                  memo << [date, users]
+                  memo
+                end.reverse,
+      :options => {
+        :chartArea => { :width => '80%', :height => '75%' },
+        :hAxis => { :showTextEvery => 30 }
+      }
+    }
+  end
+
 
   def new
     omniauth = session[:omniauth]
