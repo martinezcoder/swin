@@ -325,6 +325,16 @@ module PagesHelper
       data_list = []  
       data_list[0] = myArray
       data_list[1] = myArray
+
+      @options = "title:'" + @metric_name + "',
+                titleTextStyle: {fontSize: 14},
+                vAxis: {title: '"+ @metric_name +"'},
+                hAxes:[{title:'Día'}],
+                seriesType: 'lines',
+                fractionDigits: 2,
+                suffix: '%'
+                " 
+
       return data_list
     end
 
