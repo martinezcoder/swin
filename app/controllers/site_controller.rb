@@ -5,7 +5,7 @@ class SiteController < ApplicationController
   def home 
       @pages = Page.count
       @users = User.count
-      
+=begin
       metrics = FbMetrics.new()
       top_engage_list = FbTopEngage.where("day = ?", Time.now.yesterday.strftime("%Y%m%d").to_i)
       top_engage_list.each do |tops|
@@ -13,7 +13,7 @@ class SiteController < ApplicationController
       end
 
       @top_engage = top_engage_list.sort_by{|data| data.engagement}.reverse
-
+=end
   end
 
   def search

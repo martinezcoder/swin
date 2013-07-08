@@ -47,7 +47,12 @@
     var table = new google.visualization.Table(document.getElementById('table'));
     var chart = new google.visualization.ComboChart(document.getElementById('<%= graph %>'));
 
-	var formatter = new google.visualization.NumberFormat({fractionDigits: 0});
+	<% if @metric_name == M_CRECIMIENTO %>
+		var formatter = new google.visualization.NumberFormat({fractionDigits: 2});
+	<% else %>
+		var formatter = new google.visualization.NumberFormat({fractionDigits: 0});
+	<% end %>
+
 	formatter.format(dataTableB, 4);
 
 //	var formatter = new google.visualization.TableArrowFormat();

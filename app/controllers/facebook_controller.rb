@@ -112,11 +112,11 @@ include DashboardHelper
 
     case @type_graph
       when engage_day
-        engageData = fb_metric.get_list_in_a_day(list, date_to, "Engagement")
+        engageData = fb_metric.get_list_in_a_day(list, date_to, M_ENGAGEMENT)
       when engage_timeline_single
-        engageData = fb_metric.get_page_timeline(page, date_from, date_to, "Engagement")
+        engageData = fb_metric.get_page_timeline(page, date_from, date_to, M_ENGAGEMENT)
       when engage_timeline_multi
-        engageData = fb_metric.get_list_timeline(list, date_from, date_to, "Engagement")
+        engageData = fb_metric.get_list_timeline(list, date_from, date_to, M_ENGAGEMENT)
     end
 
 
@@ -132,12 +132,14 @@ include DashboardHelper
       date_to = Time.now - (24*60*60) # yesterday
       @type_graph = engage_day
       list = get_active_list.pages # all competitors      
-      engageData = fb_metric.get_list_in_a_day(list, date_to, "Engagement")         
+      engageData = fb_metric.get_list_in_a_day(list, date_to, M_ENGAGEMENT)         
     end
 
   end
 
   def size
+    session[:active_tab] = FACEBOOK
+
     # Tenemos tres opciones de gráficas: 
     # 1 - barras de tamaño de un solo día y varios competidores
     # 2 - timeline de tamaño de un solo competidor desde/hasta
@@ -229,11 +231,11 @@ include DashboardHelper
 
     case @type_graph
       when size_day
-        sizeData = fb_metric.get_list_in_a_day(list, date_to, "Tamaño")
+        sizeData = fb_metric.get_list_in_a_day(list, date_to, M_TAMANO)
       when size_timeline_single
-        sizeData = fb_metric.get_page_timeline(page, date_from, date_to, "Tamaño")
+        sizeData = fb_metric.get_page_timeline(page, date_from, date_to, M_TAMANO)
       when size_timeline_multi
-        sizeData = fb_metric.get_list_timeline(list, date_from, date_to, "Tamaño")
+        sizeData = fb_metric.get_list_timeline(list, date_from, date_to, M_TAMANO)
     end
 
     @errors = fb_metric.error
@@ -242,18 +244,139 @@ include DashboardHelper
       @dataB = sizeData[1]
       #@max = fb_metric.max_value
       @options = fb_metric.options 
-      @metric_name = fb_metric.metric_name
+      @metric_name = "Tamaño"
     else
       flash[:info] = @errors
       date_to = Time.now - (24*60*60) # yesterday
       @type_graph = size_day
       list = get_active_list.pages # all competitors      
-      sizeData = fb_metric.get_list_in_a_day(list, date_to, "Tamaño")         
+      sizeData = fb_metric.get_list_in_a_day(list, date_to, M_TAMANO)         
+    end    
+  end
+
+
+  def growth
+    session[:active_tab] = FACEBOOK
+
+    metric = M_CRECIMIENTO
+    # Tenemos tres opciones de gráficas: 
+    # 1 - barras de crecimiento de un solo día y varios competidores
+    # 2 - timeline de crecimiento de un solo competidor desde/hasta
+    # 3 - timeline de crecimiento de varios competidores desde/hasta
+    growth_day       = 0
+    growth_timeline  = 1
+
+    @type_graph = nil
+
+    begin
+      if !membership_user?
+        date_to = Time.now - (24*60*60) # yesterday
+        @type_graph = growth_day
+      else
+        if params.has_key?(:date_from) && params.has_key?(:date_to)
+            date_from = Time.strptime(params[:date_from], "%Y%m%d") # historic timeline
+            date_to = Time.strptime(params[:date_to], "%Y%m%d")
+            dateRange = (date_to - date_from)/60/60/24
+            @type_graph = growth_timeline
+            if dateRange < 0 
+              flash[:info] = "ATENCIÓN: rango de fechas no válido"
+              raise
+            elsif dateRange > MAX_DATE_RANGE
+              flash[:info] = "ATENCIÓN: el rango debe ser inferior a tres meses"
+              raise
+            elsif date_from == date_to
+              @type_graph = growth_day
+            end
+            
+        elsif params.has_key?(:date_to)
+            date_to = Time.strptime(params[:date_to], "%Y%m%d") # historic day
+        else
+            date_to = Time.now - (24*60*60) # yesterday
+        end
+      end
+    rescue
+      flash[:info] = "Opps, algo no ha ido bien..." if flash[:info].nil?
+      date_to = Time.now - (24*60*60) # yesterday
+      @type_graph = growth_day
+    end
+
+    if @type_graph.nil? 
+      @type_graph = growth_day
+    end
+
+    # Hasta aquí:
+    # @type_graph = growth_timeline ==> Si existe date_from y date_to con fechas diferentes
+    # @type_graph = growth_day      ==> en cualquier otro caso
+
+    growth_timeline_single = 2
+    growth_timeline_multi  = 3
+
+    @user_list = get_active_list
+
+    if params.has_key?(:pages) && params[:pages] != ""
+
+      list = []
+      num_competitors = 0
+      @params_pages = params[:pages] 
+      @params_pages.each do |p|
+        if page = Page.find_by_id(p.to_i)
+           if @user_list.pages.include?(page) and !list.include?(page)
+             list = list + [page]
+             num_competitors += 1
+           end 
+        end
+      end
+
+      if num_competitors > 1
+        @type_graph = growth_timeline_multi if @type_graph == growth_timeline
+      elsif num_competitors == 1
+        if @type_graph == growth_timeline
+          @type_graph = growth_timeline_single 
+          page = Page.find_by_id(@params_pages[0])
+        else
+          list = get_active_list.pages
+        end
+      else
+        @type_graph = growth_day
+        list = get_active_list.pages # all competitors      
+      end
+
+    else
+      @type_graph = growth_timeline_multi if @type_graph == growth_timeline 
+      list = get_active_list.pages
+    end
+
+    fb_metric = PagesHelper::FbMetrics.new(get_token(FACEBOOK)) 
+
+    case @type_graph
+      when growth_day
+        growthData = fb_metric.get_list_in_a_day(list, date_to, metric)
+      when growth_timeline_single
+        growthData = fb_metric.get_page_timeline(page, date_from, date_to, metric)
+      when growth_timeline_multi
+        growthData = fb_metric.get_list_timeline(list, date_from, date_to, metric)
+    end
+
+    @errors = fb_metric.error
+    if @errors.nil?
+      @dataA = growthData[0]
+      @dataB = growthData[1]
+      #@max = fb_metric.max_value
+      @options = fb_metric.options 
+      @metric_name = fb_metric.metric_name
+    else
+      flash[:info] = @errors
+      date_to = Time.now - (24*60*60) # yesterday
+      @type_graph = growth_day
+      list = get_active_list.pages # all competitors      
+      growthData = fb_metric.get_list_in_a_day(list, date_to, metric)         
     end    
   end
 
 
   def activity
+    session[:active_tab] = FACEBOOK
+
     # Tenemos tres opciones de gráficas: 
     # 1 - barras de actividad de un solo día y varios competidores
     # 2 - timeline de actividad de un solo competidor desde/hasta
@@ -345,11 +468,11 @@ include DashboardHelper
 
     case @type_graph
       when activity_day
-        activityData = fb_metric.get_list_in_a_day(list, date_to, "Actividad")
+        activityData = fb_metric.get_list_in_a_day(list, date_to, M_ACTIVIDAD)
       when activity_timeline_single
-        activityData = fb_metric.get_page_timeline(page, date_from, date_to, "Actividad")
+        activityData = fb_metric.get_page_timeline(page, date_from, date_to, M_ACTIVIDAD)
       when activity_timeline_multi
-        activityData = fb_metric.get_list_timeline(list, date_from, date_to, "Actividad")
+        activityData = fb_metric.get_list_timeline(list, date_from, date_to, M_ACTIVIDAD)
     end
 
     @errors = fb_metric.error
@@ -364,14 +487,13 @@ include DashboardHelper
       date_to = Time.now - (24*60*60) # yesterday
       @type_graph = activity_day
       list = get_active_list.pages # all competitors      
-      activityData = fb_metric.get_list_in_a_day(list, date_to, "Actividad")         
+      activityData = fb_metric.get_list_in_a_day(list, date_to, M_ACTIVIDAD)
     end    
   end
 
 
 
-  def timeline_engage
-    
+  def timeline_engage    
     session[:active_tab] = FACEBOOK
 
     @list = get_active_list
