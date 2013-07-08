@@ -20,9 +20,9 @@ module DashboardHelper
                 '<strong>'+ value.to_s + '</strong>'+
             '</div>'+
             '<strong>'+  if variation >= 0 
-                            '<span style="color:green">+' + sprintf( "%0.01f", variation) 
+                            '<span style="color:green">+' + sprintf("%.2f", variation) 
                          else
-                            '<span style="color:red">' + sprintf( "%0.01f", variation)
+                            '<span style="color:red">' + sprintf("%.2f", variation)
                          end + '%</span></strong>' +
     
             '<div style="'+
@@ -45,7 +45,7 @@ module DashboardHelper
           else
             ret += '<i class="icon-arrow-down"></i> ' '<span style="color:red">'
           end
-          return ret + sprintf( "%0.01f", variation)  + '%</span></div>' 
+          return ret + sprintf("%.2f", variation)  + '%</span></div>' 
       end
 
     

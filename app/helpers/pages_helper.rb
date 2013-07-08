@@ -174,6 +174,7 @@ module PagesHelper
       @error = nil
       @metric_name = metric_name
       
+      dataFirstY  = page.page_data_days.find_by_day(date_from.ago(2.days).strftime("%Y%m%d").to_i)
       dataFirst   = page.page_data_days.find_by_day(date_from.yesterday.strftime("%Y%m%d").to_i)      
       dataRecords = page.page_data_days.select("day, likes, prosumers").where("day between ? and ?", date_from.strftime("%Y%m%d").to_i, date_to.strftime("%Y%m%d").to_i).order('day ASC')
 
@@ -186,25 +187,32 @@ module PagesHelper
         valueList = []
 
         case @metric_name
-        when "Tamaño"
+        when "Tamano"
           value_yesterday = dataFirst.nil? ? 0 : dataFirst.likes
         when "Actividad"
           value_yesterday = dataFirst.nil? ? 0 : dataFirst.prosumers
-        when M_ENGAGEMENT
+        when "Engagement"
           value_yesterday = dataFirst.nil? ? 0 : engagement(dataFirst.likes, dataFirst.prosumers)
+        when "Crecimiento"
+          value_yy = dataFirstY.nil? ? 0 : dataFirstY.likes
+          value_y = dataFirst.nil?  ? 0 : dataFirst.likes
+          value_yesterday = variation(value_yy.to_f, value_y.to_f)
         end
-        
+
         html = DashboardHelper::HtmlHardcodes.new()
         picture = PagesHelper.get_picture(page, @access_token)
         dataRecords.each_with_index do |dataDay, i|     
 
             case @metric_name
-            when "Tamaño"
+            when "Tamano"
               value_today = dataDay.likes
             when "Actividad"
               value_today = dataDay.prosumers
-            when M_ENGAGEMENT
+            when "Engagement"
               value_today = engagement(dataDay.likes, dataDay.prosumers)
+            when "Crecimiento"
+              value_t = dataDay.likes
+              value_today = variation(value_y.to_f, value_t.to_f)
             end
 
             @max_value = [@max_value, value_today].max
@@ -276,7 +284,11 @@ module PagesHelper
       row = 1
       while time_index <= time_end
         regs = PageDataDay.select("day, page_id, likes, prosumers").where("day = ? and page_id in (?)", time_index.strftime("%Y%m%d").to_i, list_ids)
-        
+
+        if @metric_name == "Crecimiento"
+          regs_yesterday = PageDataDay.select("day, page_id, likes, prosumers").where("day = ? and page_id in (?)", time_index.yesterday.strftime("%Y%m%d").to_i, list_ids)
+        end
+
         myArray[row] = []
         myArray[row][0] = time_index.strftime("%Y/%m/%d")
 
@@ -286,12 +298,15 @@ module PagesHelper
           page_data = regs.find_by_page_id(p.id)
           if !page_data.nil? 
             case @metric_name
-            when "Tamaño"
+            when "Tamano"
               myArray[row][column] = page_data.likes
             when "Actividad"
               myArray[row][column] = page_data.prosumers
             when "Engagement"
               myArray[row][column] = engagement(page_data.likes, page_data.prosumers)
+            when "Crecimiento"
+              page_data_yesterday = regs_yesterday.find_by_page_id(p.id)
+              myArray[row][column] = page_data_yesterday.nil? ? 0 : variation(page_data_yesterday.likes.to_f, page_data.likes.to_f)
             end
           else
             myArray[row][column] = -1

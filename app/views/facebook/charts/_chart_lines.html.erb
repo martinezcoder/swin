@@ -19,7 +19,9 @@
       titleTextStyle: {fontSize: 14},
 	  vAxis: {title: "Engagement"},
 	  hAxis: {title: "Día"},
-	  seriesType: "lines"
+	  seriesType: "lines",
+	  fractionDigits: 2,
+      suffix: '%'
 	};
 
 	var chart = new google.visualization.ComboChart(document.getElementById('<%= graph %>'));

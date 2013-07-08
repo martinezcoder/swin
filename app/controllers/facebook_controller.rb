@@ -3,6 +3,8 @@
 class FacebookController < ApplicationController
 include DashboardHelper
 
+  before_filter :tipo, only: :growth
+
   before_filter :signed_in_user
   before_filter :has_active_list
   before_filter :list_has_pages, except: :empty
@@ -313,12 +315,14 @@ include DashboardHelper
 
     @user_list = get_active_list
 
+    params_pages = []
+    
     if params.has_key?(:pages) && params[:pages] != ""
 
       list = []
       num_competitors = 0
-      @params_pages = params[:pages] 
-      @params_pages.each do |p|
+      params_pages = params[:pages] 
+      params_pages.each do |p|
         if page = Page.find_by_id(p.to_i)
            if @user_list.pages.include?(page) and !list.include?(page)
              list = list + [page]
@@ -332,7 +336,7 @@ include DashboardHelper
       elsif num_competitors == 1
         if @type_graph == growth_timeline
           @type_graph = growth_timeline_single 
-          page = Page.find_by_id(@params_pages[0])
+          page = Page.find_by_id(params_pages[0])
         else
           list = get_active_list.pages
         end
@@ -350,11 +354,11 @@ include DashboardHelper
 
     case @type_graph
       when growth_day
-        growthData = fb_metric.get_list_in_a_day(list, date_to, metric)
+        growthData = fb_metric.get_list_in_a_day(list, date_to, @metric_type)
       when growth_timeline_single
-        growthData = fb_metric.get_page_timeline(page, date_from, date_to, metric)
+        growthData = fb_metric.get_page_timeline(page, date_from, date_to, @metric_type)
       when growth_timeline_multi
-        growthData = fb_metric.get_list_timeline(list, date_from, date_to, metric)
+        growthData = fb_metric.get_list_timeline(list, date_from, date_to, @metric_type)
     end
 
     @errors = fb_metric.error
@@ -369,7 +373,7 @@ include DashboardHelper
       date_to = Time.now - (24*60*60) # yesterday
       @type_graph = growth_day
       list = get_active_list.pages # all competitors      
-      growthData = fb_metric.get_list_in_a_day(list, date_to, metric)         
+      growthData = fb_metric.get_list_in_a_day(list, date_to, @metric_type)
     end    
   end
 
@@ -522,6 +526,11 @@ include DashboardHelper
 
 
 private
+  attr_accessor :metric_type
+
+  def tipo
+   @metric_type = M_CRECIMIENTO
+  end
 
   def has_active_list
     begin
