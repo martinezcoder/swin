@@ -23,7 +23,7 @@ class PagesController < ApplicationController
                   memo
                 end.reverse,
       :options => {
-        :chartArea => { :width => '80%', :height => '75%' },
+        :chartArea => { :width => '80%', :height => '75%' }, 
         :hAxis => { :showTextEvery => 30 } 
       }
     }
@@ -46,9 +46,22 @@ class PagesController < ApplicationController
       @page = Page.find_by_id(thisId)
     end
 
+    begin
+      if params.has_key?(:day)
+        day = params[:day].to_time
+        raise if day >= Time.now.beginning_of_day
+      else
+        day = Time.now.yesterday
+      end
+    rescue
+      day = Time.now.yesterday
+    ensure
+      @day = day.strftime('%d/%m/%Y')
+    end
+
 #    fb_metric = PagesHelper::FbMetrics.new(get_token(FACEBOOK))
     fb_metric = PagesHelper::FbMetrics.new()
-    engageData = fb_metric.get_page_engagement_timeline(@page, 8.days.ago, 1.days.ago)
+    engageData = fb_metric.get_page_engagement_timeline(@page, day.ago(7.days), day)
     @dataA = engageData[0]
     @dataB = engageData[1]
     @options = fb_metric.options
@@ -57,13 +70,35 @@ class PagesController < ApplicationController
       @error = "Oops, esta página es nueva para nosotros, tendrás que esperar unos días..."
     end
 
-    @engage = fb_metric.get_engagement(@page.fan_count, @page.talking_about_count)
+    
+    @data_day = PageDataDay.find_by_page_id_and_day(@page.id, day.strftime('%Y%m%d'))
 
-    @variations = fb_metric.get_engagement_variations_between_dates(@page, 8.days.ago.strftime("%Y%m%d"), 1.days.ago.strftime("%Y%m%d"))
+    if @data_day.nil?
+      # por si falla el proceso diario o es una nueva página
+      @data_day = PageDataDay.new()
+      @data_day.likes = @page.fan_count 
+      @data_day.prosumers = @page.talking_about_count
+    end
 
-    respond_to do |format|
-        format.html # show.html.erb
-        format.json { render json: engageData }
+    @engage = fb_metric.get_engagement(@data_day.likes, @data_day.prosumers)
+
+    @variations = {}
+    if @data_day_week_ago = PageDataDay.find_by_page_id_and_day(@page.id, day.ago(6.days).strftime('%Y%m%d'))
+      likes_week_ago     = @data_day_week_ago.likes
+      prosumers_week_ago = @data_day_week_ago.prosumers
+      engage_week_ago    = fb_metric.get_engagement(likes_week_ago, prosumers_week_ago)
+      @variations[:engage] = fb_metric.get_variation(engage_week_ago, @engage)
+      @variations[:likes]  = fb_metric.get_variation(likes_week_ago, @data_day.likes)
+      @variations[:prosumers] = fb_metric.get_variation(prosumers_week_ago, @data_day.prosumers)
+    else
+      @variations[:engage] = nil
+      @variations[:likes]  = nil
+      @variations[:prosumers] = nil
+    end
+
+    @thisUrl = request.url
+    if !@thisUrl.include?("?day")
+      @thisUrl += "?day=" + day.strftime('%Y%m%d')
     end
 
   end

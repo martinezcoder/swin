@@ -1,18 +1,23 @@
+$linkColor: #6DC5D7;//#3B5998
+$baseBorderRadius:1px;
+$btnInfoBackground: #2D255E;
+$btnInfoBackgroundHighlight: #2D255E;
 html, body {height: 100%;}
-a {
-    color: #333333;
-    text-decoration: none;
-}
-a:active, a:focus {
-    outline:none;
-}
 @font-face {
     font-family: 'DominikRegular';
     src: font-url('dominik.eot');
     src: font-url('dominik.eot') format('embedded-opentype'),
          font-url('dominik.woff') format('woff'),
          font-url('dominik.ttf') format('truetype'),
-         font-url('dominik.svg#DominikRegular') format('svg');    
+         font-url('dominik.svg#DominikRegular') format('svg');
+    font-weight: normal;     
+}
+a {
+    color: #333333;
+    text-decoration: none;
+}
+a:active, a:focus {
+    outline:none;
 }
 /*header*/
 .navbar .brand {
@@ -42,7 +47,7 @@ a:active, a:focus {
 
 .navbar .nav > li#config > a {
     font-size: 13px;
-    padding: 12px 6px 7px;
+    padding: 12px 15px 7px;
 }
 .navbar .nav > .active > a, .navbar .nav > .active > a:hover, .navbar .nav > .active > a:focus {
     background-color: #D3EDF3;
@@ -78,6 +83,7 @@ a:active, a:focus {
     display:inline-block;
 }
 
+/*#####################################################*/
 /*footer###############################################*/
 /*#####################################################*/
 #base-footer{
@@ -87,6 +93,9 @@ a:active, a:focus {
     font-weight: normal;
     padding: 16px 10px 0;
 }
+#base-footer ul {
+    padding-bottom: 20px;
+}
 #base-footer li{
   line-height: 25px;
 }
@@ -94,18 +103,21 @@ a:active, a:focus {
      color: #FFFFFF;
 }
 #tw-window {
+    height: 274px;
     padding: 0;
-    height:294px;
 }
 h4{
       font-weight: normal; 
 }
 /*clientes*/
 .clientes ul#clientes {
-    border-top: 1px solid #B6B6B6;
+    border-top: 1px solid #686868;
     list-style: none outside none;
     margin: 0;
     padding: 0 0 14px;
+}
+.clientes h3{
+  color:#686868;
 }
 .clientes li {
     display: inline-block;
@@ -120,55 +132,107 @@ h4{
   width:100%;
 }
 #aol{
-    background: url("clientes/clients-sprite.png") repeat scroll 0 -106px transparent;
+    background: url("clientes/sprite11.png") repeat scroll -184px 0 transparent;
     height: 53px;
     width: 160px;
 }
+#aol:hover{
+    background: url("clientes/sprite11.png") repeat scroll -184px -66px transparent;
+}
 #gaes{
-    background: url("clientes/clients-sprite.png") repeat scroll -323px 0 transparent;
+    background: url("clientes/sprite11.png") repeat scroll -619px -11px transparent;
+    height: 55px;
+    width: 96px;
+}
+#gaes:hover{
+    background: url("clientes/sprite11.png") repeat scroll -619px -80px transparent;
     height: 55px;
     width: 96px;
 }
 #barcelona{
-    background: url("clientes/clients-sprite.png") repeat scroll -420px -129px transparent;
+    background: url("clientes/sprite11.png") repeat scroll -204px -156px transparent;
+    width: 106px;
+}
+#barcelona:hover{
+    background: url("clientes/sprite11.png") repeat scroll -204px -214px transparent;
+    width: 106px;
 }
 #catalunya{
-    background: url("clientes/clients-sprite.png") repeat scroll -185px 4px transparent;
+    background: url("clientes/sprite11.png") repeat scroll -363px -7px transparent;
+    height: 59px;
+    width: 134px;
+}
+#catalunya:hover{
+    background: url("clientes/sprite11.png") repeat scroll -363px -88px transparent;
     height: 59px;
     width: 134px;
 }
 #american{
-    background: url("clientes/clients-sprite.png") repeat scroll -1px 1px transparent;
-    width: 161px;
+    background: url("clientes/sprite11.png") repeat scroll -1px 1px transparent;
+    width: 162px;
+}
+#american:hover{
+    background: url("clientes/sprite11.png") repeat scroll -1px -52px transparent;
+    width: 162px;
 }
 #seat{
-    background: url("clientes/clients-sprite.png") repeat scroll -332px -121px transparent;
-    width: 56px;
+    background: url("clientes/sprite11.png") repeat scroll -722px -10px transparent;
+    width: 72px;
+}
+#seat:hover{
+    background: url("clientes/sprite11.png") repeat scroll -723px -78px transparent;
+    width: 72px;
 }
 #watx{
-      background: url("clientes/clients-sprite.png") repeat scroll -1px 1px transparent;
+    background: url("clientes/clients-sprite.png") repeat scroll -70px -252px transparent;
+    width: 145px;
+}
+#watx:hover{
+    background: url("clientes/clients-sprite.png") repeat scroll -70px -306px transparent;
+    width: 145px;
 }
 #grupo{
-      background: url("clientes/clients-sprite.png") repeat scroll -1px 1px transparent;
+    background: url("clientes/sprite11.png") repeat scroll -510px -8px transparent;
+    width: 86px;
+}
+#grupo:hover{
+    background: url("clientes/sprite11.png") repeat scroll -510px -88px transparent;
+    width: 86px;
 }
 #telepolis{
-      background: url("clientes/clients-sprite.png") repeat scroll -1px 1px transparent;
+    background: url("clientes/sprite11.png") repeat scroll -8px -147px transparent;
+    width: 177px;
 }
-
+#telepolis:hover{
+    background: url("clientes/sprite11.png") repeat scroll -8px -215px transparent;
+    width: 177px;
+}
 
 /*legal*/
 #legal{
     padding-bottom: 40px;
 }
 .logo-legal{
-  padding:4px 4px;
+    padding: 12px 4px 3px;
 }
 #legal ul {
-    margin-top: 27px;
+    margin-top: 35px;
 }
 
-
-/*search button*/
+/*###############################################*/
+/*########### search-box#########################*/
+/*###############################################*/
+.form-case {
+    height: 54px;
+    margin: 13px 0 10px;
+    width: 100%;
+}
+#div-search-box{
+    display: block;
+    height: 135px;
+    margin: 58px auto 37px;
+    width: 526px;
+}
 .navbar-search em.icon-search {
     cursor: pointer;
     left: 10px;
@@ -179,7 +243,112 @@ h4{
 .navbar-search .search-query {
     padding: 4px 4px 4px 26px;
 }
+.search {
+    background-color: #665098;
+    display: inline;
+    padding: 7px 5px;
+}
+.navbar-search {
+    float: left;
+    margin-bottom: 0;
+    margin-top: 5px;
+    position: relative;
+}
 
+/*#####################################################*/
+/*### BOTON BUSCAR SOCIALWIN ##########################*/
+/*#####################################################*/
+#top-search{
+    padding: 10px 10px 60px;
+}
+em#lent{
+    left: 12px;
+    position: absolute;
+    top: 14px;
+}
+.search {
+    background-color: #665098;
+    display: inline;
+    padding: 7px 10px 7px 7px;
+}
+.navbar-search .search-query {
+    font-size: 16px;
+    padding: 4px 4px 4px 26px;
+}
+.input-xlarge {
+    width: 307px;
+}
+.btn-sw-search{
+    margin-left: 5px;
+    width: 85px;
+}
+.btn-danger {
+    background-color: #665098;
+    background-image: linear-gradient(to bottom, #665098, #2D255E);
+    background-repeat: repeat-x;
+    border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+    color: white;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+}
+.btn-danger:hover, .btn-danger:focus, .btn-danger:active, .btn-danger.active, .btn-danger.disabled, .btn-danger[disabled] {
+    background-color: #38226A;
+    color: white;
+}
 
-
-
+/*#####################################################*/
+/*### BOTON FACEBOOK SOCIALWIN ########################*/
+/*#####################################################*/
+.base-btn-facebook-center{
+    display: inline-block;
+    margin: 0 auto;
+    text-align: center;
+}
+.base-btn-facebook {
+    background: none repeat scroll 0 0 rgba(109, 197, 215, 0.3);
+    color: #FFFFFF;
+    height: 46px;
+    padding: 6px;
+    width: 246px;
+}
+.btn-large{
+    border-radius: 1px 1px 1px 1px;
+    font-size: 15px;
+    padding: 12px 7px;
+    font-family:'lucida grande',tahoma,Verdana,Arial,sans-serif;
+    width: 228px;
+}
+.box-image-facebook {
+    border-right: 2px solid #C4C4C4;
+    display: inline-block;
+    margin-right: 10px;
+    text-align: left;
+    vertical-align: top;
+    width: 40px;
+}
+#image-facebook {
+    background: url("facebook.png") repeat scroll 0 0 transparent;
+    float: left;
+    height: 20px;
+    margin-left: 6px;
+    vertical-align: bottom;
+    width: 20px;
+}
+.btn-fb {
+    background-color: #6280BF;//#3B5998
+    background-image: linear-gradient(to bottom, #6280BF, #3B5998);
+    background-repeat: repeat-x;
+    border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+    color: white;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+}
+.btn-fb:hover, .btn-fb:focus, .btn-fb:active, .btn-fb.active, .btn-fb.disabled, .btn-fb[disabled] {
+    background-color: #3B5998;
+    color: white;
+}
+/*#####################################################*/
+/*### BOTON COLAPSED ##################################*/
+/*#####################################################*/
+#menu-word {
+    color: #333333;
+    margin-right: 16px;
+}

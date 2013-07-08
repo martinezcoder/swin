@@ -72,16 +72,21 @@ include DashboardHelper
 
     if params.has_key?(:pages) && params[:pages] != ""
 
-      list = []
-      num_competitors = 0
-      @params_pages = params[:pages] 
-      @params_pages.each do |p|
-        if page = Page.find_by_id(p.to_i)
-           if @user_list.pages.include?(page) and !list.include?(page)
-             list = list + [page]
-             num_competitors += 1
-           end 
+      begin
+        list = []
+        num_competitors = 0
+        @params_pages = params[:pages] 
+        @params_pages.each do |p|
+          if page = Page.find_by_id(p.to_i)
+             if @user_list.pages.include?(page) and !list.include?(page)
+               list = list + [page]
+               num_competitors += 1
+             end 
+          end
         end
+      rescue
+        list = get_active_list.pages
+        num_competitors = list.count
       end
 
       if num_competitors > 1

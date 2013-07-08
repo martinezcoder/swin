@@ -2,7 +2,7 @@
 	<%= form_tag(rest, :method => "get", class: "form-search") do %>
 
 		<%= text_field_tag(:search, params[:search], autofocus: true, class: "input-large search-query", placeholder: "Buscar competidores...", autocomplete: "off") %>
-		<%= button_tag(type: "submit", class: "btn btn-small btn-danger") do %>
+		<%= button_tag(type: "submit", class: "btn btn-small btn-primary") do %>
 			<strong>Buscar <i class=" icon-search icon-white"></i></strong> 
 		<% end %>
 

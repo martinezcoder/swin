@@ -3,6 +3,7 @@
 <div class="container">
 
 	<div class="row">
+		<!--
 		<div class="span6">
 			<h3>Top 3 Engagement Facebook</h3>
 			<ul class="unstyled list-engagement">
@@ -11,37 +12,29 @@
 						<li>
 							<div class="podium text-center">N.<%= i+1 %></div>
 							<%= image_tag get_picture(Page.find_by_id(page.page_id), true) %>
+							<div class="nombre"><%= @page.name %></div>
 							<div class="ranking">
 								<div class="flecha-up"></div>
-								<div class="puntuacion text-right"><%= page.engagement %></div>
+								<div class="puntuacion text-right"><%= page.engagement %></div>nombre
 							</div>
 						</li>				
 					<% end %>
 				<% end %>
 			</ul>
-		</div><!--endSpan6-->
+		</div> -->
 		
-		 <div class="span6"> <!-- buscador engagement-->
+		 <div class="span6 offset3"> <!-- buscador engagement-->
 			<div class="try-search">
 				
 			    <h3 class="sw-violet">¿No tienes fanpage?</h3>
-				<h4 class="sw-blue">Lo hacemos fácil, ahora puedes conocer el engagement de tus marcas favoritas ;-)</h4>
-				
-				<%= form_tag(search_path, :method => "get", class: "navbar-search search") do %>
-				<fieldset>
-					<em class="icon-search" id="lent"></em> 
-					<%= text_field_tag(:search, params[:search], class: "input-xlarge search-query", placeholder: "Buscar páginas...", autocomplete: "off") %>
-					<%= button_tag(type: "submit", class: "btn btn-danger btn-sw-search") do %>
-						BUSCAR
-					<% end %>
-				</fieldset>
-				<% end %>
-				
+				<h4 class="sw-blue">Lo hacemos fácil, ahora puedes conocer el engagement de tus marcas favoritas ;-)</h4>				
+				<%= render 'site/shared/search_box' %>
 				<div class="clearfix"></div>
-
-
+				
 			</div>
 		</div>
-	</div>
+		
+	</div><!--row-->
+	
 </div>
 </div><!--search-->
