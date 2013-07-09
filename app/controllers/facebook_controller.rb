@@ -7,7 +7,7 @@ include DashboardHelper
   before_filter :has_active_list
   before_filter :list_has_pages, except: :empty
 
-  before_filter :graph_type, only: [:engage, :size, :growth, :activity]
+  before_filter :member_user, only: [:engage, :size, :growth, :activity]
 
   def empty
     session[:active_tab] = FACEBOOK
@@ -168,15 +168,19 @@ include DashboardHelper
 
 private
 
-  def graph_type
+  def member_user
+    @date_from = nil
+    @date_to = nil
+    @graph_type = nil
+    @user_list = nil 
+    @list = nil
+    
     # Tenemos tres opciones de gráficas: 
-    # 1 - barras de crecimiento de un solo día y varios competidores
+    # 0 - barras de crecimiento de un solo día y varios competidores
     # 2 - timeline de crecimiento de un solo competidor desde/hasta
     # 3 - timeline de crecimiento de varios competidores desde/hasta
     is_day       = 0
     is_timeline  = 1
-
-    @graph_type = nil
 
     begin
       if !membership_user?
@@ -210,17 +214,24 @@ private
       @graph_type = is_day
     end
 
-    if @graph_type.nil? 
-      @graph_type = is_day
-    end
+    set_graph_type(@graph_type)
+  end
 
 
+  def set_graph_type(grType)
+    is_day       = 0
+    is_timeline  = 1
     # Hasta aquí:
     # @graph_type = is_timeline ==> Si existe date_from y date_to con fechas diferentes
     # @graph_type = is_day      ==> en cualquier otro caso
-
     is_timeline_single = 2
     is_timeline_multi  = 3
+
+    @graph_type = grType
+    
+    if @graph_type.nil? 
+      @graph_type = is_day
+    end
 
     @user_list = get_active_list
 
