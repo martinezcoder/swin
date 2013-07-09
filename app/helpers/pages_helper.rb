@@ -101,9 +101,6 @@ module PagesHelper
           # si no existe el dato pillamos el último día registrado
           dayPageDataT = page.page_data_days.last
           if !dayPageDataT.nil?
-puts "****************************************"
-puts dayPageDataT.day.to_s
-puts dayPageDataT.page_id
             day = Time.strptime(dayPageDataT.day.to_s, "%Y%m%d")
             dayPageDataY = page.page_data_days.find_by_day(day.yesterday.strftime("%Y%m%d").to_i)          
           end
@@ -216,7 +213,8 @@ puts dayPageDataT.page_id
               value_today = engagement(dataDay.likes, dataDay.prosumers)
             when "Crecimiento"
               value_t = dataDay.likes
-              value_today = variation(value_y.to_f, value_t.to_f)
+              value_today = variation(value_y.to_f, value_t.to_f)                
+              value_y = value_t
             end
 
             @max_value = [@max_value, value_today].max

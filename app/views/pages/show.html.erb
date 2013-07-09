@@ -80,17 +80,17 @@
 							<tr>
 								<td>Fans totales: </td>
 								<td><strong> <%= @data_day.likes %> </strong></td>
-								<td><span class="<%= color_integer(@variations[:likes].to_i) %>"><%= @variations[:likes] %>%</span></td>
+								<td><span class="<%= color_integer(@variations[:likes]) %>"><%= @variations[:likes] %>%</span></td>
 							</tr>
 							<tr>
 								<td>Fans activos:</td>
 								<td><strong> <%= @data_day.prosumers %> </strong></td>
-								<td><span class="<%= color_integer(@variations[:prosumers].to_i) %>"><%= @variations[:prosumers]%>%</span></td>
+								<td><span class="<%= color_integer(@variations[:prosumers]) %>"><%= @variations[:prosumers]%>%</span></td>
 							</tr>
 							<tr>
 								<td>Engagement (últimos 7 días):</td>
 								<td><strong> <%= @engage %> </strong></td>
-								<td><span class="<%= color_integer(@variations[:engage].to_i) %>"><%= @variations[:engage] %>%</span></td>
+								<td><span class="<%= color_integer(@variations[:engage]) %>"><%= @variations[:engage] %>%</span></td>
 							</tr>							
 						</tbody>
     				</table>
