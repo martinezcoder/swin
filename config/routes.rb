@@ -6,15 +6,12 @@ Swin::Application.routes.draw do
     end
   end
   resources :list_page_relationships, only: [:create, :destroy]
-    
-  match "/facebook", to: 'facebook#timeline_engage'
-  match "/facebook/engage", to: 'facebook#engage'
-  match "/facebook/general", to: 'facebook#general'
-  match "/facebook/empty", to: 'facebook#empty'
 
-  match "/facebook/engage/:pages/:date_to/:date_from", to: 'facebook#engage'
-  match "/facebook/engage/:pages/:date_to", to: 'facebook#engage'
-  match "/facebook/engage/:pages", to: 'facebook#engage'
+  match "/facebook/engage", to: 'facebook#engage'
+  match "/facebook/size", to: 'facebook#size'
+  match "/facebook/activity", to: 'facebook#activity'
+  match "/facebook/growth", to: 'facebook#growth'
+  match "/facebook/empty", to: 'facebook#empty'
 
   # ADMIN PROTECTED
   match "/users/admin_query", to: 'users#admin_query'
@@ -32,12 +29,10 @@ Swin::Application.routes.draw do
 
   match '/youtube', to: 'static_pages#youtube'
   match '/twitter', to: 'static_pages#twitter'
-  match '/habla', to: 'static_pages#habla'
   
   match '/about', to: 'site#about' 
   match '/search_engagement', to: 'site#search'
-
-  root to: redirect('http://socialwin.herokuapp.com') #'site#home'
+  root to: 'site#home'
 
 
   # The priority is based upon order of creation:
