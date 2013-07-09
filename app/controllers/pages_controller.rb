@@ -61,7 +61,7 @@ class PagesController < ApplicationController
 
 #    fb_metric = PagesHelper::FbMetrics.new(get_token(FACEBOOK))
     fb_metric = PagesHelper::FbMetrics.new()
-    engageData = fb_metric.get_page_engagement_timeline(@page, day.ago(7.days), day)
+    engageData = fb_metric.get_page_timeline(@page, day.ago(7.days), day, M_ENGAGEMENT)
     @dataA = engageData[0]
     @dataB = engageData[1]
     @options = fb_metric.options
@@ -100,7 +100,7 @@ class PagesController < ApplicationController
     if !@thisUrl.include?("?day")
       @thisUrl += "?day=" + day.strftime('%Y%m%d')
     end
-
+    
   end
 
 

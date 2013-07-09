@@ -11,11 +11,8 @@ Swin::Application.routes.draw do
   match "/facebook/engage", to: 'facebook#engage'
   match "/facebook/size", to: 'facebook#size'
   match "/facebook/activity", to: 'facebook#activity'
+  match "/facebook/growth", to: 'facebook#growth'
   match "/facebook/empty", to: 'facebook#empty'
-
-  match "/facebook/engage/:pages/:date_to/:date_from", to: 'facebook#engage'
-  match "/facebook/engage/:pages/:date_to", to: 'facebook#engage'
-  match "/facebook/engage/:pages", to: 'facebook#engage'
 
   # ADMIN PROTECTED
   match "/users/admin_query", to: 'users#admin_query'

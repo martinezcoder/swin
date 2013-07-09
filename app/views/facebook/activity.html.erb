@@ -1,18 +1,18 @@
-<% provide(:title, "Tamaño") %>
+<% provide(:title, @metric_name) %>
 
 <%= render 'facebook/layouts/competitors', :list => @user_list, :mypath => facebook_activity_path %>
 	
-<% if @type_graph == 0 %>
+<% if @graph_type == 0 %>
 
 	<%= render 'facebook/charts/chart_bars', :graph => "graph_div" %>
 	<%= render 'facebook/shared/graph', :graph => "graph_div" %>
 
-<% elsif  @type_graph == 2 %>
+<% elsif  @graph_type == 2 %>
 
 	<%= render 'facebook/charts/chart_timeline', :graph => "graph_div" %>
 	<%= render 'facebook/shared/graph', :graph => "graph_div" %>
 
-<% elsif  @type_graph == 3 %>
+<% elsif  @graph_type == 3 %>
 
 	<%= render 'facebook/charts/chart_lines', :graph => "graph_div" %>
 	<%= render 'facebook/shared/graph', :graph => "graph_div" %>

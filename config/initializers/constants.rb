@@ -17,3 +17,10 @@ TWITTER= 'twitter'
 TWITTER_CONSUMER_KEY= 'Tx5qMYwgzYQwfO8Q48ilg'
 TWITTER_CONSUMER_SECRET= 'JLprAj48slYmthrxvcq7m2XdRf1DbYTtR6B6Mt2cVA'
 YOUTUBE= 'youtube'
+
+
+
+M_ENGAGEMENT = "Engagement"
+M_CRECIMIENTO = "Crecimiento"
+M_TAMANO = "Tamano"
+M_ACTIVIDAD = "Actividad"
