@@ -6,8 +6,7 @@ Swin::Application.routes.draw do
     end
   end
   resources :list_page_relationships, only: [:create, :destroy]
-    
-  match "/facebook", to: 'facebook#timeline_engage'
+
   match "/facebook/engage", to: 'facebook#engage'
   match "/facebook/size", to: 'facebook#size'
   match "/facebook/activity", to: 'facebook#activity'
@@ -30,7 +29,6 @@ Swin::Application.routes.draw do
 
   match '/youtube', to: 'static_pages#youtube'
   match '/twitter', to: 'static_pages#twitter'
-  match '/habla', to: 'static_pages#habla'
   
   match '/about', to: 'site#about' 
   match '/search_engagement', to: 'site#search'

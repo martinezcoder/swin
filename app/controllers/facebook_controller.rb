@@ -137,35 +137,6 @@ include DashboardHelper
   end
 
 
-
-  def timeline_engage    
-    session[:active_tab] = FACEBOOK
-
-    @list = get_active_list
-
-    if params.has_key?("page")
-      list = []
-      @params_page = params["page"]      
-      page = Page.find_by_id(@params_page)
-    else  
-      if !(page = get_active_list_page)
-        page = @list.pages.first
-        @list.set_lider_page(page)
-      end
-      params["page"] = page.id.to_s
-    end
-
-    fb_metric = PagesHelper::FbMetrics.new(get_token(FACEBOOK))
-    engageData = fb_metric.get_page_timeline(page, 16.days.ago, 1.days.ago, "Engagement")
-    @dataA = engageData[0]
-    @dataB = engageData[1]
-    @max = fb_metric.max_value
-    @options = fb_metric.options 
-
-    @var = fb_metric.get_engagement_variations_between_dates(page, 8.days.ago.strftime("%Y%m%d"), 1.days.ago.strftime("%Y%m%d"))[:engagement]
-  end
-
-
 private
 
   def member_user
