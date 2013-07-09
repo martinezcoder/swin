@@ -97,12 +97,16 @@ module PagesHelper
         dayPageDataY = page.page_data_days.find_by_day(day.yesterday.strftime("%Y%m%d").to_i)
         dayPageDataYY = page.page_data_days.find_by_day(day.ago(2.days).strftime("%Y%m%d").to_i)
 
-
         if dayPageDataT.nil?
           # si no existe el dato pillamos el último día registrado
           dayPageDataT = page.page_data_days.last
-          day = Time.strptime(dayPageDataT.day.to_s, "%Y%m%d")
-          dayPageDataY = page.page_data_days.find_by_day(day.yesterday.strftime("%Y%m%d").to_i)          
+          if !dayPageDataT.nil?
+puts "****************************************"
+puts dayPageDataT.day.to_s
+puts dayPageDataT.page_id
+            day = Time.strptime(dayPageDataT.day.to_s, "%Y%m%d")
+            dayPageDataY = page.page_data_days.find_by_day(day.yesterday.strftime("%Y%m%d").to_i)          
+          end
         end
 
         case @metric_name
@@ -344,12 +348,21 @@ module PagesHelper
     protected
 
       def engagement(fans, actives)
-        if fans > 0
-          engagement = actives * peso_engage(fans) *100 / fans
+        
+        if fans > 0        
+            engage = actives * peso_engage(fans) *100 / fans
+
+            if engage < 100
+              engage = (engage/100)*90 
+            else
+              engage = (90+(engage/100))
+            end
+
         else
-          engagement = 0
+            engage = 0
         end
-        engagement
+
+        return engage.round(0)
       end
 
       def variation(old_data, new_data)
@@ -364,25 +377,28 @@ module PagesHelper
     private
      
       def peso_engage(fans)
-        6
-=begin        
         case fans
-          when 0..99
-            1
-          when 100..999
-            3
+          when 0..9
+            0.5
+          when 10..99
+            1.0
+          when 100..299
+            2.0
+          when 300..999
+            3.0
           when 1000..9999
-            5
+            5.0
           when 10000..99999
-            10
+            7.0
           when 100000..999999
-            15
+            10.0
           when 1000000..9999999
-            25
+            20.0
+          when 10000000..49999999
+            40.0
           else
-            50
+            50.0
         end
-=end
       end
 
   end
@@ -401,7 +417,7 @@ module PagesHelper
       end
 
       if daily == UPDATE_DAY
-        page_data_day_update(p_id, data_date=Time.now.beginning_of_day)
+        page_data_day_update(p_id, data_date=Time.now)
       end
 
       newpage
@@ -436,11 +452,11 @@ module PagesHelper
       pagedata.shared = page.page_streams.sum("share_count") || 0
       pagedata.total_likes_stream = page.page_streams.sum("likes_count") || 0
       pagedata.posts = page.page_streams.count || 0
-      pagedata.day = data_date.to_i
+      pagedata.day = data_date.strftime("%Y%m%d").to_i
       pagedata.save!
   end
 
-  def page_data_stream_update(page_id)
+  def page_data_stream_update(page_id, data_date=Time.now)
     fb_page_id = Page.find_by_id(page_id).page_id
     page_stream = FacebookHelper::FbGraphAPI.new(get_token(FACEBOOK)).get_page_stream(fb_page_id)
 
@@ -461,7 +477,7 @@ module PagesHelper
         stream.comments_count = ps["comments"]["count"]
         stream.share_count = ps["share_count"] 
         stream.created_time = ps["created_time"]
-        stream.day = Time.now.yesterday.beginning_of_day
+        stream.day = data_date.strftime("%Y%m%d").to_i
         stream.save!
       end
     end
