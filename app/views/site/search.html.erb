@@ -6,13 +6,40 @@
 	<div class="row">
 		<% if @searching %>
 		<div class="span6">
-			<p><strong>Resultados para: </strong><%=  params[:search] %></p>
-			<p>Ir al resultado de engagement</p>
-				
-					<!-- Este lo carga el jQuery -->
-				   <div id="fb_search" data-facebook-search="<%= @fb_search_path %>" >
-					  <img alt="Loader" class="spinner" height="48" src="/assets/hummingbirds.gif" width="48" />
-				   </div>
+
+			<% if @fb_search_path.nil? %>
+				<div id="fb_search">
+<!--						<img alt="Loader" class="spinner" height="48" src="/assets/hummingbirds.gif" width="48" /> -->
+					<% if @pageslist.count > 0 %>
+						<p><strong>Resultados para: </strong><%=  params[:search] %></p>
+						<p>Ir al resultado de engagement</p>
+
+						<% @pageslist.each_with_index do |p, i| %>
+							<li>
+								<div>
+									<img class='fb_img' src='https://graph.facebook.com/<%= p.page_id %>/picture' />
+		  							<div class='name'><p><%= p.name %></p></div>
+									<a href='/facebook/fb-<%= p.page_id %>'>
+										<div class='arrow'></div>
+									</a>
+								</div>
+							</li>
+							<% break if i == 3 %>
+						<% end %>
+					<% else %>
+						<li>No se ha encontrado ninguna página con el texto '<%= params[:search]%>' </li>
+						<li><strong>Si no encuentras una página, puedes escribir su URL en el buscador.</strong> </li>
+					<% end %>
+				</div>
+
+			<% else %>
+				<p>Ir al resultado de engagement</p>
+
+				<!-- Este lo carga el jQuery -->
+			   <div id="fb_search" data-facebook-search="<%= @fb_search_path %>" >
+				  <img alt="Loader" class="spinner" height="48" src="/assets/hummingbirds.gif" width="48" />
+			   </div>
+			<% end %>
 						
 		</div><!--endSpan6-->	
 		<% end %>	
