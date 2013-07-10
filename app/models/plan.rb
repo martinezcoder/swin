@@ -19,5 +19,7 @@ class Plan < ActiveRecord::Base
   validates :num_competitors, presence: true, numericality: true
   validates :num_lists, presence: true, numericality: true
   validates :price, presence: true, numericality: true
-  
+
+  has_many :user_plan_relationships, foreign_key: "plan_id", dependent: :destroy
+    
 end

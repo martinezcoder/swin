@@ -26,6 +26,7 @@ class User < ActiveRecord::Base
   has_many :user_page_relationships, foreign_key: "user_id"
   has_many :pages, through: :user_page_relationships
 
+  has_many :user_plan_relationships, foreign_key: "user_id", dependent: :destroy
 
   before_save { self.email.downcase! if !self.email.nil? }
   before_save :create_remember_token
