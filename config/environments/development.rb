@@ -39,5 +39,10 @@ Swin::Application.configure do
   config.assets.paths << Rails.root.join('app', 'assets', 'fonts')
 
   # Precompile additional assets
-  config.assets.precompile += %w( .svg .eot .woff .ttf )    
+  config.assets.precompile += %w( .svg .eot .woff .ttf )   
+  
+# this allows WEBrick to handle some symbols in query parameters
+URI::DEFAULT_PARSER = 
+  URI::Parser.new(:UNRESERVED => URI::REGEXP::PATTERN::UNRESERVED + "%_.!~*'()a-zA-Z\d|")
+   
 end
