@@ -32,6 +32,7 @@ Swin::Application.routes.draw do
   
   match '/about', to: 'site#about' 
   match '/search_engagement', to: 'site#search'
+
   root to: 'site#home'
 
 

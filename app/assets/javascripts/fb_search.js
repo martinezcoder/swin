@@ -30,6 +30,7 @@ jQuery(function ($) {
 		    	}
 		    });
 	  }
+/*
 	  else {
 	  	
 	    $.ajax({
@@ -45,6 +46,7 @@ jQuery(function ($) {
 	    });
 	    
 	  }
+*/
 	  htmlResult += "</ul>";
 	  fbSearchDiv.html(htmlResult); 
 
