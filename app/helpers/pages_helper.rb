@@ -492,4 +492,10 @@ module PagesHelper
     end 
   end
 
+  def truncate_page_name(name)
+    ret = name.gsub(/[%_!~*'().,;$#|]/,"")
+    ret = ret.gsub(" ", "")
+    ret
+  end
+
 end

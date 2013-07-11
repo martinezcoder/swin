@@ -18,7 +18,7 @@
 			</div>
 			
 			<% if @day != Time.now.yesterday.strftime('%d/%m/%Y') %>
-				<%= link_to 'Ver último resultado', page_path(id: 'fb-'+@page.page_id, day: Time.now.yesterday.strftime('%Y%m%d')), id:'btn-ver-resultados', class: 'btn'  %>
+				<%= link_to 'Ver último resultado', page_path(id: truncate_page_name(@page.name)+'-engagement-'+@page.page_id, day: Time.now.yesterday.strftime('%Y%m%d')), id:'btn-ver-resultados', class: 'btn'  %>
 			<% end %>
 			
 			<div class="escudo-engagement">
