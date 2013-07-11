@@ -46,5 +46,11 @@ FactoryGirl.define do
       variation 3
   end
   
+  factory :plan do
+    name "free"
+    num_competitors 10
+    num_lists 2
+    price 0.0
+  end
 
 end

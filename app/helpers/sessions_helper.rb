@@ -136,6 +136,11 @@ module SessionsHelper
   end
 
 
+  # tabs
+  def get_active_tab
+    session[:active_tab]
+  end
+
   # activate lists
   def set_active_list(id)
     list = current_user.facebook_lists.find(id)

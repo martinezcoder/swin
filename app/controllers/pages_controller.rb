@@ -31,7 +31,7 @@ class PagesController < ApplicationController
 
 
   def show
-    fbtag = "fb-"
+    fbtag = "-"
     thisId = params[:id]
     if thisId.include?(fbtag)
       thisId = thisId.split(fbtag).last

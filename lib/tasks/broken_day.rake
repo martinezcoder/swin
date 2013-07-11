@@ -31,32 +31,34 @@ namespace :db do
     pages = Page.all
     
     pages.each do |p|
-      
-      print "Page[#{p.id}]. "
-      
-      pdata_before = PageDataDay.find_by_page_id_and_day(p.id, day_before)
-      pdata_after = PageDataDay.find_by_page_id_and_day(p.id, day_after)
-      
-      if !pdata_before.nil? and !pdata_after.nil?
-        plikes = (pdata_before.likes + pdata_after.likes) / 2
-        pprosumers = (pdata_before.prosumers + pdata_after.prosumers) / 2
-        
-        pdata = PageDataDay.find_or_initialize_by_page_id_and_day(p.id, day)     
-        pdata.likes = plikes
-        pdata.prosumers = pprosumers
-  
-        pdata.comments = 0
-        pdata.shared = 0
-        pdata.total_likes_stream = 0
-        pdata.posts = 0
-  
-        pdata.save!
-        
-        puts "page #{p.id} saved with #{plikes} likes and #{pprosumers} prosumers."
-      else
-        puts "page #{p.id} with empty data"
-      end
 
+      pdata = PageDataDay.find_by_page_id_and_day(p.id, day)
+      
+      if !(pdata)
+        print "Page[#{p.id}]. "
+        pdata_before = PageDataDay.find_by_page_id_and_day(p.id, day_before)
+        pdata_after = PageDataDay.find_by_page_id_and_day(p.id, day_after)
+        
+        if !pdata_before.nil? and !pdata_after.nil?
+          plikes = (pdata_before.likes + pdata_after.likes) / 2
+          pprosumers = (pdata_before.prosumers + pdata_after.prosumers) / 2
+          
+          pdata = PageDataDay.find_or_initialize_by_page_id_and_day(p.id, day)     
+          pdata.likes = plikes
+          pdata.prosumers = pprosumers
+    
+          pdata.comments = 0
+          pdata.shared = 0
+          pdata.total_likes_stream = 0
+          pdata.posts = 0
+    
+          pdata.save!
+          
+          puts "page #{p.id} saved with #{plikes} likes and #{pprosumers} prosumers."
+        else
+          puts "Error: page #{p.id} with empty data"
+        end
+      end
     end
 
   end

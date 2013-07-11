@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130705085955) do
+ActiveRecord::Schema.define(:version => 20130710121315) do
 
   create_table "authentications", :force => true do |t|
     t.integer  "user_id"
@@ -126,6 +126,17 @@ ActiveRecord::Schema.define(:version => 20130705085955) do
 
   add_index "pages", ["page_id"], :name => "index_pages_on_page_id", :unique => true
 
+  create_table "plans", :force => true do |t|
+    t.string   "name"
+    t.integer  "num_competitors"
+    t.integer  "num_lists"
+    t.float    "price"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+  end
+
+  add_index "plans", ["name"], :name => "index_plans_on_name", :unique => true
+
   create_table "sessions", :force => true do |t|
     t.string   "session_id", :null => false
     t.text     "data"
@@ -147,6 +158,20 @@ ActiveRecord::Schema.define(:version => 20130705085955) do
   add_index "user_page_relationships", ["page_id"], :name => "index_user_page_relationships_on_page_id"
   add_index "user_page_relationships", ["user_id", "page_id"], :name => "index_user_page_relationships_on_user_id_and_page_id", :unique => true
   add_index "user_page_relationships", ["user_id"], :name => "index_user_page_relationships_on_user_id"
+
+  create_table "user_plan_relationships", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "plan_id"
+    t.integer  "effective_date"
+    t.integer  "expiration_date"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+  end
+
+  add_index "user_plan_relationships", ["effective_date"], :name => "index_user_plan_relationships_on_effective_date"
+  add_index "user_plan_relationships", ["expiration_date"], :name => "index_user_plan_relationships_on_expiration_date"
+  add_index "user_plan_relationships", ["plan_id"], :name => "index_user_plan_relationships_on_plan_id"
+  add_index "user_plan_relationships", ["user_id"], :name => "index_user_plan_relationships_on_user_id"
 
   create_table "users", :force => true do |t|
     t.string   "name"

@@ -1,3 +1,18 @@
+# == Schema Information
+#
+# Table name: fb_top_engages
+#
+#  id                  :integer          not null, primary key
+#  day                 :integer
+#  page_id             :integer
+#  page_fb_id          :string(255)
+#  fan_count           :integer
+#  variation           :integer
+#  created_at          :datetime         not null
+#  updated_at          :datetime         not null
+#  talking_about_count :integer
+#
+
 require 'spec_helper'
 
 describe FbTopEngage do

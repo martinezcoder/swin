@@ -7,18 +7,17 @@ include DashboardHelper
   before_filter :has_active_list
   before_filter :list_has_pages, except: :empty
 
-  before_filter :graph_type, only: [:engage, :size, :growth, :activity]
+  before_filter :member_user, only: [:engage, :size, :growth, :activity]
 
+  before_filter :set_active_tab
+  
   def empty
-    session[:active_tab] = FACEBOOK
     @list = get_active_list
     @num_competitors = @list.pages.count
   end
 
 
   def engage
-    session[:active_tab] = FACEBOOK
-
     metric_type = M_ENGAGEMENT
  
     fb_metric = PagesHelper::FbMetrics.new(get_token(FACEBOOK)) 
@@ -46,8 +45,6 @@ include DashboardHelper
   end
 
   def size
-    session[:active_tab] = FACEBOOK
-
     metric_type = M_TAMANO
  
     fb_metric = PagesHelper::FbMetrics.new(get_token(FACEBOOK)) 
@@ -76,8 +73,6 @@ include DashboardHelper
   end
 
   def growth
-    session[:active_tab] = FACEBOOK
-
     metric_type = M_CRECIMIENTO
  
     fb_metric = PagesHelper::FbMetrics.new(get_token(FACEBOOK)) 
@@ -107,8 +102,6 @@ include DashboardHelper
   end
 
   def activity
-    session[:active_tab] = FACEBOOK
-
     metric_type = M_ACTIVIDAD
  
     fb_metric = PagesHelper::FbMetrics.new(get_token(FACEBOOK)) 
@@ -137,46 +130,25 @@ include DashboardHelper
   end
 
 
-
-  def timeline_engage    
-    session[:active_tab] = FACEBOOK
-
-    @list = get_active_list
-
-    if params.has_key?("page")
-      list = []
-      @params_page = params["page"]      
-      page = Page.find_by_id(@params_page)
-    else  
-      if !(page = get_active_list_page)
-        page = @list.pages.first
-        @list.set_lider_page(page)
-      end
-      params["page"] = page.id.to_s
-    end
-
-    fb_metric = PagesHelper::FbMetrics.new(get_token(FACEBOOK))
-    engageData = fb_metric.get_page_timeline(page, 16.days.ago, 1.days.ago, "Engagement")
-    @dataA = engageData[0]
-    @dataB = engageData[1]
-    @max = fb_metric.max_value
-    @options = fb_metric.options 
-
-    @var = fb_metric.get_engagement_variations_between_dates(page, 8.days.ago.strftime("%Y%m%d"), 1.days.ago.strftime("%Y%m%d"))[:engagement]
-  end
-
-
 private
 
-  def graph_type
+  def set_active_tab
+    session[:active_tab] = FACEBOOK    
+  end
+
+  def member_user
+    @date_from = nil
+    @date_to = nil
+    @graph_type = nil
+    @user_list = nil 
+    @list = nil
+    
     # Tenemos tres opciones de gráficas: 
-    # 1 - barras de crecimiento de un solo día y varios competidores
+    # 0 - barras de crecimiento de un solo día y varios competidores
     # 2 - timeline de crecimiento de un solo competidor desde/hasta
     # 3 - timeline de crecimiento de varios competidores desde/hasta
     is_day       = 0
     is_timeline  = 1
-
-    @graph_type = nil
 
     begin
       if !membership_user?
@@ -210,17 +182,24 @@ private
       @graph_type = is_day
     end
 
-    if @graph_type.nil? 
-      @graph_type = is_day
-    end
+    set_graph_type(@graph_type)
+  end
 
 
+  def set_graph_type(grType)
+    is_day       = 0
+    is_timeline  = 1
     # Hasta aquí:
     # @graph_type = is_timeline ==> Si existe date_from y date_to con fechas diferentes
     # @graph_type = is_day      ==> en cualquier otro caso
-
     is_timeline_single = 2
     is_timeline_multi  = 3
+
+    @graph_type = grType
+    
+    if @graph_type.nil? 
+      @graph_type = is_day
+    end
 
     @user_list = get_active_list
 
