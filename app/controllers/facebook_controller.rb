@@ -156,8 +156,8 @@ private
         @graph_type = is_day
       else
         if params.has_key?(:date_from) && params.has_key?(:date_to)
-            @date_from = Time.strptime(params[:date_from], "%Y%m%d") # historic timeline
-            @date_to = Time.strptime(params[:date_to], "%Y%m%d")
+            @date_from = Time.strptime(params[:date_from], "%Y/%m/%d") # historic timeline
+            @date_to = Time.strptime(params[:date_to], "%Y/%m/%d")
             dateRange = (@date_to - @date_from)/60/60/24
             @graph_type = is_timeline
             if dateRange < 0 
@@ -171,7 +171,7 @@ private
             end
             
         elsif params.has_key?(:date_to)
-            @date_to = Time.strptime(params[:date_to], "%Y%m%d") # historic day
+            @date_to = Time.strptime(params[:date_to], "%Y/%m/%d") # historic day
         else
             @date_to = Time.now - (24*60*60) # yesterday
         end
