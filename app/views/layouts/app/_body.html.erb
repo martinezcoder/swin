@@ -2,22 +2,38 @@
 
 <div class="container" id="app_content">
 	<div class="row">
-		<aside class="span2">
-			<%= render 'layouts/app/page_logo' %>
-			<%= render 'layouts/app/menu' %>
-		</aside>
-		
-		<div class="span10">
-			<nav class="tabbable"> <!-- Only required for left/right tabs -->
-				<ul class="nav nav-tabs">
-					<%= tab_link('Facebook', facebook_engage_path, FACEBOOK) %>
-					<%= tab_link('Twitter', twitter_path, TWITTER) %>
-					<%= tab_link('Youtube', youtube_path, YOUTUBE) %>
-				</ul>
 
-				<%= yield %>
-			</nav>
-		</div>
+		<nav class="tabbable"> <!-- Only required for left/right tabs -->
+			<ul class="nav nav-tabs">
+				<%= tab_link('Facebook', facebook_engage_path, FACEBOOK, { anchor: 'fb-tab' }) %>
+				<%= tab_link('Twitter', twitter_path, TWITTER, { anchor: 'tw-tab' }) %>
+				<%= tab_link('Youtube', youtube_path, YOUTUBE, { anchor: 'yt-tab' }) %>
+			</ul>
+			
+			<div class="tab-content">
+				<% if get_active_tab == FACEBOOK %>
+					<div class="tab-pane active" id="fb-tab">
+						<div class="span2">
+							<%= render 'layouts/app/page_logo' %>
+							<%= render 'layouts/app/menu' %>
+						</div>
+						<div class="span10">
+							<%= yield %>
+						</div>
+					</div>
+				<% elsif get_active_tab == TWITTER %>
+					<div class="tab-pane active" id="tw-tab">
+						<%= yield %>
+					</div>
+				<% elsif get_active_tab == YOUTUBE %>
+					<div class="tab-pane active" id="yt-tab">
+						<%= yield %>
+					</div>
+				<% end %>
+
+			</div>
+						
+		</nav>
 	</div>
 </div><!--container-->	
 

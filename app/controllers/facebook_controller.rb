@@ -9,16 +9,15 @@ include DashboardHelper
 
   before_filter :member_user, only: [:engage, :size, :growth, :activity]
 
+  before_filter :set_active_tab
+  
   def empty
-    session[:active_tab] = FACEBOOK
     @list = get_active_list
     @num_competitors = @list.pages.count
   end
 
 
   def engage
-    session[:active_tab] = FACEBOOK
-
     metric_type = M_ENGAGEMENT
  
     fb_metric = PagesHelper::FbMetrics.new(get_token(FACEBOOK)) 
@@ -46,8 +45,6 @@ include DashboardHelper
   end
 
   def size
-    session[:active_tab] = FACEBOOK
-
     metric_type = M_TAMANO
  
     fb_metric = PagesHelper::FbMetrics.new(get_token(FACEBOOK)) 
@@ -76,8 +73,6 @@ include DashboardHelper
   end
 
   def growth
-    session[:active_tab] = FACEBOOK
-
     metric_type = M_CRECIMIENTO
  
     fb_metric = PagesHelper::FbMetrics.new(get_token(FACEBOOK)) 
@@ -107,8 +102,6 @@ include DashboardHelper
   end
 
   def activity
-    session[:active_tab] = FACEBOOK
-
     metric_type = M_ACTIVIDAD
  
     fb_metric = PagesHelper::FbMetrics.new(get_token(FACEBOOK)) 
@@ -138,6 +131,10 @@ include DashboardHelper
 
 
 private
+
+  def set_active_tab
+    session[:active_tab] = FACEBOOK    
+  end
 
   def member_user
     @date_from = nil

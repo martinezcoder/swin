@@ -28,7 +28,7 @@ class SiteController < ApplicationController
               subUrl = subUrl + '?fields=id,name'
               @fb_search_path = "https://graph.facebook.com/" + subUrl
           else
-              me = User.find_by_email("fran.martinez@socialwin.es")
+              me = User.find_by_id(1)
               fb_token = me.authentications.find_by_provider(FACEBOOK).token
               fb_graph = FacebookHelper::FbGraphAPI.new(fb_token)
     
