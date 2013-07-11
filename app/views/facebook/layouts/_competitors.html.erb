@@ -6,7 +6,7 @@
 	<%= form_tag(mypath) do %>
 		<% list.pages.each do |competitor| %>
 			<div class="competitorBox">
-	          	<%= link_to page_path(competitor.id), class: "no-decoration"  do %>
+	          	<%= link_to smart_page_path(competitor), class: "no-decoration"  do %>
 	          		<%= image_tag get_picture(competitor), class: "mini_logo", alt: competitor.name, title: competitor.name %>
 	          	<% end %>
 	          	<%= link_to get_url(competitor), target: "_blank" do %>

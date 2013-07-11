@@ -492,10 +492,14 @@ module PagesHelper
     end 
   end
 
-  def truncate_page_name(name)
+  def smart_page_name(name)
     ret = name.gsub(/[%_!~*'().,;$#|]/,"")
     ret = ret.gsub(" ", "")
     ret
+  end
+
+  def smart_page_path(page)
+    page_path(id: smart_page_name(page.name)+'-engagement-'+page.page_id, day: Time.now.yesterday.strftime('%Y%m%d'))
   end
 
 end

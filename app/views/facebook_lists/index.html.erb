@@ -28,7 +28,7 @@
 				    <strong id="fb_fans" class="stat">
 				    	<% if list.page_id %>
 					    	<% p = Page.find(list.page_id) %>
-					          	<%= link_to page_path(p.id), class: "no-decoration"  do %>
+					          	<%= link_to smart_page_path(p), class: "no-decoration"  do %>
 					          		<%= image_tag get_picture(p), class: "mini_logo", alt: p.name, title: p.name %>
 					          	<% end %>
 				        <% end %>
