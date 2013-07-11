@@ -224,8 +224,8 @@ h4{
 /*###############################################*/
 .form-case {
     height: 54px;
-    margin: 13px 0 10px;
-    width: 100%;
+    margin: 0 auto;
+    width: 85%;
 }
 #div-search-box{
     display: block;
@@ -249,7 +249,7 @@ h4{
     padding: 7px 5px;
 }
 .navbar-search {
-    float: left;
+    float: none;
     margin-bottom: 0;
     margin-top: 5px;
     position: relative;
@@ -258,8 +258,32 @@ h4{
 /*#####################################################*/
 /*### BOTON BUSCAR SOCIALWIN ##########################*/
 /*#####################################################*/
+
+.fornav {
+    position: relative;
+    right: 26px;
+    top: 4px;
+    z-index: 1000;
+}
+.span4.simple-search {
+    padding: 6px 32px 6px 7px;
+}
 #top-search{
-    padding: 10px 10px 60px;
+    background: none repeat scroll 0 0 #6EC7D9;
+    padding: 57px 10px 72px;
+    -webkit-box-shadow: inset 0px 0px 4px 3px rgba(0, 0, 0, 0.5);
+    box-shadow: inset 0px 0px 4px 3px rgba(0, 0, 0, 0.5); 
+}
+#top-search h4 {
+    font-size: 16px;
+    margin-bottom: 16px;
+    margin-top: 13px;
+    padding: 0 42px;
+}
+#top-search h3 {
+    font-family: 'DominikRegular',Helvetica,'Lucida Grande',Verdana;
+    font-size: 40px;
+    font-weight: normal;
 }
 em#lent{
     left: 12px;

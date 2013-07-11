@@ -1,4 +1,4 @@
-			<div class="form-case">
+			<!--<div class="form-case">
 			<%= form_tag(search_engagement_path, :method => "get", class: "navbar-search search") do %>
 				<fieldset>
 					<em class="icon-search" id="lent"></em> 
@@ -8,4 +8,12 @@
 					<% end %>
 				</fieldset>
 				<% end %>
-			</div>	
+			</div>	-->
+<div class="form-case input-append">			
+	<%= form_tag(search_engagement_path, :method => "get", class: "navbar-search form-inline") do %>
+	    <%= text_field_tag(:search, params[:search], class: "span4 simple-search", placeholder: "Buscar páginas...", autocomplete: "off") %> 
+	    <label class="fornav" id="mySubmit" type="submit"><i class="icon-search"></i></label>
+	  
+	<% end %>
+</div>
+  

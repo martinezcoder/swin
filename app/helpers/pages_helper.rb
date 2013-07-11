@@ -259,8 +259,9 @@ puts dayPageDataT.page_id
                 vAxis: {minValue:0, maxValue:" + @max_value.to_s + "},
                 fontSize: 10,
                 legend: {position: 'none', textStyle: {fontSize: 14}},
-                tooltip: {isHtml: true}" 
-
+                tooltip: {isHtml: true},
+                theme: 'maximized'
+                "
       return dataResult
     end
 

@@ -5,7 +5,7 @@
 	<div id="competitors_title">
 	<%= form_tag(mypath) do %>
 		<% list.pages.each do |competitor| %>
-			<div id="competitorBox">
+			<div class="competitorBox">
 	          	<%= link_to page_path(competitor.id), class: "no-decoration"  do %>
 	          		<%= image_tag get_picture(competitor), class: "mini_logo", alt: competitor.name, title: competitor.name %>
 	          	<% end %>
@@ -28,6 +28,45 @@
 			<%= text_field_tag :date_to, params.has_key?(:date_to) ? params[:date_to] : Time.now.yesterday.strftime("%Y%m%d") %>
 			</div>
 		<% end %>
+		
+	    <div id="pick-from" class="input-append date">
+	    	<input id="desde" type="text" name="date_from" value="" class="span2">
+	    	<span class="add-on"><i class="icon-th"></i></span>
+	    </div>
+	    
+	    <div id="pick-to"  class="input-append date">
+	    	<input id="hasta" type="text" name="date_to" value="" class="span2">
+	    	<span class="add-on"><i class="icon-th"></i></span>
+	    </div>	    
+		    
+		<script type="text/javascript">
+		  $('.input-append.date').datepicker({
+				 format: "yyyy/mm/dd",
+				language: "es",
+				//todayBtn: "linked",
+				autoclose: true,
+				todayHighlight: true
+		  	 })
+		  	.on('changeDate', function(e){
+		  		var y = e.date.getFullYear(),
+				_m = e.date.getMonth() + 1,
+				m = (_m > 9 ? _m : '0'+_m),
+				_d = e.date.getDate(),
+				d = (_d > 9 ? _d : '0'+_d);
+		  		
+				if($(this).attr('id')=='pick-from'){
+					alert('desde ' + y+m+d);
+					$('#desde').attr('value', y+m+d);
+				}
+				if($(this).attr('id')=='pick-to'){
+					alert('hasta ' + y+m+d);
+					$('#hasta').attr('value', y+m+d);
+				}				
+					
+			});
+		  	
+		</script>
+		
 		<%= button_tag(type: "submit", class: "btn btn-default") do %>
 			<strong><i class=" icon-refresh"></i> Actualizar </strong> 
 		<% end %>

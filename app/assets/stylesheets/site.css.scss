@@ -14,6 +14,9 @@ $btnInfoBackgroundHighlight: #2D255E;
 .sw-green{
   color: #5FAD2E;
 }
+.sw-white{
+  color:#ffffff;
+}
 body { 
   font-family: 'DominikRegular', Helvetica,'Lucida Grande', Verdana;  
   padding-top: 54px;
@@ -40,7 +43,7 @@ hr, .hr{
   right:0;
 }
 #home {
-    background: url("slide-01.jpg") no-repeat scroll 0 0 / 100% 100% #000000; //  home-back-unfoc
+    background: url("slide-04.jpg") no-repeat scroll 0 0 / 100% 100% #000000; //  home-back-unfoc
     padding: 55px 10px 0;
 }
 #slogan1 {
@@ -89,7 +92,7 @@ hr, .hr{
 
 /*video*/
 #video{  
-    padding: 30px 10px;
+    padding: 8px 10px;
 }
 .video{
     margin: 20px auto;
@@ -583,6 +586,12 @@ hr.hr-nosotros {
     -moz-background-size: cover;
     -o-background-size: cover;
   }
+  .word-engage {
+    font-size: 18px;
+    left: 18%;
+    position: absolute;
+    top: 65%;
+}
 }
 
 
