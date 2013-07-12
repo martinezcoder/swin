@@ -4,7 +4,7 @@ namespace :db do
     delete_broken_data_days
   end
 
-  task delete_broken_data_days: :environment do
+  task set_free_user_plans: :environment do
     create_and_set_free_plan_to_all_users
   end
 
