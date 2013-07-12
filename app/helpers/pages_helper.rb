@@ -347,7 +347,7 @@ module PagesHelper
     protected
 
       def engagement(fans, actives)
-        
+
         if fans > 0        
             engage = actives * peso_engage(fans) *100 / fans
 
