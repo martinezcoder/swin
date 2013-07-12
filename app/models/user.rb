@@ -31,6 +31,7 @@ class User < ActiveRecord::Base
 
   before_save { self.email.downcase! if !self.email.nil? }
   before_save :create_remember_token
+  after_save :set_free_plan
 
 
   validates :name, presence: true, length: { maximum: 50 }
@@ -50,7 +51,7 @@ class User < ActiveRecord::Base
     self.authentications.find_by_provider(provider).token    
   end
 
-  def set_plan!(plan, expiration_date)
+  def set_plan!(plan, expiration_date=nil)
     today = Time.now.strftime("%Y%m%d").to_i
     if !active_plans.empty?
       active_plans.each do |p|
@@ -68,10 +69,18 @@ class User < ActiveRecord::Base
     user_plan_relationships.where("effective_date <= ? and (expiration_date is null or expiration_date > ?)", Time.now.strftime("%Y%m%d").to_i, Time.now.strftime("%Y%m%d").to_i)
   end
 
+  def plan
+    active_plans.first
+  end
+
   private
 
     def create_remember_token
       self.remember_token = SecureRandom.urlsafe_base64
+    end
+
+    def set_free_plan
+      self.set_plan!(Plan.find_by_name("free"))
     end
 
 end
