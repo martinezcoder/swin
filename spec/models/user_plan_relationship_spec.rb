@@ -65,5 +65,12 @@ describe UserPlanRelationship do
     it { should_not be_valid }
   end
 
+  describe "when expiration_date is newwe than effective_date" do
+    before do 
+      @user_plan.expiration_date = @user_plan.effective_date-1
+    end
+    it { should_not be_valid }
+  end
+
 
 end

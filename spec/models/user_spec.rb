@@ -25,7 +25,7 @@ describe User do
   it { should respond_to(:pages) }
   it { should respond_to(:user_page_relationships) }
   it { should respond_to(:facebook_lists) }
-  it { should respond_to(:plan) }
+  it { should respond_to(:user_plan_relationships) }
   
   it { should be_valid }
 

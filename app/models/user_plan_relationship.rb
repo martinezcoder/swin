@@ -13,7 +13,7 @@
 
 class UserPlanRelationship < ActiveRecord::Base
 #  attr_accessible :effective_date, :expiration_date, :plan_id, :user_id
-  attr_accessible :user_id
+#  attr_accessible :user_id
 
   belongs_to :user 
   belongs_to :plan
