@@ -47,6 +47,7 @@ FactoryGirl.define do
   end
   
   factory :plan do
+    id 5
     name "free"
     num_competitors 10
     num_lists 2

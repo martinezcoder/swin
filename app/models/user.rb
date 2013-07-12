@@ -27,6 +27,7 @@ class User < ActiveRecord::Base
   has_many :pages, through: :user_page_relationships
 
   has_many :user_plan_relationships, foreign_key: "user_id", dependent: :destroy
+  has_many :plans, through: :user_plan_relationships
 
   before_save { self.email.downcase! if !self.email.nil? }
   before_save :create_remember_token
@@ -47,6 +48,24 @@ class User < ActiveRecord::Base
 
   def token(provider)
     self.authentications.find_by_provider(provider).token    
+  end
+
+  def set_plan!(plan, expiration_date)
+    today = Time.now.strftime("%Y%m%d").to_i
+    if !active_plans.empty?
+      active_plans.each do |p|
+         p.expirate!
+      end
+    end
+    upr = self.user_plan_relationships.new
+    upr.plan_id = plan.id
+    upr.effective_date = today
+    upr.expiration_date = expiration_date
+    upr.save!
+  end
+
+  def active_plans
+    user_plan_relationships.where("effective_date <= ? and (expiration_date is null or expiration_date > ?)", Time.now.strftime("%Y%m%d").to_i, Time.now.strftime("%Y%m%d").to_i)
   end
 
   private

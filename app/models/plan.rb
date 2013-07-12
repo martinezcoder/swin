@@ -21,5 +21,6 @@ class Plan < ActiveRecord::Base
   validates :price, presence: true, numericality: true
 
   has_many :user_plan_relationships, foreign_key: "plan_id", dependent: :destroy
-    
+  has_many :users, through: :user_plan_relationships
+
 end

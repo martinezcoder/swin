@@ -55,22 +55,14 @@ describe UserPlanRelationship do
     it { should_not be_valid }
   end
 
-  describe "when effective_date is not present" do
-    before { @user_plan.effective_date = nil }
-    it { should_not be_valid }
-  end
-
   describe "when expiration_date is not present" do
     before { @user_plan.expiration_date = nil }
-    it { should_not be_valid }
+    it { should be_valid }
   end
 
-  describe "when expiration_date is newwe than effective_date" do
-    before do 
-      @user_plan.expiration_date = @user_plan.effective_date-1
-    end
-    it { should_not be_valid }
+  describe "effective_date before_save filter" do
+    before { @user_plan.save }
+    its(:effective_date) { should_not be_blank }
   end
-
-
+  
 end
