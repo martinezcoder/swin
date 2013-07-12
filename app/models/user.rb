@@ -70,7 +70,11 @@ class User < ActiveRecord::Base
   end
 
   def plan
-    active_plans.first
+    begin
+      active_plans.first.plan
+    rescue
+      nil
+    end
   end
 
   private
@@ -81,7 +85,9 @@ class User < ActiveRecord::Base
 
     def set_free_plan
       if self.plan.nil?
-        self.set_plan!(Plan.find_by_name(FREE_PLAN))
+        if free = Plan.find_by_name(FREE_PLAN)
+          self.set_plan!(free)  
+        end
       end
     end
 
