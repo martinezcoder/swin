@@ -7,21 +7,6 @@ namespace :db do
     repare_day(ENV['day'])
   end
 
-  task delete_broken_data_days: :environment do
-    delete_broken_data_days
-  end
-
-  def delete_broken_data_days
-    days = PageDataDay.where("day > ?", 99999999)
-    days.each do |d|
-      d.destroy
-    end
-    stream = PageStream.all
-    stream.each do |s|
-      s.destroy
-    end
-  end
-
   def repare_day(day)
     day_before = day.to_time.yesterday.strftime("%Y%m%d").to_i
     puts "day_before: #{day_before}"

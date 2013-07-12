@@ -21,12 +21,15 @@ namespace :db do
   end
 
   def create_and_set_free_plan_to_all_users
-    free = Plan.new
-    free.name = "free"
-    free.num_competitors = 10
-    free.num_lists = 2
-    free.price = 0.0
-    free.save
+    free = Plan.find_by_name(FREE_PLAN)
+    if free.nil?
+      free = Plan.new
+      free.name = FREE_PLAN
+      free.num_competitors = 10
+      free.num_lists = 2
+      free.price = 0.0
+      free.save
+    end
     users = User.all
     users.each do |u|
       u.set_plan!(free)

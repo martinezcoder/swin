@@ -80,7 +80,9 @@ class User < ActiveRecord::Base
     end
 
     def set_free_plan
-      self.set_plan!(Plan.find_by_name("free"))
+      if self.plan.nil?
+        self.set_plan!(Plan.find_by_name(FREE_PLAN))
+      end
     end
 
 end
