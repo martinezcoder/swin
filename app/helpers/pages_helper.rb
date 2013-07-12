@@ -277,41 +277,56 @@ module PagesHelper
     protected
 
       def engagement(fans, actives)
-        if fans > 0
-          engagement = actives * peso_engage(fans) *100 / fans
+        if fans > 0        
+            engage = actives * peso_engage(fans) *100 / fans
+
+            if engage < 100
+              engage = (engage/100)*90 
+            else
+              engage = (90+(engage/100))
+            end
+
         else
-          engagement = 0
+            engage = 0
         end
-        engagement
+
+        return engage.round(0)
       end
 
       def variation(old_data, new_data)
-        variation = ((new_data - old_data) / old_data) * 100
+        if old_data == new_data
+          variation = 0.0
+        else
+          variation = ((new_data - old_data) / old_data) * 100
+        end
         variation.round(2)
       end
       
     private
      
       def peso_engage(fans)
-        6
-=begin        
         case fans
-          when 0..99
-            1
-          when 100..999
-            3
+          when 0..9
+            0.5
+          when 10..99
+            1.0
+          when 100..299
+            2.0
+          when 300..999
+            3.0
           when 1000..9999
-            5
+            5.0
           when 10000..99999
-            10
+            7.0
           when 100000..999999
-            15
+            10.0
           when 1000000..9999999
-            25
+            20.0
+          when 10000000..49999999
+            40.0
           else
-            50
+            50.0
         end
-=end
       end
 
   end
