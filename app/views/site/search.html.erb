@@ -20,7 +20,7 @@
 								<div>
 									<img class='fb_img' src='https://graph.facebook.com/<%= p.page_id %>/picture' />
 		  							<div class='name'><p><%= p.name %></p></div>
-									<a href='/facebook/fb-<%= p.page_id %>'>
+									<a href='/facebook/<%= smart_page_name(p.name) %>-engagement-<%= p.page_id %>'>
 										<div class='arrow'></div>
 									</a>
 								</div>

@@ -8,7 +8,7 @@ class ListPageRelationshipsController < ApplicationController
       fb_page = FacebookHelper::FbGraphAPI.new(get_token(FACEBOOK)).get_page_info(params[:page_id])    
       page = page_create_or_update(fb_page.first) 
   
-      if current_user.facebook_lists.count < MAX_COMPETITORS
+      if current_user.facebook_lists.count < current_user.plan.num_competitors
         list.add!(page) if !list.added?(page)
         # get today's activity data
         if PageDataDay.find_by_page_id(page.id).nil?

@@ -41,8 +41,5 @@ Swin::Application.configure do
   # Precompile additional assets
   config.assets.precompile += %w( .svg .eot .woff .ttf )   
   
-# this allows WEBrick to handle some symbols in query parameters
-URI::DEFAULT_PARSER = 
-  URI::Parser.new(:UNRESERVED => URI::REGEXP::PATTERN::UNRESERVED + "%_.!~*'()a-zA-Z\d|")
    
 end

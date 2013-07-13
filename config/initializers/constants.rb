@@ -3,9 +3,8 @@ OFF=0
 UPDATE_STREAM=true
 UPDATE_DAY=true
 
-MAX_COMPETITORS=10
+
 MIN_COMPETITORS=2
-MAX_LISTS=2
 MAX_DATE_RANGE=92
 
 FACEBOOK= 'facebook'
@@ -24,3 +23,6 @@ M_ENGAGEMENT = "Engagement"
 M_CRECIMIENTO = "Crecimiento"
 M_TAMANO = "Tamano"
 M_ACTIVIDAD = "Actividad"
+
+
+FREE_PLAN = 'free'

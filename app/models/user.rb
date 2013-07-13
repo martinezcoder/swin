@@ -26,9 +26,12 @@ class User < ActiveRecord::Base
   has_many :user_page_relationships, foreign_key: "user_id"
   has_many :pages, through: :user_page_relationships
 
+  has_many :user_plan_relationships, foreign_key: "user_id", dependent: :destroy
+  has_many :plans, through: :user_plan_relationships
 
   before_save { self.email.downcase! if !self.email.nil? }
   before_save :create_remember_token
+  after_save :set_free_plan
 
 
   validates :name, presence: true, length: { maximum: 50 }
@@ -48,10 +51,44 @@ class User < ActiveRecord::Base
     self.authentications.find_by_provider(provider).token    
   end
 
+  def set_plan!(plan, expiration_date=nil)
+    today = Time.now.strftime("%Y%m%d").to_i
+    if !active_plans.empty?
+      active_plans.each do |p|
+         p.expirate!
+      end
+    end
+    upr = self.user_plan_relationships.new
+    upr.plan_id = plan.id
+    upr.effective_date = today
+    upr.expiration_date = expiration_date
+    upr.save!
+  end
+
+  def active_plans
+    user_plan_relationships.where("effective_date <= ? and (expiration_date is null or expiration_date > ?)", Time.now.strftime("%Y%m%d").to_i, Time.now.strftime("%Y%m%d").to_i)
+  end
+
+  def plan
+    begin
+      active_plans.first.plan
+    rescue
+      nil
+    end
+  end
+
   private
 
     def create_remember_token
       self.remember_token = SecureRandom.urlsafe_base64
+    end
+
+    def set_free_plan
+      if self.plan.nil?
+        if free = Plan.find_by_name(FREE_PLAN)
+          self.set_plan!(free)  
+        end
+      end
     end
 
 end

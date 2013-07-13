@@ -12,6 +12,7 @@ Swin::Application.routes.draw do
   match "/facebook/activity", to: 'facebook#activity'
   match "/facebook/growth", to: 'facebook#growth'
   match "/facebook/empty", to: 'facebook#empty'
+  match "/facebook/dashboard", to: 'facebook#dashboard'
 
   # ADMIN PROTECTED
   match "/users/admin_query", to: 'users#admin_query'

@@ -19,15 +19,15 @@ module ApplicationHelper
     end
   end
 
-  def tab_link(link_text, link_path, tab)
-    if tab == session[:active_tab]
+  def tab_link(link_text, link_path, tab, anchor)
+    if tab == get_active_tab
       class_name = 'active'
     else
       class_name = ''
     end 
 
     content_tag(:li, :class => class_name) do
-      link_to link_text, link_path
+      link_to link_text, link_path, anchor
     end
   end
 

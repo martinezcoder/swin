@@ -29,6 +29,7 @@ jQuery(function ($) {
 		    		htmlResult += fbPage(jsonData.id, jsonData.name);
 		    	}
 		    });
+		    htmlResult += "<p>No se encontraron coincidencias con esta búsqueda.</p>";
 	  }
 /*
 	  else {

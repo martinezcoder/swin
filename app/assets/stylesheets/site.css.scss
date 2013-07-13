@@ -2,8 +2,6 @@ $linkColor: #6DC5D7;//#3B5998
 $baseBorderRadius:1px;
 $btnInfoBackground: #2D255E;
 $btnInfoBackgroundHighlight: #2D255E;
-// $btnDangerBackground: #2D255E; /*para boton busqueda*/
-// $btnDangerBackgroundHighlight:#2D255E;
 
 @import "bootstrap";
 
@@ -15,6 +13,9 @@ $btnInfoBackgroundHighlight: #2D255E;
 }
 .sw-green{
   color: #5FAD2E;
+}
+.sw-white{
+  color:#ffffff;
 }
 body { 
   font-family: 'DominikRegular', Helvetica,'Lucida Grande', Verdana;  
@@ -42,16 +43,23 @@ hr, .hr{
   right:0;
 }
 #home {
-    background: url("slide-01.jpg") no-repeat scroll 0 0 / 100% 100% #000000; //  home-back-unfoc
+    background: url("slide-04.jpg") no-repeat scroll 0 0 / 100% 100% #000000; //  home-back-unfoc
     padding: 55px 10px 0;
 }
 #slogan1 {
     color: #6EC7D9;
-    font-family: 'DominikRegular', Helvetica,'Lucida Grande', Verdana;
+    font-family: 'DominikRegular',Helvetica,'Lucida Grande',Verdana;
+    font-size: 40px;
     font-weight: normal;
-    font-size: 38px;
 }
 #slogan2 {
+    color: #EBEBEB;
+    font-size: 18px;
+    font-weight: 200;
+    line-height: 30px;
+    margin-bottom: 0;
+}
+#slogan3 {
     color: #EBEBEB;
     font-size: 18px;
     font-weight: 200;
@@ -84,7 +92,7 @@ hr, .hr{
 
 /*video*/
 #video{  
-    padding: 30px 10px;
+    padding: 8px 10px;
 }
 .video{
     margin: 20px auto;
@@ -204,6 +212,18 @@ hr, .hr{
     color: #999999;
     padding: 35px 10px 48px;
 }
+
+#metodo h3 {
+    color: #999999;
+}
+#metodo a:hover {
+    color: #999999;
+    text-decoration:none;
+    
+}
+.container.planes h3 {
+    color: #999999;
+}
 .img-metodo{
     display: block;
     margin: 0 auto 17px;
@@ -242,7 +262,7 @@ hr, .hr{
   background: url("base-informes2.jpg") no-repeat scroll 0 -236px #5F4B8E;
 }
 .transparencia {
-    background-color: rgba(255, 255, 255, 0.6);
+    background-color: rgba(255, 255, 255, 0.8);
     color: rgba(255, 255, 255, 0.9);
     height: 400px;
     padding: 6px 5px;
@@ -486,18 +506,11 @@ hr, .hr{
     width: 113px;
 
 }
-
-
- .col-imagen img{
+.col-imagen img{
     height: 158px;
     width: 113px;
-    transform-origin: center center 0;
-    transition: all 0.3s ease 0s;
 }
 .col-imagen img:hover{
-    height:168px;
-    width: 133px; 
-    margin: -5px 0 0 -5px;
 
 }
 .col-info {
@@ -567,9 +580,25 @@ hr.hr-nosotros {
   }
   #lazo{display:none;}
   .navbar-fixed-top {top: 0px;}
+  #home {
+    background-size: cover;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+  }
+  .word-engage {
+    font-size: 18px;
+    left: 18%;
+    position: absolute;
+    top: 65%;
+}
 }
 
 
 .navbar-fixed-top {
     top: 0px;
+}
+
+@media only screen and (min-width: 0px) and (max-width: 767px) {
+
 }

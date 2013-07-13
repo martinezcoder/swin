@@ -1,9 +1,9 @@
 <h1>Mis Listas</h1>
 <center>
-	<h4>Puedes crear un máximo de <%= MAX_LISTS %> listas</h4>
+	<h4>Puedes crear un máximo de <%= current_user.plan.num_lists %> listas</h4>
 </center>
 <div class="span9 well">
-	<% if @facebook_lists.count < MAX_LISTS %>
+	<% if @facebook_lists.count < current_user.plan.num_lists %>
 		<%= link_to 'Añadir nueva lista...', new_facebook_list_path %>
 	<% end %>
 
@@ -28,7 +28,7 @@
 				    <strong id="fb_fans" class="stat">
 				    	<% if list.page_id %>
 					    	<% p = Page.find(list.page_id) %>
-					          	<%= link_to page_path(p.id), class: "no-decoration"  do %>
+					          	<%= link_to smart_page_path(p), class: "no-decoration"  do %>
 					          		<%= image_tag get_picture(p), class: "mini_logo", alt: p.name, title: p.name %>
 					          	<% end %>
 				        <% end %>

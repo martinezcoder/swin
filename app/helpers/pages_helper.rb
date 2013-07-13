@@ -257,8 +257,9 @@ module PagesHelper
                 vAxis: {minValue:0, maxValue:" + @max_value.to_s + "},
                 fontSize: 10,
                 legend: {position: 'none', textStyle: {fontSize: 14}},
-                tooltip: {isHtml: true}" 
-
+                tooltip: {isHtml: true},
+                theme: 'maximized'
+                "
       return dataResult
     end
 
@@ -346,7 +347,7 @@ module PagesHelper
     protected
 
       def engagement(fans, actives)
-        
+
         if fans > 0        
             engage = actives * peso_engage(fans) *100 / fans
 
@@ -489,6 +490,16 @@ module PagesHelper
     rescue
       'red'
     end 
+  end
+
+  def smart_page_name(name)
+    ret = name.gsub(/[%_!~*'().,;$#|]/,"")
+    ret = ret.gsub(" ", "")
+    ret
+  end
+
+  def smart_page_path(page)
+    page_path(id: smart_page_name(page.name)+'-engagement-'+page.page_id, day: Time.now.yesterday.strftime('%Y%m%d'))
   end
 
 end

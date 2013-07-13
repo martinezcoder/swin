@@ -6,8 +6,6 @@
 #  page_id             :string(255)
 #  name                :string(255)
 #  page_type           :string(255)
-#  username            :string(255)
-#  pic_square          :string(255)
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
 #  fan_count           :integer

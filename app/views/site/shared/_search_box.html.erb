@@ -1,11 +1,19 @@
-			<div class="form-case">
+			<!--<div class="form-case">
 			<%= form_tag(search_engagement_path, :method => "get", class: "navbar-search search") do %>
 				<fieldset>
 					<em class="icon-search" id="lent"></em> 
 					<%= text_field_tag(:search, params[:search], class: "input search-query", placeholder: "Buscar páginas...", autocomplete: "off") %>
-					<%= button_tag(type: "submit", class: "btn btn-danger btn-sw-search") do %>
+					<%= button_tag(type: "submit", class: "btn btn-violet btn-sw-search") do %>
 						BUSCAR
 					<% end %>
 				</fieldset>
 				<% end %>
-			</div>	
+			</div>	-->
+<div class="form-case input-append">			
+	<%= form_tag(search_engagement_path, :method => "get", class: "navbar-search form-inline") do %>
+	    <%= text_field_tag(:search, params[:search], class: "span4 simple-search", placeholder: "Buscar páginas...", autocomplete: "off") %> 
+	    <label class="fornav" id="mySubmit" type="submit"><i class="icon-search"></i></label>
+	  
+	<% end %>
+</div>
+  
