@@ -6,10 +6,10 @@ class FacebookListsController < ApplicationController
   def activate_list
     facebook_list = current_user.facebook_lists.find(params[:commit])
     set_active_list(facebook_list.id)
-
+    
     respond_to do |format|
         format.html { redirect_to facebook_lists_path }
-        format.json { head :no_content }
+        format.js
     end
   end
 

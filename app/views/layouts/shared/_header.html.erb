@@ -34,16 +34,15 @@
 							<ul class="dropdown-menu">
 								<li><%= link_to facebook_engage_path do %><i class="icon-th-large"></i> Dashboard<% end %></li>
 
-								<%= form_tag(facebook_lists_activate_path) do %>
+								<%= form_tag(facebook_lists_activate_path, remote: true) do %>
 									<% current_user.facebook_lists.each do |fb_list| %>
 									<li>
-											<%= submit_tag(fb_list.id,  class: "btn btn-primary btn-small") do %>
-												<strong><i class="icon-plus icon-white"></i> <%= fb_list.name %> </strong> 
+											<%= submit_tag(fb_list.id, class: "btn btn-primary btn-small") do %>
+												<strong><%= fb_list.name %> </strong> 
 											<% end %>
 									</li>
 									<% end %>
 								<% end %>
-
 
 
 								<li><%= link_to signout_path, method: "delete" do %><i class="icon-remove"></i> Cerrar sesión<% end %></li>
