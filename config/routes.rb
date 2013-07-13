@@ -7,6 +7,10 @@ Swin::Application.routes.draw do
   end
   resources :list_page_relationships, only: [:create, :destroy]
 
+  match "/facebook/lists/activate", to: 'facebook_lists#activate_list'
+
+
+
   match "/facebook/engage", to: 'facebook#engage'
   match "/facebook/size", to: 'facebook#size'
   match "/facebook/activity", to: 'facebook#activity'

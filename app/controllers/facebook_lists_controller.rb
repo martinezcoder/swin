@@ -1,8 +1,17 @@
 class FacebookListsController < ApplicationController
 
   before_filter :signed_in_user
-  before_filter :is_user_list, except: [:new, :create, :index]
+  before_filter :is_user_list, except: [:new, :create, :index, :activate_list]
 
+  def activate_list
+    facebook_list = current_user.facebook_lists.find(params[:commit])
+    set_active_list(facebook_list.id)
+
+    respond_to do |format|
+        format.html { redirect_to facebook_lists_path }
+        format.json { head :no_content }
+    end
+  end
 
   def activate
     facebook_list = current_user.facebook_lists.find(params[:id])
