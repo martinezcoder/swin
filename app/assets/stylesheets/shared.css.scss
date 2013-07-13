@@ -3,6 +3,9 @@ $baseBorderRadius:1px;
 $btnInfoBackground: #2D255E;
 $btnInfoBackgroundHighlight: #2D255E;
 html, body {height: 100%;}
+body {
+    padding-top: 54px;
+}
 @font-face {
     font-family: 'DominikRegular';
     src: font-url('dominik.eot');
