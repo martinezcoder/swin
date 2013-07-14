@@ -35,15 +35,16 @@
 								<li><%= link_to facebook_engage_path do %><i class="icon-th-large"></i> Dashboard<% end %></li>
 
 
-								<% current_user.facebook_lists.each do |fb_list| %>
-									<%= form_tag(activate_facebook_list_path(fb_list.id)) do %>
-										<%= hidden_field_tag :url, request.url %>
-										<%= button_tag(type: "submit", class: "btn btn-small btn-primary") do %>
-											<strong><%= fb_list.name %></strong> 
+								<% if request.fullpath != new_facebook_list_path %>
+									<% current_user.facebook_lists.each do |fb_list| %>
+										<%= form_tag(activate_facebook_list_path(fb_list.id)) do %>
+											<%= hidden_field_tag :url, request.fullpath %>
+											<%= button_tag(type: "submit", class: "btn btn-small btn-primary") do %>
+												<strong><%= fb_list.name %></strong> 
+											<% end %>
 										<% end %>
 									<% end %>
 								<% end %>
-
 
 								<li><%= link_to signout_path, method: "delete" do %><i class="icon-remove"></i> Cerrar sesión<% end %></li>
 								
