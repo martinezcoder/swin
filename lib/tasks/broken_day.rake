@@ -41,7 +41,7 @@ namespace :db do
           
           puts "page #{p.id} saved with #{plikes} likes and #{pprosumers} prosumers."
         else
-          puts "Error: page #{p.id} with empty data"
+          puts "page #{p.id} with empty data"
         end
       end
     end

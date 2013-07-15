@@ -1,5 +1,31 @@
 module DashboardHelper
 
+  def dashboard_box(link_path, title, value, variation)
+
+    class_name = "btn past "
+    if !variation.nil?
+      if variation > 0 
+        class_name += " past-green"
+      elsif variation < 0
+        class_name += " past-orange"
+      end
+    end
+        
+    link_to link_path, class: class_name do
+      concat(content_tag(:div, class: "past-title") do
+          title
+      end)
+      concat(content_tag(:div, class: "past-percent") do
+          value.to_s + '%'
+      end)
+      concat(content_tag(:div, class: "past-var") do
+          variation.to_s + '%' if !variation.nil?
+      end)
+    end
+
+  end
+  
+
   class HtmlHardcodes
 
       def logo (url, img, title, options)
@@ -51,22 +77,6 @@ module DashboardHelper
     
   end
 
-
-
-  def chart_test_tag (height, params = {})
-    params[:format] ||= :json
-    path = query_test_path(params: params)
-    if params[:type] == 'Table'
-      content_tag(:div, :'data-query-table' => path, :style => "height: #{height}px;") do
-        image_tag('loader.gif', :size => '24x24', :class => 'spinner')
-      end            
-    else
-      content_tag(:div, :'data-query-chart' => path, :style => "height: #{height}px;") do
-        image_tag('loader.gif', :size => '24x24', :class => 'spinner')
-      end
-    end
-  end
-  
   def chart_tag (height, params = {})
     params[:format] ||= :json
     if params[:chart] == 'pages'

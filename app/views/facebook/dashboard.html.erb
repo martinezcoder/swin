@@ -1,43 +1,23 @@
-<% provide(:title, @metric_name) %>
+<% provide(:title, "Dashboard de Facebook") %>
 
-<h4>Dashboard</h4>             
+<%= render 'facebook/layouts/competitors', :list =>  @user_list, :mypath => facebook_path %>
 
-         
-                <ul class="nav nav-pills">
-                   <li><a href="#" class="btn">Hoy</a></li> 
-                   <li><a href="#" class="btn">15</a></li>
-                   <li><a href="#" class="btn">30</a></li>
-                   <li><a href="#" class="btn">90</a></li>
-                   <li><a href="#" class="btn"><i class="icon-calendar"></i></a></li>
-                </ul>
-                
-                <ul id="pasts" class="unstyled">
-                   <li>
-	               		<a class="btn past past-green" href="#">
-	                   		<div class="past-title">ENGAGEMENT</div>
-	                   		<div class="past-percent">67%%</div>
-	                   		<div class="past-var">+25%%</div>                   		
-	               		</a>
-               	   </li> 
-                   <li>
-	               		<a class="btn past past-orange" href="#">
-	                   		<div class="past-title">TAMAÑO</div>
-	                   		<div class="past-percent">67%</div>
-	                   		<div class="past-var">+25%%</div>                   		
-	               		</a>
-               	   </li> 
-                   <li>
-	               		<a class="btn past" href="#">
-	                   		<div class="past-title">CRECIMIENTO</div>
-	                   		<div class="past-percent">67%</div>
-	                   		<div class="past-var">+25%</div>                   		
-	               		</a>
-               	   </li> 
-                   <li>
-	               		<a class="btn past " href="#">
-	                   		<div class="past-title">ACTIVIDAD</div>
-	                   		<div class="past-percent">67%</div>
-	                   		<div class="past-var">+25%</div>                   		
-	               		</a>
-               	   </li>                	                  	   
-                </ul>
+<ul id="pasts" class="unstyled">
+
+       <li><%= dashboard_box(facebook_engage_path(date_from: params[:date_from], date_to: params[:date_to]), 
+       						 'ENGAGEMENT', 
+       						  @data[:engagement][:value], 
+       						  @data[:engagement][:variation]) %></li> 
+       <li><%= dashboard_box(facebook_size_path, 
+       						 'TAMAÑO', 
+       						  @data[:size][:value], 
+       						  @data[:size][:variation]) %></li> 
+       <li><%= dashboard_box(facebook_growth_path, 
+       						 'CRECIMIENTO', 
+       						  @data[:growth][:value], 
+       						  nil) %></li> 
+       <li><%= dashboard_box(facebook_activity_path, 
+       						 'ACTIVIDAD', 
+       						  @data[:activity][:value], 
+       						  @data[:activity][:variation]) %></li>
+</ul>

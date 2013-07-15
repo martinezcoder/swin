@@ -7,7 +7,8 @@ include DashboardHelper
   before_filter :has_active_list
   before_filter :list_has_pages, except: :empty
 
-  before_filter :member_user, only: [:engage, :size, :growth, :activity]
+  before_filter :dates_filter, only: [:dashboard, :engage, :size, :growth, :activity]
+  before_filter :pages_filter, only: [:engage, :size, :growth, :activity]
 
   before_filter :set_active_tab
   
@@ -16,6 +17,13 @@ include DashboardHelper
     @num_competitors = @list.pages.count
   end
 
+  def dashboard
+    metric_type = M_DASHBOARD
+    @user_list = get_active_list
+
+    fb_metric = PagesHelper::FbMetrics.new(get_token(FACEBOOK)) 
+    @data = fb_metric.get_dashboard_metrics(@page, @date_from, @date_to)
+  end
 
   def engage
     metric_type = M_ENGAGEMENT
@@ -136,12 +144,13 @@ private
     session[:active_tab] = FACEBOOK    
   end
 
-  def member_user
+  def dates_filter
     @date_from = nil
     @date_to = nil
     @graph_type = nil
     @user_list = nil 
     @list = nil
+    @page = Page.find_by_id(get_active_list.page_id)
     
     # Tenemos tres opciones de gráficas: 
     # 0 - barras de crecimiento de un solo día y varios competidores
@@ -201,17 +210,14 @@ private
       @graph_type = is_day
     end
 
-    set_graph_type(@graph_type)
   end
 
 
-  def set_graph_type(gr_type)
+  def pages_filter
     is_day       = 0
     is_timeline  = 1
     is_timeline_single = 2
     is_timeline_multi  = 3
-
-    @graph_type = gr_type
     
     if @graph_type.nil? 
       @graph_type = is_day

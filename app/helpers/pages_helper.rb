@@ -52,26 +52,35 @@ module PagesHelper
       variation(old_data.to_f, new_data.to_f)
     end
     
-    def get_engagement_variations_between_dates(page, dayFrom, dayTo)
+    def get_dashboard_metrics(page, date_from, date_to)
       begin
-        regOld = page.page_data_days.find_by_day(dayFrom)
-        regNew = page.page_data_days.find_by_day(dayTo)
+        regOld = page.page_data_days.find_by_day(date_from.strftime("%Y%m%d").to_i)
+        regNew = page.page_data_days.find_by_day(date_to.strftime("%Y%m%d").to_i)
 
-        engageOld = engagement(regOld.likes, regOld.prosumers)
-        engageNew = engagement(regNew.likes, regNew.prosumers)
-        
         fansOld = regOld.likes
         fansNew = regNew.likes
         
         activesOld = regOld.prosumers
         activesNew = regNew.prosumers
 
-        return {engagement: variation(engageOld,  engageNew), 
-                     fans: variation(fansOld,    fansNew), 
-                  actives: variation(activesOld, activesNew)}
+        engageOld = engagement(fansOld, activesOld)
+        engageNew = engagement(fansNew, activesNew)
+        
+
+        return {
+               engagement: {value: engageNew,  variation: get_variation(engageOld,  engageNew)}, 
+               size:       {value: fansNew,    variation: get_variation(fansOld,    fansNew)},
+               activity:   {value: activesNew, variation: get_variation(activesOld, activesNew)},
+               growth:     {value: get_variation(fansOld,fansNew), variation: 0}, 
+               }
       rescue
       # probably because no data has been catched from these days and this page
-        return {engagement: 0, fans: 0, actives: 0}
+        return {
+               engagement: {value: 0, variation: 0}, 
+               size:       {value: 0, variation: 0}, 
+               activity:   {value: 0, variation: 0},
+               growth:     {value: 0, variation: 0}
+               }
       end
     end
     
@@ -331,6 +340,7 @@ module PagesHelper
 
       @options = "title:'" + @metric_name + "',
                 titleTextStyle: {fontSize: 14},
+                height: 300,
                 vAxis: {title: '"+ @metric_name +"'},
                 hAxes:[{title:'Día'}],
                 seriesType: 'lines',

@@ -19,6 +19,7 @@ YOUTUBE= 'youtube'
 
 
 
+M_DASHBOARD = "Dashboard"
 M_ENGAGEMENT = "Engagement"
 M_CRECIMIENTO = "Crecimiento"
 M_TAMANO = "Tamano"
