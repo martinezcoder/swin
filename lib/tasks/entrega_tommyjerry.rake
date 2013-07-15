@@ -4,13 +4,15 @@ namespace :db do
     delete_broken_data_days
   end
 
-  task set_free_user_plans: :environment do
-    create_and_set_free_plan_to_all_users
+  task initialize_user_plans: :environment do
+    create_plan(FREE,    10,    2,   0.0,  15)
+    create_plan(ADMIN,   100, 100,   0.0, 370)
+    create_plan(PREMIUM, 10,    2, 100.0,  90)    
+    set_plan_to_all_users(FREE)
   end
 
-
   def delete_broken_data_days
-    days = PageDataDay.where("day > ?", 99999999)
+    days = PageDataDay.where("day > ?", 29990101)
     days.each do |d|
       d.destroy
     end
@@ -20,21 +22,28 @@ namespace :db do
     end
   end
 
-  def create_and_set_free_plan_to_all_users
-    free = Plan.find_by_name(FREE_PLAN)
-    if free.nil?
-      free = Plan.new
-      free.name = FREE_PLAN
-      free.num_competitors = 10
-      free.num_lists = 2
-      free.price = 0.0
-      free.save
-    end
+  def set_plan_to_all_users(plan_type)
+    plan =  Plan.find_by_name(plan_type)
     users = User.all
     users.each do |u|
-      u.set_plan!(free)
+      u.set_plan!(plan)
       u.save 
     end
+    puts "done."
+  end
+
+  def create_plan(plan_type, nc, nl, p, r)
+    plan = Plan.find_by_name(plan)
+    if plan.nil?
+      plan = Plan.new
+      plan.name = plan_type
+      plan.num_competitors = nc
+      plan.num_lists = nl
+      plan.price = p
+      plan.max_date_range = r
+      plan.save
+    end 
+    puts "Created plan #{plan_type}"   
   end
 
 end

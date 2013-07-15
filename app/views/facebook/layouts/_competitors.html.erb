@@ -15,13 +15,6 @@
           		<%= check_box_tag 'pages[]', competitor[:id], params.has_key?(:pages) ? params[:pages].include?(competitor.id.to_s) : true  %>
 			</div>
 		<% end %>
-
-		<% if membership_user? %>
-			<div id="competitorBox">
-
-			
-			</div>
-		<% end %>
 		
 	    <div id="pick-from" class="input-append date">
 	    	<%= text_field_tag :date_from, params.has_key?(:date_from) ? params[:date_from] : Time.now.yesterday.strftime("%Y/%m/%d") %>
@@ -43,6 +36,8 @@
 		  	 });
 		  	
 		</script>
+
+		<%= text_field_tag :ndays, params.has_key?(:ndays) ? params[:ndays] : '' %>
 		
 		<%= button_tag(type: "submit", class: "btn btn-default") do %>
 			<strong><i class=" icon-refresh"></i> Actualizar </strong> 

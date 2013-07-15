@@ -25,4 +25,6 @@ M_TAMANO = "Tamano"
 M_ACTIVIDAD = "Actividad"
 
 
-FREE_PLAN = 'free'
+FREE = 'free'
+ADMIN = 'admin'
+PREMIUM = 'premium_FB'
