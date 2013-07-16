@@ -161,7 +161,7 @@ private
     is_timeline  = 1
     
     begin
-      pre_update_params
+      pre_params
       if user_plan?(FREE)
         @date_to = Time.now.yesterday
         if params.has_key?(:ndays) and params[:ndays] != ""
@@ -206,18 +206,18 @@ private
               @date_to = Time.strptime(params[:date_to], "%Y/%m/%d") # historic day
               @date_from = @date_to
           else
-              @date_to = Time.now - (24*60*60) # yesterday
+              @date_to = Time.now.yesterday
               @date_from = @date_to
           end
         end
       end
     rescue
       flash[:info] = "Opps, algo no ha ido bien..." if flash[:info].nil?
-      @date_to = Time.now - (24*60*60) # yesterday
+      @date_to = Time.now.yesterday
       @date_from = @date_to
       @graph_type = is_day
     end
-    post_update_params
+    post_params
   end
 
 
@@ -236,7 +236,12 @@ private
     @list = []
     
     if user_plan?(FREE) and (@graph_type == is_timeline)
-      @page = Page.find_by_id(get_active_list.page_id)
+      if params.has_key?(:pages) && params[:pages] != "" && params[:pages].count == 1
+        @page = Page.find_by_id(params[:pages].first)
+      else
+        @page = Page.find_by_id(get_active_list.page_id)        
+      end
+
       @list = @list + [@page]
       @graph_type = is_timeline_single
     else
@@ -294,7 +299,7 @@ private
     end
   end
 
-  def pre_update_params
+  def pre_params
     if !session[:params].nil?
       if params[:date_from].nil? && !session[:params][:dates][:from].nil?
         params[:date_from] = session[:params][:dates][:from]
@@ -308,16 +313,14 @@ private
       if params[:pages].nil? && !session[:params][:pages].nil?
         params[:pages] = session[:params][:pages]
       end
-
-      #params[:ndays] = session[:params][:dates][:ndays] if !params.has_key?(ndays) && !session[:params][:dates][:ndays].nil?
     end   
   end
   
-  def post_update_params
+  def post_params
     session[:params] = { dates: {
-                                 ndays: params[:ndays], 
-                                 from:  params[:date_from], 
-                                 to:    params[:date_to]
+                                 ndays: @ndays, #params[:ndays], 
+                                 from:  @date_from.strftime("%Y/%m/%d"), #|| params[:date_from], 
+                                 to:    @date_to.strftime("%Y/%m/%d"), #|| params[:date_to]
                                 },
                          pages:  params[:pages]
                        }

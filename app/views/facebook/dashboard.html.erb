@@ -4,7 +4,7 @@
 
 <ul id="pasts" class="unstyled">
 
-       <li><%= dashboard_box(facebook_engage_path(date_from: params[:date_from], date_to: params[:date_to]), 
+       <li><%= dashboard_box(facebook_engage_path, 
        						 'ENGAGEMENT', 
        						  @data[:engagement][:value], 
        						  @data[:engagement][:variation]) %></li> 
