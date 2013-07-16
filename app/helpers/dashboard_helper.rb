@@ -1,6 +1,6 @@
 module DashboardHelper
 
-  def dashboard_box(link_path, title, value, variation)
+  def dashboard_box(link_path, title, value, variation, percent=false)
 
     class_name = "btn past "
     if !variation.nil?
@@ -16,11 +16,13 @@ module DashboardHelper
           title
       end)
       concat(content_tag(:div, class: "past-percent") do
-          value.to_s + '%'
+          value.to_s + (percent ? '%' : '')
       end)
-      concat(content_tag(:div, class: "past-var") do
-          variation.to_s + '%' if !variation.nil?
-      end)
+      if !percent
+        concat(content_tag(:div, class: "past-var") do
+            variation.to_s + '%' if !variation.nil?
+        end)
+      end
     end
 
   end
