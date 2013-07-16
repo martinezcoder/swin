@@ -21,7 +21,8 @@ include DashboardHelper
     metric_type = M_DASHBOARD
     @user_list = get_active_list
 
-    fb_metric = PagesHelper::FbMetrics.new(get_token(FACEBOOK)) 
+    fb_metric = PagesHelper::FbMetrics.new(get_token(FACEBOOK))
+    @date_from = @date_from.yesterday if @date_from == @date_to
     @data = fb_metric.get_dashboard_metrics(@page, @date_from, @date_to)
   end
 
@@ -160,16 +161,19 @@ private
     is_timeline  = 1
     
     begin
+      pre_update_params
       if user_plan?(FREE)
         @date_to = Time.now.yesterday
         if params.has_key?(:ndays) and params[:ndays] != ""
           ndays =  params[:ndays].to_i
           if ndays > current_user.plan.max_date_range 
             ndays = current_user.plan.max_date_range
+            params[:ndays] = ndays
           end
           @date_from = @date_to.ago(ndays.day)
           @graph_type = is_timeline
         else
+          @date_from = @date_to
           @graph_type = is_day
         end
       else
@@ -178,6 +182,7 @@ private
           ndays =  params[:ndays].to_i
           if ndays > current_user.plan.max_date_range 
             ndays = current_user.plan.max_date_range
+            params[:ndays] = ndays
           end
           @date_from = @date_to.ago(ndays.day)
           @graph_type = is_timeline
@@ -199,17 +204,20 @@ private
               
           elsif params.has_key?(:date_to)
               @date_to = Time.strptime(params[:date_to], "%Y/%m/%d") # historic day
+              @date_from = @date_to
           else
               @date_to = Time.now - (24*60*60) # yesterday
+              @date_from = @date_to
           end
         end
       end
     rescue
       flash[:info] = "Opps, algo no ha ido bien..." if flash[:info].nil?
       @date_to = Time.now - (24*60*60) # yesterday
+      @date_from = @date_to
       @graph_type = is_day
     end
-
+    post_update_params
   end
 
 
@@ -284,6 +292,35 @@ private
     rescue
       redirect_to facebook_empty_path
     end
+  end
+
+  def pre_update_params
+    if !session[:params].nil?
+      if params[:date_from].nil? && !session[:params][:dates][:from].nil?
+        params[:date_from] = session[:params][:dates][:from]
+      end
+      if params[:date_to].nil? && !session[:params][:dates][:to].nil?
+        params[:date_to] = session[:params][:dates][:to]
+      end
+      if params[:ndays].nil? && !session[:params][:dates][:ndays].nil?
+        params[:ndays] = session[:params][:dates][:ndays]
+      end
+      if params[:pages].nil? && !session[:params][:pages].nil?
+        params[:pages] = session[:params][:pages]
+      end
+
+      #params[:ndays] = session[:params][:dates][:ndays] if !params.has_key?(ndays) && !session[:params][:dates][:ndays].nil?
+    end   
+  end
+  
+  def post_update_params
+    session[:params] = { dates: {
+                                 ndays: params[:ndays], 
+                                 from:  params[:date_from], 
+                                 to:    params[:date_to]
+                                },
+                         pages:  params[:pages]
+                       }
   end
 
 end

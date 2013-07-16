@@ -1,6 +1,10 @@
-<% if signed_in? %>	
+<% if !signed_in? or (params.has_key?(:id) && request.path == page_path(params[:id]))%>	
 
-<div class="container" id="app_content">
+	<%= yield %>
+
+<% else %>
+
+  <div class="container" id="app_content">
 	<div class="row">
 
 		<nav class="tabbable"> <!-- Only required for left/right tabs -->
@@ -32,11 +36,9 @@
 				<% end %>
 
 			</div>
-						
+
 		</nav>
 	</div>
-</div><!--container-->	
+  </div><!--container-->	
 
-<% else %>
-	<%= yield %>
 <% end %>
