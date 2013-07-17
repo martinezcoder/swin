@@ -11,7 +11,9 @@
 				<%= menu_link('Engagement', 'icon-heart', facebook_engage_path) %>
 				<%= menu_link('Tamaño', 'icon-globe', facebook_size_path) %>
 				<%= menu_link('Crecimiento', 'icon-globe', facebook_growth_path) %>
-				<%= menu_link('Actividad', 'icon-globe', facebook_activity_path) %>
+				<% if current_user.plan.name == ADMIN %>
+					<%= menu_link('Actividad', 'icon-globe', facebook_activity_path) %>
+				<% end %>
 
 <!-- 
 			    <li class="disabled"><a href="#">Interacción</a></li>
