@@ -1,9 +1,10 @@
-$linkColor: #6DC5D7;//#3B5998
+$linkColor: #6DC5D7;
 $baseBorderRadius:1px;
 $btnInfoBackground: #2D255E;
 $btnInfoBackgroundHighlight: #2D255E;
 
 @import "bootstrap";
+
 
 .sw-blue{
   color: #6EC7D9;
@@ -16,6 +17,12 @@ $btnInfoBackgroundHighlight: #2D255E;
 }
 .sw-white{
   color:#ffffff;
+}
+html, body {
+  height: 100%;
+}
+body{
+    min-width:320px;  
 }
 body { 
   font-family: 'DominikRegular', Helvetica,'Lucida Grande', Verdana;  
@@ -43,8 +50,14 @@ hr, .hr{
   right:0;
 }
 #home {
-    background: url("slide-04.jpg") no-repeat scroll 0 0 / 100% 100% #000000; //  home-back-unfoc
-    padding: 55px 10px 0;
+    //background: url("slide-04.jpg") no-repeat scroll 0 0 / 100% 100% #000000; //  home-back-unfoc
+     padding: 55px 10px 0;
+    
+     background-color: #000000;
+     background-image: url('slide-04.jpg');
+     background-repeat: no-repeat;
+     background-position: center top;
+     overflow: auto;
 }
 #slogan1 {
     color: #6EC7D9;
@@ -61,19 +74,70 @@ hr, .hr{
 }
 #slogan3 {
     color: #EBEBEB;
-    font-size: 18px;
+    font-family: 'DominikRegular',Helvetica,'Lucida Grande',Verdana;
+    font-size: 17px;
     font-weight: 200;
     line-height: 30px;
     margin-bottom: 20px;
 }
 #monitorizando{
     color: #EBEBEB;
-    font-size: 15px;
+    font-size: 13px;
     font-weight: bold;
     line-height: 30px;
-    margin-bottom: 20px; 
+    margin-bottom: 20px;
 }
 
+/*#####################################################*/
+/*### BOTON FACEBOOK SOCIALWIN ########################*/
+/*#####################################################*/
+.base-btn-facebook-center{
+    display: inline-block;
+    margin: 0 auto;
+    text-align: center;
+}
+.base-btn-facebook {
+    background: none repeat scroll 0 0 rgba(109, 197, 215, 0.3);
+    color: #FFFFFF;
+    height: 46px;
+    padding: 6px;
+    width: 246px;
+}
+.btn-large{
+    border-radius: 1px 1px 1px 1px;
+    font-size: 15px;
+    padding: 12px 7px;
+    font-family:'lucida grande',tahoma,Verdana,Arial,sans-serif;
+    width: 228px;
+}
+.box-image-facebook {
+    border-right: 2px solid #C4C4C4;
+    display: inline-block;
+    margin-right: 10px;
+    text-align: left;
+    vertical-align: top;
+    width: 40px;
+}
+#image-facebook {
+    background: url("facebook.png") repeat scroll 0 0 transparent;
+    float: left;
+    height: 20px;
+    margin-left: 6px;
+    vertical-align: bottom;
+    width: 20px;
+}
+.btn-fb {
+    background: #6280BF;
+    background-image: linear-gradient(to bottom, #6280BF, #3B5998);
+    background-repeat: repeat-x;
+    border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+    color: white;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+}
+.btn-fb:hover, .btn-fb:focus, .btn-fb:active, .btn-fb.active, .btn-fb.disabled, .btn-fb[disabled] {
+    background: #3B5998;
+    color: white;
+}
 
 .screen{
     margin: 31px auto 0;
@@ -95,7 +159,7 @@ hr, .hr{
     padding: 8px 10px;
 }
 .video{
-    margin: 20px auto;
+    margin: 4px auto;
     max-width: 500px;
 }
 
@@ -139,7 +203,7 @@ hr, .hr{
     max-height:100px;
 }
 .podium{
-    background-color: #E8E9EB;
+    background: #E8E9EB;
     color: #666666;
     font-weight: bold;
 
@@ -234,7 +298,7 @@ hr, .hr{
 /*target*/
 #a_quien{
     color: #999999;
-    padding: 50px 10px 0;
+    padding: 44px 10px 0;
 }
 .quienes{
     color:#5FAD2E;
@@ -262,7 +326,7 @@ hr, .hr{
   background: url("base-informes2.jpg") no-repeat scroll 0 -236px #5F4B8E;
 }
 .transparencia {
-    background-color: rgba(255, 255, 255, 0.8);
+    background: rgba(255, 255, 255, 0.8);
     color: rgba(255, 255, 255, 0.9);
     height: 400px;
     padding: 6px 5px;

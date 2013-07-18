@@ -6,7 +6,7 @@
 		<h3 class="consulta">Consulta de ENGAGEMENT</h3>
 	</div>
 	
-	<div lass="row-fluid">
+	<div class="row-fluid">
 		<div class="span5 no-space">
 			
 			<div class="presentacion">
@@ -22,17 +22,18 @@
 			<% end %>
 			
 			<div class="escudo-engagement">
-				<%= image_tag "show-engagement/escudo.png" %>
+				<div class="image-engage">
+					<%= image_tag "show-engagement/escudo.png" %>
+				</div>
 				<div class="num-engage"><%= @engage %></div>
 				<div class="word-engage">ENGAGEMENT</div>
 				<div class="name-engage"><%= @page.name %></div>
 			</div>
 			
-		    <div class="clearfix"></div>
 		    
-		    	<!--btn-group-comparte -->
-		    <div class="btn-group "><!-- comparte-engagement-btn -->
-		    	<a class="btn dropdown-toggle btn-comparte" data-toggle="dropdown">
+	    	<!--btn-group-comparte -->
+		    <div class="btn-group" id="comparten"><!-- comparte-engagement-btn -->
+		    	<a class="btn btn-comparte dropdown-toggle" data-toggle="dropdown">
 		    		¡Comparte su Engagement! <span class="comparte-icon"></span>
 	    		</a>
 			    <ul class="dropdown-menu">
@@ -52,7 +53,8 @@
 						</a>
 					</li>
 			    </ul>	    		
-			</div>    
+			</div> 
+  
 			<% if signed_in? %>
 				<div class="space"></div>
 			<% else %>

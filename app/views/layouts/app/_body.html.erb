@@ -1,10 +1,43 @@
 <% if signed_in? %>	
 
-<div class="container" id="app_content">
-	<div class="row">
+<div id="app_content" class="container">
 
-		<nav class="tabbable"> <!-- Only required for left/right tabs -->
-			<ul class="nav nav-tabs">
+		<div class="snap-drawers container">
+			<div class="snap-drawer snap-drawer-left">
+			    <div>
+			        <h3>Snap.js</h3>
+
+			        <h4>Demos</h4>
+			        <ul>
+			            <li><a href="default.html">Default</a></li>
+			            <li><a href="noDrag.html">No Drag</a></li>
+			            <li><a href="dragElement.html">Drag Element</a></li>
+			            <li><a href="rightDisabled.html">Right Disabled</a></li>
+			            <li><a href="hyperextend.html">Hyperextension Disabled</a></li>
+			            <li><a href="skinnyThreshold.html">Skinny Threshold</a></li>
+			            <li><a href="toggles.html">Toggles</a></li>
+			            <li><a href="classNames.html">Class Names</a></li>
+			            <li><a href="expand.html">Expanding</a></li>
+			            <li><a href="settings.html">Settings</a></li>
+			            <li><a href="ratchet/template.html">Ratchet</a></li>
+			        </ul>
+			        <div>
+			            <p>The Default demo shows basic Snap.js functionality</p>
+			            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla non erat ac leo ultrices blandit sed vel risus. Pellentesque facilisis blandit auctor. Maecenas vestibulum vulputate tincidunt. Mauris nec quam libero. Fusce eget ligula non leo varius condimentum quis ac elit. Donec id urna ut neque semper ultrices. Proin ut suscipit felis. Nullam neque felis, ullamcorper scelerisque volutpat vel, vehicula vehicula neque. Aenean scelerisque elit ac erat sagittis ullamcorper.</p>
+			        </div>
+			    </div>
+			</div>
+			<div class="snap-drawer snap-drawer-right">
+			        <h3>Snap.js</h3>
+			        <h4>Demos</h4>
+			</div>
+		</div> 
+		 		
+		<div id="content" class="tabbable snap-content container">
+		
+			<ul class="nav nav-tabs offset2 ">
+								<a id="open-left" href="#"></a>
+                   				<a id="open-right" href="#"></a>
 				<%= tab_link('Facebook', facebook_engage_path, FACEBOOK, { anchor: 'fb-tab' }) %>
 				<%= tab_link('Twitter', twitter_path, TWITTER, { anchor: 'tw-tab' }) %>
 				<%= tab_link('Youtube', youtube_path, YOUTUBE, { anchor: 'yt-tab' }) %>
@@ -13,30 +46,63 @@
 			<div class="tab-content">
 				<% if get_active_tab == FACEBOOK %>
 					<div class="tab-pane active" id="fb-tab">
-						<div class="span2">
-							<%= render 'layouts/app/page_logo' %>
-							<%= render 'layouts/app/menu' %>
-						</div>
-						<div class="span10">
-							<%= yield %>
-						</div>
-					</div>
+						<div class="row-fluid">
+							
+							<div class="span2">
+								<!--<%= render 'layouts/app/page_logo' %>-->
+
+								<%= render 'layouts/app/menu' %>
+							</div>	
+	
+							<div class="span10">
+								<%= yield %>
+							</div>
+							
+						</div><!--endrow-->
+ 					</div>
+					
 				<% elsif get_active_tab == TWITTER %>
 					<div class="tab-pane active" id="tw-tab">
 						<%= yield %>
-					</div>
+					</div><!--tabPane-->
 				<% elsif get_active_tab == YOUTUBE %>
 					<div class="tab-pane active" id="yt-tab">
 						<%= yield %>
 					</div>
 				<% end %>
-
 			</div>
 						
-		</nav>
-	</div>
+		</div><!--tabbable-->
+	
+	
 </div><!--container-->	
+
+
+  
+<script>
+var snapper = new Snap({
+    element: document.getElementById('content')
+});
+
+var addEvent = function addEvent(element, eventName, func) {
+    if (element.addEventListener) {
+        return element.addEventListener(eventName, func, false);
+    } else if (element.attachEvent) {
+        return element.attachEvent("on" + eventName, func);
+    }
+};
+
+addEvent(document.getElementById('open-left'), 'click', function () {
+    if (snapper.state().state == "left") {
+        snapper.close();
+    } else {
+        snapper.open('left');
+    }
+});
+</script>
 
 <% else %>
 	<%= yield %>
 <% end %>
+
+

@@ -1,26 +1,40 @@
-<div class="menu_metricas">
-	<div class="well">
-		
-		<ul class="nav nav-list">
-			<li class="nav-header">Mi Perfil</li>
-				<%= menu_link('Mis Listas', 'icon-list', facebook_lists_path) %>
-				<%= menu_link('Editar lista activa', 'icon-search', (lst = get_active_list).nil? ? root_url : edit_facebook_list_path(lst)) %>
-			<li class="divider"></li>				
-			<li class="nav-header">Métricas</li>
+<div class="menu_metricas span12">
+	<div class="collapse-inner">
+
+		<!-- boton colapsed -->
+		<a type="button" class="btn navbar btn-navbar" data-toggle="collapse" data-target=".menuapp-collapse">
+			Métricas <b class="caret"></b>
+		</a>
+	
+		<div class="menuapp-collapse nav-collapse collapse">
+			<ul class="nav">
+				<!--
 				<%= menu_link('Engagement', 'icon-home', facebook_engage_path) %>
 				<%= menu_link('Tamaño', 'icon-globe', facebook_size_path) %>
 				<%= menu_link('Crecimiento', 'icon-globe', facebook_growth_path) %>
 				<%= menu_link('Actividad', 'icon-globe', facebook_activity_path) %>
-
-<!-- 
-			    <li class="disabled"><a href="#">Interacción</a></li>
+				-->
+				
+				<li><%= link_to 'Engagement', facebook_engage_path, class: 'btn' %></li>
+				<li><%= link_to 'Tamaño', facebook_size_path, class: 'btn disabled' %></li>
+				<li><%= link_to 'Crecimiento', facebook_growth_path, class: 'btn disabled' %></li>
+				<li><%= link_to 'Actividad', facebook_activity_path, class: 'btn disabled' %>	</li>			
+		 		 
+		 		<!--  
+		  		<li class="disabled"><a href="#">Interacción</a></li>
 			    <li class="disabled"><a href="#">Embajadores</a></li>
 			    <li class="disabled"><a href="#">Influence</a></li>
-			    <li class="disabled"><a href="#">Sentiment</a></li>
--->
-			<li class="divider"></li>
-		</ul>
-		
-	</div><!--wel-->
+			    <li class="disabled"><a href="#">Sentiment</a></li> 
+			    -->
+			</ul>
+		</div>
+
+	</div><!--navbar-->
 </div>
 
+<!--
+			<li class="nav-header">Mi Perfil</li>
+				<%= menu_link('Mis Listas', 'icon-list', facebook_lists_path) %>
+				<%= menu_link('Editar lista activa', 'icon-search', (lst = get_active_list).nil? ? root_url : edit_facebook_list_path(lst)) %>
+			<li class="divider"></li>	
+-->

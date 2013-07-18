@@ -4,7 +4,67 @@ $baseBorderRadius:1px;
 @import "bootstrap";
 
 
-/*ESTILOS ALEX******************************************************************************************/
+/***ESTILOS ALEX******************************************************************************************/
+/*********************************************************************************************************/
+html, body {
+  height: 100%;
+}
+body{
+    min-width:320px;  
+}
+
+/*#####################################################*/
+/*### BOTON FACEBOOK SOCIALWIN ########################*/
+.base-btn-facebook-center{
+    display: inline-block;
+    margin: 0 auto;
+    text-align: center;
+}
+.base-btn-facebook {
+    background: none repeat scroll 0 0 rgba(109, 197, 215, 0.3);
+    color: #FFFFFF;
+    height: 46px;
+    padding: 6px;
+    width: 246px;
+}
+.btn-large{
+    border-radius: 1px 1px 1px 1px;
+    font-size: 15px;
+    padding: 12px 7px;
+    font-family:'lucida grande',tahoma,Verdana,Arial,sans-serif;
+    width: 228px;
+}
+.box-image-facebook {
+    border-right: 2px solid #C4C4C4;
+    display: inline-block;
+    margin-right: 10px;
+    text-align: left;
+    vertical-align: top;
+    width: 40px;
+}
+#image-facebook {
+    background: url("facebook.png") repeat scroll 0 0 transparent;
+    float: left;
+    height: 20px;
+    margin-left: 6px;
+    vertical-align: bottom;
+    width: 20px;
+}
+.btn-fb {
+    background: #6280BF;
+    background: linear-gradient(to bottom, #6280BF, #3B5998);
+    background-repeat: repeat-x;
+    border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+    color: white;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+}
+.btn-fb:hover, .btn-fb:focus, .btn-fb:active, .btn-fb.active, .btn-fb.disabled, .btn-fb[disabled] {
+    background: #3B5998;
+    color: white;
+}
+
+
+
 .accordion {
     border: 6px solid #EEEEEE;
     border-radius: 6px 6px 6px 6px;
@@ -17,6 +77,7 @@ $baseBorderRadius:1px;
 .body, body{
     background: none repeat scroll 0 0 #FFFFFF;
     min-width:320px;
+    padding-top: 54px;
 }
 #show{
     padding:0 10px;
@@ -64,13 +125,20 @@ $baseBorderRadius:1px;
     width: 84%;
 }
 .escudo-engagement {
-    margin: 0 0 36px 26px;
+    margin: 0 auto;
+    max-height: 290px;
     max-width: 349px;
     position: relative;
 }
-.escudo-engagement > img {
-    height: 100%;
+.image-engage{
+    width: auto !important; /*override the width below*/
     width: 100%;
+    height: auto;
+    max-width: 349px;
+    max-height: 290px;
+}
+.escudo-engagement > img {
+
 }
 .num-engage {
     font-size: 92px;
@@ -96,7 +164,7 @@ $baseBorderRadius:1px;
 .comparte-word > p {
     font-weight: bold;
 }
-.btn-group {
+/*.btn-group {
     display: inline-block;
     font-size: 0;
     max-width: 349px;
@@ -104,9 +172,16 @@ $baseBorderRadius:1px;
     vertical-align: middle;
     white-space: nowrap;
     width: 93%;
-}
-.btn-group-comparte{
-
+}*/
+#comparten.btn-group {
+    display: block;
+    font-size: 0;
+    margin: 47px 0 8px;
+    max-width: 349px;
+    position: relative;
+    vertical-align: middle;
+    white-space: nowrap;
+    width: 93%;
 }
 .comparte-engagement-btn{
     font-weight: bold;
@@ -114,8 +189,8 @@ $baseBorderRadius:1px;
     width: 84%;
 }
 .btn-comparte {
-    background-color: #B4E3EC;
-    background-image: linear-gradient(to bottom, #B4E3EC, #59CADA);
+    background: #B4E3EC;
+    background: linear-gradient(to bottom, #B4E3EC, #59CADA);
     background-repeat: repeat-x;
     border-color:0;
     border-color: #6CDDED;
@@ -123,7 +198,7 @@ $baseBorderRadius:1px;
     width: 100%;
 }
 .btn-comparte:hover, .btn-comparte:focus, .btn-comparte:active, .btn-comparte.active, .btn-comparte.disabled, .btn-comparte[disabled] {
-    background-color: #6DC5D7;
+    background: #6DC5D7;
 }
 .comparte-icon{
     background: url("sw-sprite.png") no-repeat scroll -57px -284px transparent;
@@ -186,7 +261,7 @@ $baseBorderRadius:1px;
     background: url("sw-sprite.png") no-repeat scroll -148px -284px transparent;
 }
 .btn-group.open .btn.dropdown-toggle {
-    background-color: #6DC5D7;
+    background: #6DC5D7;
 }
 .comparte-icon:hover{
     background: url("sw-sprite.png") no-repeat scroll -57px -284px transparent;
@@ -228,7 +303,7 @@ thead tr th {
     width: 100%;
 }
 .grafica-header {
-    background-color: #EEEEEE;
+    background: #EEEEEE;
     font-weight: bold;
     margin: 10px 0;
     padding: 10px 0 10px 10px;
@@ -237,9 +312,10 @@ thead tr th {
     width: 100%;
 }
 .data_graph {
-    background: url("/assets/hummingbirds.gif") no-repeat scroll center center transparent;
+    background: url("/assets/hummingbirds.gif") no-repeat scroll center center #ffffff;
     //border: 6px solid #EEEEEE;
     border-radius: 6px 6px 6px 6px;
+    -webkit-border-radius: 6px 6px 6px 6px;
     display: block;
     margin: 0;
     min-height: 100px;
@@ -247,25 +323,268 @@ thead tr th {
     margin: 0 0 10px;
 }
 .data_table {
-  padding: 10px;
-  margin: 0 0 10px 0px;
-  background:transparent url(/assets/hummingbirds.gif) center no-repeat;
-  min-height: 0px;
-  border: 6px solid #EEEEEE;
-  //@include recuadrogris;
+    background: url("/assets/hummingbirds.gif") no-repeat scroll center center #ffffff;
+    min-height: 0px;
+    // border: 6px solid #EEEEEE;
+    border-radius: 6px 6px 6px 6px;
+    -webkit-border-radius: 6px 6px 6px 6px;  
+    min-width: 100px;
+    padding: 0;
+    margin: 0 0 10px;
+    //@include recuadrogris;
+}
+/*#####################################################*/
+/*### APLICATION            ##########################*/
+/*####################################################*/
+
+/*snap.js ##############################################*/
+
+
+.snap-content {
+  position: absolute;
+  background:#ffffff;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: auto;
+  height: auto;
+  z-index: 2;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  -webkit-transform: translate3d(0, 0, 0);
+     -moz-transform: translate3d(0, 0, 0);
+      -ms-transform: translate3d(0, 0, 0);
+       -o-transform: translate3d(0, 0, 0);
+          transform: translate3d(0, 0, 0);
+}
+.snap-drawers {
+  background: none repeat scroll 0 0 #323949;
+  color: #EEEEEE;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: auto;
+  height: auto;
+}
+.snap-drawer {
+  position: absolute;
+  top: 0;
+  right: auto;
+  bottom: 0;
+  left: auto;
+  width: 265px;
+  height: auto;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  -webkit-transition: width 0.3s ease;
+     -moz-transition: width 0.3s ease;
+      -ms-transition: width 0.3s ease;
+       -o-transition: width 0.3s ease;
+          transition: width 0.3s ease;
+}
+.snap-drawer-left {
+  left: 0;
+  z-index: 1;
+}
+.snap-drawer-right {
+  right: 0;
+  z-index: 1;
+}
+.snapjs-left .snap-drawer-right,
+.snapjs-right .snap-drawer-left {
+  display: none;
+}
+.snapjs-expand-left .snap-drawer-left,
+.snapjs-expand-right .snap-drawer-right {
+  width: 100%;
+}
+
+#open-left {
+    background: url("open.png") no-repeat scroll center center transparent;
+    display: block;
+    height: 44px;
+    width: 44px;
+}
+/*######################################################*/
+
+.nav-tabs > li > a {
+    background: none repeat scroll 0 0 #E2E1E0;
+}
+.nav-tabs > .active > a, .nav-tabs > .active > a:hover, .nav-tabs > .active > a:focus {
+     background: none repeat scroll 0 0 #F2F1F0; 
+}
+.tabbable .nav.nav-tabs {
+    margin-bottom: 0;
+    margin-top: 6px;
+}
+.tab-content {
+    background: none repeat scroll 0 0 #F2F1F0;
+    border-color: #F2F1F0;
+    border-radius: 6px 0 6px 6px;
+    -webkit-border-radius: 6px 0 6px 6px;    
+    border-style: solid;
+    border-width: 1px;
+    margin-bottom: 18px;
+    min-height: 488px;
+    overflow: auto;
+    padding: 10px;      
+}
+.menuapp-collapse li{
+  float:none;
 }
 
 /*#####################################################*/
 /*### ENGAGEMENT              ##########################*/
 /*####################################################*/
+
 .competitorBox {
     display: inline-block;
 }
-
 .engageBox {
     display: inline-block;
 }
+#pick-from > input,#pick-to > input {
+    width: 76px;
+}
+#pick-from, #pick-to {
+    display: inline-block;
+    margin: 0;
+    vertical-align: top;
+}
+#selec {
+    display: inline-block;
+}
+#selec .btn {
+    display: inline-block;
+    vertical-align: top;
+}
+.select-day {
+    width: 263px;
+}
+#selec .select-day input[type=radio]{
+    display:none;
+}
+#selec .select-day input[type=radio] + label {
+    display:inline-block;
+    padding: 0 0 0 0px;
+}
+#selec .select-day input[type=radio]:checked + label {
+    display:inline-block;
+    padding: 0 0 0 0px;
+}
+.select-comp{
+    display: inline-block;
+    vertical-align: top;
+    margin:0;
+}
+.select-comp .dropdown-menu {
+    left: 0;
+    padding: 2px 4px;
+    
+}
+.image-competitor-selec{
+    border: 1px solid #999999;
+    box-shadow: 0 1px 3px 0 #6C6C6C;
+    display: inline-block;
+    height: 32px;
+    margin: 2px;
+    overflow: hidden;
+    width: 32px;
+}
+.img-comp{
+    height: 32px;
+    position: relative;
+    width: 32px; 
+    z-index: -1;    
+}
+.dropdown-menu{
+    //min-width: 100%;
+}
 
+/*CHECKED*/
+
+.image-competitor-selec input[type=checkbox] {
+  display:none;
+}
+.image-competitor-selec input[type=checkbox] + label{
+    //background: #999;
+    height: 32px;
+    width: 32px;
+    display:inline-block;
+    padding: 0 0 0 0px;
+}
+.image-competitor-selec input[type=checkbox]:checked + label{
+    background: url('checked.png') 0 0px no-repeat;
+    height: 32px;
+    width: 32px;
+    display:inline-block;
+    padding: 0 0 0 0px;
+}
+
+
+.engageBox { 
+  display: inline-block;
+  margin-bottom: 25px;
+  margin-right: 35px;
+  position: relative;
+}
+.engageMedal {
+    position:absolute;
+    top:10px;
+    left:14px;
+    width: 30px;
+    height: 25px;
+    margin: 20px; 
+    padding-top: 5px; 
+    text-align: center;
+    border: 1px solid #0088CC; 
+    background: #0088CC;
+
+    -moz-border-radius: 15px 15px 35px 35px;
+    -webkit-border-radius: 15px 15px 25px 25px;
+    border-radius: 15px 15px 35px 35px;
+  
+    -moz-box-shadow: rgb(150,150,150) 2px 2px 2px;
+    -webkit-box-shadow: rgb(150,150,150) 2px 2px 2px;
+    box-shadow: rgb(150,150,150) 2px 2px 2px;  
+}
+#engageNumber {
+     /* font: bold 16px verdana, sans-serif; */
+    /*  text-shadow: rgba(0,0,0,0.5) 1px 1px 1px; */
+    color: white;
+}
+.golden {
+    border: 1px solid #FFD700; 
+    background: #FFD700;
+    background: radial-gradient(contain circle, #FFD700, #006699);
+    background:  -moz-radial-gradient(center, ellipse, #FFD700 10%, #006699 200%);
+    background:  -webkit-radial-gradient(center, ellipse, #FFD700 10%, #006699 200%);
+    -moz-box-shadow: rgb(240,210,20) 0px 0px 10px;
+    -webkit-box-shadow: rgb(240,210,20) 0px 0px 10px;
+    box-shadow: rgb(240,210,20) 0px 0px 10px;  
+}
+.silver {
+    border: 1px solid #C0C0C0;
+    background: #C0C0C0;
+    background: radial-gradient(contain circle, #C0C0C0, #006699);
+    background:  -moz-radial-gradient(center, ellipse, #C0C0C0 10%, #006699 200%);
+    background:  -webkit-radial-gradient(center, ellipse, #C0C0C0 10%, #006699 200%);
+    -moz-box-shadow: rgb(150,150,150) 2px 2px 2px;
+    -webkit-box-shadow: rgb(150,150,150) 2px 2px 2px;
+    box-shadow: rgb(150,150,150) 2px 2px 2px;  
+}
+.bronze {
+    border: 1px solid #D2B48C;
+    background: #D2B48C;
+    background: radial-gradient(contain circle, #D2B48C, #006699);
+    background:  -moz-radial-gradient(center, ellipse, #D2B48C 10%, #006699 300%);
+    background:  -webkit-radial-gradient(center, ellipse, #D2B48C 10%, #006699 300%);
+}
+
+    
 /*#####################################################*/
 /*### DASHBOARD              ##########################*/
 /*#####################################################*/
@@ -289,7 +608,7 @@ thead tr th {
 }
 .past-green {
     background-color: #85bd66;
-    background-image: linear-gradient(to bottom, #85bd66, #5fad2e);
+    background: linear-gradient(to bottom, #85bd66, #5fad2e);
     background-repeat: repeat-x;
     border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
     color: white;
@@ -301,7 +620,7 @@ thead tr th {
 }
 .past-orange {
     background-color: #f5af4c;
-    background-image: linear-gradient(to bottom, #f5af4c, #f2921b);
+    background: linear-gradient(to bottom, #f5af4c, #f2921b);
     background-repeat: repeat-x;
     border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
     color: white;
@@ -311,7 +630,100 @@ thead tr th {
     background-color:  #f2921b;
     color: white;
 }
+/**######################################################################*/
+body {
+  //width: 100%;
+  //height: 100%;
+  //margin: 0;
+  //padding: 0;
+  //overflow: hidden;
+  
+  .frame {
+    position: relative;
+    width: 200%;
+    height: auto;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    padding-top: 60px;
+    .navbar .navbar-inner {
+      border-radius: 0;
+      padding-left: 5px;
+    }
+    
+    .menu {
+      height:100%;
+      /* background-color: #3D6AA2; */
 
+      &.collapse {
+        float:left;
+        height: 100% !important;
+        width: auto;
+      }
+  
+      &.collapse.height {
+        position: relative;
+        height: 0;
+        overflow: hidden;
+        -webkit-transition: height 0.35s ease;
+        -moz-transition: height 0.35s ease;
+        -o-transition: height 0.35s ease;
+        transition: height 0.35s ease;
+      }
+  
+      &.collapse.width {
+        position: relative;
+        width: 0;
+        overflow: hidden;
+        -webkit-transition: width 0.35s ease;
+        -moz-transition: width 0.35s ease;
+        -o-transition: width 0.35s ease;
+        transition: width 0.35s ease;
+      }
+      
+      &.collapse.in.width {
+        width: auto;
+      }
+      
+      &.collapse.in.height {
+        height: auto;
+      }
+    
+      .collapse-inner {
+        position: relative;        
+        width: 250px;
+        height: 100%;
+      }
+      
+      .navbar .navbar-inner {
+        text-align: center;
+        color: grey;
+        font-size: 1.2em;
+        line-height: 38px;
+      }
+      
+      .nav-stacked {
+        padding: 0 10px;
+      }
+        
+    }
+    .view {
+      width: 50%;
+      height: 100%;
+      overflow: hidden;
+      
+      .navbar .navbar-inner .btn-navbar {
+        display: block;
+        float: left;
+      }
+      #content {
+        margin: auto 15px;
+        text-align: justify;
+      }
+    }
+  }
+}
+/*########################################################################*/
 @import "bootstrap-responsive";
 
 /* Large desktop */
@@ -326,6 +738,10 @@ thead tr th {
   .no-space {
       margin-left:0;
   }  
+  .simple-search {
+    padding: 6px 32px 6px 7px;
+    width:280px;
+  }   
 }
  
 /* Landscape phone to portrait tablet */
@@ -356,12 +772,20 @@ thead tr th {
     left: 18%;
     position: absolute;
     top: 65%;
-  }  
+  } 
+  .simple-search {
+    padding: 6px 32px 6px 7px;
+    width:280px;
+  } 
 }
  
 /* Landscape phones and down */
 @media (max-width: 480px) {
   .navbar-fixed-top {
       top: 0px;
-  }  
+  } 
+  input.simple-search {
+    padding: 6px 32px 6px 7px;
+    width:280px;
+  } 
 }
