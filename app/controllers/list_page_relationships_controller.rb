@@ -15,8 +15,8 @@ class ListPageRelationshipsController < ApplicationController
           page_data_day_update(page.id)
         end  
       end
-      
-      if list.page_id.nil?
+
+      if list.page_id.nil? && current_user.pages.include?(page)
         list.set_lider_page(page)
       end
 

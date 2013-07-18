@@ -34,12 +34,10 @@
 	
 		  </div>
 		  
-		  
 	  <% end %>
 	
-	
+
 	  <div class="span3">
-	    <%= f.label "Guardar nombre y foto de lista" %>
 	    <%= f.submit "Guardar lista", class: "btn btn-primary" %>
 	  </div>
 
@@ -47,7 +45,8 @@
 <% end %>
 </div>
 
-<div id="span3">
-<%= render 'search' %>
-</div>
-
+<% if request.path != new_facebook_list_path %>
+	<div id="span3">
+		<%= render 'search' %>
+	</div>
+<% end %>

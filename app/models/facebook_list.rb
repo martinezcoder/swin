@@ -24,8 +24,10 @@ class FacebookList < ActiveRecord::Base
 #  validates :page_id, presence: true
 
   def set_lider_page(page)
-    self.page_id = page.id
-    save
+    if self.user.pages.include?(page)
+      self.page_id = page.id 
+      save
+    end
   end
   
   def added?(page)

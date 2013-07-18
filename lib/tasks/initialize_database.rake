@@ -1,6 +1,6 @@
 namespace :db do
 
-  task initialize_user_plans: :environment do
+  task initialize_plans: :environment do
     create_plan(FREE,    10,    2,   0.0,  7)
     create_plan(ADMIN,   100, 100,   0.0, 370)
     create_plan(PREMIUM, 10,    2, 100.0,  90)    
