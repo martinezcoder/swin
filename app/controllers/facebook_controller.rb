@@ -163,7 +163,10 @@ private
     begin
       pre_params
       if user_plan?(FREE)
-        @date_to = Time.now.yesterday
+        @date_from = Time.now.yesterday
+        @date_to   = @date_from
+        @graph_type = is_day
+=begin
         if params.has_key?(:ndays) and params[:ndays] != ""
           ndays =  params[:ndays].to_i
           if ndays > current_user.plan.max_date_range 
@@ -176,6 +179,7 @@ private
           @date_from = @date_to
           @graph_type = is_day
         end
+=end
       else
         if params.has_key?(:ndays) and params[:ndays] != ""
           @date_to = Time.now.yesterday

@@ -44,11 +44,6 @@
 					<div class="fb_stat">
 						<%= link_to 'Editar lista...', edit_facebook_list_path(list) %>
 					</div>
-					
-					<div class="fb_stat">
-						<%= link_to 'Eliminar lista...', list, method: :delete, class: "text-error", data: { confirm: '¿Estás seguro?' } %>
-					</div>
-
 
 					<div class="fb_btn">
 					<% if list == get_active_list %>

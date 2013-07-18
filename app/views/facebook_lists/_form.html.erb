@@ -1,3 +1,4 @@
+<div id="span4">
 <%= form_for(@facebook_list) do |f| %>
   <% if @facebook_list.errors.any? %>
     <div id="error_explanation">
@@ -11,25 +12,42 @@
     </div>
   <% end %>
 
-<fieldset class="form-actions">
-  <div class="span3">
-    <%= f.label "Nombre de lista", class: "control-label" %>
-    <%= f.text_field :name %>
-  </div>
-
-  <% if @facebook_list.pages.any? %>	
+  <fieldset class="form-actions">
 	  <div class="span3">
-	  	<%= f.label "Foto de la lista" %>
-	  		<%= f.select(:page_id, options_for_select(@facebook_list.pages.map {|p| [p.name, p.id]}, :selected => @facebook_list.page_id)) %>
+	    <%= f.label "Nombre del perfil", class: "control-label" %>
+	    <%= f.text_field :name %>
 	  </div>
-  <% end %>
-  
-  <div class="span3">
-    <%= f.label "Guardar nombre y foto de lista" %>
-    <%= f.submit "Guardar lista", class: "btn btn-primary" %>
-  </div>
+	
+	  <% if @facebook_list.pages.any? %>	
+		  <div class="span3">
+		  	
+		  	<%= f.label "Master de la lista" %>
+	
+			<% @facebook_list.pages.each do |p| %>
+				<ul>
+				<li><%= f.radio_button(:page_id, p.id, checked: (@facebook_list.page_id == p.id)) if current_user.pages.include?(p) %> <%= p.name %>
+					<%= render 'pages/page_form_unfollow', :page => p %>
+				</li>
+				</ul>
+			<% end %>
+	
+	
+		  </div>
+		  
+		  
+	  <% end %>
+	
+	
+	  <div class="span3">
+	    <%= f.label "Guardar nombre y foto de lista" %>
+	    <%= f.submit "Guardar lista", class: "btn btn-primary" %>
+	  </div>
 
-</fieldset>
-
+  </fieldset>
 <% end %>
+</div>
+
+<div id="span3">
+<%= render 'search' %>
+</div>
 

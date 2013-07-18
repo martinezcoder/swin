@@ -3,17 +3,14 @@
 		
 		<ul class="nav nav-list">
 			<li class="nav-header">Mi Perfil</li>
-				<%= menu_link('Mis Listas', 'icon-list', facebook_lists_path) %>
-				<%= menu_link('Editar lista activa', 'icon-search', (lst = get_active_list).nil? ? root_url : edit_facebook_list_path(lst)) %>
+				<%= menu_link('Perfiles', 'icon-list', facebook_lists_path) %>
 			<li class="divider"></li>				
 			<li class="nav-header">Métricas</li>
 				<%= menu_link('Dashboard', 'icon-home', facebook_path) %>
 				<%= menu_link('Engagement', 'icon-heart', facebook_engage_path) %>
 				<%= menu_link('Tamaño', 'icon-globe', facebook_size_path) %>
 				<%= menu_link('Crecimiento', 'icon-globe', facebook_growth_path) %>
-				<% if current_user.plan.name == ADMIN %>
-					<%= menu_link('Actividad', 'icon-globe', facebook_activity_path) %>
-				<% end %>
+				<%= menu_link('Actividad', 'icon-globe', facebook_activity_path) %>
 
 <!-- 
 			    <li class="disabled"><a href="#">Interacción</a></li>

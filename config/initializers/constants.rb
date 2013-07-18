@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 ON=1
 OFF=0
 UPDATE_STREAM=true
@@ -22,7 +24,7 @@ YOUTUBE= 'youtube'
 M_DASHBOARD = "Dashboard"
 M_ENGAGEMENT = "Engagement"
 M_CRECIMIENTO = "Crecimiento"
-M_TAMANO = "Tamano"
+M_TAMANO = "Tamaño"
 M_ACTIVIDAD = "Actividad"
 
 

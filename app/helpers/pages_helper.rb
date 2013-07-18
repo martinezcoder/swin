@@ -116,7 +116,7 @@ module PagesHelper
         end
 
         case @metric_name
-        when "Tamano" 
+        when "Tamaño" 
           value_yesterday = (dayPageDataY.nil? ? 0 : dayPageDataY.likes)
           value_today = (dayPageDataT.nil? ? 0 : dayPageDataT.likes)
         when "Actividad"
@@ -197,7 +197,7 @@ module PagesHelper
         valueList = []
 
         case @metric_name
-        when "Tamano"
+        when "Tamaño"
           value_yesterday = dataFirst.nil? ? 0 : dataFirst.likes
         when "Actividad"
           value_yesterday = dataFirst.nil? ? 0 : dataFirst.prosumers
@@ -214,7 +214,7 @@ module PagesHelper
         dataRecords.each_with_index do |dataDay, i|     
 
             case @metric_name
-            when "Tamano"
+            when "Tamaño"
               value_today = dataDay.likes
             when "Actividad"
               value_today = dataDay.prosumers
@@ -310,7 +310,7 @@ module PagesHelper
           page_data = regs.find_by_page_id(p.id)
           if !page_data.nil? 
             case @metric_name
-            when "Tamano"
+            when "Tamaño"
               myArray[row][column] = page_data.likes
             when "Actividad"
               myArray[row][column] = page_data.prosumers
