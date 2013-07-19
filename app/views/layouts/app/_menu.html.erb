@@ -10,12 +10,6 @@
 				<li><%= link_to 'Tamaño', facebook_size_path, class: 'btn disabled' %></li>
 				<li><%= link_to 'Crecimiento', facebook_growth_path, class: 'btn disabled' %></li>
 				<li><%= link_to 'Actividad', facebook_activity_path, class: 'btn disabled' %>	</li>			
-		 		 
-
-				<li class="nav-header">Mi Perfil</li>
-					<%= menu_link('Mis Listas', 'icon-list', facebook_lists_path) %>
-					<%= menu_link('Editar lista activa', 'icon-search', (lst = get_active_list).nil? ? root_url : edit_facebook_list_path(lst)) %>
-				<li class="divider"></li>	
 			    		    
 			</ul>
 		</div>
