@@ -4,6 +4,7 @@
   // Load the Visualization API and the chart package.
   google.load('visualization', '1', {packages: ['corechart','table']});
 </script>
+
 <script type="text/javascript">
 
 	// Set a callback to run when the Google Visualization API is loaded.
@@ -69,5 +70,9 @@
 
   }
 
+	//por si resize
+   $(window).smartresize(function(){
+		drawVisualization();
+   });
 </script>
 
