@@ -29,6 +29,18 @@ include DashboardHelper
   def engage
     metric_type = M_ENGAGEMENT
  
+    if user_plan?(FREE)
+      if params.has_key?(:ndays) and params[:ndays] != ""
+        ndays =  params[:ndays].to_i
+        if ndays > current_user.plan.max_date_range 
+          ndays = current_user.plan.max_date_range
+          params[:ndays] = ndays
+        end
+        @date_from = @date_to.ago(ndays.day)
+        @graph_type = 2
+      end
+    end
+
     fb_metric = PagesHelper::FbMetrics.new(get_token(FACEBOOK)) 
     case @graph_type
       when 0
@@ -167,19 +179,20 @@ private
         @date_to   = @date_from
         @graph_type = is_day
 =begin
-        if params.has_key?(:ndays) and params[:ndays] != ""
-          ndays =  params[:ndays].to_i
-          if ndays > current_user.plan.max_date_range 
-            ndays = current_user.plan.max_date_range
-            params[:ndays] = ndays
+          if params.has_key?(:ndays) and params[:ndays] != ""
+            ndays =  params[:ndays].to_i
+            if ndays > current_user.plan.max_date_range 
+              ndays = current_user.plan.max_date_range
+              params[:ndays] = ndays
+            end
+            @date_from = @date_to.ago(ndays.day)
+            @graph_type = is_timeline
+          else
+            @date_from = @date_to
+            @graph_type = is_day
           end
-          @date_from = @date_to.ago(ndays.day)
-          @graph_type = is_timeline
-        else
-          @date_from = @date_to
-          @graph_type = is_day
-        end
 =end
+
       else
         if params.has_key?(:ndays) and params[:ndays] != ""
           @date_to = Time.now.yesterday
