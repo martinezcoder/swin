@@ -54,19 +54,22 @@
 					</li>
 			    </ul>	    		
 			</div> 
-  
+  			
 			<% if signed_in? %>
 				<div class="space"></div>
 			<% else %>
+			<!--
 				<div id="conectarConFacebook">
 					<div id="quieres">
 						<p><strong>¿Quieres comparar varios competidores?</strong></p>
 						<p><strong>¡Prueba GRATIS SocialWin Analytics!</strong></p>							
 					</div>
-					<!--btnConectarConFacebook-->	
+						
 					<%= render 'site/shared/facebook_button_signin' %>
 				</div>
+			-->	
 			<% end %>
+			
 			
 		</div><!-- span5-->
 		
@@ -109,6 +112,7 @@
 					<%= render 'facebook/shared/graph', :graph => "graph_div" %>
 			</div>
 			
+		<!--
 			<% if not signed_in? %>			
 				<div class="clearfix"></div>
 				
@@ -117,8 +121,40 @@
 					<%= render 'site/shared/search_box' %>
 				</div>
 			<% end %>
-		</div><!-- span6 -->
-	</div>
+		-->	
+		</div><!-- span7 -->
+	</div><!--row-->
 	
 </div>
 </div><!-- idShow -->
+
+<div id="top-search">
+	<div class="container">
+		<div class="row">
+			 <div class="span6 offset3 text-center"> <!-- buscador engagement-->
+				<div class="try-search text-center" >
+				    <h3 class="sw-violet"></h3>
+					<h4 class="sw-violet">Nueva búsqueda</h4>				
+					<%= render 'site/shared/search_box' %>	
+				</div>
+			 </div>
+		</div><!--row-->
+	</div>	
+</div><!--search-->	
+
+<% if !signed_in? %>
+<div class="container">
+		<div class="row">
+			<div class="span4 offset4 text-center">
+				<div id="conectarConFacebook">
+					<div id="quieres">
+						<p><strong>¿Quieres comparar varios competidores?</strong></p>
+						<p><strong>¡Prueba GRATIS SocialWin Analytics!</strong></p>							
+					</div>			
+					<!--btnConectarConFacebook-->	
+					<%= render 'site/shared/facebook_button_signin' %>
+				</div>	
+			</div>
+		</div>
+</div><!--container-->
+<% end %>

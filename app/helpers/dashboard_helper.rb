@@ -1,5 +1,36 @@
 module DashboardHelper
 
+
+  def ndays_plan_constraint_class(label_for, link_class, link_text, link_type)
+
+    if user_plan?(FREE)
+      if request.path == facebook_engage_path
+        if link_type > 7
+          link_class += ' disabled'
+        end
+      else
+        if link_type > 0
+          link_class += ' disabled'
+        end
+      end
+    end
+    
+    content_tag(:label, :for => label_for) do
+      concat(content_tag(:li, class: link_class) do
+          link_text
+      end)
+    end
+
+  end
+
+  def date_range_plan_constraint_class
+    if user_plan?(FREE)
+      false 
+    else
+      true
+    end
+  end
+
   def dashboard_box(link_path, title, value, variation, percent=false)
 
     class_name = "btn past "

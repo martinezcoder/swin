@@ -1,20 +1,22 @@
 <div class="menu_metricas span12">
 	<div class="collapse-inner">
 
-
-	
 		<div class="menuapp-collapse nav-collapse collapse">
 			<ul class="nav">
-				<li><%= link_to 'Dashboard', facebook_path, class: 'btn' %></li>
-				<li><%= link_to 'Engagement', facebook_engage_path, class: 'btn' %></li>
-				<li><%= link_to 'Tamaño', facebook_size_path, class: 'btn disabled' %></li>
-				<li><%= link_to 'Crecimiento', facebook_growth_path, class: 'btn disabled' %></li>
-				<li><%= link_to 'Actividad', facebook_activity_path, class: 'btn disabled' %>	</li>			
-			    		    
+				<%= menu_link('Dashboard', nil, facebook_dashboard_path, 'btn btn-blue') %>
+				<%= menu_link('Engagement', nil, facebook_engage_path, 'btn btn-blue') %>
+				<%= menu_link('Tamaño', nil, facebook_size_path, 'btn btn-blue') %>
+				<%= menu_link('Crecimiento', nil, facebook_growth_path, 'btn btn-blue') %>
+				<%= menu_link('Actividad', nil, facebook_activity_path, 'btn btn-blue') %>
 			</ul>
 		</div>
 
+<script>
+    $('a[disabled=disabled]').click(function(event){
+        event.preventDefault(); // Prevent link from following its href
+    });
+</script>
+		
 	</div><!--navbar-->
 </div>
-
 

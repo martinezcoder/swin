@@ -16,33 +16,38 @@
 			<!-- Main Menu / Colapse-->	
 			<div class="menusite-collapse nav-collapse collapse">
 				<ul class="nav pull-right">
-					<%= menu_link('CONSULTA ENGAGEMENT', '', search_engagement_path) %>
-					<%= menu_link('SOBRE SOCIALWIN', '', about_path) %>
+					<%= menu_link('CONSULTA ENGAGEMENT', '', search_engagement_path, '') %>
+					<%= menu_link('SOBRE SOCIALWIN', '', about_path, '') %>
 					<% if signed_in? %>
-						<li class="dropdown" id="config"> <!--id="fat-menu"--> 
-							<a href="#"  data-toggle="dropdown"><!--class="dropdown-toggle"-->
-								<%= image_for current_user %>
-								<span class="user-session"><%= current_user.name %></span><b class="caret"></b>
-							</a>
-							<ul class="dropdown-menu">
-								<%= menu_link('Dashboard', 'icon-th-large', facebook_path) %>
-
-								<% if request.fullpath != new_facebook_list_path %>
-									<% current_user.facebook_lists.each do |fb_list| %>
-										<%= form_tag(activate_facebook_list_path(fb_list.id)) do %>
-											<%= hidden_field_tag :url, request.fullpath %>
-											<%= button_tag(type: "submit", class: "btn btn-small btn-primary") do %>
-												<strong><%= fb_list.name %></strong> 
-											<% end %>
+					<li class="dropdown" id="config"> <!--id="fat-menu"--> 
+						<a href="#"  data-toggle="dropdown"><!--class="dropdown-toggle"-->
+							<%= image_for current_user %>
+							<span class="user-session"><%= current_user.name %></span><b class="caret"></b>
+						</a>
+						
+						<ul class="dropdown-menu">
+						<!--dashboard-->
+							<%= menu_link('Dashboard', 'icon-th-large', facebook_path, '') %>
+						<!-- perfiles -->
+							<% if request.fullpath != new_facebook_list_path %>
+								<% current_user.facebook_lists.each do |fb_list| %>
+									<%= form_tag(activate_facebook_list_path(fb_list.id)) do %>
+										<%= hidden_field_tag :url, request.fullpath %>
+										<%= button_tag(type: "submit", class: "btn btn-profile") do %>
+											<strong><%= fb_list.name %></strong> 
 										<% end %>
 									<% end %>
 								<% end %>
-
-								<%= menu_link('Perfiles', 'icon-list', facebook_lists_path) %>
-
-								<li><%= link_to signout_path, method: "delete" do %><i class="icon-remove"></i> Cerrar sesión<% end %></li>
-							</ul>
-						</li>
+							<% end %>
+						<!--preferencias -->
+							<%= menu_link('Preferencias', '', facebook_lists_path, '') %><!-- icon-list-->
+						<!-- tipo de cuenta? -->
+							<%= menu_link('Tipo de cuenta', '', facebook_lists_path, '') %>
+						<!-- cerrar sesion -->	
+							<li><%= link_to signout_path, method: "delete" do %>Cerrar sesión<% end %></li><!-- <i class="icon-remove"></i> -->
+						</ul>
+					
+					</li>
 	
 					<% else %>
 	

@@ -10,10 +10,10 @@ module ApplicationHelper
     end
   end
 
-  def menu_link(link_text, icon_type, link_path)
+  def menu_link(link_text, icon_type, link_path, link_class)
     class_name = (request.path == link_path) ? 'active' : ''
     content_tag(:li, :class => class_name) do
-      link_to link_path do
+      link_to link_path, class: link_class do
         icon_type.nil? ? link_text : content_tag(:i, '', :class => icon_type) + ' ' + link_text
       end
     end

@@ -168,14 +168,16 @@ module PagesHelper
       @options = "seriesType: 'bars', 
                 title:'"+ @metric_name +"',
                 titleTextStyle: {fontSize: 14},
-                colors: ['#0088CC'],
+                colors: ['#0088CC','#33316C','#60B74D','#FDA64A','#666B83'],
                 height: 200,
                 animation:{duration: 1500,easing: 'out'},
                 hAxes:[{title:'Competidores'}],
                 vAxis: {minValue:0, maxValue:" + @max_value.to_s + "},
                 fontSize: 10,
                 legend: {position: 'none', textStyle: {fontSize: 14}},
-                tooltip: {isHtml: true}" 
+                tooltip: {isHtml: true},
+                hAxis: {gridlines:{color: '#333', count: 4}},
+                theme: 'maximized' " 
       return data_list
     end
 
@@ -345,7 +347,8 @@ module PagesHelper
                 hAxes:[{title:'Día'}],
                 seriesType: 'lines',
                 fractionDigits: 2,
-                suffix: '%'
+                suffix: '%',
+                theme: 'maximized'
                 " 
 
       return data_list

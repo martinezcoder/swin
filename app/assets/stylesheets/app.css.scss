@@ -15,6 +15,7 @@ body{
 
 /*#####################################################*/
 /*### BOTON FACEBOOK SOCIALWIN ########################*/
+/*#####################################################*/
 .base-btn-facebook-center{
     display: inline-block;
     margin: 0 auto;
@@ -74,20 +75,33 @@ body{
 /*#####################################################*/
 /*### SHOW ENGAGE PUBLIC PAGE ##########################*/
 /*#####################################################*/
+.sw-violet{
+  color:#50388C;
+}
 .body, body{
     background: none repeat scroll 0 0 #FFFFFF;
     min-width:320px;
     padding-top: 54px;
 }
 #show{
-    padding:0 10px;
+    padding: 0 10px 13px;
 }
 .consulta{
     color: #6EC7D9;
     padding: 13px 0 5px;
     font-weight:normal;
-    font-family:'DominikRegular',Helvetica,'Lucida Grande',Verdana;
-}
+    font-family:'DominikRegular',Helvetica,'Lucida Grande',Verdana;  
+}   
+/*.btn-group {
+    display: inline-block;
+    font-size: 0;
+    max-width: 349px;
+    position: relative;
+    vertical-align: middle;
+    white-space: nowrap;
+    width: 93%;
+}*/
+
 .presentacion {
     display: inline-block;
 }
@@ -142,17 +156,29 @@ body{
 }
 .num-engage {
     font-size: 92px;
-    left: 19%;
+    left: 24%;
     position: absolute;
     text-align: center;
     top: 38%;
-    width: 45%;
+    width: 122px;  
+}            
+.btn-group {
+    display: inline-block;
+    font-size: 0;
+    max-width: 349px;
+    position: relative;
+    vertical-align: middle;
+    white-space: nowrap;
+    width: 93%;
 }
+
 .word-engage {
     font-size: 22px;
-    left: 19%;
+    left: 13%;
     position: absolute;
+    text-align: center;
     top: 65%;
+    width: 200px;
 }
 .name-engage {
     font-size: 33px;
@@ -164,15 +190,6 @@ body{
 .comparte-word > p {
     font-weight: bold;
 }
-/*.btn-group {
-    display: inline-block;
-    font-size: 0;
-    max-width: 349px;
-    position: relative;
-    vertical-align: middle;
-    white-space: nowrap;
-    width: 93%;
-}*/
 #comparten.btn-group {
     display: block;
     font-size: 0;
@@ -313,33 +330,54 @@ thead tr th {
 }
 .data_graph {
     background: url("/assets/hummingbirds.gif") no-repeat scroll center center #ffffff;
-    //border: 6px solid #EEEEEE;
     border-radius: 6px 6px 6px 6px;
     -webkit-border-radius: 6px 6px 6px 6px;
     display: block;
-    margin: 0;
     min-height: 100px;
     padding: 0;
     margin: 0 0 10px;
+    height:auto;
 }
 .data_table {
     background: url("/assets/hummingbirds.gif") no-repeat scroll center center #ffffff;
     min-height: 0px;
-    // border: 6px solid #EEEEEE;
     border-radius: 6px 6px 6px 6px;
     -webkit-border-radius: 6px 6px 6px 6px;  
     min-width: 100px;
     padding: 0;
     margin: 0 0 10px;
-    //@include recuadrogris;
+    height:auto;
+    display:block;
 }
 /*#####################################################*/
 /*### APLICATION            ##########################*/
 /*####################################################*/
 
+.navbar .btn-navbar{
+    background: #EDEDED;
+    background-image: linear-gradient(to bottom, #F2F2F2, #E6E6E6);
+    background-repeat: repeat-x;
+    border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1) inset, 0 1px 0 rgba(255, 255, 255, 0.075);
+    color: white;
+    display: none;
+    //float: right;
+    margin: 2px 3px 2px 5px;
+    padding: 4px 10px;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+    border-radius:3px;
+}
+
+#app_content{
+    display: block;
+    min-height: 600px;;
+    //padding-top: 54px;
+    position: relative;
+    width: 100%;
+    
+}
+
 /*snap.js ##############################################*/
-
-
 .snap-content {
   position: absolute;
   background:#ffffff;
@@ -348,30 +386,33 @@ thead tr th {
   bottom: 0;
   left: 0;
   width: auto;
-  height: auto;
+  min-height: 100%;
   z-index: 2;
-  overflow: auto;
+  //overflow: auto;
   -webkit-overflow-scrolling: touch;
   -webkit-transform: translate3d(0, 0, 0);
      -moz-transform: translate3d(0, 0, 0);
       -ms-transform: translate3d(0, 0, 0);
        -o-transform: translate3d(0, 0, 0);
           transform: translate3d(0, 0, 0);
-  padding-top:54px;  
-  width:100%;
-  height:100%;      
+  width:100%;    
+}
+#content{
+    backface-visibility:hidden;
+    -webkit-backface-visibility:hidden; /* Chrome and Safari */
+    -moz-backface-visibility:hidden; /* Firefox */
+    -ms-backface-visibility:hidden; /* Internet Explorer 10+ */
 }
 .snap-drawers {
-  background: none repeat scroll 0 0 #323949;
+  background: none repeat scroll 0 0 #302E2F;
   color: #EEEEEE;
   position: absolute;
-  top: 0;
+  top:0;
   right: 0;
   bottom: 0;
   left: 0;
   width: auto;
   height: auto;
-  padding-top:54px;
   width:100%;
   height:100%;    
 }
@@ -381,8 +422,8 @@ thead tr th {
   right: auto;
   bottom: 0;
   left: auto;
-  width: 265px;
-  height: auto;
+  width: 239px;
+  //height: auto;
   overflow: auto;
   -webkit-overflow-scrolling: touch;
   -webkit-transition: width 0.3s ease;
@@ -392,12 +433,24 @@ thead tr th {
           transition: width 0.3s ease;
 }
 .snap-drawer-left {
-  left: 0;
-  z-index: 1;
+     left: 0;
+     z-index: 1;
+     padding-top: 54px; 
+    -webkit-box-shadow: inset 0 0 5px 5px #222;
+    -moz-shadow: inset 0 0 5px 5px #222;
+    box-shadow: inset 0 0 5px 5px #222;        
+     
 }
 .snap-drawer-right {
-  right: 0;
-  z-index: 1;
+    padding: 0 14px;
+    right: 0;
+    z-index: 1;
+    -webkit-box-shadow: inset 0 0 5px 5px #222;
+    -moz-shadow: inset 0 0 5px 5px #222;
+    box-shadow: inset 0 0 5px 5px #222;    
+}
+.snap-drawer .nav > li {
+    margin: 5px 20px;
 }
 .snapjs-left .snap-drawer-right,
 .snapjs-right .snap-drawer-left {
@@ -407,14 +460,29 @@ thead tr th {
 .snapjs-expand-right .snap-drawer-right {
   width: 100%;
 }
-
+.scrollable{
+    overflow: auto;
+    -webkit-transition-property: top, bottom;
+    transition-property: top, bottom;
+    -webkit-transition-duration: .2s, .2s;
+    transition-duration: .2s, .2s;
+    -webkit-transition-timing-function: linear, linear;
+    transition-timing-function: linear, linear;
+    -webkit-overflow-scrolling: touch;
+}
 #open-left {
     background: url("open.png") no-repeat scroll center center transparent;
     display: block;
     height: 44px;
     width: 44px;
 }
-/*######################################################*/
+#perfiles{
+  color:#85BD66;
+}
+/*### endSnap.js ###################################################*/
+
+
+
 
 .nav-tabs > li > a {
     background: none repeat scroll 0 0 #E2E1E0;
@@ -430,17 +498,99 @@ thead tr th {
     background: none repeat scroll 0 0 #F2F1F0;
     border-color: #F2F1F0;
     border-radius: 6px 0 6px 6px;
-    -webkit-border-radius: 6px 0 6px 6px;    
     border-style: solid;
     border-width: 1px;
+    height: auto;
     margin-bottom: 18px;
     min-height: 488px;
-    overflow: auto;
-    padding: 10px;      
+    padding: 10px;
+    -webkit-border-radius: 6px 0 6px 6px;    
+    display:block;
 }
 .menuapp-collapse li{
-  float:none;
+    float: none;
+    margin: 5px 0;
 }
+
+
+/*btn-blue*/
+a.btn-blue {
+    border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+    color: #58585A;
+    font-weight:bold;    
+}
+a.btn-blue:hover, a.btn-blue:focus, a.btn-blue:active, a.btn-blue.active {
+    background: #99D4E0;
+    color: #58585A;
+    font-weight:bold;
+}
+a.btn-blue.disabled, a.btn-blue[disabled], a.btn-blue.disabled:hover, a.btn-blue[disabled]:hover{
+    background-color: inherit;
+    text-decoration: none;  
+}
+.nav > li > a.btn-blue.disabled:hover, .nav > li > a.btn-blue.disabled:focus, .nav > li > a.btn-blue[disabled]:hover{
+    background-color: inherit;
+    text-decoration: none;    
+}
+.nav > li > a.btn-blue:hover, .nav > li > a.btn-blue:focus {
+    background-color: #99D4E0;
+    text-decoration: none;
+}
+.nav > li.active > a.btn-blue {
+    background: none repeat scroll 0 0 #99D4E0;
+    color: #58585A;
+    text-decoration: none;
+}
+
+.datepicker .table-condensed th, .table-condensed td {
+    background: none repeat scroll 0 0 transparent;
+    cursor: pointer;
+}
+.datepicker td.day:hover { background: #6DC5D7; cursor: pointer; }
+.input-append.date.disabled{
+  background:#EAEAE9;
+  
+}
+/*btn-profile*/
+.btn-profile {
+    background: #778991;
+    background-image: linear-gradient(to bottom, #778991, #778991);
+    background-repeat: repeat-x;
+    border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+    color: white;
+    font-weight:bold;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+}
+.btn-profile:hover, .btn-profile:focus, .btn-profile:active, .btn-profile.active, .btn-profile.disabled, .btn-profile[disabled] {
+    background: #778991;
+    color: white;
+    font-weight:bold;
+}
+.nav > li > a.btn-profile:hover, .nav > li > a.btn-profile:focus {
+    background-color: #4B5D65;
+    text-decoration: none;
+}
+
+/*btn-preferences*/
+.btn-preferences {
+    background: #666B83;
+    background-image: linear-gradient(to bottom, #666B83, #666B83);
+    background-repeat: repeat-x;
+    border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+    color: white;
+    font-weight:bold;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+}
+.btn-preferences:hover, .btn-preferences:focus, .btn-preferences:active, .btn-preferences.active, .btn-preferences.disabled, .btn-preferences[disabled] {
+    background: #666B83;
+    color: white;
+    font-weight:bold;
+}
+.nav > li > a.btn-preferences:hover, .nav > li > a.btn-preferences:focus {
+    background-color: #434860;
+    text-decoration: none;
+}
+
 
 /*#####################################################*/
 /*### ENGAGEMENT              ##########################*/
@@ -464,10 +614,11 @@ thead tr th {
 }
 #selec .btn {
     display: inline-block;
+    margin-right: 5px;
     vertical-align: top;
 }
 .select-day {
-    width: 263px;
+    width: 278px;
 }
 #selec .select-day input[type=radio]{
     display:none;
@@ -482,12 +633,14 @@ thead tr th {
 }
 .select-comp{
     display: inline-block;
+    margin: 0;
     vertical-align: top;
-    margin:0;
+    width: 128px;
 }
 .select-comp .dropdown-menu {
+    height: auto;
     left: 0;
-    padding: 2px 4px; 
+    padding: 2px 4px;
 }
 .image-competitor-selec{
     border: 1px solid #999999;
@@ -497,6 +650,8 @@ thead tr th {
     margin: 2px;
     overflow: hidden;
     width: 32px;
+    vertical-align: top;
+    float: left;
 }
 .img-comp{
     height: 32px;
@@ -505,7 +660,7 @@ thead tr th {
     z-index: -1;    
 }
 .dropdown-menu{
-    //min-width: 100%;
+    min-width:0;
 }
 
 /*CHECKED*/
@@ -585,15 +740,14 @@ thead tr th {
 
     
 /*#####################################################*/
-/*### DASHBOARD              ##########################*/
+/*### DASHBOARD #######################################*/
 /*#####################################################*/
-
 #pasts > li {
     display: inline-block;
 }
 .past{
-    height: 212px;
-    width: 212px;
+    height: 200px;
+    width: 200px;
 }
 .past-percent {
     font-size: 3em;
@@ -631,104 +785,40 @@ thead tr th {
 }
 
 /*#####################################################*/
-/*### APP WHITH SNAP.JS      ##########################*/
+/*### PREFERENCIAS - LISTAS - PERFILES ################*/
 /*#####################################################*/
-#app_content{
-    height:100%;
+.paginas{
+  background:#999999;
+  height:100px;
+  width:100%;
 }
-body {
-  //width: 100%;
-  //height: 100%;
-  //margin: 0;
-  //padding: 0;
-  //overflow: hidden;
+.list-competitors{
   
-  .frame {
-    position: relative;
-    width: 200%;
-    height: auto;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    padding-top: 60px;
-    .navbar .navbar-inner {
-      border-radius: 0;
-      padding-left: 5px;
-    }
-    
-    .menu {
-      height:100%;
-      /* background-color: #3D6AA2; */
+}
+.list-competitor{
+    display: block;
+    width: 320px;
+}
+.image-competitor{
+    display:inline-block;
+    vertical-align:top;  
+}
+.starOn{
+  background: url("sw-sprite2.png") no-repeat scroll -174px -203px transparent;
+  width:30px;
+  height:30px;
+  display:inline-block;
+  vertical-align:top;
+}
+.starOff{
+  background: url("sw-sprite2.png") no-repeat scroll -176px -166px transparent; 
+  width:30px;
+  height:30px;
+  display:inline-block; 
+  vertical-align:top;
+}
 
-      &.collapse {
-        float:left;
-        height: 100% !important;
-        width: auto;
-      }
-  
-      &.collapse.height {
-        position: relative;
-        height: 0;
-        overflow: hidden;
-        -webkit-transition: height 0.35s ease;
-        -moz-transition: height 0.35s ease;
-        -o-transition: height 0.35s ease;
-        transition: height 0.35s ease;
-      }
-  
-      &.collapse.width {
-        position: relative;
-        width: 0;
-        overflow: hidden;
-        -webkit-transition: width 0.35s ease;
-        -moz-transition: width 0.35s ease;
-        -o-transition: width 0.35s ease;
-        transition: width 0.35s ease;
-      }
-      
-      &.collapse.in.width {
-        width: auto;
-      }
-      
-      &.collapse.in.height {
-        height: auto;
-      }
-    
-      .collapse-inner {
-        position: relative;        
-        width: 250px;
-        height: 100%;
-      }
-      
-      .navbar .navbar-inner {
-        text-align: center;
-        color: grey;
-        font-size: 1.2em;
-        line-height: 38px;
-      }
-      
-      .nav-stacked {
-        padding: 0 10px;
-      }
-        
-    }
-    .view {
-      width: 50%;
-      height: 100%;
-      overflow: hidden;
-      
-      .navbar .navbar-inner .btn-navbar {
-        display: block;
-        float: left;
-      }
-      #content {
-        margin: auto 15px;
-        text-align: justify;
-      }
-    }
-  }
-}
-/*########################################################################*/
+
 @import "bootstrap-responsive";
 
 /* Large desktop */
@@ -791,6 +881,5 @@ body {
   } 
   input.simple-search {
     padding: 6px 32px 6px 7px;
-    width:280px;
   } 
 }

@@ -11,6 +11,7 @@
 		<%= csrf_meta_tags %>
 		<%= render 'layouts/shared/shim' %>
 		<%= render 'layouts/shared/analytics'%>
+		<%= render 'layouts/shared/open_graph'%>
 	</head>
 	<body>
 		<%= render 'layouts/shared/header' %>
@@ -24,8 +25,12 @@
 
 		<%= render 'layouts/shared/footer' %>
 
-		<%= debug(params) if Rails.env.development? %>
-		<%= debug(session) if Rails.env.development? %>
-		<%= debug(cookies) if Rails.env.development? %>
+		<div id="row span12">
+			<div id="container">
+				<%= debug(params) if Rails.env.development? %>
+				<%= debug(session) if Rails.env.development? %>
+				<%= debug(cookies) if Rails.env.development? %>
+			</div>
+		</div>
 	</body>
 </html>
