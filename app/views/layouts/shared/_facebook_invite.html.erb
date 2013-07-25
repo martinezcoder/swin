@@ -1,0 +1,23 @@
+<script src="http://connect.facebook.net/en_US/all.js"></script>
+<script>
+FB.init({
+<% if Rails.env.production? %>
+  appId: '<%= FACEBOOK_APP_ID %>',
+<% else %>
+  appId: '<%= FACEBOOK_APP_ID_DEV %>',
+<% end %>
+cookie:true,
+status:true,
+xfbml:true
+});
+ 
+function FacebookInviteFriends()
+{
+FB.ui({
+method: 'apprequests',
+message: 'Únete a SocialWin y analiza tu engagement y el de tus competidores'
+});
+}
+</script>
+ 
+<div id="fb-root"></div> 
