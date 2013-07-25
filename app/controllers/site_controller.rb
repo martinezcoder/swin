@@ -3,6 +3,9 @@ class SiteController < ApplicationController
   layout "site"
   
   def home 
+      if (request.host.include?("heroku"))
+        redirect_to "http://www.socialwinapp.com"
+      end
       @pages = Page.count
       @users = User.count
       
