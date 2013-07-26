@@ -1,0 +1,23 @@
+<% provide(:title, "Dashboard de Facebook") %>
+
+<%= render 'facebook/layouts/competitors', :list =>  @user_list, :mypath => facebook_path %>
+
+<ul id="pasts" class="unstyled">
+
+       <li><%= dashboard_box(facebook_engage_path, 
+       						 'ENGAGEMENT', 
+       						  @data[:engagement][:value], 
+       						  @data[:engagement][:variation]) %></li> 
+       <li><%= dashboard_box(facebook_size_path, 
+       						 'TAMAÑO', 
+       						  @data[:size][:value], 
+       						  @data[:size][:variation]) %></li> 
+       <li><%= dashboard_box(facebook_growth_path, 
+       						 'CRECIMIENTO', 
+       						  @data[:growth][:value], 
+       						  @data[:growth][:value], true) %></li> 
+       <li><%= dashboard_box(facebook_activity_path, 
+       						 'ACTIVIDAD', 
+       						  @data[:activity][:value], 
+       						  @data[:activity][:variation]) %></li>
+</ul>

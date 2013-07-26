@@ -1,3 +1,16 @@
+# == Schema Information
+#
+# Table name: facebook_lists
+#
+#  id         :integer          not null, primary key
+#  user_id    :integer
+#  name       :string(255)
+#  photo_url  :string(255)
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  page_id    :integer
+#
+
 class FacebookList < ActiveRecord::Base
   attr_accessible :name, :page_id, :photo_url
 
@@ -11,8 +24,10 @@ class FacebookList < ActiveRecord::Base
 #  validates :page_id, presence: true
 
   def set_lider_page(page)
-    self.page_id = page.id
-    save
+    if self.user.pages.include?(page)
+      self.page_id = page.id 
+      save
+    end
   end
   
   def added?(page)

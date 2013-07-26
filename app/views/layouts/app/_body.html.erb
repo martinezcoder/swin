@@ -1,26 +1,98 @@
-<% if signed_in? %>	
+<% if !signed_in? or (params.has_key?(:id) && request.path == page_path(params[:id]))%>	
 
-<div class="container" id="app_content">
-	<div class="row">
-		<aside class="span2">
-			<%= render 'layouts/app/page_logo' %>
-			<%= render 'layouts/app/menu' %>
-		</aside>
-		
-		<div class="span10">
-			<nav class="tabbable"> <!-- Only required for left/right tabs -->
-				<ul class="nav nav-tabs">
-					<%= tab_link('Facebook', facebook_engage_path, FACEBOOK) %>
-					<%= tab_link('Twitter', twitter_path, TWITTER) %>
-					<%= tab_link('Youtube', youtube_path, YOUTUBE) %>
-				</ul>
-
-				<%= yield %>
-			</nav>
-		</div>
-	</div>
-</div><!--container-->	
+	<%= yield %>
 
 <% else %>
-	<%= yield %>
+
+<div id="app_content">
+
+	<div id="content">	<!--class="snap-content" -->
+		<div class="container">	 		
+			<div  class="tabbable">
+				<ul class="nav nav-tabs offset2 navbar">
+					<%= tab_link('Facebook', facebook_engage_path, FACEBOOK, { anchor: 'fb-tab' }) %>
+					<%= tab_link('Twitter', twitter_path, TWITTER, { anchor: 'tw-tab' }) %>
+					<%= tab_link('Youtube', youtube_path, YOUTUBE, { anchor: 'yt-tab' }) %>					
+					
+					<!-- boton despl perfil 
+					<a id="open-right" class="btn btn-navbar pull-right visible-desktop visible-tablet visible-phone" data-target="" data-toggle="" type="button">
+						<span><i class="icon-user"></i></span><span><i class="icon-th-list"></i></span>
+					</a>-->
+					
+					<!-- boton metricas -->
+					<a type="button" class="btn btn-navbar pull-right visible-phone" data-toggle="collapse" data-target=".menuapp-collapse">
+						<span><i class="icon-align-justify"></i></span>
+					</a>
+				</ul>
+				
+				<div class="tab-content">
+					<% if get_active_tab == FACEBOOK %>
+						<div class="tab-pane in active" ><!--id="fb-tab" -->
+							<div class="row-fluid">
+								
+								<div class="span2">
+									<%= render 'layouts/app/menu' %>
+								</div>	
+		
+								<div class="span10">
+									<%= yield %>
+								</div>
+								
+							</div><!--endrow-->
+	 					</div>
+						
+					<% elsif get_active_tab == TWITTER %>
+						<div class="tab-pane active" id="tw-tab">
+							<%= yield %>
+						</div><!--tabPane-->
+					<% elsif get_active_tab == YOUTUBE %>
+						<div class="tab-pane active" id="yt-tab">
+							<%= yield %>
+						</div>
+					<% end %>
+				</div>
+							
+			</div><!--tabbable-->
+		</div><!--container-->
+  	</div><!--Snapcontent-->
+
+<!-- Deleted snapdrawers!!!!!!!!!!!! -->
+	
+</div><!--appContent container-->	
+
+
 <% end %>
+
+<script>
+	var snapper = new Snap({
+		element: document.getElementById('content')
+	}); 
+
+	var addEvent = function addEvent(element, eventName, func) {
+		if (element.addEventListener) {
+			return element.addEventListener(eventName, func, false);
+		} else if (element.attachEvent) {
+			return element.attachEvent("on" + eventName, func);
+		}
+	};
+	addEvent(document.getElementById('open-right'), 'click', function(){
+	    if( snapper.state().state=="right" ){
+	        snapper.close();
+	    } else {
+	        snapper.open('right');
+	    }
+	});
+	/* Prevent Safari opening links when viewing as a Mobile App */
+	(function (a, b, c) {
+		if(c in b && b[c]) {
+		var d, e = a.location,
+		f = /^(a|html)$/i;
+		a.addEventListener("click", function (a) {
+		d = a.target;
+		while(!f.test(d.nodeName)) d = d.parentNode;
+		"href" in d && (d.href.indexOf("http") || ~d.href.indexOf(e.host)) && (a.preventDefault(), e.href = d.href)
+		}, !1)
+		}
+	})(document, window.navigator, "standalone");	
+	
+</script>

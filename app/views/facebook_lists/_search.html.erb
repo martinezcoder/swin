@@ -1,17 +1,14 @@
-<div class="row">
-
-<div class="span4 well">
-
-	<!-- <h2>Buscador de páginas de Facebook!</h2> -->
+<div class="">
 
 	<% if @more > 0 %>
-		<p>Puede seguir <%= @more %> competidores más.</p>
+		
 		<%= render :partial => "search_form", :locals => { :rest => request.url } %>
 		<%= render 'search_results'%>
-
+		<p>Puede seguir <%= @more %> competidores más.</p>
+		
 		<% if @liders.any? %>
 			<p>Añade páginas de Facebook!</p>
-			<ul class="fb_pages">
+			<ul class="fb_pages unstyled">
 				<% @liders.each do |p| %>
 					<li>
 						<%= render p, :origin => 'search' if !@facebook_list.added?(p) %>
@@ -27,6 +24,7 @@
 
 </div>
 
+<% if false %><!--
 <div class="span5 well">
 
     <h3>Siguiendo a <%= @competitors.count %> competidores:</h3>
@@ -39,7 +37,7 @@
 			<li>
 				<%= render p, :origin => 'competitors' %>
 			</li>
-		<% end %>
+		<% end %><p>Puede seguir <%= @more %> competidores más.</p>
       </ul>
     <% else %>
     	<p>Actualmente no sigue a ningún competidor.</p>
@@ -47,5 +45,6 @@
 	</div>
 
 </div>
+--><% end %>
 
-</div>
+

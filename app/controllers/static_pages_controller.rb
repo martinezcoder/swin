@@ -25,11 +25,6 @@ class StaticPagesController < ApplicationController
     end
   end
 
-
-  def habla
-    session[:active_tab] = FACEBOOK
-  end
-
   def twitter
     session[:active_tab] = TWITTER
   end

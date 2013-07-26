@@ -1,13 +1,13 @@
 <% provide(:title, "Engagement de " + @page.name + " el día " + @day) %>
 
 <div id="show">
-<div class="container-fluid">
-	<div class="span12">
+<div class="container">
+	<div class="">
 		<h3 class="consulta">Consulta de ENGAGEMENT</h3>
 	</div>
 	
-	<div lass="row-fluid">
-		<div class="span5">
+	<div class="row-fluid">
+		<div class="span5 no-space">
 			
 			<div class="presentacion">
 				<img src="<%= get_picture(@page, big=true) %>">
@@ -18,19 +18,22 @@
 			</div>
 			
 			<% if @day != Time.now.yesterday.strftime('%d/%m/%Y') %>
-				<%= link_to 'Ver último resultado', page_path(id: 'fb-'+@page.page_id, day: Time.now.yesterday.strftime('%Y%m%d')), id:'btn-ver-resultados', class: 'btn'  %>
+				<%= link_to 'Ver último resultado', smart_page_path(@page), id:'btn-ver-resultados', class: 'btn'  %>
 			<% end %>
 			
 			<div class="escudo-engagement">
-				<%= image_tag "show-engagement/escudo.png" %>
+				<div class="image-engage">
+					<%= image_tag "show-engagement/escudo.png" %>
+				</div>
 				<div class="num-engage"><%= @engage %></div>
 				<div class="word-engage">ENGAGEMENT</div>
 				<div class="name-engage"><%= @page.name %></div>
 			</div>
-		    <div class="clearfix"></div>
-		    	<!--btn-group-comparte -->
-		    <div class="btn-group "><!-- comparte-engagement-btn -->
-		    	<a class="btn dropdown-toggle btn-comparte" data-toggle="dropdown">
+			
+		    
+	    	<!--btn-group-comparte -->
+		    <div class="btn-group" id="comparten"><!-- comparte-engagement-btn -->
+		    	<a class="btn btn-comparte dropdown-toggle" data-toggle="dropdown">
 		    		¡Comparte su Engagement! <span class="comparte-icon"></span>
 	    		</a>
 			    <ul class="dropdown-menu">
@@ -50,25 +53,29 @@
 						</a>
 					</li>
 			    </ul>	    		
-			</div>    
+			</div> 
+  			
 			<% if signed_in? %>
 				<div class="space"></div>
 			<% else %>
+			<!--
 				<div id="conectarConFacebook">
 					<div id="quieres">
 						<p><strong>¿Quieres comparar varios competidores?</strong></p>
 						<p><strong>¡Prueba GRATIS SocialWin Analytics!</strong></p>							
 					</div>
-					<!--btnConectarConFacebook-->	
+						
 					<%= render 'site/shared/facebook_button_signin' %>
 				</div>
+			-->	
 			<% end %>
 			<%= render 'layouts/shared/facebook_invite' %>
 			<div class="space"></div> 
 			
+			
 		</div><!-- span5-->
 		
-		<div class="span7">
+		<div class="span7 no-space">
 			<div class="tabla-metricas">
 				    <table class="table">
 						<thead>
@@ -82,17 +89,17 @@
 							<tr>
 								<td>Fans totales: </td>
 								<td><strong> <%= @data_day.likes %> </strong></td>
-								<td><span class="<%= color_integer(@variations[:likes].to_i) %>"><%= @variations[:likes] %>%</span></td>
+								<td><span class="<%= color_integer(@variations[:likes]) %>"><%= @variations[:likes] %>%</span></td>
 							</tr>
 							<tr>
 								<td>Fans activos:</td>
 								<td><strong> <%= @data_day.prosumers %> </strong></td>
-								<td><span class="<%= color_integer(@variations[:prosumers].to_i) %>"><%= @variations[:prosumers]%>%</span></td>
+								<td><span class="<%= color_integer(@variations[:prosumers]) %>"><%= @variations[:prosumers]%>%</span></td>
 							</tr>
 							<tr>
 								<td>Engagement (últimos 7 días):</td>
 								<td><strong> <%= @engage %> </strong></td>
-								<td><span class="<%= color_integer(@variations[:engage].to_i) %>"><%= @variations[:engage] %>%</span></td>
+								<td><span class="<%= color_integer(@variations[:engage]) %>"><%= @variations[:engage] %>%</span></td>
 							</tr>							
 						</tbody>
     				</table>
@@ -106,6 +113,8 @@
 					<%= render 'facebook/charts/chart_timeline', :graph => "graph_div" %>
 					<%= render 'facebook/shared/graph', :graph => "graph_div" %>
 			</div>
+			
+		<!--
 			<% if not signed_in? %>			
 				<div class="clearfix"></div>
 				
@@ -114,8 +123,40 @@
 					<%= render 'site/shared/search_box' %>
 				</div>
 			<% end %>
-		</div><!-- span6 -->
-	</div>
+		-->	
+		</div><!-- span7 -->
+	</div><!--row-->
 	
 </div>
 </div><!-- idShow -->
+
+<div id="top-search">
+	<div class="container">
+		<div class="row">
+			 <div class="span6 offset3 text-center"> <!-- buscador engagement-->
+				<div class="try-search text-center" >
+				    <h3 class="sw-violet"></h3>
+					<h4 class="sw-violet">Nueva búsqueda</h4>				
+					<%= render 'site/shared/search_box' %>	
+				</div>
+			 </div>
+		</div><!--row-->
+	</div>	
+</div><!--search-->	
+
+<% if !signed_in? %>
+<div class="container">
+		<div class="row">
+			<div class="span4 offset4 text-center">
+				<div id="conectarConFacebook">
+					<div id="quieres">
+						<p><strong>¿Quieres comparar varios competidores?</strong></p>
+						<p><strong>¡Prueba GRATIS SocialWin Analytics!</strong></p>							
+					</div>			
+					<!--btnConectarConFacebook-->	
+					<%= render 'site/shared/facebook_button_signin' %>
+				</div>	
+			</div>
+		</div>
+</div><!--container-->
+<% end %>

@@ -4,6 +4,7 @@
   // Load the Visualization API and the chart package.
   google.load('visualization', '1', {packages: ['corechart','table']});
 </script>
+
 <script type="text/javascript">
 
 	// Set a callback to run when the Google Visualization API is loaded.
@@ -37,9 +38,14 @@
 
     var table = new google.visualization.Table(document.getElementById('table'));
     var chart = new google.visualization.ComboChart(document.getElementById('<%= graph %>'));
-
-	var formatter = new google.visualization.NumberFormat({fractionDigits: 0});
+	
+	<% if @metric_name == M_CRECIMIENTO %>
+		var formatter = new google.visualization.NumberFormat({fractionDigits: 2});
+	<% else %>
+		var formatter = new google.visualization.NumberFormat({fractionDigits: 0});
+	<% end %>
 	formatter.format(dataTableB, 1);
+	
 
   	// Data
   	var dataChartA = new google.visualization.DataView(dataTableA);
@@ -64,5 +70,9 @@
 
   }
 
+	//por si resize
+   $(window).smartresize(function(){
+		drawVisualization();
+   });
 </script>
 

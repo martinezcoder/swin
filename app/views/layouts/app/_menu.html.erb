@@ -1,29 +1,22 @@
-<div class="menu_metricas">
-	<div class="well">
-		
-		<ul class="nav nav-list">
-			<li class="nav-header">Mi Perfil</li>
-				<%= menu_link('Mis Listas', 'icon-list', facebook_lists_path) %>
-				<%= menu_link('Editar lista activa', 'icon-search', (lst = get_active_list).nil? ? root_url : edit_facebook_list_path(lst)) %>
-			<li class="divider"></li>				
-			<li class="nav-header">Métricas</li>
-				<%= menu_link('Engagement', 'icon-home', facebook_engage_path) %>
-				<%= menu_link('Vista General', 'icon-globe', facebook_general_path) %>
-				<%= menu_link('Timeline', 'icon-random', facebook_path) %>
+<div class="menu_metricas span12">
+	<div class="collapse-inner">
 
-<!-- 
-		    	<li class="disabled"><a href="#">Tamaño</a></li>
-		    	<li class="disabled"><a href="#">Crecimiento</a></li>
-			    <li class="disabled"><a href="#">Actividad</a></li>
-			    <li class="disabled"><a href="#">Interacción</a></li>
-			    <li class="disabled"><a href="#">Embajadores</a></li>
-			    <li class="disabled"><a href="#">Influence</a></li>
-			    <li class="disabled"><a href="#">Sentiment</a></li>
--->
-			<li class="divider"></li>
-				<%= menu_link('Comentarios', 'icon-comment', habla_path) %>
-		</ul>
+		<div class="menuapp-collapse nav-collapse collapse">
+			<ul class="nav">
+				<%= menu_link('Dashboard', nil, facebook_dashboard_path, 'btn btn-blue') %>
+				<%= menu_link('Engagement', nil, facebook_engage_path, 'btn btn-blue') %>
+				<%= menu_link('Tamaño', nil, facebook_size_path, 'btn btn-blue') %>
+				<%= menu_link('Crecimiento', nil, facebook_growth_path, 'btn btn-blue') %>
+				<%= menu_link('Actividad', nil, facebook_activity_path, 'btn btn-blue') %>
+			</ul>
+		</div>
+
+<script>
+    $('a[disabled=disabled]').click(function(event){
+        event.preventDefault(); // Prevent link from following its href
+    });
+</script>
 		
-	</div><!--wel-->
+	</div><!--navbar-->
 </div>
 

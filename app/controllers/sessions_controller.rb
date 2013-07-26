@@ -15,11 +15,11 @@ class SessionsController < ApplicationController
         if auth_exist?
           if same_user?
             turn_on_auth
-            redirect_back_or facebook_engage_path
+            redirect_back_or facebook_path
           else
             # this provider is asigned to other user. Posibility of Merge will be done in next version.
             signout_or_merge
-            redirect_to facebook_engage_path
+            redirect_to facebook_path
           end
         else
           create_new_auth
@@ -30,7 +30,7 @@ class SessionsController < ApplicationController
         if auth_exist?
           sign_in(current_auth.user)
           turn_on_auth
-          redirect_back_or facebook_engage_path
+          redirect_back_or facebook_path
         else
           @user = User.find_by_email(omniauth['info']['email']) 
           if @user.nil?

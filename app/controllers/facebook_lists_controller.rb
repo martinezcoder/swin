@@ -3,13 +3,12 @@ class FacebookListsController < ApplicationController
   before_filter :signed_in_user
   before_filter :is_user_list, except: [:new, :create, :index]
 
-
   def activate
     facebook_list = current_user.facebook_lists.find(params[:id])
     set_active_list(facebook_list.id)
 
     respond_to do |format|
-        format.html { redirect_to facebook_lists_path }
+        format.html { redirect_to params[:url] }
         format.json { head :no_content }
     end
   end
@@ -33,7 +32,7 @@ class FacebookListsController < ApplicationController
     @facebook_list = current_user.facebook_lists.find(params[:id])
     set_active_list(params[:id])
     @competitors = @facebook_list.pages.order("created_at DESC")
-    @more =  MAX_COMPETITORS - @competitors.count
+    @more =  current_user.plan.num_competitors - @competitors.count
     @liders = current_user.pages
 
     fb_list = nil
@@ -81,10 +80,11 @@ class FacebookListsController < ApplicationController
   # GET /facebook_lists/new
   # GET /facebook_lists/new.json
   def new
+=begin
     session[:active_tab] = FACEBOOK
-    if current_user.facebook_lists.count < MAX_LISTS
-      @facebook_list = current_user.facebook_lists.build(page_id: 35)
-  
+    if current_user.facebook_lists.count < current_user.plan.num_lists
+      @facebook_list = current_user.facebook_lists.build(page_id: params[:page_id], name: params[:name])
+
       respond_to do |format|
         format.html # new.html.erb
         format.json { render json: @facebook_list }
@@ -95,13 +95,19 @@ class FacebookListsController < ApplicationController
         format.json { render json: nil, status: :unprocessable_entity }
       end      
     end
+=end
   end
 
   # POST /facebook_lists
   # POST /facebook_lists.json
   def create
-    if current_user.facebook_lists.count < MAX_LISTS
-      @facebook_list = current_user.facebook_lists.build(params[:facebook_list])
+    if current_user.facebook_lists.count < current_user.plan.num_lists
+#      @facebook_list = current_user.facebook_lists.build(params[:facebook_list])
+puts "****************************************"
+puts params["/facebook/lists/new"][:page_id]
+puts "****************************************"
+  
+@facebook_list = current_user.facebook_lists.build(page_id: params[new_facebook_list_path][:page_id], name: params[new_facebook_list_path][:name])
       
       respond_to do |format|
         if @facebook_list.save

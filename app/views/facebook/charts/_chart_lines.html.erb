@@ -14,13 +14,7 @@
 	// Some raw data (not necessarily accurate)
 	var data = google.visualization.arrayToDataTable(<%= raw @dataA %>);
 
-	var options = {
-	  title : 'Evolución del engagement',
-      titleTextStyle: {fontSize: 14},
-	  vAxis: {title: "Engagement"},
-	  hAxis: {title: "Día"},
-	  seriesType: "lines"
-	};
+    var options = { <%= raw @options %> };
 
 	var chart = new google.visualization.ComboChart(document.getElementById('<%= graph %>'));
     var table = new google.visualization.Table(document.getElementById('table'));
@@ -38,7 +32,10 @@
 
   }
 
-
+	//por si resize
+   $(window).smartresize(function(){
+		drawVisualization();
+   });
 
 </script>
 

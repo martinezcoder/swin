@@ -1,13 +1,13 @@
   
 <% if !@dataB.nil? %>
 <div id="engage_medals">
-	<div id="engageBox">
+	<div class="engageBox">
 	  <%= raw @dataB[0][5] %>
 	  <div class="engageMedal golden">
 	     <span id="engageNumber"><%= raw @dataB[0][4] %></span>
 	  </div>
 	</div>
-	<div id="engageBox">
+	<div class="engageBox">
 	  <%= raw @dataB[1][5] %>
 	  <div class="engageMedal silver">
 	     <span id="engageNumber"><%= raw @dataB[1][4] %></span>
@@ -16,7 +16,7 @@
 	
 	<% @dataB.drop(2).each do |logo| %>
 	
-		<div id="engageBox">
+		<div class="engageBox">
 		  <%= raw logo[5] %>
 		  <div class="engageMedal">
 		     <span id="engageNumber"><%= raw logo[4] %></span>
@@ -26,3 +26,4 @@
 	<% end %>  
 </div>
 <% end %>
+

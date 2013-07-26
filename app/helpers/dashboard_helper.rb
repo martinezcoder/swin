@@ -1,43 +1,89 @@
 module DashboardHelper
 
+
+  def ndays_plan_constraint_class(label_for, link_class, link_text, link_type)
+
+    if user_plan?(FREE)
+      if request.path == facebook_engage_path
+        if link_type > 7
+          link_class += ' disabled'
+        end
+      else
+        if link_type > 0
+          link_class += ' disabled'
+        end
+      end
+    end
+    
+    content_tag(:label, :for => label_for) do
+      concat(content_tag(:li, class: link_class) do
+          link_text
+      end)
+    end
+
+  end
+
+  def date_range_plan_constraint_class
+    if user_plan?(FREE)
+      false 
+    else
+      true
+    end
+  end
+
+  def dashboard_box(link_path, title, value, variation, percent=false)
+
+    class_name = "btn past "
+    if !variation.nil?
+      if variation > 0 
+        class_name += " past-green"
+      elsif variation < 0
+        class_name += " past-orange"
+      end
+    end
+        
+    link_to link_path, class: class_name do
+      concat(content_tag(:div, class: "past-title") do
+          title
+      end)
+      concat(content_tag(:div, class: "past-percent") do
+          value.to_s + (percent ? '%' : '')
+      end)
+      if !percent
+        concat(content_tag(:div, class: "past-var") do
+            variation.to_s + '%' if !variation.nil?
+        end)
+      end
+    end
+
+  end
+  
+
   class HtmlHardcodes
 
       def logo (url, img, title, options)
         return '<a href="'+ url +'" target="_blank"><img src="'+ img +'" class="'+ options +'" title="'+ title +'"></a>'
       end
       
-      def html_tooltip_engage(img, title, value, variation)
+      def html_tooltip(img, title, value, variation)
           ret = 
          '<div style="padding:5px 5px 5px 5px;'+ 
                      'text-align: center;'+
                      'align:center;'+
                      '">'+
-            '<strong>'+  if variation >= 0 
-                            '<span style="color:green">+' + sprintf( "%0.01f", variation) 
-                         else
-                            '<span style="color:red">' + sprintf( "%0.01f", variation)
-                         end + '%</span></strong>' +
-    
             '<div style="'+
-                        'margin:10px auto 10px auto;'+
-                        'width: 30px;'+
-                        'padding: 2px  5px;'+
+                        'padding:5px 5px 5px 5px;'+
                         'font-size: 1.7em;'+
-                        'color: #FFF;'+
-      
-                        'border: 1px solid #0088CC;'+ 
-                        'background-color: #0088CC;'+
-      
-                        '-moz-border-radius: 5px;'+
-                        '-webkit-border-radius: 5px;'+
-                        'border-radius: 5px;'+
-                        
-                        '-moz-box-shadow: rgb(150,150,150) 2px 2px 2px;'+
-                        '-webkit-box-shadow: rgb(150,150,150) 2px 2px 2px;'+
-                        'box-shadow: rgb(150,150,150) 2px 2px 2px;'+
+                        'color: #0088CC;'+
                         '">'+
                 '<strong>'+ value.to_s + '</strong>'+
             '</div>'+
+            '<strong>'+  if variation >= 0 
+                            '<span style="color:green">+' + sprintf("%.2f", variation) 
+                         else
+                            '<span style="color:red">' + sprintf("%.2f", variation)
+                         end + '%</span></strong>' +
+    
             '<div style="'+
                         'margin:10px 0px;'+
                         '">'+
@@ -47,27 +93,7 @@ module DashboardHelper
           '</div>'
     
          return ret
-      end
-      
-      def html_tooltip_general(img, title, fans, actives)
-          ret = 
-         '<div style="padding:5px 5px 5px 5px;'+ 
-                     'text-align: center;'+
-                     'align:center;'+
-                     '">'+
-            '<p><strong>'+ title + '</strong></p>' +
-            '<div style="'+
-                        'margin-bottom:10px;'+
-                        '">'+
-            '<img src="'+ img +'">'+
-            '</div>'+
-            '<p>Fans: <strong>'+ fans.to_s.reverse.gsub(/...(?=.)/,'\&.').reverse + '</strong>' +
-            '<br/>Activos: <strong>'+ actives.to_s.reverse.gsub(/...(?=.)/,'\&.').reverse + '</strong></p>' +
-          '</div>'
-    
-         return ret
-      end
-    
+      end    
     
       def html_variation(variation)
           ret = '<div style="margin-left:10px;">'
@@ -78,28 +104,12 @@ module DashboardHelper
           else
             ret += '<i class="icon-arrow-down"></i> ' '<span style="color:red">'
           end
-          return ret + sprintf( "%0.01f", variation)  + '%</span></div>' 
+          return ret + sprintf("%.2f", variation)  + '%</span></div>' 
       end
 
     
   end
 
-
-
-  def chart_test_tag (height, params = {})
-    params[:format] ||= :json
-    path = query_test_path(params: params)
-    if params[:type] == 'Table'
-      content_tag(:div, :'data-query-table' => path, :style => "height: #{height}px;") do
-        image_tag('loader.gif', :size => '24x24', :class => 'spinner')
-      end            
-    else
-      content_tag(:div, :'data-query-chart' => path, :style => "height: #{height}px;") do
-        image_tag('loader.gif', :size => '24x24', :class => 'spinner')
-      end
-    end
-  end
-  
   def chart_tag (height, params = {})
     params[:format] ||= :json
     if params[:chart] == 'pages'

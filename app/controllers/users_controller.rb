@@ -21,7 +21,7 @@ class UsersController < ApplicationController
                   memo
                 end.reverse,
       :options => {
-        :chartArea => { :width => '80%', :height => '75%' },
+        :chartArea => { :width => '80%', :height => '75%'},
         :hAxis => { :showTextEvery => 30 }
       }
     }

@@ -1,3 +1,16 @@
+# == Schema Information
+#
+# Table name: facebook_lists
+#
+#  id         :integer          not null, primary key
+#  user_id    :integer
+#  name       :string(255)
+#  photo_url  :string(255)
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  page_id    :integer
+#
+
 require 'spec_helper'
 
 describe FacebookList do

@@ -23,7 +23,7 @@ class PagesController < ApplicationController
                   memo
                 end.reverse,
       :options => {
-        :chartArea => { :width => '80%', :height => '75%' }, 
+        :chartArea => { :width => '90%', :height => '75%' , :backgroundColor => 'red' }, 
         :hAxis => { :showTextEvery => 30 } 
       }
     }
@@ -31,7 +31,7 @@ class PagesController < ApplicationController
 
 
   def show
-    fbtag = "fb-"
+    fbtag = "-"
     thisId = params[:id]
     if thisId.include?(fbtag)
       thisId = thisId.split(fbtag).last
@@ -61,7 +61,7 @@ class PagesController < ApplicationController
 
 #    fb_metric = PagesHelper::FbMetrics.new(get_token(FACEBOOK))
     fb_metric = PagesHelper::FbMetrics.new()
-    engageData = fb_metric.get_page_engagement_timeline(@page, day.ago(7.days), day)
+    engageData = fb_metric.get_page_timeline(@page, day.ago(7.days), day, M_ENGAGEMENT)
     @dataA = engageData[0]
     @dataB = engageData[1]
     @options = fb_metric.options
@@ -100,7 +100,7 @@ class PagesController < ApplicationController
     if !@thisUrl.include?("?day")
       @thisUrl += "?day=" + day.strftime('%Y%m%d')
     end
-
+    
   end
 
 

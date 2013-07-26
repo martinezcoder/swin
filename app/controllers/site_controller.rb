@@ -8,7 +8,7 @@ class SiteController < ApplicationController
       end
       @pages = Page.count
       @users = User.count
-      
+=begin
       metrics = FbMetrics.new()
       top_engage_list = FbTopEngage.where("day = ?", Time.now.yesterday.strftime("%Y%m%d").to_i)
       top_engage_list.each do |tops|
@@ -16,7 +16,7 @@ class SiteController < ApplicationController
       end
 
       @top_engage = top_engage_list.sort_by{|data| data.engagement}.reverse
-
+=end
   end
 
   def search
@@ -31,7 +31,7 @@ class SiteController < ApplicationController
               subUrl = subUrl + '?fields=id,name'
               @fb_search_path = "https://graph.facebook.com/" + subUrl
           else
-              me = User.find_by_email("fran.martinez@socialwin.es")
+              me = User.find_by_id(1)
               fb_token = me.authentications.find_by_provider(FACEBOOK).token
               fb_graph = FacebookHelper::FbGraphAPI.new(fb_token)
     
