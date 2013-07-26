@@ -70,18 +70,22 @@
 		<div class="span6">
 			<ul class="unstyled fb_pages">
 				<li>
+					<% if @facebook_lists.count < current_user.plan.num_lists %>
 					<div class="paginas">
 						<div class="fb_stat fb_stat-text">Añadir perfil</div>
-						<div class="fb_stat pull-right">
-							<% if @facebook_lists.count < current_user.plan.num_lists %>
+						<div class="fb_stat pull-right">	
 								<%= form_for(new_facebook_list_path) do |list| %>
 									<%= list.text_field :page_id, value: 35, type: "hidden" %>
 									<%= list.text_field :name, value: 'list', type: "hidden" %>
 					  				<%= list.submit "", id: 'new-perfil', class: "" %>
 					  			<% end %>
-							<% end %>	
 						</div>
 					</div>
+					<% else %>
+					<div class="paginas">
+						<div class="fb_stat fb_stat-text">Tu plan no permite crear más perfiles.</div>
+					</div>
+					<% end %>
 					
 				</li>
 			</ul>
