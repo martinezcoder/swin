@@ -15,6 +15,32 @@
 		</div>	
 	</div><!--search-->	
 	
+	<div id="metodon">
+	<div class="container metodon">
+		
+		<div class="row text-center">
+			<div class="span2"></div>
+			<div class="span2">
+				<%= image_tag "metodo1n.png", :class => "img-metodo" %>
+				<h4 class="text-center">MONITORING</h4>
+			</div>
+			<div class="span2">
+				<%= image_tag "metodo2n.png", :class => "img-metodo" %>
+				<h4 class="text-center">COMPETITIVE ANALYSIS</h4>
+			</div>
+			<div class="span2">
+				<%= image_tag "metodo3n.png", :class => "img-metodo" %>
+				<h4 class="text-center">RESEARCHS & REPORTS</h4>
+			</div>
+			<div class="span2">
+				<%= image_tag "metodo4n.png", :class => "img-metodo" %>
+				<h4 class="text-center">STRATEGIC DASHBOARD</h4>
+			</div>	
+			<div class="span2"></div>			
+		</div>
+	</div>
+</div><!--nedMetodo-->
+	
     <% if !signed_in? %>
 	<div class="container">
 			<div class="row">
@@ -81,7 +107,6 @@
 			<% end %>	
 			
 			<div class="span6">
-				
 			    <p><strong>Nueva búsqueda</strong><br/>
 			    	<small>Tip. si no encuentras lo que buscas, inserta la URL de la página deseada.</small>
 			    </p>
@@ -96,15 +121,10 @@
 						<!--btnConectarConFacebook-->	
 						<%= render 'site/shared/facebook_button_signin' %>
 					</div>	
-				<% end %>	
-						
+				<% end %>			
 			</div><!--endSpan6-->	
 				
 		</div><!--endRow-->	
 	</div>					
 </div>	
 <% end %><!--if searching-->			
-
-
-
-		

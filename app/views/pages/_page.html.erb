@@ -1,45 +1,41 @@
 <% if origin == 'search' %>
-	<%= image_tag get_picture(page), class: "imgpage", alt: page.name, title: page.name %>
-	<strong><small>
-		<% if page.name.length > 16 %>
-    		<%= page.name[0..16] %>...
-    	<% else %>
-    		<%= page.name %>
-    	<% end %>
-	</small></strong>
-	<small><%= link_to "Ver en Facebook", get_url(page), target: "_blank" %></small>
+	<div class="fb_stat">
+		<small><%= link_to (image_tag get_picture(page), class: "imgpage", alt: page.name, title: page.name), get_url(page), target: "_blank" %></small>
+	</div>
+	
+  <div class="fb_stat">
 
-  <div class="fb_stats">
-
-	  <div class="fb_stat mini">
+	  <div class="fb_stat">
 	  	<small>Fans:</small>
 	    <strong id="fb_fans" class="stat">
     		<small><%= page.fan_count %></small>
 	    </strong>
 	  </div>
 
-	  <div class="fb_stat mini">
-	  	<small>Usuarios activos:</small>
+	  <div class="fb_stat">
+	  	<small>Usuarios:</small>
 	    <strong id="fb_talking_about" class="stat">
 			<small><%= page.talking_about_count %></small>
 	    </strong>
 	  </div>
+	
+	  <div class="name">
+		<strong><small>
+			<% if page.name.length > 16 %>
+	    		<%= page.name[0..16] %>...
+	    	<% else %>
+	    		<%= page.name %>
+	    	<% end %>
+		</small></strong>
+	  </div>  
 
 <% else %>
-	<%= link_to page do %>
-	
-    	<%= image_tag get_picture(page), class: "imgpage", alt: page.name, title: page.name %>
-	<% end %>
-	<strong>
-		<% if page.name.length > 16 %>
-    		<%= page.name[0..16] %>...
-    	<% else %>
-    		<%= page.name %>
-    	<% end %>
-	</strong>
-	<small><%= link_to "Ver en Facebook", get_url(page), target: "_blank" %></small>
 
-	<div class="fb_stats">
+	<div class="fb_stat">
+		<small><%= link_to (image_tag get_picture(page), class: "imgpage", alt: page.name, title: page.name), get_url(page), target: "_blank" %></small>
+	</div>
+
+	<div class="fb_stat">
 
 	  <div class="fb_stat">
 	  	Fans:
@@ -49,27 +45,36 @@
 	  </div>
 
 	  <div class="fb_stat">
-	  	Usuarios activos:
+	  	Usuarios:
 	    <strong id="fb_talking_about" class="stat">
 			<%= page.talking_about_count %>
 	    </strong>
 	  </div>
+	  
 <% end %>
 
-<% case origin %>
-	<% when 'search' %>
-	<div class="fb_stat mini">
-		<%= render 'pages/page_form_follow', :page => page %>
-  	</div>
+		<% case origin %>
+			<% when 'search' %>
+			<div class="fb_stat mini">
+				<%= render 'pages/page_form_follow', :page => page %>
+		  	</div>
+		
+			<% when 'competitors' %>
+			<div class="fb_stat">
+				<%= render 'pages/page_form_unfollow', :page => page %>
+		  	</div>
+		
+			<% when nil %>
+		<% end %>
 
-	<% when 'competitors' %>
-	<div class="fb_stat">
-		<%= render 'pages/page_form_unfollow', :page => page %>
-  	</div>
-
-	<% when nil %>
-<% end %>
-
-
-  </div>
+	
+	<!--<strong>
+		<% if page.name.length > 16 %>
+    		<% page.name[0..16] %>...
+    	<% else %>
+    		<% page.name %>
+    	<% end %>
+	</strong>
+-->
+ 	</div><!--fb-stat-->
 

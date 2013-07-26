@@ -1,13 +1,11 @@
-
 <script type="text/javascript">
-	function WaitDiv(page)
-	{
+	function WaitDiv(page){
 		document.getElementById(page).style.display = 'block';
 	}
 </script>
 
 <% if @pageslist %>
-	<ul class="fb_pages">
+	<ul class="fb_pages unstyled">
 
 		<% if @pageslist.count > 0 %>
 			<% @pageslist.each do |p| %>

@@ -1,52 +1,72 @@
-<div id="span4">
-<%= form_for(@facebook_list) do |f| %>
-  <% if @facebook_list.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@facebook_list.errors.count, "error") %> prohibited this list from being saved:</h2>
-
-      <ul>
-      <% @facebook_list.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <fieldset class="form-actions">
-	  <div class="span3">
-	    <%= f.label "Nombre del perfil", class: "control-label" %>
-	    <%= f.text_field :name %>
-	  </div>
-	
-	  <% if @facebook_list.pages.any? %>	
-		  <div class="span3">
-		  	
-		  	<%= f.label "Master de la lista" %>
-	
-			<% @facebook_list.pages.each do |p| %>
-				<ul>
-				<li><%= f.radio_button(:page_id, p.id, checked: (@facebook_list.page_id == p.id)) if current_user.pages.include?(p) %> <%= p.name %>
-					<%= render 'pages/page_form_unfollow', :page => p %>
-				</li>
-				</ul>
-			<% end %>
-	
-	
-		  </div>
-		  
-	  <% end %>
-	
-
-	  <div class="span3">
-	    <%= f.submit "Guardar lista", class: "btn btn-primary" %>
-	  </div>
-
-  </fieldset>
-<% end %>
+<div class="paginas">
+	<div class="fb_stat fb_stat-text">Páginas</div>
+	<%= link_to '', facebook_lists_path, id:'volver', class:'pull-right' %>	
 </div>
 
-<% if request.path != new_facebook_list_path %>
-	<div id="span3">
-		<%= render 'search' %>
-	</div>
-<% end %>
+<div class="row-fluid">
+
+	<div class="span6">
+		<%= form_for(@facebook_list) do |f| %>
+	
+		  <!--<fieldset class="form-actions">-->
+			  <div class="">
+			    <%= f.label "Nombre del perfil", class: "control-label hidden-desktop hidden-tablet hidden-phone" %>
+			    <%= f.text_field :name %>
+			  </div>
+			
+			  <% if @facebook_list.pages.any? %>	
+				  <div class="">
+				  	<!--<%= f.label "Master de la lista" %>-->
+					<ul class="unstyled fb_pages">
+						<% @facebook_list.pages.each do |p| %>
+							<li>
+								<div class="fb_stat">
+							      	<%= link_to smart_page_path(p), class: "image-competitor"  do %>
+							      		<%= image_tag get_picture(p), class: "mini_logo", alt: p.name, title: p.name %>
+							      	<% end %>
+						      	</div>
+						      	
+						      	<div class="fb_stat">
+						      		<%= render 'pages/page_form_unfollow', :page => p %>
+						      	</div>
+						      	
+						      	<div class="fb_stat pull-right">
+						      		<% if current_user.pages.include?(p)  %>
+						      			<% @mystatus = (@facebook_list.page_id == p.id) %>
+							    		<%= f.radio_button(:page_id, p.id, checked: @mystatus, id: p.id)  %>
+							    		<label for="<%= p.id %>">
+							    			 <div class=""></div>			
+						    			</label>
+							    	<% else %>
+							    		<% radio_button(:page_id, p.id, checked: @mystatus, id: p.id)  %>
+							    		<label for="<%= p.id %>">
+							    			<div class=""></div>
+							    		</label>
+							    	<% end %>
+							   	</div> 
+						   </li>
+						<% end %>
+					</ul>
+				  </div>
+			  <% end %>
+			
+			  <div class="">
+			    <%= f.submit "Guardar lista", class: "btn" %>
+			    <%= link_to 'Eliminar lista', @facebook_list, method: :delete, class: "btn", data: { confirm: '¿Estás seguro?' } %>
+			  </div>
+		
+		  <!--</fieldset>-->
+		<% end %>
+	</div><!--span5-->
+	
+	<div class="span6">
+		<% if request.path != new_facebook_list_path %>
+			<div id="span">
+				<%= render 'search' %>
+			</div>
+		<% end %>
+	</div><!-- span5 -->
+
+</div><!--row-->
+
+

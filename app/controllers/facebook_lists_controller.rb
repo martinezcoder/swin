@@ -80,10 +80,11 @@ class FacebookListsController < ApplicationController
   # GET /facebook_lists/new
   # GET /facebook_lists/new.json
   def new
+=begin
     session[:active_tab] = FACEBOOK
     if current_user.facebook_lists.count < current_user.plan.num_lists
-      @facebook_list = current_user.facebook_lists.build(page_id: 35)
-  
+      @facebook_list = current_user.facebook_lists.build(page_id: params[:page_id], name: params[:name])
+
       respond_to do |format|
         format.html # new.html.erb
         format.json { render json: @facebook_list }
@@ -94,13 +95,19 @@ class FacebookListsController < ApplicationController
         format.json { render json: nil, status: :unprocessable_entity }
       end      
     end
+=end
   end
 
   # POST /facebook_lists
   # POST /facebook_lists.json
   def create
     if current_user.facebook_lists.count < current_user.plan.num_lists
-      @facebook_list = current_user.facebook_lists.build(params[:facebook_list])
+#      @facebook_list = current_user.facebook_lists.build(params[:facebook_list])
+puts "****************************************"
+puts params["/facebook/lists/new"][:page_id]
+puts "****************************************"
+  
+@facebook_list = current_user.facebook_lists.build(page_id: params[new_facebook_list_path][:page_id], name: params[new_facebook_list_path][:name])
       
       respond_to do |format|
         if @facebook_list.save

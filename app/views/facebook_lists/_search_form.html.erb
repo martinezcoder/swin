@@ -1,10 +1,20 @@
+<!--
 <div class="search-box">
 	<%= form_tag(rest, :method => "get", class: "form-search") do %>
 
-		<%= text_field_tag(:search, params[:search], autofocus: true, class: "input-large search-query", placeholder: "Buscar competidores...", autocomplete: "off") %>
-		<%= button_tag(type: "submit", class: "btn btn-small btn-primary") do %>
+		<%= text_field_tag(:search, params[:search], autofocus: true, class: "simple-search", placeholder: "Buscar competidores...", autocomplete: "off") %>
+		<%= button_tag(type: "submit", class: "btn btn-primary") do %>
 			<strong>Buscar <i class=" icon-search icon-white"></i></strong> 
 		<% end %>
+
+	<% end %>
+</div>
+-->
+<div class="sform-case input-append">
+	<%= form_tag(rest, :method => "get", class: "navbar-search form-inline") do %>
+
+	    <%= text_field_tag(:search, params[:search], class: "simple-search", placeholder: "Buscar competidores...", autocomplete: "off") %> 
+	  	<button type="submit" class="btn" title="Buscar!"><i class="icon-search"></i></button>
 
 	<% end %>
 </div>

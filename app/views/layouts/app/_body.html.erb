@@ -4,9 +4,9 @@
 
 <% else %>
 
-<div id="app_content" class="">
+<div id="app_content">
 
-	<div id="content" class="snap-content">	
+	<div id="content">	<!--class="snap-content" -->
 		<div class="container">	 		
 			<div  class="tabbable">
 				<ul class="nav nav-tabs offset2 navbar">
@@ -14,18 +14,14 @@
 					<%= tab_link('Twitter', twitter_path, TWITTER, { anchor: 'tw-tab' }) %>
 					<%= tab_link('Youtube', youtube_path, YOUTUBE, { anchor: 'yt-tab' }) %>					
 					
-					<!-- boton despl perfil -->
+					<!-- boton despl perfil 
 					<a id="open-right" class="btn btn-navbar pull-right visible-desktop visible-tablet visible-phone" data-target="" data-toggle="" type="button">
 						<span><i class="icon-user"></i></span><span><i class="icon-th-list"></i></span>
-					</a>
+					</a>-->
 					
 					<!-- boton metricas -->
 					<a type="button" class="btn btn-navbar pull-right visible-phone" data-toggle="collapse" data-target=".menuapp-collapse">
 						<span><i class="icon-align-justify"></i></span>
-						<!--<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>-->
 					</a>
 				</ul>
 				
@@ -60,61 +56,7 @@
 		</div><!--container-->
   	</div><!--Snapcontent-->
 
-	<div class="snap-drawers">
-		<div class="container">
-			<div class="snap-drawer snap-drawer-left"></div>
-			<div class="snap-drawer snap-drawer-right">
-				<% if signed_in? %>
-						<h4 class="text-center"><span id="perfiles">PERFILES</span></h4>
-						
-						<% if request.fullpath != new_facebook_list_path %>
-							<% current_user.facebook_lists.each do |fb_list| %>
-								<%= form_tag(activate_facebook_list_path(fb_list.id)) do %>
-									<%= hidden_field_tag :url, request.fullpath %>
-									<%= button_tag(type: "submit", class: "btn btn-profile") do %>
-										<%= fb_list.name %>
-									<% end %>
-								<% end %>
-							<% end %>
-						<% end %>
-												
-					<ul class="nav">
-						<li><%= link_to 'Perfil 1', facebook_dashboard_path, class: 'btn btn-profile' %></li>
-						<li><%= link_to 'Perfil 2', facebook_dashboard_path, class: 'btn btn-profile' %></li>
-					</ul>
-					
-					<ul class="nav">
-						<li><%= link_to 'Preferencias', facebook_dashboard_path, class: 'btn btn-preferences' %></li>
-						<li><%= link_to 'Tipo de cuenta', facebook_dashboard_path, class: 'btn btn-preferences' %></li>
-						<li><%= link_to 'Salir', facebook_dashboard_path, class: 'btn btn-preferences' %></li>
-					</ul>
-				<% end %>	
-					
-					<% if signed_in? %>
-					
-						<%= menu_link('Dashboard', 'icon-th-large', facebook_path, '') %>
-
-						<% if request.fullpath != new_facebook_list_path %>
-							<% current_user.facebook_lists.each do |fb_list| %>
-								<%= form_tag(activate_facebook_list_path(fb_list.id)) do %>
-									<%= hidden_field_tag :url, request.fullpath %>
-									<%= button_tag(type: "submit", class: "btn btn-small btn-primary") do %>
-										<strong><%= fb_list.name %></strong> 
-									<% end %>
-								<% end %>
-							<% end %>
-						<% end %>
-
-						<%= menu_link('Perfiles', 'icon-list', facebook_lists_path, '') %>
-
-						<li><%= link_to signout_path, method: "delete" do %>
-							<i class="icon-remove"></i> Cerrar sesión<% end %></li>
-
-					<% end %>	
-			</div>
-		</div><!-- container-->
-	</div> <!--snap-drawers-->
-<div clas="clearfix"></div>
+<!-- Deleted snapdrawers!!!!!!!!!!!! -->
 	
 </div><!--appContent container-->	
 

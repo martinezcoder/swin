@@ -139,7 +139,7 @@ body{
     width: 84%;
 }
 .escudo-engagement {
-    margin: 0 auto;
+    margin: 0;
     max-height: 290px;
     max-width: 349px;
     position: relative;
@@ -156,11 +156,11 @@ body{
 }
 .num-engage {
     font-size: 92px;
-    left: 24%;
+    left: 19%;
     position: absolute;
     text-align: center;
     top: 38%;
-    width: 122px;  
+    width: 160px;
 }            
 .btn-group {
     display: inline-block;
@@ -175,10 +175,11 @@ body{
 .word-engage {
     font-size: 22px;
     left: 13%;
+    max-width: 213px;
     position: absolute;
     text-align: center;
     top: 65%;
-    width: 200px;
+    width: 213px;
 }
 .name-engage {
     font-size: 33px;
@@ -292,6 +293,7 @@ body{
 .open > .dropdown-menu {
     display: block;
     left: 180px;
+    padding:4px;
 }
 .dropdown-menu li a {
     padding: 2px 10px 2px 2px;
@@ -553,13 +555,13 @@ a.btn-blue.disabled, a.btn-blue[disabled], a.btn-blue.disabled:hover, a.btn-blue
 }
 /*btn-profile*/
 .btn-profile {
-    background: #778991;
-    background-image: linear-gradient(to bottom, #778991, #778991);
-    background-repeat: repeat-x;
+    background: linear-gradient(to bottom, #778991, #778991) repeat-x scroll 0 0 #778991;
     border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
     color: white;
-    font-weight:bold;
+    font-weight: bold;
+    text-align: left;
     text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+    width: 100%;
 }
 .btn-profile:hover, .btn-profile:focus, .btn-profile:active, .btn-profile.active, .btn-profile.disabled, .btn-profile[disabled] {
     background: #778991;
@@ -788,9 +790,14 @@ a.btn-blue.disabled, a.btn-blue[disabled], a.btn-blue.disabled:hover, a.btn-blue
 /*### PREFERENCIAS - LISTAS - PERFILES ################*/
 /*#####################################################*/
 .paginas{
-  background:#999999;
-  height:100px;
-  width:100%;
+    background: none repeat scroll 0 0 #E2E1E0;
+    color: #58585A;
+    font-size: 14px;
+    font-weight: bold;
+    height: 40px;
+    margin: 0 0 18px;
+    padding: 5px 5px 5px 13px;
+    text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
 }
 .list-competitors{
   
@@ -802,6 +809,31 @@ a.btn-blue.disabled, a.btn-blue[disabled], a.btn-blue.disabled:hover, a.btn-blue
 .image-competitor{
     display:inline-block;
     vertical-align:top;  
+}
+.fb_stat.pull-right > input[type=radio]{
+  display:none;
+}
+
+.fb_stat.pull-right {
+    margin-right: 19px;
+}
+.fb_stat.pull-right > input[type=radio] + label {
+    background: none repeat scroll 0 0 #000000;
+    background: url("sw-sprite2.png") no-repeat scroll -176px -166px transparent; 
+    width:30px;
+    height:30px;
+    display:inline-block; 
+    vertical-align:top; 
+    margin-top: 9px; 
+}
+.fb_stat.pull-right > input[type=radio]:checked + label {
+    background: none repeat scroll 0 0 #000000;
+    background: url("sw-sprite2.png") no-repeat scroll -174px -203px transparent;
+    width:30px;
+    height:30px;
+    display:inline-block;
+    vertical-align:top;  
+    margin-top: 9px;
 }
 .starOn{
   background: url("sw-sprite2.png") no-repeat scroll -174px -203px transparent;
@@ -817,8 +849,58 @@ a.btn-blue.disabled, a.btn-blue[disabled], a.btn-blue.disabled:hover, a.btn-blue
   display:inline-block; 
   vertical-align:top;
 }
-
-
+.unstyled.fb_pages > li {
+    margin: 6px 0;
+}
+.fb_stat {
+    display: inline-block;
+    margin: 0 5px 0 0;
+    vertical-align: top;
+}
+.fb_stat-name {
+    min-width: 177px;
+}
+.fb_stat-edit {
+    background: none repeat scroll 0 0 #E2E1E0;
+    height: 45px;
+    padding: 2px 13px;
+    width: 34px;
+}
+.fb_stat-text{
+  margin-top: 10px;
+}
+/*#edit_facebook_list_8 input {
+    border: 9px solid #DAD9D8;
+    width: 91%;
+}*/
+input#facebook_list_name  {
+    border: 9px solid #DAD9D8;
+    width: 91%;
+}
+#editar {
+    background: url("sw-sprite2.png") no-repeat scroll -176px -117px transparent;
+    display: inline-block;
+    height: 30px;
+    margin-top: 6px;
+    vertical-align: top;
+    width: 30px;
+}
+#new-perfil {
+    background: url("sw-sprite2.png") no-repeat scroll -258px -120px transparent;
+    display: inline-block;
+    height: 30px;
+    margin-top: 4px;
+    vertical-align: middle;
+    width: 30px;
+}
+#volver{
+    background: url("sw-sprite2.png") no-repeat scroll -217px -120px transparent;
+    display: inline-block;
+    height: 30px;
+    margin-top: 4px;
+    vertical-align: middle;
+    width: 30px; 
+}
 @import "bootstrap-responsive";
 
 /* Large desktop */
@@ -862,12 +944,30 @@ a.btn-blue.disabled, a.btn-blue[disabled], a.btn-blue.disabled:hover, a.btn-blue
     -moz-background-size: cover;
     -o-background-size: cover;
   }
+  
+  .escudo-engagement {
+      margin: 0 auto;
+      max-height: 290px;
+      max-width: 349px;
+      position: relative;
+  }
   .word-engage {
-    font-size: 18px;
+      font-size: 22px;
+      left: 11%;
+      max-width: 213px;
+      position: absolute;
+      text-align: center;
+      top: 65%;
+      width: 213px;
+  }
+  .num-engage {
+    font-size: 92px;
     left: 18%;
     position: absolute;
-    top: 65%;
-  } 
+    text-align: center;
+    top: 38%;
+    width: 160px;
+  }
   .simple-search {
     padding: 6px 32px 6px 7px;
     width:280px;
