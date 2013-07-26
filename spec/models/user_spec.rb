@@ -25,7 +25,7 @@ describe User do
   it { should respond_to(:pages) }
   it { should respond_to(:user_page_relationships) }
   it { should respond_to(:facebook_lists) }
-  it { should respond_to(:plan) }
+  it { should respond_to(:user_plan_relationships) }
   
   it { should be_valid }
 
@@ -148,5 +148,31 @@ describe User do
     end
 
   end
+
+  describe "new plan" do
+    let(:plan) { FactoryGirl.create(:plan) }
+    before do
+      @user.save
+      @user.set_plan!(plan, nil)
+    end
+    
+    its(:plans) { should include(plan) }
+
+    it "should increment the number of user plans" do
+      expect do
+        @user.save
+        @user.set_plan!(plan, nil)
+      end.to change(@user.plans, :count).by(1)
+    end      
+
+    it "should not increment the number of ACTIVE user plans" do
+      expect do
+        @user.save
+        @user.set_plan!(plan, nil)
+      end.to change(@user.active_plans, :count).by(0)
+    end      
+
+  end
+    
   
 end

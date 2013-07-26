@@ -1,69 +1,130 @@
 <% provide(:title, "Búsqueda de engagement") %>
 
-<div id="search-page">
-<div class="container">	
-	<h3 id="consulta">Consulta de ENGAGEMENT</h3>
+<% if !@searching %>
+	<div id="top-search">
+		<div class="container">
+			<div class="row">
+				 <div class="span8 offset2"> <!-- buscador engagement-->
+					<div class="try-search text-center" >
+					    <h3 class="sw-violet">Facebook Engagement</h3>
+						<h4 class="sw-white">Lo hacemos fácil, ahora puedes conocer el engagement de tus marcas favoritas ;-)</h4>				
+						<%= render 'site/shared/search_box' %>	
+					</div>
+				 </div>
+			</div><!--row-->
+		</div>	
+	</div><!--search-->	
 	
-	<div class="row">
-		<% if @searching %>
-		<div class="span6">
-
-			<% if @fb_search_path.nil? %>
-				<div id="fb_search">
-<!--						<img alt="Loader" class="spinner" height="48" src="/assets/hummingbirds.gif" width="48" /> -->
-					<% if @pageslist.count > 0 %>
-						<p><strong>Resultados para: </strong><%=  params[:search] %></p>
-						<p>Ir al resultado de engagement</p>
-
-						<% @pageslist.each_with_index do |p, i| %>
-							<li>
-								<div>
-									<img class='fb_img' src='https://graph.facebook.com/<%= p.page_id %>/picture' />
-		  							<div class='name'><p><%= p.name %></p></div>
-									<a href='/facebook/fb-<%= p.page_id %>'>
-										<div class='arrow'></div>
-									</a>
-								</div>
-							</li>
-							<% break if i == 3 %>
-						<% end %>
-					<% else %>
-						<li>No se ha encontrado ninguna página con el texto '<%= params[:search]%>' </li>
-						<li><strong>Si no encuentras una página, puedes escribir su URL en el buscador.</strong> </li>
-					<% end %>
-				</div>
-
-			<% else %>
-				<p>Ir al resultado de engagement</p>
-
-				<!-- Este lo carga el jQuery -->
-			   <div id="fb_search" data-facebook-search="<%= @fb_search_path %>" >
-				  <img alt="Loader" class="spinner" height="48" src="/assets/hummingbirds.gif" width="48" />
-			   </div>
-			<% end %>
-						
-		</div><!--endSpan6-->	
-		<% end %>	
-		<div class="span6">
-		    <p><strong>Nueva búsqueda</strong><br/>
-		    	<small>Tip. si no encuentras lo que buscas, inserta la URL de la página deseada.</small>
-		    </p>
-			<%= render 'site/shared/search_box' %>
-			
-		<% if !signed_in? %>
-			<div id="conectarConFacebook">
-				<div id="quieres">
-					<p><strong>¿Quieres comparar varios competidores?</strong></p>
-					<p><strong>¡Prueba GRATIS SocialWin Analytics!</strong></p>							
-				</div>			
-				<!--btnConectarConFacebook-->	
-				<%= render 'site/shared/facebook_button_signin' %>
+	<div id="metodon">
+	<div class="container metodon">
+		
+		<div class="row text-center">
+			<div class="span2"></div>
+			<div class="span2">
+				<%= image_tag "metodo1n.png", :class => "img-metodo" %>
+				<h4 class="text-center">MONITORING</h4>
+			</div>
+			<div class="span2">
+				<%= image_tag "metodo2n.png", :class => "img-metodo" %>
+				<h4 class="text-center">COMPETITIVE ANALYSIS</h4>
+			</div>
+			<div class="span2">
+				<%= image_tag "metodo3n.png", :class => "img-metodo" %>
+				<h4 class="text-center">RESEARCHS & REPORTS</h4>
+			</div>
+			<div class="span2">
+				<%= image_tag "metodo4n.png", :class => "img-metodo" %>
+				<h4 class="text-center">STRATEGIC DASHBOARD</h4>
 			</div>	
-		<% end %>			
-		</div><!--endSpan6-->	
-			
-	</div><!--endRow-->	
-</div>					
-</div>				
+			<div class="span2"></div>			
+		</div>
+	</div>
+</div><!--nedMetodo-->
+	
+    <% if !signed_in? %>
+	<div class="container">
+			<div class="row">
+				<div class="span4 offset4">
+					<div id="conectarConFacebook">
+						<div id="quieres">
+							<p><strong>¿Quieres comparar varios competidores?</strong></p>
+							<p><strong>¡Prueba GRATIS SocialWin Analytics!</strong></p>							
+						</div>			
+						<!--btnConectarConFacebook-->	
+						<%= render 'site/shared/facebook_button_signin' %>
+					</div>	
+				</div>
+			</div>
+	</div>
+	<% end %>
+<% end %>
 
+
+<% if @searching %>
+<div id="search-page">
+	<div class="container">	
+		<h3 id="consulta">Consulta de ENGAGEMENT</h3>
+		
+		<div class="row">
+			<% if @searching %>
+			<div class="span6">
+	
+				<% if @fb_search_path.nil? %>
+					<div id="fb_search">
+	               <!-- <img alt="Loader" class="spinner" height="48" src="/assets/hummingbirds.gif" width="48" /> -->
+						<% if @pageslist.count > 0 %>
+							<p><strong>Resultados para: </strong><%=  params[:search] %></p>
+							<p>Ir al resultado de engagement</p>
+	
+							<% @pageslist.each_with_index do |p, i| %>
+								<li>
+									<div>
+										<img class='fb_img' src='https://graph.facebook.com/<%= p.page_id %>/picture' />
+			  							<div class='name'><p><%= p.name %></p></div>
+										<a href='/facebook/<%= smart_page_name(p.name) %>-engagement-<%= p.page_id %>'>
+											<div class='arrow'></div>
+										</a>
+									</div>
+								</li>
+								<% break if i == 3 %>
+							<% end %>
+						<% else %>
+							<li>No se ha encontrado ninguna página con el texto '<%= params[:search]%>' </li>
+							<li><strong>Si no encuentras una página, puedes escribir su URL en el buscador.</strong> </li>
+						<% end %>
+					</div>
+	
+				<% else %>
+					<p>Ir al resultado de engagement</p>
+	
+					<!-- Este lo carga el jQuery -->
+				   <div id="fb_search" data-facebook-search="<%= @fb_search_path %>" >
+					  <img alt="Loader" class="spinner" height="48" src="/assets/hummingbirds.gif" width="48" />
+				   </div>
+				<% end %>
+							
+			</div><!--endSpan6-->	
+			<% end %>	
 			
+			<div class="span6">
+			    <p><strong>Nueva búsqueda</strong><br/>
+			    	<small>Tip. si no encuentras lo que buscas, inserta la URL de la página deseada.</small>
+			    </p>
+				<%= render 'site/shared/search_box' %>
+				
+				<% if !signed_in? %>
+					<div id="conectarConFacebook">
+						<div id="quieres">
+							<p><strong>¿Quieres comparar varios competidores?</strong></p>
+							<p><strong>¡Prueba GRATIS SocialWin Analytics!</strong></p>							
+						</div>			
+						<!--btnConectarConFacebook-->	
+						<%= render 'site/shared/facebook_button_signin' %>
+					</div>	
+				<% end %>			
+			</div><!--endSpan6-->	
+				
+		</div><!--endRow-->	
+	</div>					
+</div>	
+<% end %><!--if searching-->			

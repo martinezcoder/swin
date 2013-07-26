@@ -1,38 +1,22 @@
 <div class="menu_metricas span12">
 	<div class="collapse-inner">
 
-
-	
 		<div class="menuapp-collapse nav-collapse collapse">
 			<ul class="nav">
-				<!--
-				<%= menu_link('Engagement', 'icon-home', facebook_engage_path) %>
-				<%= menu_link('Tamaño', 'icon-globe', facebook_size_path) %>
-				<%= menu_link('Crecimiento', 'icon-globe', facebook_growth_path) %>
-				<%= menu_link('Actividad', 'icon-globe', facebook_activity_path) %>
-				-->
-				<li><%= link_to 'Dashboard', facebook_dashboard_path, class: 'btn' %></li>
-				<li><%= link_to 'Engagement', facebook_engage_path, class: 'btn' %></li>
-				<li><%= link_to 'Tamaño', facebook_size_path, class: 'btn disabled' %></li>
-				<li><%= link_to 'Crecimiento', facebook_growth_path, class: 'btn disabled' %></li>
-				<li><%= link_to 'Actividad', facebook_activity_path, class: 'btn disabled' %>	</li>			
-		 		 
-		 		<!--  
-		  		<li class="disabled"><a href="#">Interacción</a></li>
-			    <li class="disabled"><a href="#">Embajadores</a></li>
-			    <li class="disabled"><a href="#">Influence</a></li>
-			    <li class="disabled"><a href="#">Sentiment</a></li> 
-			    -->
-
-				<li class="nav-header">Mi Perfil</li>
-					<%= menu_link('Mis Listas', 'icon-list', facebook_lists_path) %>
-					<%= menu_link('Editar lista activa', 'icon-search', (lst = get_active_list).nil? ? root_url : edit_facebook_list_path(lst)) %>
-				<li class="divider"></li>	
-			    		    
+				<%= menu_link('Dashboard', nil, facebook_dashboard_path, 'btn btn-blue') %>
+				<%= menu_link('Engagement', nil, facebook_engage_path, 'btn btn-blue') %>
+				<%= menu_link('Tamaño', nil, facebook_size_path, 'btn btn-blue') %>
+				<%= menu_link('Crecimiento', nil, facebook_growth_path, 'btn btn-blue') %>
+				<%= menu_link('Actividad', nil, facebook_activity_path, 'btn btn-blue') %>
 			</ul>
 		</div>
 
+<script>
+    $('a[disabled=disabled]').click(function(event){
+        event.preventDefault(); // Prevent link from following its href
+    });
+</script>
+		
 	</div><!--navbar-->
 </div>
-
 

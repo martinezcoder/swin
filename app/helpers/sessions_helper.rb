@@ -54,17 +54,18 @@ module SessionsHelper
     end
   end
 
-  def user_is_admin
-    redirect_to root_path if !(["fran.martinez@socialwin.es", "thomas.bartczak@socialwin.es", "encarna_e@yahoo.com"].include?(current_user.email))
-  end
-
-  def membership_user?
-    if ["fran.martinez@socialwin.es", "alexvicentejose@gmail.com", "thomas.bartczak@socialwin.es"].include?(current_user.email)
-      true
-    else
+  def user_plan?(plan)
+    begin
+      current_user.plan.name == plan
+    rescue
       false
     end
   end
+
+  def user_is_admin
+    user_plan?(ADMIN)
+  end
+
 
   # omniauth and socialnetworks authentication functions
 

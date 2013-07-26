@@ -5,7 +5,15 @@ $btnInfoBackgroundHighlight: #2D255E;
 
 @import "bootstrap";
 
-
+html, body {
+  height: 100%;
+}
+body{
+    min-width:320px;  
+    padding-top: 54px;  
+    font-family: 'DominikRegular', Helvetica,'Lucida Grande', Verdana;  
+    color:#999999;        
+}
 .sw-blue{
   color: #6EC7D9;
 }
@@ -20,15 +28,6 @@ $btnInfoBackgroundHighlight: #2D255E;
 }
 html, body {
   height: 100%;
-}
-body{
-    min-width:320px;  
-}
-body { 
-  font-family: 'DominikRegular', Helvetica,'Lucida Grande', Verdana;  
-  padding-top: 54px;
-  color:#999999;  
-  min-width:320px;
 }
 ul{
   list-style:none;
@@ -470,6 +469,7 @@ hr, .hr{
     max-width: 327px;
 }
 #conectarConFacebook{
+    margin-bottom: 50px;
     margin-top: 56px;
 }
 
@@ -498,7 +498,7 @@ hr, .hr{
     max-width: 830px;    
 }
 #cita-thomas{
-    font-size: 20px;
+    font-size: 18px;
     line-height: 23px;
     margin: 0 auto;
 }
@@ -557,9 +557,9 @@ hr, .hr{
 }
 #colaboradores > li {
     display: inline-block;
-    margin: 0 0 24px;
+    margin: 0 0 34px;
     vertical-align: top;
-    width: 386px;
+    width: 352px;
 }
 .col-imagen {
     display: inline-block;
@@ -615,7 +615,7 @@ hr, .hr{
 hr.hr-nosotros {
     background: none repeat scroll 0 0 #FFFFFF;
     box-shadow: 0 2px 2px 0 #B6B6B6;
-    height: 3px;
+    height: 2px;
 }
 
 

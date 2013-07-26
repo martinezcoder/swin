@@ -1,75 +1,93 @@
-<h1>Mis Listas</h1>
-<center>
-	<h4>Puedes crear un máximo de <%= MAX_LISTS %> listas</h4>
-</center>
-<div class="span9 well">
-	<% if @facebook_lists.count < MAX_LISTS %>
-		<%= link_to 'Añadir nueva lista...', new_facebook_list_path %>
-	<% end %>
 
-	<h2>Elige una de tus listas para monitorizar y comparar</h2>
-	
-	<ul class="fb_pages">
-		<% @facebook_lists.each do |list| %>
-		
-			<li>
-
-				<div class="fb_stats">
-				  
-				  <div class="fb_stat">
-				  	Nombre de lista:
-				    <strong id="fb_fans" class="stat">
-				    	<%= list.name %>
-				    </strong>
-				  </div>
-
-				  <div class="fb_stat">
-				  	Lider Page:
-				    <strong id="fb_fans" class="stat">
-				    	<% if list.page_id %>
-					    	<% p = Page.find(list.page_id) %>
-					          	<%= link_to page_path(p.id), class: "no-decoration"  do %>
-					          		<%= image_tag get_picture(p), class: "mini_logo", alt: p.name, title: p.name %>
-					          	<% end %>
-				        <% end %>
-				    </strong>
-				  </div>
-
-					<div class="fb_stat">
-						Competidores:
-						<%= render 'competitors_mini_logos', :list => list %>
-				    </strong>
-					</div>
-					
-					<div class="fb_stat">
-						<%= link_to 'Editar lista...', edit_facebook_list_path(list) %>
-					</div>
-					
-					<div class="fb_stat">
-						<%= link_to 'Eliminar lista...', list, method: :delete, class: "text-error", data: { confirm: '¿Estás seguro?' } %>
-					</div>
-
-
-					<div class="fb_btn">
-					<% if list == get_active_list %>
-						<div class="btn btn-success btn-small disabled">
-							<i class="icon-ok icon-white"></i> Activada
-						</div> 
-					<% else %>
-						<%= link_to activate_facebook_list_path(list), method: :post, class: "btn btn-primary btn-small"  do %>
-							<i class=" icon-plus icon-white"></i> Activar
-						<% end %>
-					<% end %>
-					</div>
-
-		<% end %>
-
-	</ul>		
+<div class="paginas">
+	<div class="fb_stat fb_stat-text">Perfiles</div>	
 </div>
 
+<!--<h4>Puedes crear un máximo de <%= current_user.plan.num_lists %> listas</h4>-->
+<!--<h2>Elige una de tus listas para monitorizar y comparar</h2>-->
 
 
+<div class="">
+	<div class="row-fluid">
+		<div class="span6">
+				<ul class="unstyled fb_pages">
+					<% @facebook_lists.each do |list| %>
+					<li>
+						
+						  <!--Lider Page:-->
+					  	  <div class="fb_stat">
+						    <strong id="fb_fans" class="stat">
+						    	<% if list.page_id %>
+							    	<% p = Page.find(list.page_id) %>
+							          	<%= link_to smart_page_path(p), class: "no-decoration"  do %>
+							          		<%= image_tag get_picture(p), class: "mini_logo", alt: p.name, title: p.name %>
+							          	<% end %>
+						        <% end %>
+						    </strong>
+						  </div>
+						  
+						  <!--Nombre de lista:-->
+						  <div class="fb_stat fb_stat-name"> 
+						     <div class="fb_stat">
+						        <strong id="fb_fans" class="stat">
+						    	<%= list.name %>
+						        </strong>
+						   </div>				  
+						 </div> 
+						
+					    <!--<div class="fb_stat">
+						  	Competidores: 
+								 <% render 'competitors_mini_logos', :list => list %>
+					        </div>
+						-->
+								
+					  <div class="fb_stat fb_stat-edit pull-right">
+							<%= link_to '', edit_facebook_list_path(list), id: 'editar' %>
+					  </div>
 
+			
+					  <!--
+					  <div class="fb_stat fb_btn">
+							<% if list == get_active_list %>
+								<div class="btn btn-success btn-small disabled">
+									<i class="icon-ok icon-white"></i> Activada
+								</div> 
+							<% else %>
+								<%= form_tag(activate_facebook_list_path(list)) do %>
+									<%= hidden_field_tag :url, request.url %>
+									<%= button_tag(type: "submit", class: "btn btn-small btn-primary") do %>
+										<i class=" icon-plus icon-white"></i> Activar
+									<% end %>
+								<% end %>
+							<% end %>
+					  </div>
+					  -->
+					  
+					</li>	
+					<% end %>
+				</ul>
+		</div>
+		<div class="span6">
+			<ul class="unstyled fb_pages">
+				<li>
+					<div class="paginas">
+						<div class="fb_stat fb_stat-text">Añadir perfil</div>
+						<div class="fb_stat pull-right">
+							<% if @facebook_lists.count < current_user.plan.num_lists %>
+								<%= form_for(new_facebook_list_path) do |list| %>
+									<%= list.text_field :page_id, value: 35, type: "hidden" %>
+									<%= list.text_field :name, value: 'list', type: "hidden" %>
+					  				<%= list.submit "", id: 'new-perfil', class: "" %>
+					  			<% end %>
+							<% end %>	
+						</div>
+					</div>
+					
+				</li>
+			</ul>
 
-
-
+		</div>
+	</div>
+	
+		
+</div>

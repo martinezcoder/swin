@@ -29,7 +29,7 @@ describe Plan do
   it { should respond_to(:num_competitors) }
   it { should respond_to(:num_lists) }
   it { should respond_to(:price) }
-
+  it { should respond_to(:user_plan_relationships) }
 
   describe "when name is not present" do
     before { @plan.name = nil }

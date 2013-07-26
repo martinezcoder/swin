@@ -13,22 +13,25 @@
 
 class UserPlanRelationship < ActiveRecord::Base
 #  attr_accessible :effective_date, :expiration_date, :plan_id, :user_id
-  attr_accessible :user_id
 
   belongs_to :user 
   belongs_to :plan
 
   validates :user_id, presence: true
   validates :plan_id, presence: true
-  validates :effective_date, presence: true
-  validates :expiration_date, presence: true
   
-  before_save :validate_dates?
+  before_save :set_effective_date
+
+  def expirate!
+    self.expiration_date = Time.now.strftime("%Y%m%d").to_i
+    self.save!
+  end
 
 private
 
-  def validate_dates?
-    (self.expiration_date > self.effective_date) 
+  def set_effective_date
+    self.effective_date = Time.now.strftime("%Y%m%d").to_i
   end  
+
 
 end

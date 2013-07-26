@@ -1,5 +1,64 @@
 module DashboardHelper
 
+
+  def ndays_plan_constraint_class(label_for, link_class, link_text, link_type)
+
+    if user_plan?(FREE)
+      if request.path == facebook_engage_path
+        if link_type > 7
+          link_class += ' disabled'
+        end
+      else
+        if link_type > 0
+          link_class += ' disabled'
+        end
+      end
+    end
+    
+    content_tag(:label, :for => label_for) do
+      concat(content_tag(:li, class: link_class) do
+          link_text
+      end)
+    end
+
+  end
+
+  def date_range_plan_constraint_class
+    if user_plan?(FREE)
+      false 
+    else
+      true
+    end
+  end
+
+  def dashboard_box(link_path, title, value, variation, percent=false)
+
+    class_name = "btn past "
+    if !variation.nil?
+      if variation > 0 
+        class_name += " past-green"
+      elsif variation < 0
+        class_name += " past-orange"
+      end
+    end
+        
+    link_to link_path, class: class_name do
+      concat(content_tag(:div, class: "past-title") do
+          title
+      end)
+      concat(content_tag(:div, class: "past-percent") do
+          value.to_s + (percent ? '%' : '')
+      end)
+      if !percent
+        concat(content_tag(:div, class: "past-var") do
+            variation.to_s + '%' if !variation.nil?
+        end)
+      end
+    end
+
+  end
+  
+
   class HtmlHardcodes
 
       def logo (url, img, title, options)
@@ -51,22 +110,6 @@ module DashboardHelper
     
   end
 
-
-
-  def chart_test_tag (height, params = {})
-    params[:format] ||= :json
-    path = query_test_path(params: params)
-    if params[:type] == 'Table'
-      content_tag(:div, :'data-query-table' => path, :style => "height: #{height}px;") do
-        image_tag('loader.gif', :size => '24x24', :class => 'spinner')
-      end            
-    else
-      content_tag(:div, :'data-query-chart' => path, :style => "height: #{height}px;") do
-        image_tag('loader.gif', :size => '24x24', :class => 'spinner')
-      end
-    end
-  end
-  
   def chart_tag (height, params = {})
     params[:format] ||= :json
     if params[:chart] == 'pages'

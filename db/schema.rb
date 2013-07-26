@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130710121315) do
+ActiveRecord::Schema.define(:version => 20130715110749) do
 
   create_table "authentications", :force => true do |t|
     t.integer  "user_id"
@@ -133,6 +133,7 @@ ActiveRecord::Schema.define(:version => 20130710121315) do
     t.float    "price"
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
+    t.integer  "max_date_range"
   end
 
   add_index "plans", ["name"], :name => "index_plans_on_name", :unique => true

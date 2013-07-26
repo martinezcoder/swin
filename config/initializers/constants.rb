@@ -1,11 +1,12 @@
+# encoding: UTF-8
+
 ON=1
 OFF=0
 UPDATE_STREAM=true
 UPDATE_DAY=true
 
-MAX_COMPETITORS=10
+
 MIN_COMPETITORS=2
-MAX_LISTS=2
 MAX_DATE_RANGE=92
 
 FACEBOOK= 'facebook'
@@ -20,7 +21,13 @@ YOUTUBE= 'youtube'
 
 
 
+M_DASHBOARD = "Dashboard"
 M_ENGAGEMENT = "Engagement"
 M_CRECIMIENTO = "Crecimiento"
-M_TAMANO = "Tamano"
+M_TAMANO = "Tamaño"
 M_ACTIVIDAD = "Actividad"
+
+
+FREE = 'free'
+ADMIN = 'admin'
+PREMIUM = 'premium_FB'

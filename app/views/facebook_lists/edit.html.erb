@@ -1,5 +1,5 @@
+
+
 <%= render 'form' %>
 
-<%= render 'competitors' %>
-
-<%= link_to 'Atrás', facebook_lists_path %>
+<% link_to 'Eliminar lista...', @facebook_list, method: :delete, class: "text-error", data: { confirm: '¿Estás seguro?' } %>

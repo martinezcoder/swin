@@ -52,26 +52,35 @@ module PagesHelper
       variation(old_data.to_f, new_data.to_f)
     end
     
-    def get_engagement_variations_between_dates(page, dayFrom, dayTo)
+    def get_dashboard_metrics(page, date_from, date_to)
       begin
-        regOld = page.page_data_days.find_by_day(dayFrom)
-        regNew = page.page_data_days.find_by_day(dayTo)
+        regOld = page.page_data_days.find_by_day(date_from.strftime("%Y%m%d").to_i)
+        regNew = page.page_data_days.find_by_day(date_to.strftime("%Y%m%d").to_i)
 
-        engageOld = engagement(regOld.likes, regOld.prosumers)
-        engageNew = engagement(regNew.likes, regNew.prosumers)
-        
         fansOld = regOld.likes
         fansNew = regNew.likes
         
         activesOld = regOld.prosumers
         activesNew = regNew.prosumers
 
-        return {engagement: variation(engageOld,  engageNew), 
-                     fans: variation(fansOld,    fansNew), 
-                  actives: variation(activesOld, activesNew)}
+        engageOld = engagement(fansOld, activesOld)
+        engageNew = engagement(fansNew, activesNew)
+        
+
+        return {
+               engagement: {value: engageNew,  variation: get_variation(engageOld,  engageNew)}, 
+               size:       {value: fansNew,    variation: get_variation(fansOld,    fansNew)},
+               activity:   {value: activesNew, variation: get_variation(activesOld, activesNew)},
+               growth:     {value: get_variation(fansOld,fansNew), variation: 0}, 
+               }
       rescue
       # probably because no data has been catched from these days and this page
-        return {engagement: 0, fans: 0, actives: 0}
+        return {
+               engagement: {value: 0, variation: 0}, 
+               size:       {value: 0, variation: 0}, 
+               activity:   {value: 0, variation: 0},
+               growth:     {value: 0, variation: 0}
+               }
       end
     end
     
@@ -107,7 +116,7 @@ module PagesHelper
         end
 
         case @metric_name
-        when "Tamano" 
+        when "Tamaño" 
           value_yesterday = (dayPageDataY.nil? ? 0 : dayPageDataY.likes)
           value_today = (dayPageDataT.nil? ? 0 : dayPageDataT.likes)
         when "Actividad"
@@ -159,14 +168,16 @@ module PagesHelper
       @options = "seriesType: 'bars', 
                 title:'"+ @metric_name +"',
                 titleTextStyle: {fontSize: 14},
-                colors: ['#0088CC'],
+                colors: ['#0088CC','#33316C','#60B74D','#FDA64A','#666B83'],
                 height: 200,
                 animation:{duration: 1500,easing: 'out'},
                 hAxes:[{title:'Competidores'}],
                 vAxis: {minValue:0, maxValue:" + @max_value.to_s + "},
                 fontSize: 10,
                 legend: {position: 'none', textStyle: {fontSize: 14}},
-                tooltip: {isHtml: true}" 
+                tooltip: {isHtml: true},
+                hAxis: {gridlines:{color: '#333', count: 4}},
+                theme: 'maximized' " 
       return data_list
     end
 
@@ -188,7 +199,7 @@ module PagesHelper
         valueList = []
 
         case @metric_name
-        when "Tamano"
+        when "Tamaño"
           value_yesterday = dataFirst.nil? ? 0 : dataFirst.likes
         when "Actividad"
           value_yesterday = dataFirst.nil? ? 0 : dataFirst.prosumers
@@ -205,7 +216,7 @@ module PagesHelper
         dataRecords.each_with_index do |dataDay, i|     
 
             case @metric_name
-            when "Tamano"
+            when "Tamaño"
               value_today = dataDay.likes
             when "Actividad"
               value_today = dataDay.prosumers
@@ -301,7 +312,7 @@ module PagesHelper
           page_data = regs.find_by_page_id(p.id)
           if !page_data.nil? 
             case @metric_name
-            when "Tamano"
+            when "Tamaño"
               myArray[row][column] = page_data.likes
             when "Actividad"
               myArray[row][column] = page_data.prosumers
@@ -331,11 +342,13 @@ module PagesHelper
 
       @options = "title:'" + @metric_name + "',
                 titleTextStyle: {fontSize: 14},
+                height: 300,
                 vAxis: {title: '"+ @metric_name +"'},
                 hAxes:[{title:'Día'}],
                 seriesType: 'lines',
                 fractionDigits: 2,
-                suffix: '%'
+                suffix: '%',
+                theme: 'maximized'
                 " 
 
       return data_list
@@ -347,7 +360,7 @@ module PagesHelper
     protected
 
       def engagement(fans, actives)
-        
+
         if fans > 0        
             engage = actives * peso_engage(fans) *100 / fans
 
@@ -490,6 +503,16 @@ module PagesHelper
     rescue
       'red'
     end 
+  end
+
+  def smart_page_name(name)
+    ret = name.gsub(/[%_!~*'().,;$#|]/,"")
+    ret = ret.gsub(" ", "")
+    ret
+  end
+
+  def smart_page_path(page)
+    page_path(id: smart_page_name(page.name)+'-engagement-'+page.page_id, day: Time.now.yesterday.strftime('%Y%m%d'))
   end
 
 end
