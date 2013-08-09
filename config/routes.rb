@@ -1,5 +1,6 @@
 Swin::Application.routes.draw do
 
+=begin
   resources :facebook_lists, :path => "/facebook/lists" do
     member do
       post :activate
@@ -36,7 +37,7 @@ Swin::Application.routes.draw do
   match '/search_engagement', to: 'site#search'
 
   root to: 'site#home' # redirect('http://socialwin.herokuapp.com') 
-
+=end
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
