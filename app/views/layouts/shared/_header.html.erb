@@ -18,8 +18,8 @@
 				<ul class="nav pull-right">
 					<%= menu_link('CONSULTA ENGAGEMENT', '', search_engagement_path, '') %>
 					<%= menu_link('SOBRE SOCIALWIN', '', about_path, '') %>
-					<% if signed_in? %>
 <% if false %>
+					<% if signed_in? %>
 
 					<li class="dropdown" id="config">
 						<a href="#" data-toggle="dropdown"><!--class="dropdown-toggle"-->
@@ -49,8 +49,6 @@
 						</ul>
 					
 					</li>
-	
-<% end %>
 
 					<% else %>
 	
@@ -65,6 +63,7 @@
 						</li>
 	
 					<% end %>				   
+<% end %>
 				</ul>
 			</div>
 			
