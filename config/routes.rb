@@ -34,6 +34,7 @@ Swin::Application.routes.draw do
   match '/twitter', to: 'static_pages#twitter'
 
 =end
+  resources :pages, :path => "/facebook", only: :show
   
   match '/about', to: 'site#about' 
   match '/search_engagement', to: 'site#search'
