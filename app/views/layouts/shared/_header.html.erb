@@ -19,6 +19,8 @@
 					<%= menu_link('CONSULTA ENGAGEMENT', '', search_engagement_path, '') %>
 					<%= menu_link('SOBRE SOCIALWIN', '', about_path, '') %>
 					<% if signed_in? %>
+<% if false %>
+
 					<li class="dropdown" id="config">
 						<a href="#" data-toggle="dropdown"><!--class="dropdown-toggle"-->
 							<%= image_for current_user %>
@@ -48,6 +50,8 @@
 					
 					</li>
 	
+<% end %>
+
 					<% else %>
 	
 						<li class="dropdown" id="config"><!--id="fat-menu"     -->
