@@ -85,7 +85,7 @@ class User < ActiveRecord::Base
 
     def set_free_plan
       if self.plan.nil?
-        if free = Plan.find_by_name(FREE)
+        if free = Plan.find_by_name(PREMIUM)
           self.set_plan!(free)  
         end
       end

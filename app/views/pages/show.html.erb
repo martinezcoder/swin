@@ -1,9 +1,9 @@
-<% provide(:title, "Engagement de " + @page.name + " el día " + @day) %>
+<% provide(:title, "" + @page.name + "Proportion on " + @day) %>
 
 <div id="show">
 <div class="container">
 	<div class="">
-		<h3 class="consulta">Consulta de ENGAGEMENT</h3>
+		<h3 class="consulta">Fans/Activity proportion</h3>
 	</div>
 	
 	<div class="row-fluid">
@@ -23,10 +23,10 @@
 			
 			<div class="escudo-engagement">
 				<div class="image-engage">
-					<%= image_tag "show-engagement/escudo.png" %>
+					<%= image_tag "show-page/escudo.png" %>
 				</div>
 				<div class="num-engage"><%= @engage %></div>
-				<div class="word-engage">ENGAGEMENT</div>
+				<div class="word-engage">Proportion</div>
 				<div class="name-engage"><%= @page.name %></div>
 			</div>
 			
@@ -34,12 +34,12 @@
 	    	<!--btn-group-comparte -->
 		    <div class="btn-group" id="comparten"><!-- comparte-engagement-btn -->
 		    	<a class="btn btn-comparte dropdown-toggle" data-toggle="dropdown">
-		    		¡Comparte su Engagement! <span class="comparte-icon"></span>
+		    		Share this data!<span class="comparte-icon"></span>
 	    		</a>
 			    <ul class="dropdown-menu">
 					<li>
 						 <a class="btn" 
-						    href="http://twitter.com/share?url=<%= @thisUrl %>&text=Descubre el engagement de <%= @page.name  %> vía @SocialWinApp" target="_blank" onClick="window.open(this.href, this.target, 'width=500,height=400'); return false;">
+						    href="http://twitter.com/share?url=<%= @thisUrl %>&text=Descubre la proporción de <%= @page.name  %>" target="_blank" onClick="window.open(this.href, this.target, 'width=500,height=400'); return false;">
 							<span class="comparte-twitter"></span> Twitter</a>	
 					</li>
 					<li>
@@ -54,24 +54,13 @@
 					</li>
 			    </ul>	    		
 			</div> 
-  			
+<% if false %>  			
 			<% if signed_in? %>
 				<div class="space"></div>
-			<% else %>
-			<!--
-				<div id="conectarConFacebook">
-					<div id="quieres">
-						<p><strong>¿Quieres comparar varios competidores?</strong></p>
-						<p><strong>¡Prueba GRATIS SocialWin Analytics!</strong></p>							
-					</div>
-						
-					<%= render 'site/shared/facebook_button_signin' %>
-				</div>
-			-->	
 			<% end %>
 			<%= render 'layouts/shared/facebook_invite' %>
 			<div class="space"></div> 
-			
+<% end %>			
 			
 		</div><!-- span5-->
 		
@@ -80,50 +69,40 @@
 				    <table class="table">
 						<thead>
 							<tr>
-								<th>Métricas</th>
-								<th>Valor</th>
+								<th>Metrics</th>
+								<th>Value</th>
 								<th>Var%</th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr>
-								<td>Fans totales: </td>
+								<td>Total Fans: </td>
 								<td><strong> <%= @data_day.likes %> </strong></td>
 								<td><span class="<%= color_integer(@variations[:likes]) %>"><%= @variations[:likes] %>%</span></td>
 							</tr>
 							<tr>
-								<td>Fans activos:</td>
+								<td>Talking about:</td>
 								<td><strong> <%= @data_day.prosumers %> </strong></td>
 								<td><span class="<%= color_integer(@variations[:prosumers]) %>"><%= @variations[:prosumers]%>%</span></td>
 							</tr>
 							<tr>
-								<td>Engagement (últimos 7 días):</td>
+								<td>Proportion:</td>
 								<td><strong> <%= @engage %> </strong></td>
 								<td><span class="<%= color_integer(@variations[:engage]) %>"><%= @variations[:engage] %>%</span></td>
 							</tr>							
 						</tbody>
     				</table>
 				
-				<small><%= link_to "Ver en Facebook", get_url(@page), target: "_blank" %></small>
+				<small><%= link_to "Show on Facebook", get_url(@page), target: "_blank" %></small>
 				
 			</div>
 			
 			<div class="grafica-engagement">
-					<div class="grafica-header">Engagement últimos 7 días</div>
+					<div class="grafica-header">Last 6 days</div>
 					<%= render 'facebook/charts/chart_timeline', :graph => "graph_div" %>
 					<%= render 'facebook/shared/graph', :graph => "graph_div" %>
 			</div>
-			
-		<!--
-			<% if not signed_in? %>			
-				<div class="clearfix"></div>
-				
-				<div id="div-search-box">
-					<p><strong>Nueva busqueda</strong></p>
-					<%= render 'site/shared/search_box' %>
-				</div>
-			<% end %>
-		-->	
+
 		</div><!-- span7 -->
 	</div><!--row-->
 	
@@ -136,7 +115,7 @@
 			 <div class="span6 offset3 text-center"> <!-- buscador engagement-->
 				<div class="try-search text-center" >
 				    <h3 class="sw-violet"></h3>
-					<h4 class="sw-violet">Nueva búsqueda</h4>				
+					<h4 class="sw-violet">New search</h4>				
 					<%= render 'site/shared/search_box' %>	
 				</div>
 			 </div>
@@ -148,14 +127,7 @@
 <div class="container">
 		<div class="row">
 			<div class="span4 offset4 text-center">
-				<div id="conectarConFacebook">
-					<div id="quieres">
-						<p><strong>¿Quieres comparar varios competidores?</strong></p>
-						<p><strong>¡Prueba GRATIS SocialWin Analytics!</strong></p>							
-					</div>			
-					<!--btnConectarConFacebook-->	
-					<%= render 'site/shared/facebook_button_signin' %>
-				</div>	
+				<%= render 'site/shared/face_signin' %>	
 			</div>
 		</div>
 </div><!--container-->

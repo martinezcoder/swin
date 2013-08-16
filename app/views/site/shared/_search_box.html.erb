@@ -1,7 +1,7 @@
 <div class="form-case input-append">			
 	<%= form_tag(search_engagement_path, :method => "get", class: "navbar-search form-inline") do %>
-	    <%= text_field_tag(:search, params[:search], class: "simple-search", placeholder: "Buscar páginas...", autocomplete: "off") %> 
-	  	<button type="submit" class="btn" title="Buscar!"><i class="icon-search"></i></button>
+	    <%= text_field_tag(:search, params[:search], class: "simple-search", placeholder: "Facebook Page(name or URL)...", autocomplete: "off") %> 
+	  	<button type="submit" class="btn" title="Search!"><i class="icon-search"></i></button>
 	<% end %>
 </div>
   

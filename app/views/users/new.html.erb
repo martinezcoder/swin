@@ -1,13 +1,13 @@
-<% provide(:title, "Confirmación de registro") %> 
+<% provide(:title, "Sign up confirmation") %> 
 
-	<h1>Confirmación de registro</h1>
+	<h1>Sign up confirmation</h1>
 
 	<div class="row">
 		<div class="span6 offset3">
 
 		    <%= form_for(@user) do |f| %>
 
-		      <%= f.label :name, "Nombre" %>
+		      <%= f.label :name, "Name" %>
 		      <%= f.text_field :name %>
 
 			  <%= f.label :email %>
@@ -19,12 +19,12 @@
 
 			  <%=  f.label :terms_of_service, { class: "checkbox" } do %>
 			  	<%= f.check_box :terms_of_service %>
-			  	<small>Al registrarme, acepto las <%= link_to "condiciones del servicio", "/terms.html" %> y la <%= link_to "política de privacidad", "/private_policy.html" %>.</small>
+			  	<small>I accept the <%= link_to "terms of service", "/terms.html" %> and the <%= link_to "private policy", "/private_policy.html" %>.</small>
 			  <% end %>
 
 		      <%= f.submit "Confirmar", class: "btn btn-default btn-primary" %>
 
-			  <%= link_to "Cancelar", root_path, data: { confirm: "Desea cancelar el registro en SocialWin?" }, class: "btn btn-default btn-default", style: "width: 60px;margin-left:10px;" %>
+			  <%= link_to "Cancelar", root_path, data: { confirm: "Are you sure to cancel de sign up?" }, class: "btn btn-default btn-default", style: "width: 60px;margin-left:10px;" %>
 
 		    <% end %>
 		</div>

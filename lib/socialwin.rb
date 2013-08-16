@@ -1,3 +1,3 @@
-module SocialWin
-  VERSION = 1.0
+module FanPagesCompare
+  VERSION = 2.0
 end

@@ -10,12 +10,14 @@ body{
     min-width:320px;  
 }
 @font-face {
+/*
     font-family: 'DominikRegular';
     src: font-url('dominik.eot');
     src: font-url('dominik.eot') format('embedded-opentype'),
          font-url('dominik.woff') format('woff'),
          font-url('dominik.ttf') format('truetype'),
          font-url('dominik.svg#DominikRegular') format('svg');
+*/
     font-weight: normal;     
 }
 a {
@@ -268,7 +270,7 @@ h4{
 }
 
 /*#####################################################*/
-/*### BOTON BUSCAR SOCIALWIN ##########################*/
+/*### BOTON BUSCAR  ##########################*/
 /*#####################################################*/
 
 #search{

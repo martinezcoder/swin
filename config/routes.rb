@@ -35,7 +35,7 @@ Swin::Application.routes.draw do
   match '/about', to: 'site#about' 
   match '/search_engagement', to: 'site#search'
 
-  root to: 'site#home' # redirect('http://socialwin.herokuapp.com') 
+  root to: 'site#home' 
 
 
   # The priority is based upon order of creation:

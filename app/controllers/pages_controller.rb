@@ -37,7 +37,7 @@ class PagesController < ApplicationController
       thisId = thisId.split(fbtag).last
       @page = Page.find_by_page_id(thisId)
       if @page.nil?
-#        me = User.find_by_email("fran.martinez@socialwin.es")
+#        me = User.find_by_email("francisjavier@gmail.com")
 #        fb_token = me.authentications.find_by_provider(FACEBOOK).token
         fb_page = FacebookHelper::FbGraphAPI.new().get_page_info(thisId)
         @page = page_create_or_update(fb_page[0])
@@ -61,13 +61,13 @@ class PagesController < ApplicationController
 
 #    fb_metric = PagesHelper::FbMetrics.new(get_token(FACEBOOK))
     fb_metric = PagesHelper::FbMetrics.new()
-    engageData = fb_metric.get_page_timeline(@page, day.ago(7.days), day, M_ENGAGEMENT)
-    @dataA = engageData[0]
-    @dataB = engageData[1]
+    activityData = fb_metric.get_page_timeline(@page, day.ago(7.days), day, M_ACTIVIDAD)
+    @dataA = activityData[0]
+    @dataB = activityData[1]
     @options = fb_metric.options
 
     if (@error = fb_metric.error)
-      @error = "Oops, esta página es nueva para nosotros, tendrás que esperar unos días..."
+      @error = "Oops, this page is new for us, you must wait some days to get data..."
     end
 
     

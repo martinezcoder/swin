@@ -3,11 +3,11 @@
 	<div class="base-btn-facebook">
 		<% if signed_in? %>
 			<%= link_to facebook_path, id: "btn-facebook", class: "btn btn-fb btn-large" do %>
-				<div id="image-facebook"></div><span id="pipe">|</span> Entrar con Facebook
+				<div id="image-facebook"></div><span id="pipe">|</span> Go with Facebook
 			<% end %>		
 		<% else %>
 			<%= link_to "auth/facebook", id: "btn-facebook", class: "btn btn-fb btn-large" do %>
-				<div id="image-facebook"></div><span id="pipe">|</span> Conectar con Facebook
+				<div id="image-facebook"></div><span id="pipe">|</span> Sign in with Facebook
 			<% end %>
 		<% end %>
 	</div>	
