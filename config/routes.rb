@@ -1,6 +1,6 @@
 Swin::Application.routes.draw do
 
-=begin
+
   resources :facebook_lists, :path => "/facebook/lists" do
     member do
       post :activate
@@ -32,9 +32,6 @@ Swin::Application.routes.draw do
 
   match '/youtube', to: 'static_pages#youtube'
   match '/twitter', to: 'static_pages#twitter'
-
-=end
-  resources :pages, :path => "/facebook", only: :show
   
   match '/about', to: 'site#about' 
   match '/search_engagement', to: 'site#search'
