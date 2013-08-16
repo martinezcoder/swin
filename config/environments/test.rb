@@ -44,7 +44,7 @@ Swin::Application.configure do
       'provider' => 'facebook',
       'info' => {
         'name' => 'FranJMartinez',
-        'email' => 'fran.martinez@socialwin.es'
+        'email' => 'francisjavier@gmail.com'
         },
       'credentials' => {
         'token' => 'Agfkw32mdl2m3dDEkao'

@@ -3,9 +3,9 @@ function fbPage(id, name) {
 		txt += 		"<div>";
   		txt += 			"<img class='fb_img' src='https://graph.facebook.com/" + id + "/picture' />";
   		txt += 					"<div class='name'><p>" + name +"</p></div>";
-		txt += 			"<a href='/facebook/" + name + "-engagement-" + id + "'>" ;
+		txt += 			"<a href='/facebook/" + name + "-propvalue-" + id + "'>" ;
 		txt +=				"<div class='arrow'></div>"	;
-		txt += 			"</a>";  			
+		txt += 			"</a>"; 
 		txt += 		"</div>";
 		txt += "</li>";
   	return txt;

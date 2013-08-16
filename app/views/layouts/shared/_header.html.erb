@@ -8,17 +8,14 @@
 			
 			<!-- Logo -->
 			<div class="brand">
-				<a href="index.html" title="SocialWin">
-				<%= link_to image_tag("logo-social196x56.png", width:145, title:"SocialWin", alt:"SocialWin"), root_path %> 
-				</a>
+				<%= link_to "FanPagesCompare", root_path %> 
 			</div>
 				
 			<!-- Main Menu / Colapse-->	
 			<div class="menusite-collapse nav-collapse collapse">
 				<ul class="nav pull-right">
-					<%= menu_link('CONSULTA ENGAGEMENT', '', search_engagement_path, '') %>
-					<%= menu_link('SOBRE SOCIALWIN', '', about_path, '') %>
 <% if false %>
+					<%= menu_link('FANPAGE ANALYSIS', '', search_engagement_path, '') %>
 					<% if signed_in? %>
 
 					<li class="dropdown" id="config">
@@ -43,9 +40,9 @@
 								<% end %>
 							<% end %>
 						<!--preferencias -->
-							<%= menu_link('Preferencias', 'icon-wrench', facebook_lists_path, '') %>
+							<%= menu_link('Preferences', 'icon-wrench', facebook_lists_path, '') %>
 						<!-- cerrar sesion -->	
-							<li><%= link_to signout_path, method: "delete" do %><i class="icon-remove"></i> Cerrar sesión<% end %></li><!--  -->
+							<li><%= link_to signout_path, method: "delete" do %><i class="icon-remove"></i> Sign out<% end %></li><!--  -->
 						</ul>
 					
 					</li>
@@ -54,7 +51,7 @@
 	
 						<li class="dropdown" id="config"><!--id="fat-menu"     -->
 							<a href="#" data-toggle="dropdown"><!-- class="dropdown-toggle"-->
-								EMPEZAR AHORA <b class="caret"></b>
+								START NOW <b class="caret"></b>
 							</a>
 							<ul class="dropdown-menu "><!--signinmenu-->
 								<li><%= link_to "Facebook", '/auth/facebook' %></li><!--, class: "btn btn-small btn-primary" -->

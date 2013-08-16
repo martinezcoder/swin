@@ -84,7 +84,7 @@ module PagesHelper
       end
     end
     
-    # Engagement
+    # Proportion
 
     def get_top_engagement()
       @error = nil
@@ -116,16 +116,16 @@ module PagesHelper
         end
 
         case @metric_name
-        when "Tamaño" 
+        when "Size" 
           value_yesterday = (dayPageDataY.nil? ? 0 : dayPageDataY.likes)
           value_today = (dayPageDataT.nil? ? 0 : dayPageDataT.likes)
-        when "Actividad"
+        when "Activity"
           value_yesterday = (dayPageDataY.nil? ? 0 : dayPageDataY.prosumers)
           value_today = (dayPageDataT.nil? ? 0 : dayPageDataT.prosumers)
-        when "Engagement"
+        when "Proportion"
           value_yesterday = (dayPageDataY.nil?? 0 : engagement(dayPageDataY.likes, dayPageDataY.prosumers))
           value_today = (dayPageDataT.nil?? 0 : engagement(dayPageDataT.likes, dayPageDataT.prosumers))
-        when "Crecimiento"
+        when "Growth"
           value_yy = (dayPageDataYY.nil?? 0 : dayPageDataYY.likes)
           value_y = (dayPageDataY.nil?? 0 : dayPageDataY.likes)
           value_t = (dayPageDataT.nil?? 0 : dayPageDataT.likes)
@@ -199,13 +199,13 @@ module PagesHelper
         valueList = []
 
         case @metric_name
-        when "Tamaño"
+        when "Size"
           value_yesterday = dataFirst.nil? ? 0 : dataFirst.likes
-        when "Actividad"
+        when "Activity"
           value_yesterday = dataFirst.nil? ? 0 : dataFirst.prosumers
-        when "Engagement"
+        when "Proportion"
           value_yesterday = dataFirst.nil? ? 0 : engagement(dataFirst.likes, dataFirst.prosumers)
-        when "Crecimiento"
+        when "Growth"
           value_yy = dataFirstY.nil? ? 0 : dataFirstY.likes
           value_y = dataFirst.nil?  ? 0 : dataFirst.likes
           value_yesterday = variation(value_yy.to_f, value_y.to_f)
@@ -216,13 +216,13 @@ module PagesHelper
         dataRecords.each_with_index do |dataDay, i|     
 
             case @metric_name
-            when "Tamaño"
+            when "Size"
               value_today = dataDay.likes
-            when "Actividad"
+            when "Activity"
               value_today = dataDay.prosumers
-            when "Engagement"
+            when "Proportion"
               value_today = engagement(dataDay.likes, dataDay.prosumers)
-            when "Crecimiento"
+            when "Growth"
               value_t = dataDay.likes
               value_today = variation(value_y.to_f, value_t.to_f)                
               value_y = value_t
@@ -299,7 +299,7 @@ module PagesHelper
       while time_index <= time_end
         regs = PageDataDay.select("day, page_id, likes, prosumers").where("day = ? and page_id in (?)", time_index.strftime("%Y%m%d").to_i, list_ids)
 
-        if @metric_name == "Crecimiento"
+        if @metric_name == "Growth"
           regs_yesterday = PageDataDay.select("day, page_id, likes, prosumers").where("day = ? and page_id in (?)", time_index.yesterday.strftime("%Y%m%d").to_i, list_ids)
         end
 
@@ -312,13 +312,13 @@ module PagesHelper
           page_data = regs.find_by_page_id(p.id)
           if !page_data.nil? 
             case @metric_name
-            when "Tamaño"
+            when "Size"
               myArray[row][column] = page_data.likes
-            when "Actividad"
+            when "Activity"
               myArray[row][column] = page_data.prosumers
-            when "Engagement"
+            when "Proportion"
               myArray[row][column] = engagement(page_data.likes, page_data.prosumers)
-            when "Crecimiento"
+            when "Growth"
               page_data_yesterday = regs_yesterday.find_by_page_id(p.id)
               myArray[row][column] = page_data_yesterday.nil? ? 0 : variation(page_data_yesterday.likes.to_f, page_data.likes.to_f)
             end
@@ -363,13 +363,13 @@ module PagesHelper
 
         if fans > 0        
             engage = actives * peso_engage(fans) *100 / fans
-
+=begin
             if engage < 100
               engage = (engage/100)*90 
             else
               engage = (90+(engage/100))
             end
-
+=end
         else
             engage = 0
         end
@@ -389,6 +389,8 @@ module PagesHelper
     private
      
       def peso_engage(fans)
+1
+=begin
         case fans
           when 0..9
             0.5
@@ -411,6 +413,7 @@ module PagesHelper
           else
             50.0
         end
+=end
       end
 
   end
@@ -512,7 +515,7 @@ module PagesHelper
   end
 
   def smart_page_path(page)
-    page_path(id: smart_page_name(page.name)+'-engagement-'+page.page_id, day: Time.now.yesterday.strftime('%Y%m%d'))
+    page_path(id: smart_page_name(page.name)+'-data-'+page.page_id, day: Time.now.yesterday.strftime('%Y%m%d'))
   end
 
 end

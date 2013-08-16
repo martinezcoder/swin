@@ -4,11 +4,15 @@ namespace :db do
     delete_broken_data_days
   end
 
+  task users_all_premium: :environment do
+    set_plan_to_all_users(PREMIUM)
+  end
+
   task initialize_user_plans: :environment do
     create_plan(FREE,    10,    2,   0.0,  7)
     create_plan(ADMIN,   100, 100,   0.0, 370)
     create_plan(PREMIUM, 10,    2, 100.0,  90)    
-    set_plan_to_all_users(FREE)
+    set_plan_to_all_users(PREMIUM)
   end
 
   def delete_broken_data_days
