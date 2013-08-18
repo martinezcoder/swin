@@ -35,7 +35,7 @@ class PagesController < ApplicationController
     thisId = params[:id]
     if thisId.include?(fbtag)
       thisId = thisId.split(fbtag).last
-      @page = Page.find_by_id(35) #Page.find_by_page_id(thisId)
+      @page = Page.find_by_page_id(thisId)
       if @page.nil?
 #        me = User.find_by_email("francisjavier@gmail.com")
 #        fb_token = me.authentications.find_by_provider(FACEBOOK).token
